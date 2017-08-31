@@ -21,3 +21,24 @@ export function getShopOrderListByDate(startDate, endDate) {
     }
 }
 
+export function getOrderDetail(id) {
+    return function(dispatch) {
+        if (id) {
+            let url = '/api/shop-service/backend/getOrderByFrontendId?orderId=' + id;
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'get',
+                responseType: 'json'
+            }).then(function(response) {
+                dispatch({
+                    type: 'FETCH_SHOP_ORDER_DETAIL',
+                    payload: response.data
+                })
+            }).catch(function(error) {
+                console.log(error);
+            })
+        }
+    }
+}
+
