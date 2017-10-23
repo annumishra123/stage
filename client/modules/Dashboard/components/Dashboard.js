@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-require('react-datepicker/dist/react-datepicker.css');
+//require('react-datepicker/dist/react-datepicker.css');
 
 class Dashboard extends React.Component {
   constructor(props) {

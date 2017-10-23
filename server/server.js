@@ -43,9 +43,12 @@ import Helmet from 'react-helmet';
 // Import required modules
 import routes from '../client/routes';
 import { fetchComponentData } from './util/fetchData';
+import { fetchIsAuthenticated } from './util/fetchAuth';
+import auth from './routes/auth.routes';
 import posts from './routes/post.routes';
 import dummyData from './dummyData';
 import serverConfig from './config';
+import passport from './passport';
 
 // Set native promises as mongoose promise
 mongoose.Promise = global.Promise;
@@ -72,6 +75,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(Express.static(path.resolve(__dirname, '../dist')));
 app.use('/api', proxyServer);
+app.use('/auth', auth);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
