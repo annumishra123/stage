@@ -41,11 +41,10 @@ import { match, RouterContext } from 'react-router';
 import Helmet from 'react-helmet';
 
 // Import required modules
-import routes from '../client/routes';
+import getRoutes from '../client/routes';
 import { fetchComponentData } from './util/fetchData';
 import { fetchIsAuthenticated } from './util/fetchAuth';
 import auth from './routes/auth.routes';
-import posts from './routes/post.routes';
 import dummyData from './dummyData';
 import serverConfig from './config';
 import passport from './passport';
@@ -124,6 +123,15 @@ const renderError = err => {
 
 // Server Side Rendering based on routes matched by React-router.
 app.use((req, res, next) => {
+  const initialState = {
+    auth: {
+      isAuthenticated: false,
+      isFetching: false
+    }
+  };
+  const store = configureStore(initialState);
+  const routes = getRoutes(store, req);
+
   match({
     routes,
     location: req.url
@@ -140,9 +148,8 @@ app.use((req, res, next) => {
       return next();
     }
 
-    const store = configureStore();
-
-    return fetchComponentData(store, renderProps.components, renderProps.params)
+    return fetchIsAuthenticated(store.dispatch, req, passport)
+      .then(() => fetchComponentData(store.dispatch, renderProps.components, renderProps.params))
       .then(() => {
         const initialView = renderToString(
           <Provider store={ store }>
