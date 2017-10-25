@@ -115,7 +115,7 @@ export function loginUser(creds) {
                 }
                 localStorage.setItem('token', user.token);
                 dispatch(loginSuccess(user));
-                browserHistory.push('/shop');
+                browserHistory.push('/customer');
             })
             .catch((err) => {
                 console.log(err);

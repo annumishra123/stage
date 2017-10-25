@@ -5,9 +5,6 @@ import { connect } from 'react-redux';
 import { getShopOrderListByDate, getOrderDetail } from '../ShopActions.js';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-if (typeof window !== 'undefined') {
-    //require('react-datepicker/dist/react-datepicker.css');
-}
 
 
 
