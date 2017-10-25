@@ -2,21 +2,21 @@ import React from 'react';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import CreateCustomer from './CreateCustomer.js';
+import FormSubmitButton from './FormSubmitButton.js';
+
 
 class Customer extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    componentDidMount() {}
+    componentDidMount() { }
 
     render() {
-        return <section>
-                 <input type="text" placeholder="Email Id" />
-                 <br/>
-                 <br/>
-                 <button>Search</button>
-               </section>;
+        return (<section>
+            <CreateCustomer />
+            <FormSubmitButton formName="createCustomer" /></section>);
     }
 }
 

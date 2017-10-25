@@ -17,7 +17,7 @@ if (typeof require.ensure !== 'function') {
  */
 if (process.env.NODE_ENV !== 'production') {
   // Require async routes only in development for react-hot-reloader to work.
-  //require('./modules/Post/pages/PostListPage/PostListPage');
+  // require('./modules/Post/pages/PostListPage/PostListPage');
 }
 
 // react-router setup with code-splitting
@@ -27,35 +27,39 @@ export default function getRoutes(store, req) {
 
   if (req && req.session) {
     token = req.session.token ? req.session.token : null;
+    // console.log(token);
   }
 
   const checkAdmin = (nextState, replace, cb) => {
     function checkAuth() {
-      const {auth: {isAuthenticated, role}} = store.getState();
-      if (!isAuthenticated || role !== 'admin') {
+      const { auth: { isAuthenticated, role } } = store.getState();
+      if ((!isAuthenticated || role !== 'admin') && !localStorage.getItem('token')) {
         replace('/');
       }
       cb();
     }
-
-    const {auth: {loaded}} = store.getState();
-    if (!loaded) {
-      store.dispatch(Actions.checkToken(token)).then(checkAuth);
+    if (typeof window !== 'undefined') {
+      const { auth: { loaded } } = store.getState();
+      if (!loaded) {
+        store.dispatch(Actions.checkToken(token)).then(checkAuth);
+      } else {
+        checkAuth();
+      }
     } else {
-      checkAuth();
+      cb();
     }
   };
 
   const checkDelivery = (nextState, replace, cb) => {
     function checkAuth() {
-      const {auth: {isAuthenticated, role}} = store.getState();
+      const { auth: { isAuthenticated, role } } = store.getState();
       if (!isAuthenticated || role !== 'delivery') {
         replace('/');
       }
       cb();
     }
 
-    const {auth: {loaded}} = store.getState();
+    const { auth: { loaded } } = store.getState();
     if (!loaded) {
       store.dispatch(Actions.checkToken(token)).then(checkAuth);
     } else {
@@ -65,14 +69,14 @@ export default function getRoutes(store, req) {
 
   const checkViewer = (nextState, replace, cb) => {
     function checkAuth() {
-      const {auth: {isAuthenticated, role}} = store.getState();
+      const { auth: { isAuthenticated, role } } = store.getState();
       if (!isAuthenticated || role !== 'viewer') {
         replace('/');
       }
       cb();
     }
 
-    const {auth: {loaded}} = store.getState();
+    const { auth: { loaded } } = store.getState();
     if (!loaded) {
       store.dispatch(Actions.checkToken(token)).then(checkAuth);
     } else {
@@ -81,27 +85,27 @@ export default function getRoutes(store, req) {
   };
 
   return (
-    <Route path="/" component={ App }>
-      <IndexRoute getComponent={ (nextState, cb) => {
-                                   require.ensure([], require => {
-                                     cb(null, require('./modules/Dashboard/components/Dashboard').default);
-                                   });
-                                 } } />
-      <Route path="/shop" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
-                                                                  require.ensure([], require => {
-                                                                    cb(null, require('./modules/Shop/components/ShopOrders').default);
-                                                                  });
-                                                                } } />
-      <Route path="/shop/create" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
-                                                                         require.ensure([], require => {
-                                                                           cb(null, require('./modules/Shop/components/CreateOrder').default);
-                                                                         });
-                                                                       } } />
-      <Route path="/customer" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
-                                                                      require.ensure([], require => {
-                                                                        cb(null, require('./modules/Customer/components/Customer').default);
-                                                                      });
-                                                                    } } />
+    <Route path="/" component={App}>
+      <IndexRoute getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Dashboard/components/Dashboard').default);
+        });
+      }} />
+      <Route path="/shop" onEnter={checkAdmin} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Shop/components/ShopOrders').default);
+        });
+      }} />
+      <Route path="/shop/create" onEnter={checkAdmin} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Shop/components/CreateOrder').default);
+        });
+      }} />
+      <Route path="/customer" onEnter={checkAdmin} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Customer/components/Customer').default);
+        });
+      }} />
     </Route>
-    );
+  );
 }
