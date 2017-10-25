@@ -10,16 +10,21 @@ const style = {
   fontSize: '16px',
 };
 
-const SubmitButton = ({ props, dispatch }) => (
+class SubmitButton extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-  < button
-    type="button"
-    style={style}
-    onClick={() => { console.log(props); dispatch(submit(props.formName)); }}
-  >
-    Submit
-  </button >
-);
+  componentDidMount() { }
 
-export default connect()(SubmitButton)
-  ;
+  render() {
+    return (<button
+      type="button"
+      style={style}
+      onClick={() => { console.log(this.props); this.props.dispatch(submit(this.props.formName)); }}
+    >
+      Submit
+    </button>);
+  }
+}
+export default connect()(SubmitButton);
