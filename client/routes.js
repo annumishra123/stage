@@ -97,6 +97,11 @@ export default function getRoutes(store, req) {
                                                                            cb(null, require('./modules/Shop/components/CreateOrder').default);
                                                                          });
                                                                        } } />
+      <Route path="/customer" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
+                                                                      require.ensure([], require => {
+                                                                        cb(null, require('./modules/Customer/components/Customer').default);
+                                                                      });
+                                                                    } } />
     </Route>
     );
 }
