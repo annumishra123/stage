@@ -23,18 +23,51 @@ if (process.env.NODE_ENV !== 'production') {
 // react-router setup with code-splitting
 // More info: http://blog.mxstbr.com/2016/01/react-apps-with-pages/
 export default function getRoutes(store, req) {
-  console.log('STARTED!!!', store);
   let token = null;
 
   if (req && req.session) {
     token = req.session.token ? req.session.token : null;
   }
 
-  const requireLogin = (nextState, replace, cb) => {
+  const checkAdmin = (nextState, replace, cb) => {
     function checkAuth() {
-      const {auth: {isAuthenticated}} = store.getState();
-      if (!isAuthenticated) {
-        replace('/login');
+      const {auth: {isAuthenticated, role}} = store.getState();
+      if (!isAuthenticated || role !== 'admin') {
+        replace('/');
+      }
+      cb();
+    }
+
+    const {auth: {loaded}} = store.getState();
+    if (!loaded) {
+      store.dispatch(Actions.checkToken(token)).then(checkAuth);
+    } else {
+      checkAuth();
+    }
+  };
+
+  const checkDelivery = (nextState, replace, cb) => {
+    function checkAuth() {
+      const {auth: {isAuthenticated, role}} = store.getState();
+      if (!isAuthenticated || role !== 'delivery') {
+        replace('/');
+      }
+      cb();
+    }
+
+    const {auth: {loaded}} = store.getState();
+    if (!loaded) {
+      store.dispatch(Actions.checkToken(token)).then(checkAuth);
+    } else {
+      checkAuth();
+    }
+  };
+
+  const checkViewer = (nextState, replace, cb) => {
+    function checkAuth() {
+      const {auth: {isAuthenticated, role}} = store.getState();
+      if (!isAuthenticated || role !== 'viewer') {
+        replace('/');
       }
       cb();
     }
@@ -54,16 +87,16 @@ export default function getRoutes(store, req) {
                                      cb(null, require('./modules/Dashboard/components/Dashboard').default);
                                    });
                                  } } />
-      <Route path="/shop" onEnter={ requireLogin } getComponent={ (nextState, cb) => {
-                                                                    require.ensure([], require => {
-                                                                      cb(null, require('./modules/Shop/components/ShopOrders').default);
-                                                                    });
-                                                                  } } />
-      <Route path="/shop/create" getComponent={ (nextState, cb) => {
-                                                  require.ensure([], require => {
-                                                    cb(null, require('./modules/Shop/components/CreateOrder').default);
-                                                  });
-                                                } } />
+      <Route path="/shop" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
+                                                                  require.ensure([], require => {
+                                                                    cb(null, require('./modules/Shop/components/ShopOrders').default);
+                                                                  });
+                                                                } } />
+      <Route path="/shop/create" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
+                                                                         require.ensure([], require => {
+                                                                           cb(null, require('./modules/Shop/components/CreateOrder').default);
+                                                                         });
+                                                                       } } />
     </Route>
     );
 }

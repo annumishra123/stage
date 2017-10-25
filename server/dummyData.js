@@ -8,12 +8,13 @@ export default function () {
     }
 
     const admin = new User({
-      email: 'admin@devblog.com',
+      email: 'shivi@stage3.co',
       isAdmin: true,
       cuid: cuid(),
+      role: 'admin'
     });
 
-    admin.password = admin.generateHash('almaa');
+    admin.password = admin.generateHash('volcantis');
 
     admin.save();
   });

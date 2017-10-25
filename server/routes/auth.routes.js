@@ -21,17 +21,20 @@ router.post('/login', (req, res, next) => {
                 email: user.email
             };
             const options = {
-                subject: user.cuid
+                subject: user.cuid ? user.cuid.toString() : ''
             };
             const token = jwt.sign(payload, 'secret', options);
 
-            req.session.token = token;
+            if (req.session) {
+                req.session.token = token;
+            }
 
             return res.json({
                 message: '',
                 user: {
                     ok: true,
-                    token
+                    token,
+                    role: user.role
                 }
             });
         }
@@ -43,7 +46,8 @@ router.get('/me', passport.authenticate('jwt', {
 }), (req, res) => {
     return res.json({
         user: {
-            ok: true
+            ok: true,
+            role: user.role
         }
     });
 });

@@ -1,5 +1,6 @@
 import * as ActionTypes from './constants';
 import fetch from 'isomorphic-fetch';
+import { browserHistory } from 'react-router';
 
 const baseURL = typeof window === 'undefined' ? process.env.BASE_URL || (`http://localhost:${(process.env.PORT || 8000)}`) : '';
 
@@ -18,6 +19,7 @@ export function loginSuccess(user) {
         isFetching: false,
         isAuthenticated: true,
         token: user.token,
+        role: user.role
     };
 }
 
@@ -38,11 +40,12 @@ export function requestCheckToken() {
     };
 }
 
-export function tokenValid() {
+export function tokenValid(user) {
     return {
         type: ActionTypes.TOKEN_VALID,
         isFetching: false,
-        isAuthenticated: true
+        isAuthenticated: true,
+        role: user.role
     };
 }
 
@@ -84,7 +87,7 @@ export function checkToken(sToken) {
                     return Promise.reject();
                 }
 
-                dispatch(tokenValid());
+                dispatch(tokenValid(user));
             })
             .catch((err) => {
                 console.log(err);
@@ -110,9 +113,9 @@ export function loginUser(creds) {
                     dispatch(loginFailure(message));
                     return Promise.reject(message);
                 }
-
                 localStorage.setItem('token', user.token);
                 dispatch(loginSuccess(user));
+                browserHistory.push('/shop');
             })
             .catch((err) => {
                 console.log(err);

@@ -4,6 +4,7 @@ const initialState = {
     isAuthenticated: false,
     isFetching: false,
     loaded: false,
+    role: '',
     message: ''
 };
 
@@ -44,6 +45,7 @@ const authReducer = (state = initialState, action) => {
                 isAuthenticated: true,
                 isFetching: false,
                 message: '',
+                role: action.role
             };
         case ActionTypes.LOGIN_FALIURE:
             return {
