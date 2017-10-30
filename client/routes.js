@@ -27,19 +27,19 @@ export default function getRoutes(store, req) {
 
   if (req && req.session) {
     token = req.session.token ? req.session.token : null;
-  // console.log(token);
+    // console.log(token);
   }
 
   const checkAdmin = (nextState, replace, cb) => {
     function checkAuth() {
-      const {auth: {isAuthenticated, role}} = store.getState();
+      const { auth: { isAuthenticated, role } } = store.getState();
       if ((!isAuthenticated || role !== 'admin') && !localStorage.getItem('token')) {
         replace('/');
       }
       cb();
     }
     if (typeof window !== 'undefined') {
-      const {auth: {loaded}} = store.getState();
+      const { auth: { loaded } } = store.getState();
       if (!loaded) {
         store.dispatch(Actions.checkToken(token)).then(checkAuth);
       } else {
@@ -52,14 +52,14 @@ export default function getRoutes(store, req) {
 
   const checkDelivery = (nextState, replace, cb) => {
     function checkAuth() {
-      const {auth: {isAuthenticated, role}} = store.getState();
+      const { auth: { isAuthenticated, role } } = store.getState();
       if (!isAuthenticated || role !== 'delivery') {
         replace('/');
       }
       cb();
     }
 
-    const {auth: {loaded}} = store.getState();
+    const { auth: { loaded } } = store.getState();
     if (!loaded) {
       store.dispatch(Actions.checkToken(token)).then(checkAuth);
     } else {
@@ -69,14 +69,14 @@ export default function getRoutes(store, req) {
 
   const checkViewer = (nextState, replace, cb) => {
     function checkAuth() {
-      const {auth: {isAuthenticated, role}} = store.getState();
+      const { auth: { isAuthenticated, role } } = store.getState();
       if (!isAuthenticated || role !== 'viewer') {
         replace('/');
       }
       cb();
     }
 
-    const {auth: {loaded}} = store.getState();
+    const { auth: { loaded } } = store.getState();
     if (!loaded) {
       store.dispatch(Actions.checkToken(token)).then(checkAuth);
     } else {
@@ -85,27 +85,27 @@ export default function getRoutes(store, req) {
   };
 
   return (
-    <Route path="/" component={ App }>
-      <IndexRoute getComponent={ (nextState, cb) => {
-                                   require.ensure([], require => {
-                                     cb(null, require('./modules/Dashboard/components/Dashboard').default);
-                                   });
-                                 } } />
-      <Route path="/shop" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
-                                                                  require.ensure([], require => {
-                                                                    cb(null, require('./modules/Shop/components/ShopOrders').default);
-                                                                  });
-                                                                } } />
-      <Route path="/shop/create" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
-                                                                         require.ensure([], require => {
-                                                                           cb(null, require('./modules/Shop/components/CreateOrder').default);
-                                                                         });
-                                                                       } } />
-      <Route path="/customer" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
-                                                                      require.ensure([], require => {
-                                                                        cb(null, require('./modules/Customer/components/CreateCustomer').default);
-                                                                      });
-                                                                    } } />
+    <Route path="/" component={App}>
+      <IndexRoute getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Dashboard/components/Dashboard').default);
+        });
+      }} />
+      <Route path="/shop" onEnter={checkAdmin} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Shop/components/ShopOrders').default);
+        });
+      }} />
+      <Route path="/shop/create" onEnter={checkAdmin} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Shop/components/CreateOrder').default);
+        });
+      }} />
+      <Route path="/customer" onEnter={checkAdmin} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Customer/components/CreateCustomer').default);
+        });
+      }} />
     </Route>
-    );
+  );
 }
