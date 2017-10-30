@@ -15,13 +15,6 @@ import proxy from 'http-proxy-middleware';
 // Initialize the Express App
 const app = new Express();
 
-// Proxy Server Config
-var options = {
-  target: 'https://staging.stage3.co',
-  changeOrigin: true
-};
-var proxyServer = proxy(options);
-
 // Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
@@ -63,6 +56,19 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
   dummyData();
 });
 
+// Proxy Server Config
+var options = {
+  target: serverConfig.targetURL,
+  changeOrigin: true,
+  logLevel: 'debug',
+  headers: {
+    'Authorization': serverConfig.access_token,
+    'Content-Type': 'application/json'
+  }
+};
+var proxyServer = proxy(options);
+app.use('/api', proxyServer);
+
 // Apply body Parser and server public assets and routes
 app.use(compression());
 app.use(bodyParser.json({
@@ -73,7 +79,6 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(Express.static(path.resolve(__dirname, '../dist')));
-app.use('/api', proxyServer);
 app.use('/auth', auth);
 
 // Render Initial HTML

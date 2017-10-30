@@ -17,60 +17,58 @@ const jwtOptions = {
 
 const jwtSessionOptions = {
   jwtFromRequest: (req) => {
-      let token = null;
-      if (req && req.session) {
-          token = req.session.token;
-        }
-      return token;
-    },
+    let token = null;
+    if (req && req.session) {
+      token = req.session.token;
+    }
+    return token;
+  },
   secretOrKey: 'secret',
 };
 
 const localCallback = (req, email, pass, done) => {
   User.findOne({
-      email,
+    email,
+  })
+    .then((user) => {
+      if (!user) {
+        done(null, false);
+      } else if (!user.validatePassword(pass)) {
+        done(null, false);
+      } else {
+        done(null, user);
+      }
     })
-        .then((user) => {
-          if (!user) {
-              done(null, false);
-            } else if (!user.validatePassword(pass)) {
-              done(null, false);
-            } else {
-              done(null, user);
-            }
-        })
-        .catch((err) => {
-          done(err, false);
-        });
+    .catch((err) => {
+      done(err, false);
+    });
 };
 
 const jwtCallback = (payload, done) => {
   const _id = payload.cuid;
-  console.log(payload);
   User.findById(_id)
-        .then((user) => {
-          console.log(user);
-          if (!user) {
-              done(null, false);
-            } else {
-              done(null, user);
-            }
-        })
-        .catch((err) => {
-          done(err, false);
-        });
+    .then((user) => {
+      if (!user) {
+        done(null, false);
+      } else {
+        done(null, user);
+      }
+    })
+    .catch((err) => {
+      done(err, false);
+    });
 };
 
 const localStrategy = new LocalStrategy(
-    localOptions, localCallback
+  localOptions, localCallback
 );
 
 const jwtStrategy = new JwtStrategy(
-    jwtOptions, jwtCallback
+  jwtOptions, jwtCallback
 );
 
 const jwtSessionStrategy = new JwtStrategy(
-    jwtSessionOptions, jwtCallback
+  jwtSessionOptions, jwtCallback
 );
 
 passport.use('local', localStrategy);

@@ -1,32 +1,45 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
-import { createCustomer } from '../CustomerActions.js';
+import { Link } from 'react-router';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import CustomerForm from './CustomerForm.js';
+import AddressForm from './AddressForm.js';
+import EmailForm from './EmailForm.js';
+import MeasurementsForm from './MeasurementsForm.js';
+import FormSubmitButton from './FormSubmitButton.js';
 
-let CreateCustomer = props => {
-  const { handleSubmit } = props;
-  return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="firstName">First Name</label>
-                <Field name="firstName" component="input" type="text" />
-            </div>
-            <div>
-                <label htmlFor="lastName">Last Name</label>
-                <Field name="lastName" component="input" type="text" />
-            </div>
-            <div>
-                <label htmlFor="email">Email</label>
-                <Field name="email" component="input" type="email" />
-            </div>
-            <div>
-                <label htmlFor="phonenumber">Phonenumber</label>
-                <Field name="phonenumber" component="input" type="text" />
-            </div>
-        </form>
-    );
-};
-export default reduxForm({
-  form: 'createCustomer', // a unique identifier for this form
-  onSubmit: createCustomer, // submit function must be passed to onSubmit
-})(CreateCustomer)
-    ;
+
+class CreateCustomer extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {}
+
+    render() {
+        return (<section>
+                  <EmailForm />
+                  <FormSubmitButton formName="createEmail" />
+                  <br/>
+                  <CustomerForm />
+                  <FormSubmitButton formName="createCustomer" />
+                  <AddressForm />
+                  <FormSubmitButton formName="createAddress" />
+                  <MeasurementsForm />
+                  <FormSubmitButton formName="createMeasurements" />
+                </section>);
+    }
+}
+
+function matchDispatchToProps(dispatch) {
+    return bindActionCreators({
+    }, dispatch);
+}
+
+function mapStateToProps(state) {
+    return {
+    };
+}
+
+
+export default connect(mapStateToProps, matchDispatchToProps)(CreateCustomer);
