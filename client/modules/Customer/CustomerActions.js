@@ -28,12 +28,24 @@ export function getCustomerDetail(customer) {
             responseType: 'json'
         }).then(function(response) {
             let customer = response.data;
+            if (customer) {
+                dispatch({
+                    type: 'FETCH_CUSTOMER_DETAIL',
+                    payload: customer
+                });
+                alert('Customer found.');
+            } else {
+                dispatch({
+                    type: 'FETCH_CUSTOMER_DETAIL',
+                    payload: {}
+                });
+                alert('Customer not found.');
+            }
+        }).catch(function(error) {
             dispatch({
                 type: 'FETCH_CUSTOMER_DETAIL',
-                payload: customer
+                payload: {}
             });
-            alert('Customer found.');
-        }).catch(function(error) {
             alert('Customer not found.');
             console.log(error);
         })

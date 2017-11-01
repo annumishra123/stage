@@ -87,7 +87,7 @@ AddressForm = reduxForm({
 
 AddressForm = connect(
   state => ({
-    addresses: state.customerDetail.shippingInfo
+    addresses: state.customerDetail ? state.customerDetail.shippingInfo : {}
   })
 )(AddressForm);
 
