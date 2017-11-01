@@ -70,7 +70,9 @@ class ShopOrders extends React.Component {
         if (this.props.orderDetail) {
 
             return (<div>
-
+                <h3>ORDER DETAILS</h3>
+                <hr />
+                <br />
                 <p>
                     <strong>ORDER ID :</strong> {JSON.stringify(this.props.orderDetail.id)}
                     <br />
@@ -92,6 +94,9 @@ class ShopOrders extends React.Component {
                     <br />
                     <br />
 
+                    <h3>ITEM DETAILS</h3>
+                    <hr />
+                    <br />
                     {this.props.orderDetail.orderLinesFrontend.map((line) => {
                         return (
                             <div><strong>OUTFIT :</strong> {JSON.stringify(line.product.name)}
@@ -104,15 +109,14 @@ class ShopOrders extends React.Component {
                                 <br />
                                 <strong>DISCOUNTED PRICE :</strong> {JSON.stringify(this.props.orderDetail.discountedPrice)}
                                 <br />
-                                <strong>PAYMENT TYPE :</strong> {JSON.stringify(this.props.orderDetail.paymentType)}
+                            <strong>PAYMENT METHOD :</strong> {JSON.stringify(line.paymentMethod)}
                                 <br />
                                 <strong>STATUS :</strong> {JSON.stringify(this.props.orderDetail.status)}
                                 <br />
-                                <br />
-                            </div>)
+                        
+                        </div>)
                     })
                     }
-
                 </p>
             </div>)
         }
