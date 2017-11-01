@@ -10,7 +10,7 @@ import MeasurementsForm from './MeasurementsForm.js';
 import FormSubmitButton from './FormSubmitButton.js';
 
 
-class CreateCustomer extends React.Component {
+class Customer extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -50,4 +50,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, matchDispatchToProps)(CreateCustomer);
+export default connect(mapStateToProps, matchDispatchToProps)(Customer);

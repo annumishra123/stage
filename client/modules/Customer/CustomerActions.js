@@ -1,16 +1,25 @@
 import axios from 'axios';
+import { reset } from 'redux-form';
 
 export function createCustomer(customer) {
     return function(dispatch, getState) {
-        customer.emailId = getState().form.createEmail.values.email;
+        //customer.emailId = getState().form.createEmail.values.email;
+        let cust = {
+            emailId: getState().form.createEmail.values.email,
+            firstName: customer.firstName,
+            lastName: customer.lastName,
+            phoneNumber: customer.phoneNumber,
+            dataSource: customer.dataSource
+        }
         let url = '/api/myaccount/profile/backend/create';
         return axios({
             url: url,
             timeout: 20000,
             method: 'post',
-            data: customer,
+            data: cust,
             responseType: 'json'
         }).then(function(response) {
+            dispatch(getCustomerDetail(cust.emailId));
             alert('Customer information has been saved.');
         }).catch(function(error) {
             console.log(error);
@@ -18,9 +27,13 @@ export function createCustomer(customer) {
     }
 }
 
-export function getCustomerDetail(customer) {
+export function getCustomerDetail(email) {
     return function(dispatch) {
-        let url = '/api/myaccount/profile/backend/get/?emailId=' + customer.email;
+        dispatch({
+            type: 'FETCH_CUSTOMER_DETAIL',
+            payload: {}
+        });
+        let url = '/api/myaccount/profile/backend/get/?emailId=' + email;
         return axios({
             url: url,
             timeout: 20000,
@@ -33,7 +46,6 @@ export function getCustomerDetail(customer) {
                     type: 'FETCH_CUSTOMER_DETAIL',
                     payload: customer
                 });
-                alert('Customer found.');
             } else {
                 dispatch({
                     type: 'FETCH_CUSTOMER_DETAIL',
@@ -63,6 +75,7 @@ export function createMeasurements(measurements) {
             data: measurements,
             responseType: 'json'
         }).then(function(response) {
+            dispatch(getCustomerDetail(measurements.email));
             alert('Customer measurements have been saved.');
         }).catch(function(error) {
             alert("Customer measurements couldn't be saved.");
@@ -82,6 +95,8 @@ export function createAddress(address) {
             data: address,
             responseType: 'json'
         }).then(function(response) {
+            dispatch(reset('createAddress'));
+            dispatch(getCustomerDetail(address.userId));
             alert('New address has been saved.');
         }).catch(function(error) {
             alert("Couldn't save new address.");
