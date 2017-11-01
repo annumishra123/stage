@@ -18,5 +18,5 @@ let EmailForm = props => {
 
 export default reduxForm({
   form: 'createEmail', // a unique identifier for this form
-  onSubmit: (values, dispatch) => dispatch(getCustomerDetail(values)) // submit function must be passed to onSubmit
+  onSubmit: (values, dispatch) => dispatch(getCustomerDetail(values.email)) // submit function must be passed to onSubmit
 })(EmailForm);
