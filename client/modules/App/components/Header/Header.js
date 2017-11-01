@@ -15,18 +15,7 @@ export function Header(props, context) {
   return (
     <div className={ styles.header }>
       <div className={ styles.content }>
-        <h1 className={ styles['site-title'] }>
-              <Link to="/" >Stage3 - Dashboard</Link>
-            </h1>
-        <br/><br/><br/><br/><br/>
-        <div className="">
-          <ul>
-            <li>
-              <Link to="/shop">Shop Orders </Link>
-              <Link to="/shop/create">( + Create Order)</Link>
-            </li>
-          </ul>
-        </div>
+        <h1 className={ styles['site-title'] }><Link to="/" >Stage3 - Dashboard</Link></h1>
       </div>
     </div>
     );

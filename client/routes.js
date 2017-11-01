@@ -103,7 +103,7 @@ export default function getRoutes(store, req) {
       }} />
       <Route path="/customer" onEnter={checkAdmin} getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          cb(null, require('./modules/Customer/components/Customer').default);
+          cb(null, require('./modules/Customer/components/CreateCustomer').default);
         });
       }} />
     </Route>

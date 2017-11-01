@@ -47,6 +47,26 @@ module.exports = {
             ]
           ]
         },
+      },
+      {
+        test: /\.jsx$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
+          presets: [
+            'react',
+            'es2015',
+            'stage-0',
+          ],
+          plugins: [
+            [
+              'babel-plugin-webpack-loaders', {
+                'config': './webpack.config.babel.js',
+                "verbose": false
+              }
+            ]
+          ]
+        },
       }, {
         test: /\.json$/,
         loader: 'json-loader',

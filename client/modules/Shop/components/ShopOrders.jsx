@@ -7,42 +7,38 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
 
-
 class ShopOrders extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            startDate: moment().subtract(1, 'days'),
-            endDate: moment(),
-            viewOrderDetail: false
+  constructor(props) {
+      super(props);
+      this.state = {
+          startDate: moment().subtract(1, 'days'),
+          endDate: moment(),
+          viewOrderDetail: false,
         };
     }
 
-    componentDidMount() {
-    }
+  componentDidMount() { }
 
-    handleChangeStartDate(date) {
-        this.setState({
-            startDate: date
+  handleChangeStartDate(date) {
+      this.setState({
+          startDate: date,
         });
     }
 
-    handleChangeEndDate(date) {
-        this.setState({
-            endDate: date
+  handleChangeEndDate(date) {
+      this.setState({
+          endDate: date,
         });
     }
 
-
-
-    getOrders() {
-        this.props.getShopOrderListByDate(this.state.startDate, this.state.endDate);
+  getOrders() {
+      this.props.getShopOrderListByDate(this.state.startDate, this.state.endDate);
     }
 
-    showOrderDetail(id) {
-        this.props.getOrderDetail(id);
-        this.setState({
-            viewOrderDetail: true
+  showOrderDetail(id) {
+      this.props.getOrderDetail(id);
+      this.setState({
+          viewOrderDetail: true,
         });
     }
 
@@ -149,16 +145,16 @@ class ShopOrders extends React.Component {
 }
 
 function matchDispatchToProps(dispatch) {
-    return bindActionCreators({
-        getShopOrderListByDate: getShopOrderListByDate,
-        getOrderDetail: getOrderDetail
+  return bindActionCreators({
+      getShopOrderListByDate,
+      getOrderDetail,
     }, dispatch);
 }
 
 function mapStateToProps(state) {
-    return {
-        orders: state.orders,
-        orderDetail: state.orderDetail
+  return {
+      orders: state.orders,
+      orderDetail: state.orderDetail,
     };
 }
 
