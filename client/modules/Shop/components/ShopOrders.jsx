@@ -42,41 +42,88 @@ class ShopOrders extends React.Component {
         });
     }
 
-  renderOrders() {
-      if (this.props.orders) {
-          if (this.props.orders.length > 0) {
-              return (<div>
+    renderOrders() {
+        if (this.props.orders) {
+            if (this.props.orders.length > 0) {
+                return <div>
                     {this.props.orders.map(function (order, i) {
-                      return (<div key={i} className="row">
+                        return <div key={i} className="row">
+                            <br />
                             <p>
-                                {order.frontendOrderId}
+                                <strong>ORDER ID :</strong> {order.frontendOrderId}
                             </p>
                             <p>
-                                {order.userId}
+                                <strong>USER ID :</strong> {order.userId}
                             </p>
                             <p>
-                                {moment(order.orderDate).format('dddd, MMMM Do YYYY, h:mm:ss a')}
+                                <strong>DATE OF ORDER :</strong> {moment(order.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}
                             </p>
                             <button onClick={this.showOrderDetail.bind(this, order.frontendOrderId)}>Order Detail</button>
-                        </div>);
+                        </div>
                     }, this)}
-                </div>);
+                </div>
             }
         }
     }
 
-  renderOrderDetail() {
-      if (this.props.orderDetail) {
-          return (<div>
+    renderOrderDetail() {
+        if (this.props.orderDetail) {
+
+            return (<div>
+                <h3>ORDER DETAILS</h3>
+                <hr />
+                <br />
                 <p>
-                    {JSON.stringify(this.props.orderDetail)}
+                    <strong>ORDER ID :</strong> {JSON.stringify(this.props.orderDetail.id)}
+                    <br />
+                    <strong>ORDER DATE :</strong> {JSON.stringify(this.props.orderDetail.orderDate)}
+                    <br />
+                    <strong>STATUS :</strong> {JSON.stringify(this.props.orderDetail.status)}
+                    <br />
+                    <strong>USER ID :</strong> {JSON.stringify(this.props.orderDetail.userId)}
+                    <br />
+                    <strong>FRONT-END ORDER ID :</strong> {JSON.stringify(this.props.orderDetail.frontendOrderId)}
+                    <br />
+                    <strong>ADDRESS :</strong> {JSON.stringify(this.props.orderDetail.deliveryAddress.address)}
+                    <br />
+                    <strong>CITY :</strong> {JSON.stringify(this.props.orderDetail.deliveryAddress.city)}
+                    <br />
+                    <strong>PINCODE :</strong> {JSON.stringify(this.props.orderDetail.deliveryAddress.pincode)}
+                    <br />
+                    <strong>STATE :</strong> {JSON.stringify(this.props.orderDetail.deliveryAddress.state)}
+                    <br />
+                    <br />
+
+                    <h3>ITEM DETAILS</h3>
+                    <hr />
+                    <br />
+                    {this.props.orderDetail.orderLinesFrontend.map((line) => {
+                        return (
+                            <div><strong>OUTFIT :</strong> {JSON.stringify(line.product.name)}
+                                <br />
+                                <strong>SKU :</strong> {JSON.stringify(line.product.sku)}
+                                <br />
+                                <strong>DESIGNER NAME :</strong> {JSON.stringify(line.product.designer)}
+                                <br />
+                                <strong>ORIGINAL PRICE :</strong> {JSON.stringify(this.props.orderDetail.originalPrice)}
+                                <br />
+                                <strong>DISCOUNTED PRICE :</strong> {JSON.stringify(this.props.orderDetail.discountedPrice)}
+                                <br />
+                            <strong>PAYMENT METHOD :</strong> {JSON.stringify(line.paymentMethod)}
+                                <br />
+                                <strong>STATUS :</strong> {JSON.stringify(this.props.orderDetail.status)}
+                                <br />
+                        
+                        </div>)
+                    })
+                    }
                 </p>
-            </div>);
+            </div>)
         }
     }
 
-  render() {
-      return (<section>
+    render() {
+        return <section>
             {!this.state.viewOrderDetail ?
                 <div>
                     <div className="container">
@@ -97,7 +144,7 @@ class ShopOrders extends React.Component {
                 <div>
                     {this.renderOrderDetail()}
                 </div>}
-        </section>);
+        </section>
     }
 }
 
