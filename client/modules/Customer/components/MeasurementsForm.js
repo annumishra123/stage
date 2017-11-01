@@ -85,7 +85,7 @@ MeasurementsForm = reduxForm({
 
 MeasurementsForm = connect(
   state => ({
-    initialValues: state.customerDetail ? state.customerDetail.measurements : {}
+    initialValues: state.customerDetail.measurements
   })
 )(MeasurementsForm);
 
