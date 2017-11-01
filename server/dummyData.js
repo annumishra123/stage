@@ -8,14 +8,25 @@ export default function () {
     }
 
     const admin = new User({
-      email: 'shivi@stage3.co',
+      email: 'store@stage3.co',
       isAdmin: true,
       cuid: cuid(),
       role: 'admin'
     });
 
-    admin.password = admin.generateHash('volcantis');
+    admin.password = admin.generateHash('stage@123');
 
     admin.save();
+
+    const viewer = new User({
+      email: 'warehouse@stage3.co',
+      isAdmin: true,
+      cuid: cuid(),
+      role: 'viewer'
+    });
+
+    viewer.password = admin.generateHash('stage@123');
+
+    viewer.save();
   });
 }

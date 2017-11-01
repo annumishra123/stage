@@ -9,6 +9,13 @@ import EmailForm from './EmailForm.js';
 import MeasurementsForm from './MeasurementsForm.js';
 import FormSubmitButton from './FormSubmitButton.js';
 
+const style = {
+    padding: '10px 20px',
+    width: 140,
+    display: 'block',
+    margin: '20px auto',
+    fontSize: '16px',
+};
 
 class Customer extends React.Component {
     constructor(props) {
@@ -26,15 +33,15 @@ class Customer extends React.Component {
     render() {
         return (<section>
                   <EmailForm />
-                  <FormSubmitButton formName="createEmail" />
+                  <FormSubmitButton formName="createEmail" text="Find Customer" />
                   <br/>
                   <CustomerForm />
-                  <FormSubmitButton formName="createCustomer" />
+                  { this.props.role === 'admin' ? <FormSubmitButton formName="createCustomer" text="Save Contact" /> : <br/> }
                   <AddressForm />
-                  <FormSubmitButton formName="createAddress" />
+                  { this.props.role === 'admin' ? <FormSubmitButton formName="createAddress" text="Save Address" /> : <br/> }
                   <MeasurementsForm />
-                  <FormSubmitButton formName="createMeasurements" />
-                  <button onClick={ this.saveCustomerDetails.bind(this) }>Save All Information</button>
+                  { this.props.role === 'admin' ? <FormSubmitButton formName="createMeasurements" text="Save Measurements" /> : <br/> }
+                  { this.props.role === 'admin' ? <button type="button" style={ style } onClick={ this.saveCustomerDetails.bind(this) }>Save All Information</button> : <br/> }
                 </section>);
     }
 }
@@ -46,7 +53,9 @@ function matchDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    return {};
+    return {
+        role: state.auth.role
+    };
 }
 
 

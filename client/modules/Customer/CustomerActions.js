@@ -3,7 +3,6 @@ import { reset } from 'redux-form';
 
 export function createCustomer(customer) {
     return function(dispatch, getState) {
-        //customer.emailId = getState().form.createEmail.values.email;
         let cust = {
             emailId: getState().form.createEmail.values.email,
             firstName: customer.firstName,

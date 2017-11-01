@@ -7,22 +7,22 @@ let CustomerForm = props => {
   const {handleSubmit} = props;
   return (
     <form onSubmit={ handleSubmit }>
-      <h3>Save Contact</h3>
+      <h3>Contact Info</h3>
       <br/>
       <div>
-        <label htmlFor="firstName">First Name</label>
+        <label htmlFor="firstName">First Name </label>
         <Field name="firstName" component="input" type="text" />
       </div>
       <div>
-        <label htmlFor="lastName">Last Name</label>
+        <label htmlFor="lastName">Last Name </label>
         <Field name="lastName" component="input" type="text" />
       </div>
       <div>
-        <label htmlFor="phoneNumber">Phonenumber</label>
+        <label htmlFor="phoneNumber">Phonenumber </label>
         <Field name="phoneNumber" component="input" type="text" />
       </div>
       <div>
-        <label htmlFor="dataSource">Source</label>
+        <label htmlFor="dataSource">Source </label>
         <Field name="dataSource" component="select" type="text">
           <option value="">-- Select --</option>
           <option value="store">Store</option>

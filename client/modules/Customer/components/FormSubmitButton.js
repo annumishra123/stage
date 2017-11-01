@@ -15,16 +15,14 @@ class SubmitButton extends React.Component {
     super(props);
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   render() {
-    return (<button
-      type="button"
-      style={style}
-      onClick={() => { console.log(this.props); this.props.dispatch(submit(this.props.formName)); }}
-    >
-      Submit
-    </button>);
+    return (<button type="button" style={ style } onClick={ () => {
+                                                  console.log(this.props); this.props.dispatch(submit(this.props.formName));
+                                                } }>
+              { this.props.text }
+            </button>);
   }
 }
 export default connect()(SubmitButton);
