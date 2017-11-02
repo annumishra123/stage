@@ -12,8 +12,8 @@ class ShopOrders extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            startDate: moment().subtract(1, 'days'),
-            endDate: moment(),
+            startDate: moment().startOf('day'),
+            endDate: moment().endOf('day'),
             viewOrderDetail: false,
             cancelReason: '',
             emailId: '',
@@ -163,8 +163,18 @@ class ShopOrders extends React.Component {
                       <p><strong>STATE :</strong>
                         { this.props.orderDetail.deliveryAddress.state }
                       </p>
-                      <br />
-                      <br />
+                      <br/>
+                      <select onChange={ this.changeCancelReason.bind(this) }>
+                        <option value="">-- Select Reason --</option>
+                        { clientConfig.cancelReasons.map((reason, i) => {
+                              return <option key={ i } value={ reason }>
+                                       { reason }
+                                     </option>;
+                          }) }
+                      </select>
+                      <button onClick={ this.removeItem.bind(this, null) }>Cancel Complete Order</button>
+                      <br/>
+                      <br/>
                       <h3>ITEM DETAILS</h3>
                       <hr />
                       { this.props.orderDetail.orderLinesFrontend.map((line, i) => {
@@ -200,7 +210,7 @@ class ShopOrders extends React.Component {
                                   </p>
                                   <br/>
                                   <select onChange={ this.changeCancelReason.bind(this) }>
-                                    <option value="">-- Select --</option>
+                                    <option value="">-- Select Reason --</option>
                                     { clientConfig.cancelReasons.map((reason, i) => {
                                           return <option key={ i } value={ reason }>
                                                    { reason }
@@ -212,16 +222,6 @@ class ShopOrders extends React.Component {
                                 </div>)
                         }) }
                       <br/>
-                      <hr/>
-                      <select onChange={ this.changeCancelReason.bind(this) }>
-                        <option value="">-- Select --</option>
-                        { clientConfig.cancelReasons.map((reason, i) => {
-                              return <option key={ i } value={ reason }>
-                                       { reason }
-                                     </option>;
-                          }) }
-                      </select>
-                      <button onClick={ this.removeItem.bind(this, null) }>Cancel Complete Order</button>
                     </div>)
         }
     }
