@@ -59,7 +59,23 @@ const clientConfig = {
     }, {
         city: 'Chennai',
         state: 'TamilNadu'
-    }]
+    }],
+    cancelReasons: [
+        'customer not interested',
+        'orderverification failure',
+        'customer denied accepting order',
+        'customer not available',
+        'measurements cant be altered',
+        'outfit altered customer measurements wrong',
+        'booked outfit for another date',
+        'booked another outfit',
+        'did not provide measurements',
+        'event cancelled',
+        'outfit disabled',
+        'defect in outfit',
+        'measurements didn’t fit',
+        'outfit now looking old'
+    ]
 }
 
 export default clientConfig;
