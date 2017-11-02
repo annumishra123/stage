@@ -5,35 +5,35 @@ import jwt from 'jsonwebtoken';
 const router = new Router();
 
 router.post('/login', (req, res, next) => {
-  passport.authenticate('local', {
-      session: false,
+    passport.authenticate('local', {
+        session: false,
     }, (err, user, info) => {
-      if (err) return next(err);
-      if (!user) {
-          return res.status(401).json({
-              user: {
-                  ok: false,
+        if (err) return next(err);
+        if (!user) {
+            return res.status(401).json({
+                user: {
+                    ok: false,
                 },
-              message: 'Faliure to login',
+                message: 'Faliure to login',
             });
         } else {
-          console.log(user);
-          const payload = {
-              email: user.email,
-              cuid: user._id ? user._id.toString() : '',
+            console.log(user);
+            const payload = {
+                email: user.email,
+                cuid: user._id ? user._id.toString() : '',
             };
-          const token = jwt.sign(payload, 'secret');
+            const token = jwt.sign(payload, 'secret');
 
-          if (req.session) {
-              req.session.token = token;
+            if (req.session) {
+                req.session.token = token;
             }
 
-          return res.json({
-              message: '',
-              user: {
-                  ok: true,
-                  token,
-                  role: user.role,
+            return res.json({
+                message: '',
+                user: {
+                    ok: true,
+                    token,
+                    role: user.role,
                 },
             });
         }
@@ -41,13 +41,13 @@ router.post('/login', (req, res, next) => {
 });
 
 router.get('/me', passport.authenticate('jwt', {
-  session: false,
+    session: false,
 }), (req, res) => {
-  return res.json({
-      user: {
-          ok: true,
-          role: req.user.role,
-
+    return res.json({
+        user: {
+            ok: true,
+            role: req.user.role,
+            email: req.user.email
         },
     });
 });

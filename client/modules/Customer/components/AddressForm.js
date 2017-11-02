@@ -47,34 +47,41 @@ let AddressForm = props => {
              </div>
     }
   }
+  const renderAddressForm = function() {
+    if (props.role === 'admin') {
+      return <div>
+               <h3>Save New Address</h3>
+               <br/>
+               <div>
+                 <label htmlFor="address">Address </label>
+                 <Field name="address" component="input" type="text" />
+               </div>
+               <div>
+                 <label htmlFor="city">City </label>
+                 <Field name="city" component="select" type="text" onChange={ handleCityChange }>
+                   <option value="">-- Select --</option>
+                   { clientConfig.serviceCities.map((object, i) => {
+                       return <option key={ i } value={ object.city }>
+                                { object.city }
+                              </option>;
+                     }) }
+                 </Field>
+               </div>
+               <div>
+                 <label htmlFor="state">State </label>
+                 <Field name="state" component="input" type="text" />
+               </div>
+               <div>
+                 <label htmlFor="pincode">Pincode </label>
+                 <Field name="pincode" component="input" type="text" />
+               </div>
+             </div>;
+    }
+  }
   return (
     <form onSubmit={ handleSubmit }>
       { renderSavedAddress() }
-      <h3>Save New Address</h3>
-      <br/>
-      <div>
-        <label htmlFor="address">Address</label>
-        <Field name="address" component="input" type="text" />
-      </div>
-      <div>
-        <label htmlFor="city">City</label>
-        <Field name="city" component="select" type="text" onChange={ handleCityChange }>
-          <option value="">-- Select --</option>
-          { clientConfig.serviceCities.map((object, i) => {
-              return <option key={ i } value={ object.city }>
-                       { object.city }
-                     </option>;
-            }) }
-        </Field>
-      </div>
-      <div>
-        <label htmlFor="state">State</label>
-        <Field name="state" component="input" type="text" />
-      </div>
-      <div>
-        <label htmlFor="pincode">Pincode</label>
-        <Field name="pincode" component="input" type="text" />
-      </div>
+      { renderAddressForm() }
     </form>
     );
 };
@@ -87,7 +94,8 @@ AddressForm = reduxForm({
 
 AddressForm = connect(
   state => ({
-    addresses: state.customerDetail ? state.customerDetail.shippingInfo : {}
+    addresses: state.customerDetail ? state.customerDetail.shippingInfo : {},
+    role: state.auth.role
   })
 )(AddressForm);
 

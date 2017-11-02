@@ -6,10 +6,10 @@ let EmailForm = props => {
   const {handleSubmit} = props;
   return (
     <form>
-      <h3>Create Customer</h3>
+      <h3>Create/Find Customer</h3>
       <br/>
       <div>
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email">Email </label>
         <Field name="email" component="input" type="email" />
       </div>
     </form>

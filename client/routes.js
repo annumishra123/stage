@@ -33,7 +33,7 @@ export default function getRoutes(store, req) {
   const checkAdmin = (nextState, replace, cb) => {
     function checkAuth() {
       const {auth: {isAuthenticated, role}} = store.getState();
-      if ((!isAuthenticated || role !== 'admin') && !localStorage.getItem('token')) {
+      if ((!isAuthenticated || role !== 'admin' || role !== 'viewer') && !localStorage.getItem('token')) {
         replace('/');
       }
       cb();
