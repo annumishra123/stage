@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getShopOrderListByDate, getOrderDetail, removeItem, getOrderDetailByUserId, getOrderDetailByOrderId } from '../ShopActions.js';
@@ -21,7 +21,33 @@ class ShopOrders extends React.Component {
         };
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        if (this.props.location.query.orderId) {
+            this.props.getOrderDetail(this.props.location.query.orderId);
+            this.setState({
+                viewOrderDetail: true,
+                cancelReason: ''
+            });
+        } else {
+            this.setState({
+                viewOrderDetail: false
+            });
+        }
+    }
+
+    componentWillReceiveProps(next) {
+        if (next.location.query.orderId) {
+            this.props.getOrderDetail(next.location.query.orderId);
+            this.setState({
+                viewOrderDetail: true,
+                cancelReason: ''
+            });
+        } else {
+            this.setState({
+                viewOrderDetail: false
+            });
+        }
+    }
 
     handleChangeStartDate(date) {
         this.setState({
@@ -56,17 +82,11 @@ class ShopOrders extends React.Component {
     }
 
     showOrderDetail(id) {
-        this.props.getOrderDetail(id);
-        this.setState({
-            viewOrderDetail: true,
-            cancelReason: ''
-        });
+        browserHistory.push('/shop?orderId=' + id);
     }
 
     showOrderList() {
-        this.setState({
-            viewOrderDetail: false
-        })
+        browserHistory.goBack();
     }
 
     changeCancelReason(e) {
