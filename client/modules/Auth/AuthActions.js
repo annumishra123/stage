@@ -118,10 +118,22 @@ export function loginUser(creds) {
         }
         localStorage.setItem('token', user.token);
         dispatch(loginSuccess(user));
-        browserHistory.push('/customer');
+        browserHistory.push('/menu');
       })
       .catch((err) => {
         console.log(err);
       });
   };
+}
+
+export function logoutUser() {
+  localStorage.removeItem('token');
+  browserHistory.push('/');
+  return {
+    type: ActionTypes.REQUEST_LOGOUT,
+    isAuthenticated: false,
+    isFetching: false,
+    role: '',
+    email: ''
+  }
 }

@@ -50,47 +50,18 @@ export default function getRoutes(store, req) {
     }
   };
 
-  const checkDelivery = (nextState, replace, cb) => {
-    function checkAuth() {
-      const {auth: {isAuthenticated, role}} = store.getState();
-      if (!isAuthenticated || role !== 'delivery') {
-        replace('/');
-      }
-      cb();
-    }
-
-    const {auth: {loaded}} = store.getState();
-    if (!loaded) {
-      store.dispatch(Actions.checkToken(token)).then(checkAuth);
-    } else {
-      checkAuth();
-    }
-  };
-
-  const checkViewer = (nextState, replace, cb) => {
-    function checkAuth() {
-      const {auth: {isAuthenticated, role}} = store.getState();
-      if (!isAuthenticated || role !== 'viewer') {
-        replace('/');
-      }
-      cb();
-    }
-
-    const {auth: {loaded}} = store.getState();
-    if (!loaded) {
-      store.dispatch(Actions.checkToken(token)).then(checkAuth);
-    } else {
-      checkAuth();
-    }
-  };
-
   return (
     <Route path="/" component={ App }>
       <IndexRoute getComponent={ (nextState, cb) => {
                                    require.ensure([], require => {
-                                     cb(null, require('./modules/Dashboard/components/Dashboard').default);
+                                     cb(null, require('./modules/Dashboard/components/Login').default);
                                    });
                                  } } />
+      <Route path="/menu" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
+                                                                  require.ensure([], require => {
+                                                                    cb(null, require('./modules/Dashboard/components/Navigation').default);
+                                                                  });
+                                                                } } />
       <Route path="/shop" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
                                                                   require.ensure([], require => {
                                                                     cb(null, require('./modules/Shop/components/ShopOrders').default);

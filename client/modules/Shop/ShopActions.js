@@ -57,6 +57,7 @@ export function getOrderDetail(id) {
                     payload: response.data
                 })
             }).catch(function(error) {
+                alert('Could not fetch order detail');
                 console.log(error);
             })
         }
@@ -88,6 +89,7 @@ export function removeItem(cancelRequest) {
                 alert('The order has been canceled');
             }
         }).catch(function(error) {
+            alert('Could not change order status');
             console.log(error);
         })
     }

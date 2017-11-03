@@ -6,7 +6,7 @@ import LoginForm from '../../Auth/components/LoginForm';
 
 
 
-class Dashboard extends React.Component {
+class Login extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {};
@@ -23,9 +23,9 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <section>
         <LoginForm handleLogin={ this.handleLogin } />
-      </div>
+      </section>
     )
   }
 }
@@ -38,15 +38,15 @@ function mapStateToProps(state) {
   };
 }
 
-Dashboard.contextTypes = {
+Login.contextTypes = {
   router: React.PropTypes.object,
 };
 
-Dashboard.propTypes = {
+Login.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   message: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps)(Login);

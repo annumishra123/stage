@@ -36,16 +36,18 @@ class ShopOrders extends React.Component {
     }
 
     componentWillReceiveProps(next) {
-        if (next.location.query.orderId) {
-            this.props.getOrderDetail(next.location.query.orderId);
-            this.setState({
-                viewOrderDetail: true,
-                cancelReason: ''
-            });
-        } else {
-            this.setState({
-                viewOrderDetail: false
-            });
+        if (this.props.location.query.orderId !== next.location.query.orderId) {
+            if (next.location.query.orderId) {
+                this.props.getOrderDetail(next.location.query.orderId);
+                this.setState({
+                    viewOrderDetail: true,
+                    cancelReason: ''
+                });
+            } else {
+                this.setState({
+                    viewOrderDetail: false
+                });
+            }
         }
     }
 
@@ -93,7 +95,6 @@ class ShopOrders extends React.Component {
         this.setState({
             cancelReason: e.target.value
         });
-        console.log(e.target.value);
     }
 
     removeItem(sku) {

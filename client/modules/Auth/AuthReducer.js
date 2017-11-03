@@ -58,6 +58,15 @@ const authReducer = (state = initialState, action) => {
         isFetching: false,
         message: action.message,
       };
+    case ActionTypes.REQUEST_LOGOUT:
+      return {
+        ...state,
+        isAuthenticated: action.isAuthenticated,
+        isFetching: action.isFetching,
+        message: '',
+        role: action.role,
+        email: action.email
+      };
     default:
       return state;
   }
