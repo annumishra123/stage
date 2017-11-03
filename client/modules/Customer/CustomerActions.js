@@ -30,7 +30,7 @@ export function getCustomerDetail(email) {
     return function(dispatch) {
         dispatch({
             type: 'FETCH_CUSTOMER_DETAIL',
-            payload: {}
+            payload: null
         });
         let url = '/api/myaccount/profile/backend/get/?emailId=' + email;
         return axios({
@@ -48,14 +48,14 @@ export function getCustomerDetail(email) {
             } else {
                 dispatch({
                     type: 'FETCH_CUSTOMER_DETAIL',
-                    payload: {}
+                    payload: null
                 });
                 alert('Customer not found.');
             }
         }).catch(function(error) {
             dispatch({
                 type: 'FETCH_CUSTOMER_DETAIL',
-                payload: {}
+                payload: null
             });
             alert('Customer not found.');
             console.log(error);
@@ -101,5 +101,14 @@ export function createAddress(address) {
             alert("Couldn't save new address.");
             console.log(error);
         })
+    }
+}
+
+export function selectAddress(id) {
+    return function(dispatch) {
+        dispatch({
+            type: 'SELECT_ADDRESS',
+            payload: id
+        });
     }
 }

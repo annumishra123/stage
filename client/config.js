@@ -75,7 +75,8 @@ const clientConfig = {
         'defect in outfit',
         'measurements didn’t fit',
         'outfit now looking old'
-    ]
+    ],
+    targetURL: 'https://staging.stage3.co'
 }
 
 export default clientConfig;

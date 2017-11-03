@@ -20,9 +20,6 @@ class Navigation extends React.Component {
                    <li>
                      <Link to="/shop">Shop Orders</Link>
                    </li>
-                   <li>
-                     <Link to="/shop/create">New Shop Order</Link>
-                   </li>
                  </ul>
                </section>
     }

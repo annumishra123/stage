@@ -69,7 +69,7 @@ export default function getRoutes(store, req) {
                                                                 } } />
       <Route path="/shop/create" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
                                                                          require.ensure([], require => {
-                                                                           cb(null, require('./modules/Shop/components/CreateOrder').default);
+                                                                           cb(null, require('./modules/Shop/components/CreateShopOrder').default);
                                                                          });
                                                                        } } />
       <Route path="/customer" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {

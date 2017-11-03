@@ -1,4 +1,6 @@
 import axios from 'axios';
+import clientConfig from '../../config';
+import { browserHistory } from 'react-router'
 
 export function getShopOrderListByDate(startDate, endDate) {
     return function(dispatch) {
@@ -16,7 +18,7 @@ export function getShopOrderListByDate(startDate, endDate) {
                 })
             }).catch(function(error) {
                 console.log(error);
-            })
+            });
         }
     }
 }
@@ -37,7 +39,7 @@ export function getOrderDetailByUserId(userId) {
                 })
             }).catch(function(error) {
                 console.log(error);
-            })
+            });
         }
     }
 }
@@ -59,7 +61,7 @@ export function getOrderDetail(id) {
             }).catch(function(error) {
                 alert('Could not fetch order detail');
                 console.log(error);
-            })
+            });
         }
     }
 }
@@ -91,7 +93,95 @@ export function removeItem(cancelRequest) {
         }).catch(function(error) {
             alert('Could not change order status');
             console.log(error);
-        })
+        });
+    }
+}
+
+export function fetchProduct(sku) {
+    return function(dispatch) {
+        let loopBackFilter = {
+            where: {
+                sku: sku.toUpperCase()
+            }
+        }
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/findOne?filter=' + JSON.stringify(loopBackFilter);
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then(function(response) {
+            dispatch({
+                type: 'FETCH_PRODUCT',
+                payload: response.data
+            })
+        }).catch(function(error) {
+            alert('Could not fetch product');
+            console.log(error);
+        });
+    }
+}
+
+export function getPricingOfShoppingCart(cart) {
+    return function(dispatch, getState) {
+        let cartObject = {
+            "discountCode": "",
+            "products": cart,
+            "userId": getState().customerDetail.email
+        }
+        let url = '/api/shop-service/backend/getPricing';
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            data: cartObject,
+            responseType: 'json'
+        }).then(function(response) {
+            dispatch({
+                type: 'FETCH_SHOP_PRICING',
+                payload: response.data
+            });
+        }).catch(function(error) {
+            alert('Could not fetch pricing');
+            console.log(error);
+        });
+    }
+}
+
+export function addItemToCart(id) {
+    return function(dispatch, getState) {
+        let cart = getState().shoppingCart ? getState().shoppingCart : [];
+        if (cart.indexOf(id) == -1) {
+            cart.push(id);
+        }
+        dispatch({
+            type: 'FETCH_SHOPPING_CART',
+            payload: cart
+        });
+        dispatch({
+            type: 'FETCH_PRODUCT',
+            payload: null
+        });
+        dispatch(getPricingOfShoppingCart(cart));
+        alert('Product added to cart');
+    }
+}
+
+export function placeOrder(orderObject) {
+    return function(dispatch) {
+        let url = '/api/shop-service/backend/initiateOrder';
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            data: orderObject,
+            responseType: 'json'
+        }).then(function(response) {
+            browserHistory.push('/shop?orderId=' + response.data.order.frontendOrderId);
+        }).catch(function(error) {
+            alert('Could not initiate order');
+            console.log(error);
+        });
     }
 }
 

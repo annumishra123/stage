@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { submit } from 'redux-form'
@@ -8,6 +8,7 @@ import AddressForm from './AddressForm.js';
 import EmailForm from './EmailForm.js';
 import MeasurementsForm from './MeasurementsForm.js';
 import FormSubmitButton from './FormSubmitButton.js';
+import { selectAddress } from '../CustomerActions'
 
 const style = {
     padding: '10px 20px',
@@ -30,6 +31,14 @@ class Customer extends React.Component {
         this.props.submit('createMeasurements');
     }
 
+    createShopOrder() {
+        browserHistory.push('/shop/create');
+    }
+
+    selectAddress(id) {
+        this.props.selectAddress(id);
+    }
+
     render() {
         return (<section>
                   <EmailForm />
@@ -37,24 +46,28 @@ class Customer extends React.Component {
                   <br/>
                   <CustomerForm />
                   { this.props.role === 'admin' ? <FormSubmitButton formName="createCustomer" text="Save Contact" /> : <br/> }
-                  <AddressForm />
+                  <AddressForm selectAddress={ this.selectAddress.bind(this) } />
                   { this.props.role === 'admin' ? <FormSubmitButton formName="createAddress" text="Save Address" /> : <br/> }
                   <MeasurementsForm />
                   { this.props.role === 'admin' ? <FormSubmitButton formName="createMeasurements" text="Save Measurements" /> : <br/> }
                   { this.props.role === 'admin' ? <button type="button" style={ style } onClick={ this.saveCustomerDetails.bind(this) }>Save All Information</button> : <br/> }
+                  { this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" style={ style } onClick={ this.createShopOrder.bind(this) }>New Shop Order</button> : <br/> }
                 </section>);
     }
 }
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        submit: submit
+        submit: submit,
+        selectAddress: selectAddress
     }, dispatch);
 }
 
 function mapStateToProps(state) {
     return {
-        role: state.auth.role
+        role: state.auth.role,
+        customerDetail: state.customerDetail,
+        selectedAddress: state.selectedAddress
     };
 }
 
