@@ -141,6 +141,10 @@ export function getPricingOfShoppingCart(cart) {
                 type: 'FETCH_SHOP_PRICING',
                 payload: response.data
             });
+            dispatch({
+                type: 'FETCH_PRODUCT',
+                payload: null
+            });
         }).catch(function(error) {
             alert('Could not fetch pricing');
             console.log(error);
@@ -150,18 +154,10 @@ export function getPricingOfShoppingCart(cart) {
 
 export function addItemToCart(id) {
     return function(dispatch, getState) {
-        let cart = getState().shoppingCart ? getState().shoppingCart : [];
+        let cart = getState().shopPricing ? Object.keys(getState().shopPricing.linePricing) : [];
         if (cart.indexOf(id) == -1) {
             cart.push(id);
         }
-        dispatch({
-            type: 'FETCH_SHOPPING_CART',
-            payload: cart
-        });
-        dispatch({
-            type: 'FETCH_PRODUCT',
-            payload: null
-        });
         dispatch(getPricingOfShoppingCart(cart));
         alert('Product added to cart');
     }

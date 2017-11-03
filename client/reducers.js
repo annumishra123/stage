@@ -21,7 +21,6 @@ export default combineReducers({
   form: formReducer,
   customerDetail,
   productDetail,
-  shoppingCart,
   shopPricing,
   selectedAddress
 });
