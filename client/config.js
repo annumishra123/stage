@@ -76,7 +76,12 @@ const clientConfig = {
         'measurements didn’t fit',
         'outfit now looking old'
     ],
-    targetURL: 'https://staging.stage3.co'
+    targetURL: 'https://staging.stage3.co',
+    paymentMethods: [
+        'cod',
+        'bank transfer',
+        'razor pay'
+    ]
 }
 
 export default clientConfig;

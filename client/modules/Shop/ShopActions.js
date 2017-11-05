@@ -163,6 +163,17 @@ export function addItemToCart(id) {
     }
 }
 
+export function removeItemFromCart(id) {
+    return function(dispatch, getState) {
+        let cart = getState().shopPricing ? Object.keys(getState().shopPricing.linePricing) : [];
+        if (cart.indexOf(id) !== -1) {
+            cart = cart.filter(e => e !== id);
+        }
+        dispatch(getPricingOfShoppingCart(cart));
+        alert('Product removed from cart');
+    }
+}
+
 export function placeOrder(orderObject) {
     return function(dispatch) {
         let url = '/api/shop-service/backend/initiateOrder';
@@ -173,9 +184,31 @@ export function placeOrder(orderObject) {
             data: orderObject,
             responseType: 'json'
         }).then(function(response) {
+            dispatch({
+                type: 'FETCH_SHOP_PRICING',
+                payload: null
+            });
             browserHistory.push('/shop?orderId=' + response.data.order.frontendOrderId);
         }).catch(function(error) {
             alert('Could not initiate order');
+            console.log(error);
+        });
+    }
+}
+
+export function confirmPayment(confirmPaymentObject) {
+    return function(dispatch) {
+        let url = '/api/shop-service/backend/recordPayment';
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            data: confirmPaymentObject,
+            responseType: 'json'
+        }).then(function(response) {
+            alert('Payment has been recorded');
+        }).catch(function(error) {
+            alert('Could not confirm payment');
             console.log(error);
         });
     }

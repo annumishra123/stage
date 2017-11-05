@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getShopOrderListByDate, getOrderDetail, removeItem, getOrderDetailByUserId, getOrderDetailByOrderId } from '../ShopActions.js';
+import { getShopOrderListByDate, getOrderDetail, removeItem, getOrderDetailByUserId, getOrderDetailByOrderId, confirmPayment } from '../ShopActions.js';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import clientConfig from '../../../config'
@@ -17,7 +17,8 @@ class ShopOrders extends React.Component {
             viewOrderDetail: false,
             cancelReason: '',
             emailId: '',
-            orderId: ''
+            orderId: '',
+            paymentMethod: ''
         };
     }
 
@@ -110,6 +111,24 @@ class ShopOrders extends React.Component {
         }
     }
 
+    changePaymentMethod(e) {
+        this.setState({
+            paymentMethod: e.target.value
+        });
+    }
+
+    confirmPayment() {
+        let confirmPaymentObject = {
+            "amount": 0,
+            "modifier": this.props.user,
+            "orderId": this.props.orderDetail.id,
+            "paymentType": this.state.paymentMethod,
+            "sha": '',
+            "status": ''
+        };
+        this.props.confirmPayment(confirmPaymentObject);
+    }
+
     renderOrders() {
         if (this.props.orders) {
             if (this.props.orders.length > 0) {
@@ -185,16 +204,28 @@ class ShopOrders extends React.Component {
                         { this.props.orderDetail.deliveryAddress.state }
                       </p>
                       <br/>
-                      <select onChange={ this.changeCancelReason.bind(this) }>
-                        <option value="">-- Select Reason --</option>
-                        { clientConfig.cancelReasons.map((reason, i) => {
-                              return <option key={ i } value={ reason }>
-                                       { reason }
-                                     </option>;
-                          }) }
-                      </select>
-                      <button onClick={ this.removeItem.bind(this, null) }>Cancel Complete Order</button>
-                      <br/>
+                      { this.props.role === 'admin' ? <div>
+                                                        <select onChange={ this.changePaymentMethod.bind(this) }>
+                                                          <option value="">-- Select Payment Method --</option>
+                                                          { clientConfig.paymentMethods.map((method, i) => {
+                                                                return <option key={ i } value={ method }>
+                                                                         { method }
+                                                                       </option>;
+                                                            }) }
+                                                        </select>
+                                                        <button onClick={ this.confirmPayment.bind(this) }>Confirm Payment</button>
+                                                        <br/>
+                                                        <select onChange={ this.changeCancelReason.bind(this) }>
+                                                          <option value="">-- Select Reason --</option>
+                                                          { clientConfig.cancelReasons.map((reason, i) => {
+                                                                return <option key={ i } value={ reason }>
+                                                                         { reason }
+                                                                       </option>;
+                                                            }) }
+                                                        </select>
+                                                        <button onClick={ this.removeItem.bind(this, null) }>Cancel Complete Order</button>
+                                                        <br/>
+                                                      </div> : null }
                       <br/>
                       <h3>ITEM DETAILS</h3>
                       <hr />
@@ -230,16 +261,18 @@ class ShopOrders extends React.Component {
                                     { this.props.orderDetail.status }
                                   </p>
                                   <br/>
-                                  <select onChange={ this.changeCancelReason.bind(this) }>
-                                    <option value="">-- Select Reason --</option>
-                                    { clientConfig.cancelReasons.map((reason, i) => {
-                                          return <option key={ i } value={ reason }>
-                                                   { reason }
-                                                 </option>;
-                                      }) }
-                                  </select>
-                                  <button onClick={ this.removeItem.bind(this, line.product.sku) }>Remove Item</button>
-                                  <br />
+                                  { this.props.role === 'admin' ? <div>
+                                                                    <select onChange={ this.changeCancelReason.bind(this) }>
+                                                                      <option value="">-- Select Reason --</option>
+                                                                      { clientConfig.cancelReasons.map((reason, i) => {
+                                                                            return <option key={ i } value={ reason }>
+                                                                                     { reason }
+                                                                                   </option>;
+                                                                        }) }
+                                                                    </select>
+                                                                    <button onClick={ this.removeItem.bind(this, line.product.sku) }>Remove Item</button>
+                                                                    <br />
+                                                                  </div> : null }
                                 </div>)
                         }) }
                       <br/>
@@ -298,14 +331,17 @@ function matchDispatchToProps(dispatch) {
         getOrderDetailByUserId,
         getOrderDetailByOrderId,
         getOrderDetail,
-        removeItem
+        removeItem,
+        confirmPayment
     }, dispatch);
 }
 
 function mapStateToProps(state) {
     return {
         orders: state.orders,
-        orderDetail: state.orderDetail
+        orderDetail: state.orderDetail,
+        role: state.auth.role,
+        user: state.auth.email
     };
 }
 

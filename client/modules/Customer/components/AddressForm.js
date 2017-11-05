@@ -25,7 +25,7 @@ let AddressForm = props => {
                { props.addresses.map((address, i) => {
                    return <div key={ i }>
                             <div>
-                              <input name="shippingId" type="radio" value={ address.shippingId } onChange={ handleSelectAddress } />
+                              { props.role === 'admin' ? <input name="shippingId" type="radio" value={ address.shippingId } checked={ address.shippingId == props.selectedAddress } onChange={ handleSelectAddress } /> : null }
                             </div>
                             <div>
                               <label htmlFor="address">Address :
@@ -101,7 +101,8 @@ AddressForm = reduxForm({
 AddressForm = connect(
   state => ({
     addresses: state.customerDetail ? state.customerDetail.shippingInfo : {},
-    role: state.auth.role
+    role: state.auth.role,
+    selectedAddress: state.selectedAddress
   })
 )(AddressForm);
 

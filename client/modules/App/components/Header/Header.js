@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
-import { logoutUser } from '../../../Auth/AuthActions'
+import { connect } from 'react-redux';
 
 // Import Style
 import styles from './Header.css';
@@ -13,7 +13,7 @@ export function Header(props, context) {
             </li>
   );
   const logout = function() {
-    logoutUser();
+    props.logoutUser();
   }
   const style = {
     position: 'absolute',
@@ -25,7 +25,7 @@ export function Header(props, context) {
     <div className={ styles.header }>
       <div className={ styles.content }>
         <h1 className={ styles['site-title'] }><Link to="/menu" >Stage3 - Dashboard</Link></h1>
-        <button style={ style } onClick={ logout }>Logout</button>
+        { props.isAuthenticated ? <button style={ style } onClick={ logout }>Logout</button> : null }
       </div>
     </div>
     );
@@ -40,5 +40,11 @@ Header.propTypes = {
   switchLanguage: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
 };
+
+Header = connect(
+  state => ({
+    isAuthenticated: state.auth.isAuthenticated
+  })
+)(Header);
 
 export default Header;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { fetchProduct, addItemToCart, placeOrder } from '../ShopActions';
+import { fetchProduct, addItemToCart, placeOrder, removeItemFromCart } from '../ShopActions';
 import clientConfig from '../../../config';
 
 
@@ -27,12 +27,22 @@ class CreateShopOrder extends React.Component {
     })
   }
 
+  changePaymentMethod(e) {
+    this.setState({
+      paymentMethod: e.target.value
+    });
+  }
+
   findProduct() {
     this.props.fetchProduct(this.state.sku);
   }
 
   addProductToCart() {
     this.props.addItemToCart(this.props.productDetail.id);
+  }
+
+  removeProductFromCart(id) {
+    this.props.removeItemFromCart(id);
   }
 
   placeOrder() {
@@ -76,7 +86,7 @@ class CreateShopOrder extends React.Component {
   }
 
   renderCart() {
-    if (this.props.shopPricing) {
+    if (this.props.shopPricing && Object.keys(this.props.shopPricing.linePricing).length > 0) {
       return <div>
                <h3>Order Summary</h3>
                <hr/>
@@ -87,6 +97,7 @@ class CreateShopOrder extends React.Component {
                        <th style={ { width: '100px' } }>SKU</th>
                        <th style={ { width: '100px' } }>Original Price</th>
                        <th style={ { width: '100px' } }>Sale Price</th>
+                       <th style={ { width: '100px' } }></th>
                      </tr>
                    </thead>
                    <tbody>
@@ -101,6 +112,9 @@ class CreateShopOrder extends React.Component {
                                   <td>
                                     { this.props.shopPricing.linePricing[item].totalDiscountedPrice }
                                   </td>
+                                  <td>
+                                    <button onClick={ this.removeProductFromCart.bind(this, item) }>Remove Product</button>
+                                  </td>
                                 </tr>;
                        }, this) }
                    </tbody>
@@ -112,6 +126,14 @@ class CreateShopOrder extends React.Component {
                <p>Total Sale Price:
                  { ' ' + this.props.shopPricing.totalDiscountedPrice }
                </p>
+               <select onChange={ this.changePaymentMethod.bind(this) }>
+                 <option value="">-- Select Payment Method --</option>
+                 { clientConfig.paymentMethods.map((method, i) => {
+                     return <option key={ i } value={ method }>
+                              { method }
+                            </option>;
+                   }) }
+               </select>
                <button onClick={ this.placeOrder.bind(this) }>Place Order</button>
              </div>
     }
@@ -135,7 +157,8 @@ function matchDispatchToProps(dispatch) {
   return bindActionCreators({
     fetchProduct,
     addItemToCart,
-    placeOrder
+    placeOrder,
+    removeItemFromCart
   }, dispatch);
 }
 

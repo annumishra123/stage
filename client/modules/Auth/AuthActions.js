@@ -33,6 +33,16 @@ export function loginFailure(message) {
   };
 }
 
+export function requestLogout() {
+  return {
+    type: ActionTypes.REQUEST_LOGOUT,
+    isAuthenticated: false,
+    isFetching: false,
+    role: '',
+    email: ''
+  }
+}
+
 export function requestCheckToken() {
   return {
     type: ActionTypes.REQUEST_CHECK_TOKEN,
@@ -127,13 +137,9 @@ export function loginUser(creds) {
 }
 
 export function logoutUser() {
-  localStorage.removeItem('token');
-  browserHistory.push('/');
-  return {
-    type: ActionTypes.REQUEST_LOGOUT,
-    isAuthenticated: false,
-    isFetching: false,
-    role: '',
-    email: ''
+  return function(dispatch) {
+    localStorage.removeItem('token');
+    browserHistory.push('/');
+    dispatch(requestLogout());
   }
 }
