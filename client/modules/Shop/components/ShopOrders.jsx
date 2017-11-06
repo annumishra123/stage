@@ -18,7 +18,8 @@ class ShopOrders extends React.Component {
             cancelReason: '',
             emailId: '',
             orderId: '',
-            paymentMethod: ''
+            paymentMethod: '',
+            paymentStatus: ''
         };
     }
 
@@ -76,6 +77,12 @@ class ShopOrders extends React.Component {
         })
     }
 
+    handleChangePaymentStatus(e) {
+        this.setState({
+            paymentStatus: e.target.value
+        });
+    }
+
     getOrders() {
         this.props.getShopOrderListByDate(this.state.startDate, this.state.endDate);
     }
@@ -119,12 +126,12 @@ class ShopOrders extends React.Component {
 
     confirmPayment() {
         let confirmPaymentObject = {
-            "amount": 0,
-            "modifier": this.props.user,
-            "orderId": this.props.orderDetail.id,
-            "paymentType": this.state.paymentMethod,
-            "sha": '',
-            "status": ''
+            amount: this.props.orderDetail.discountedPrice,
+            modifier: this.props.user,
+            orderId: this.props.orderDetail.id,
+            paymentType: this.state.paymentMethod,
+            sha: 'stage3-admin-hash',
+            status: this.state.paymentStatus
         };
         this.props.confirmPayment(confirmPaymentObject);
     }
@@ -212,6 +219,11 @@ class ShopOrders extends React.Component {
                                                                          { method }
                                                                        </option>;
                                                             }) }
+                                                        </select>
+                                                        <select onChange={ this.handleChangePaymentStatus.bind(this) }>
+                                                          <option value="">-- Select Payment Status --</option>
+                                                          <option value="success">Success</option>
+                                                          <option value="failed">Failed</option>
                                                         </select>
                                                         <button onClick={ this.confirmPayment.bind(this) }>Confirm Payment</button>
                                                         <br/>
