@@ -75,6 +75,18 @@ const clientConfig = {
         'defect in outfit',
         'measurements didn’t fit',
         'outfit now looking old'
+    ],
+    targetURL: 'https://staging.stage3.co',
+    paymentMethods: [
+        'bank deposit',
+        'Bluedart COD',
+        'cheque',
+        'COD',
+        'FREE',
+        'ICICI',
+        'payu',
+        'payumoney',
+        'razorpay'
     ]
 }
 

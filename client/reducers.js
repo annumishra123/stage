@@ -6,10 +6,11 @@ import { combineReducers } from 'redux';
 // Import Reducers
 import app from './modules/App/AppReducer';
 import intl from './modules/Intl/IntlReducer';
-import { orders, orderDetail } from './modules/Shop/ShopReducer';
+import { orders, orderDetail, productDetail, shoppingCart, shopPricing } from './modules/Shop/ShopReducer';
 import auth from './modules/Auth/AuthReducer';
-import customerDetail from './modules/Customer/CustomerReducer';
+import { customerDetail, selectedAddress } from './modules/Customer/CustomerReducer';
 import { reducer as formReducer } from 'redux-form';
+
 // Combine all reducers into one root reducer
 export default combineReducers({
   app,
@@ -18,5 +19,8 @@ export default combineReducers({
   orders,
   orderDetail,
   form: formReducer,
-  customerDetail
+  customerDetail,
+  productDetail,
+  shopPricing,
+  selectedAddress
 });

@@ -33,6 +33,16 @@ export function loginFailure(message) {
   };
 }
 
+export function requestLogout() {
+  return {
+    type: ActionTypes.REQUEST_LOGOUT,
+    isAuthenticated: false,
+    isFetching: false,
+    role: '',
+    email: ''
+  }
+}
+
 export function requestCheckToken() {
   return {
     type: ActionTypes.REQUEST_CHECK_TOKEN,
@@ -118,10 +128,18 @@ export function loginUser(creds) {
         }
         localStorage.setItem('token', user.token);
         dispatch(loginSuccess(user));
-        browserHistory.push('/customer');
+        browserHistory.push('/menu');
       })
       .catch((err) => {
         console.log(err);
       });
   };
+}
+
+export function logoutUser() {
+  return function(dispatch) {
+    localStorage.removeItem('token');
+    browserHistory.push('/');
+    dispatch(requestLogout());
+  }
 }

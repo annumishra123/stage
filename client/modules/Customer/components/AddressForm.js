@@ -5,7 +5,7 @@ import { createAddress } from '../CustomerActions.js';
 import clientConfig from '../../../config.js';
 
 let AddressForm = props => {
-  const {handleSubmit} = props;
+  const {handleSubmit, selectAddress} = props;
   const handleCityChange = function(e) {
     if (e.target.value) {
       let state = clientConfig.serviceCities.find(o => o.city == e.target.value).state
@@ -14,6 +14,9 @@ let AddressForm = props => {
       props.change('state', '');
     }
   }
+  const handleSelectAddress = function(e) {
+    props.selectAddress(e.target.value);
+  }
   const renderSavedAddress = function() {
     if (props.addresses && props.addresses.length > 0) {
       return <div>
@@ -21,6 +24,9 @@ let AddressForm = props => {
                <br/>
                { props.addresses.map((address, i) => {
                    return <div key={ i }>
+                            <div>
+                              { props.role === 'admin' ? <input name="shippingId" type="radio" value={ address.shippingId } checked={ address.shippingId == props.selectedAddress } onChange={ handleSelectAddress } /> : null }
+                            </div>
                             <div>
                               <label htmlFor="address">Address :
                                 { address.address }
@@ -95,7 +101,8 @@ AddressForm = reduxForm({
 AddressForm = connect(
   state => ({
     addresses: state.customerDetail ? state.customerDetail.shippingInfo : {},
-    role: state.auth.role
+    role: state.auth.role,
+    selectedAddress: state.selectedAddress
   })
 )(AddressForm);
 
