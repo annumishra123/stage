@@ -78,9 +78,15 @@ const clientConfig = {
     ],
     targetURL: 'https://staging.stage3.co',
     paymentMethods: [
-        'cod',
-        'bank transfer',
-        'razor pay'
+        'bank deposit',
+        'Bluedart COD',
+        'cheque',
+        'COD',
+        'FREE',
+        'ICICI',
+        'payu',
+        'payumoney',
+        'razorpay'
     ]
 }
 

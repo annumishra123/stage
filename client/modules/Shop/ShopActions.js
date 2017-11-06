@@ -207,6 +207,7 @@ export function confirmPayment(confirmPaymentObject) {
             responseType: 'json'
         }).then(function(response) {
             alert('Payment has been recorded');
+            browserHistory.push('/customer');
         }).catch(function(error) {
             alert('Could not confirm payment');
             console.log(error);
