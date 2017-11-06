@@ -174,13 +174,8 @@ class ShopOrders extends React.Component {
                       <h3>ORDER DETAILS</h3>
                       <hr />
                       <br />
-                      <p>
-                        <strong>ORDER ID :</strong>
-                        { this.props.orderDetail.id }
-                      </p>
-                      <br />
                       <p><strong>ORDER DATE :</strong>
-                        { this.props.orderDetail.orderDate }
+                        { moment( this.props.orderDetail.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a") }
                       </p>
                       <br />
                       <p><strong>STATUS :</strong>
@@ -191,7 +186,7 @@ class ShopOrders extends React.Component {
                         { this.props.orderDetail.userId }
                       </p>
                       <br />
-                      <p><strong>FRONT-END ORDER ID :</strong>
+                      <p><strong>ORDER ID :</strong>
                         { this.props.orderDetail.frontendOrderId }
                       </p>
                       <br />
