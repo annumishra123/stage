@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router'
 export function getShopOrderListByDate(startDate, endDate) {
     return function(dispatch) {
         if (startDate && endDate) {
-            let url = '/api/shop-service/backend/getOrdersbyDateRange/' + startDate + '/' + endDate;
+            let url = '/api/om/orders/backend/get/byDateRange/' + startDate + '/' + endDate;
             return axios({
                 url: url,
                 timeout: 20000,
@@ -13,7 +13,7 @@ export function getShopOrderListByDate(startDate, endDate) {
                 responseType: 'json'
             }).then(function(response) {
                 dispatch({
-                    type: 'FETCH_SHOP_ORDERS',
+                    type: 'FETCH_RENT_ORDERS',
                     payload: response.data
                 })
             }).catch(function(error) {
@@ -26,7 +26,7 @@ export function getShopOrderListByDate(startDate, endDate) {
 export function getOrdersByUserId(userId) {
     return function(dispatch) {
         if (userId) {
-            let url = '/api/shop-service/backend/getOrdersByUserId?userId=' + userId;
+            let url = '/api/om/orders/backend/get/byUserId/' + userId + '/';
             return axios({
                 url: url,
                 timeout: 20000,
@@ -34,7 +34,7 @@ export function getOrdersByUserId(userId) {
                 responseType: 'json'
             }).then(function(response) {
                 dispatch({
-                    type: 'FETCH_SHOP_ORDERS',
+                    type: 'FETCH_RENT_ORDERS',
                     payload: response.data
                 })
             }).catch(function(error) {
@@ -47,7 +47,7 @@ export function getOrdersByUserId(userId) {
 export function getOrderDetail(id) {
     return function(dispatch) {
         if (id) {
-            let url = '/api/shop-service/backend/getOrderByFrontendId?orderId=' + id;
+            let url = '/api/om/orders/backend/view/' + id + '/';
             return axios({
                 url: url,
                 timeout: 20000,
@@ -55,7 +55,7 @@ export function getOrderDetail(id) {
                 responseType: 'json'
             }).then(function(response) {
                 dispatch({
-                    type: 'FETCH_SHOP_ORDER_DETAIL',
+                    type: 'FETCH_RENT_ORDER_DETAIL',
                     payload: response.data
                 })
             }).catch(function(error) {
@@ -71,12 +71,9 @@ export function removeItem(cancelRequest) {
         let cancellationObject = {
             cancellationReason: cancelRequest.cancelReason,
             cancellationUser: getState().auth.email,
-            orderId: cancelRequest.orderId,
-            skusToCancel: cancelRequest.sku ? [
-                cancelRequest.sku
-            ] : null
+            orderlineId: cancelRequest.lineId
         };
-        let url = '/api/shop-service/backend/cancelOrder';
+        let url = '/api/om/orders/backend/partialCancellation/';
         return axios({
             url: url,
             timeout: 20000,
@@ -85,11 +82,31 @@ export function removeItem(cancelRequest) {
             responseType: 'json'
         }).then(function(response) {
             dispatch(getOrderDetail(cancelRequest.frontendOrderId));
-            if (cancelRequest.sku) {
-                alert('Product has been removed from the order');
-            } else {
-                alert('The order has been canceled');
-            }
+            alert('Product has been removed from the order');
+        }).catch(function(error) {
+            alert('Could not change order status');
+            console.log(error);
+        });
+    }
+}
+
+export function cancelOrder(cancelRequest) {
+    return function(dispatch, getState) {
+        let cancellationObject = {
+            cancellationReason: cancelRequest.cancelReason,
+            cancellationUser: getState().auth.email,
+            orderId: cancelRequest.orderId
+        };
+        let url = '/api/om/orders/backend/requestcancel/v2/';
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            data: cancellationObject,
+            responseType: 'json'
+        }).then(function(response) {
+            dispatch(getOrderDetail(cancelRequest.frontendOrderId));
+            alert('The order has been canceled');
         }).catch(function(error) {
             alert('Could not change order status');
             console.log(error);
@@ -207,7 +224,6 @@ export function confirmPayment(confirmPaymentObject) {
             responseType: 'json'
         }).then(function(response) {
             alert('Payment has been recorded');
-            browserHistory.push('/customer');
         }).catch(function(error) {
             alert('Could not confirm payment');
             console.log(error);

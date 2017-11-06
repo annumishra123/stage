@@ -2,13 +2,13 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, confirmPayment } from '../ShopActions.js';
+import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, confirmPayment, cancelOrder } from '../RentActions.js';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import clientConfig from '../../../config'
 
 
-class ShopOrders extends React.Component {
+class RentOrders extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -92,7 +92,7 @@ class ShopOrders extends React.Component {
     }
 
     showOrderDetail(id) {
-        browserHistory.push('/shop?orderId=' + id);
+        browserHistory.push('/rent?orderId=' + id);
     }
 
     showOrderList() {
@@ -105,16 +105,25 @@ class ShopOrders extends React.Component {
         });
     }
 
-    removeItem(sku) {
+    removeItem(lineId) {
         let cancelRequest = {
-            orderId: this.props.orderDetail.id,
-            frontendOrderId: this.props.orderDetail.frontendOrderId,
-            sku: sku ? sku : null,
+            lineId: lineId,
             cancelReason: this.state.cancelReason
         }
-        let confirmCancel = sku ? confirm("Do you confirm to remove this item!") : confirm("Do you confirm to delete this order!");
+        let confirmCancel = confirm("Do you confirm to remove this item!");
         if (confirmCancel) {
             this.props.removeItem(cancelRequest);
+        }
+    }
+
+    cancelOrder(orderId) {
+        let cancelRequest = {
+            orderId: orderId,
+            cancelReason: this.state.cancelReason
+        }
+        let confirmCancel = confirm("Do you confirm to cancel this order!");
+        if (confirmCancel) {
+            this.props.cancelOrder(cancelRequest);
         }
     }
 
@@ -174,8 +183,13 @@ class ShopOrders extends React.Component {
                       <h3>ORDER DETAILS</h3>
                       <hr />
                       <br />
+                      <p>
+                        <strong>ORDER ID :</strong>
+                        { this.props.orderDetail.id }
+                      </p>
+                      <br />
                       <p><strong>ORDER DATE :</strong>
-                        { moment(this.props.orderDetail.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a") }
+                        { this.props.orderDetail.orderDate }
                       </p>
                       <br />
                       <p><strong>STATUS :</strong>
@@ -186,24 +200,12 @@ class ShopOrders extends React.Component {
                         { this.props.orderDetail.userId }
                       </p>
                       <br />
-                      <p><strong>ORDER ID :</strong>
+                      <p><strong>FRONT-END ORDER ID :</strong>
                         { this.props.orderDetail.frontendOrderId }
                       </p>
                       <br />
                       <p><strong>ADDRESS :</strong>
-                        { this.props.orderDetail.deliveryAddress.address }
-                      </p>
-                      <br />
-                      <p><strong>CITY :</strong>
-                        { this.props.orderDetail.deliveryAddress.city }
-                      </p>
-                      <br />
-                      <p><strong>PINCODE :</strong>
-                        { this.props.orderDetail.deliveryAddress.pincode }
-                      </p>
-                      <br />
-                      <p><strong>STATE :</strong>
-                        { this.props.orderDetail.deliveryAddress.state }
+                        { this.props.orderDetail.shippingInformation }
                       </p>
                       <br/>
                       { this.props.role === 'admin' ? <div>
@@ -230,13 +232,13 @@ class ShopOrders extends React.Component {
                                                                        </option>;
                                                             }) }
                                                         </select>
-                                                        <button onClick={ this.removeItem.bind(this, null) }>Cancel Complete Order</button>
+                                                        <button onClick={ this.cancelOrder.bind(this, this.props.orderDetail.id) }>Cancel Complete Order</button>
                                                         <br/>
                                                       </div> : null }
                       <br/>
                       <h3>ITEM DETAILS</h3>
                       <hr />
-                      { this.props.orderDetail.orderLinesFrontend.map((line, i) => {
+                      { this.props.orderDetail.orderLinesView.map((line, i) => {
                             return (
                                 <div key={ i }>
                                   <br/>
@@ -277,7 +279,7 @@ class ShopOrders extends React.Component {
                                                                                    </option>;
                                                                         }) }
                                                                     </select>
-                                                                    <button onClick={ this.removeItem.bind(this, line.product.sku) }>Remove Item</button>
+                                                                    <button onClick={ this.removeItem.bind(this, line.id) }>Remove Item</button>
                                                                     <br />
                                                                   </div> : null }
                                 </div>)
@@ -339,18 +341,19 @@ function matchDispatchToProps(dispatch) {
         getOrderDetailByOrderId,
         getOrderDetail,
         removeItem,
-        confirmPayment
+        confirmPayment,
+        cancelOrder
     }, dispatch);
 }
 
 function mapStateToProps(state) {
     return {
-        orders: state.orders,
-        orderDetail: state.orderDetail,
+        orders: state.rentOrders,
+        orderDetail: state.rentOrderDetail,
         role: state.auth.role,
         user: state.auth.email
     };
 }
 
 
-export default connect(mapStateToProps, matchDispatchToProps)(ShopOrders);
+export default connect(mapStateToProps, matchDispatchToProps)(RentOrders);
