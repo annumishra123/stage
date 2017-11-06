@@ -69,7 +69,7 @@ export function getCustomerDetail(email) {
 
 export function createMeasurements(measurements) {
     return function(dispatch, getState) {
-        measurements.email = getState().form.createEmail.values.email;
+        measurements.email = getState().customerDetail.email;
         let url = '/api/myaccount/profile/backend/measurements/save';
         return axios({
             url: url,
@@ -89,7 +89,7 @@ export function createMeasurements(measurements) {
 
 export function createAddress(address) {
     return function(dispatch, getState) {
-        address.userId = getState().form.createEmail.values.email;
+        address.userId = getState().customerDetail.email;
         let url = '/api/myaccount/profile/backend/shipping/backend/save';
         return axios({
             url: url,
