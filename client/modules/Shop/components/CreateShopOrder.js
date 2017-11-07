@@ -144,7 +144,8 @@ class CreateShopOrder extends React.Component {
              <h3>Create New Shop Order</h3>
              <br/>
              <label>SKU: </label>
-             <input type="text" onChange={ this.handleChangeSKU.bind(this) } onBlur={ this.findProduct.bind(this) } />
+             <input type="text" onChange={ this.handleChangeSKU.bind(this) } />
+             <button onClick={ this.findProduct.bind(this) }>Find</button>
              <br/>
              <br/>
              { this.renderProductPreview() }

@@ -6,7 +6,8 @@ import { combineReducers } from 'redux';
 // Import Reducers
 import app from './modules/App/AppReducer';
 import intl from './modules/Intl/IntlReducer';
-import { orders, orderDetail, productDetail, shoppingCart, shopPricing } from './modules/Shop/ShopReducer';
+import { orders, orderDetail, productDetail, shopPricing } from './modules/Shop/ShopReducer';
+import { rentOrders, rentOrderDetail, rentProductDetail, rentalPricing } from './modules/Rent/RentReducer';
 import auth from './modules/Auth/AuthReducer';
 import { customerDetail, selectedAddress } from './modules/Customer/CustomerReducer';
 import { reducer as formReducer } from 'redux-form';
@@ -17,10 +18,14 @@ export default combineReducers({
   auth,
   intl,
   orders,
+  rentOrders,
   orderDetail,
+  rentOrderDetail,
   form: formReducer,
   customerDetail,
   productDetail,
+  rentProductDetail,
   shopPricing,
+  rentalPricing,
   selectedAddress
 });
