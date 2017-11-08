@@ -80,7 +80,9 @@ class CreateShopOrder extends React.Component {
                </p>
                <a target="blank" href={ clientConfig.targetURL + '/shop/product/' + this.props.productDetail.id }>View Complete Product</a>
                <br/>
+               <br/>
                <button onClick={ this.addProductToCart.bind(this) }>Add Product</button>
+               <br/>
                <br/>
              </div>
     }

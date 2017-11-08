@@ -143,7 +143,6 @@ class CreateRentOrder extends React.Component {
                      <p>Pickup Date:
                        { ' ' + moment(this.props.deliveryDates.pickupDate).format('ll') }
                      </p>
-                     <br/>
                    </div>;
         }
     }
@@ -152,7 +151,7 @@ class CreateRentOrder extends React.Component {
         if (this.props.productDetail) {
             let gender = this.props.productDetail.gender == 'male' ? 'men' : 'women';
             return <div>
-                     <img src={ this.props.productDetail.frontimage } style={ { width: '200px' } } />
+                     <img src={ this.props.productDetail.looknumber ? this.props.productDetail.frontimage : this.props.productDetail.image } style={ { width: '200px' } } />
                      <p>
                        Designer:
                        { ' ' + this.props.productDetail.designer }
@@ -161,10 +160,10 @@ class CreateRentOrder extends React.Component {
                        Name:
                        { ' ' + this.props.productDetail.name }
                      </p>
-                     <p>
-                       Discounted Rental Price:
-                       { ' ' + this.state.days == 3 ? Math.round(this.props.productDetail.discountedrentalprice * 3) : Math.round(this.props.productDetail.discountedrentalprice * 4.2) }
-                     </p>
+                     { this.props.productDetail.looknumber ? <p>
+                                                               Discounted Rental Price:
+                                                               { ' ' + this.state.days == 3 ? Math.round(this.props.productDetail.discountedrentalprice * 3) : Math.round(this.props.productDetail.discountedrentalprice * 4.2) }
+                                                             </p> : null }
                      <p>
                        Rental Price:
                        { ' ' + this.state.days == 3 ? Math.round(this.props.productDetail.rentalprice * 3) : Math.round(this.props.productDetail.rentalprice * 4.2) }
@@ -173,21 +172,25 @@ class CreateRentOrder extends React.Component {
                        Deposit Price:
                        { ' ' + this.state.days == 3 ? Math.round(this.props.productDetail.depositprice * 3) : Math.round(this.props.productDetail.depositprice * 4.2) }
                      </p>
-                     <a target="blank" href={ clientConfig.targetURL + '/' + gender + '/' + this.props.productDetail.url + '/p/' + this.props.productDetail.looknumber }>View Complete Product</a>
-                     <br/>
+                     { this.props.productDetail.looknumber ? <a target="blank" href={ clientConfig.targetURL + '/' + gender + '/' + this.props.productDetail.url + '/p/' + this.props.productDetail.looknumber }>View Complete Product</a> : null }
                      <div>
+                       <br/>
+                       <p>Rental Period:</p>
                        <input type="radio" name="days" defaultChecked={ true } onChange={ this.selectDays.bind(this, 3) } />
                        <label>3 Days</label>
                        <input type="radio" name="days" onChange={ this.selectDays.bind(this, 6) } />
                        <label>6 Days</label>
                      </div>
+                     <br/>
                      <DatePicker onMonthChange={ this.onMonthChange.bind(this) } inline selected={ this.state.occasionDate } filterDate={ this.isPastdate } excludeDates={ this.props.bookableStatus ? this.props.bookableStatus.bookedDates : null } highlightDates={ this.props.bookableStatus ? this.props.bookableStatus.productAvailability.expressDates : null }
                        onChange={ this.handleChangeOccasionDate.bind(this) } />
                      <br/>
                      { this.renderDeliveryDates() }
+                     <br/>
                      <button onClick={ this.addProductToCart.bind(this) }>
                        { this.props.productDetail.looknumber ? 'Add Product' : 'Add Accessory' }
                      </button>
+                     <br/>
                      <br/>
                    </div>
         }
