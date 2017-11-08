@@ -15,3 +15,12 @@ export function selectedAddress(state = null, action) {
     }
     return state;
 }
+
+export function creditPoints(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_CREDIT_POINTS':
+            return action.payload;
+            break;
+    }
+    return state;
+}

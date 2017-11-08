@@ -9,7 +9,7 @@ import intl from './modules/Intl/IntlReducer';
 import { orders, orderDetail, productDetail, shopPricing } from './modules/Shop/ShopReducer';
 import { rentOrders, rentOrderDetail, rentProductDetail, rentalPricing, bookableStatus, deliveryDates } from './modules/Rent/RentReducer';
 import auth from './modules/Auth/AuthReducer';
-import { customerDetail, selectedAddress } from './modules/Customer/CustomerReducer';
+import { customerDetail, selectedAddress,creditPoints } from './modules/Customer/CustomerReducer';
 import { reducer as formReducer } from 'redux-form';
 
 // Combine all reducers into one root reducer
@@ -29,5 +29,6 @@ export default combineReducers({
   rentalPricing,
   bookableStatus,
   selectedAddress,
-  deliveryDates
+  deliveryDates,
+  creditPoints
 });
