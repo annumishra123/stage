@@ -321,6 +321,7 @@ class RentOrders extends React.Component {
         return <section>
                  { !this.state.viewOrderDetail ?
                    <div>
+                     <h3>Rent Orders</h3>
                      <div>
                        <div>
                          <div>

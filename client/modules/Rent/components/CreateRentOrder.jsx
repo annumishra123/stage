@@ -24,8 +24,10 @@ class CreateRentOrder extends React.Component {
     componentDidMount() {
         if (!this.props.customerDetail) {
             browserHistory.push('/customer');
-        } else {
-            this.applyDiscountCode();
+        } else if (this.props.rentalPricing) {
+            if (Object.keys(this.props.rentalPricing.pricing.linePricing).length > 0) {
+                this.applyDiscountCode();
+            }
         }
     }
 
@@ -186,6 +188,7 @@ class CreateRentOrder extends React.Component {
                      <button onClick={ this.addProductToCart.bind(this) }>
                        { this.props.productDetail.looknumber ? 'Add Product' : 'Add Accessory' }
                      </button>
+                     <br/>
                    </div>
         }
     }
@@ -241,6 +244,7 @@ class CreateRentOrder extends React.Component {
                          </tbody>
                        </table>
                      </div>
+                     <br/>
                      <p>Total Original Price:
                        { ' ' + this.props.rentalPricing.pricing.totalOriginalPrice }
                      </p>
@@ -250,6 +254,7 @@ class CreateRentOrder extends React.Component {
                      <p>Total Deposit:
                        { ' ' + this.props.rentalPricing.pricing.totalOriginalDeposit }
                      </p>
+                     <br/>
                      <label>Discount Code:</label>
                      <input type="text" onChange={ this.handleChangeDiscountCode.bind(this) } />
                      <button onClick={ this.applyDiscountCode.bind(this) }>Apply Discount</button>
@@ -268,8 +273,38 @@ class CreateRentOrder extends React.Component {
         }
     }
 
+    renderCustomerDetails() {
+        let address = this.props.customerDetail.shippingInfo.find(x => x.shippingId == this.props.selectedAddress);
+        return <div>
+                 <h3>Customer Details</h3>
+                 <br/>
+                 <p> Name:
+                   { ' ' + this.props.customerDetail.firstName + ' ' + this.props.customerDetail.lastName }
+                 </p>
+                 <p> Email:
+                   { ' ' + this.props.customerDetail.email }
+                 </p>
+                 <p> Phone Number:
+                   { ' ' + this.props.customerDetail.phoneNumber }
+                 </p>
+                 <p> Credit Points:
+                   { ' ' + this.props.customerDetail.creditPoints }
+                 </p>
+                 <br/>
+                 <h4>Selected Address:</h4>
+                 <p>
+                   { address.address + ',' }
+                 </p>
+                 <p>
+                   { address.city + ', ' + address.state + ' - ' + address.pincode }
+                 </p>
+                 <br/>
+               </div>
+    }
+
     render() {
         return <section>
+                 { this.renderCustomerDetails() }
                  <h3>Create New Rent Order</h3>
                  <br/>
                  <h4>Find Product</h4>

@@ -291,6 +291,7 @@ class ShopOrders extends React.Component {
         return <section>
                  { !this.state.viewOrderDetail ?
                    <div>
+                     <h3>Shop Orders</h3>
                      <div>
                        <div>
                          <div>
