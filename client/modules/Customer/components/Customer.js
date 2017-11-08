@@ -35,6 +35,10 @@ class Customer extends React.Component {
         browserHistory.push('/shop/create');
     }
 
+    createRentOrder() {
+        browserHistory.push('/rent/create');
+    }
+
     selectAddress(id) {
         this.props.selectAddress(id);
     }
@@ -52,6 +56,7 @@ class Customer extends React.Component {
                   { this.props.role === 'admin' ? <FormSubmitButton formName="createMeasurements" text="Save Measurements" /> : <br/> }
                   { this.props.role === 'admin' ? <button type="button" style={ style } onClick={ this.saveCustomerDetails.bind(this) }>Save All Information</button> : <br/> }
                   { this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" style={ style } onClick={ this.createShopOrder.bind(this) }>New Shop Order</button> : <br/> }
+                  { this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" style={ style } onClick={ this.createRentOrder.bind(this) }>New Rent Order</button> : <br/> }
                 </section>);
     }
 }
