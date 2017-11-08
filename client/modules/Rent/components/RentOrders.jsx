@@ -219,8 +219,16 @@ class RentOrders extends React.Component {
                     {this.props.orderDetail.discountCoupon}
                 </p>
                 <br />
-                <p><strong>TOTAL AMOUNT :</strong>
-                    {this.props.orderDetail.paymentInformation.paymentAmount}
+                <p><strong>TOTAL ORIGINAL RENT :</strong>
+                    {this.props.orderDetail.totalRentalPrice}
+                </p>
+                <br />
+                <p><strong>TOTAL RENT TO PAY :</strong>
+                    {this.props.orderDetail.totalDiscountedRentalPrice}
+                </p>
+                <br />
+                <p><strong>TOTAL DEPOSIT AMOUNT :</strong>
+                    {this.props.orderDetail.totalDepositPrice}
                 </p>
                 <br />
                 <p><strong>CREDIT POINTS EARNED :</strong>
@@ -314,46 +322,47 @@ class RentOrders extends React.Component {
 
     render() {
         return <section>
-            {!this.state.viewOrderDetail ?
-                <div>
-                    <div>
-                        <div>
-                            <div>
-                                <h3>Start Date</h3>
-                                <DatePicker selected={this.state.startDate} onChange={this.handleChangeStartDate.bind(this)} />
-                            </div>
-                            <div>
-                                <h3>End Date</h3>
-                                <DatePicker selected={this.state.endDate} onChange={this.handleChangeEndDate.bind(this)} />
-                            </div>
-                        </div>
-                        <div>
-                            <button onClick={this.getOrders.bind(this)}>Search By Date</button>
-                        </div>
-                        <br />
-                        <div>
-                            <h3>Email Id</h3>
-                            <input type="text" onChange={this.handleChangeEmailId.bind(this)} />
-                            <div>
-                                <button onClick={this.getOrdersByUserId.bind(this)}>Search By Email Id</button>
-                            </div>
-                        </div>
-                        <br />
-                        <div>
-                            <h3>Order Id</h3>
-                            <input type="text" onChange={this.handleChangeOrderId.bind(this)} />
-                            <div>
-                                <button onClick={this.showOrderDetail.bind(this, this.state.orderId)}>Search By Order Id</button>
-                            </div>
-                        </div>
-                    </div>
-                    <br />
-                    {this.renderOrders()}
-                </div> :
-                <div>
-                    {this.renderorderDetail()}
-                </div>}
-        </section>
+                 { !this.state.viewOrderDetail ?
+                   <div>
+                     <h3>Rent Orders</h3>
+                     <div>
+                       <div>
+                         <div>
+                           <h3>Start Date</h3>
+                           <DatePicker selected={ this.state.startDate } onChange={ this.handleChangeStartDate.bind(this) } />
+                         </div>
+                         <div>
+                           <h3>End Date</h3>
+                           <DatePicker selected={ this.state.endDate } onChange={ this.handleChangeEndDate.bind(this) } />
+                         </div>
+                       </div>
+                       <div>
+                         <button onClick={ this.getOrders.bind(this) }>Search By Date</button>
+                       </div>
+                       <br />
+                       <div>
+                         <h3>Email Id</h3>
+                         <input type="text" onChange={ this.handleChangeEmailId.bind(this) } />
+                         <div>
+                           <button onClick={ this.getOrdersByUserId.bind(this) }>Search By Email Id</button>
+                         </div>
+                       </div>
+                       <br />
+                       <div>
+                         <h3>Order Id</h3>
+                         <input type="text" onChange={ this.handleChangeOrderId.bind(this) } />
+                         <div>
+                           <button onClick={ this.showOrderDetail.bind(this, this.state.orderId) }>Search By Order Id</button>
+                         </div>
+                       </div>
+                     </div>
+                     <br />
+                     { this.renderOrders() }
+                   </div> :
+                   <div>
+                     { this.renderorderDetail() }
+                   </div> }
+               </section>
     }
 }
 

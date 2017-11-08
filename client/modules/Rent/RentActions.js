@@ -1,6 +1,7 @@
 import axios from 'axios';
 import clientConfig from '../../config';
-import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router';
+import moment from 'moment';
 
 export function getShopOrderListByDate(startDate, endDate) {
     return function(dispatch) {
@@ -114,14 +115,14 @@ export function cancelOrder(cancelRequest) {
     }
 }
 
-export function fetchProduct(sku) {
+export function fetchProduct(looknumber) {
     return function(dispatch) {
         let loopBackFilter = {
             where: {
-                sku: sku.toUpperCase()
+                looknumber: looknumber.toUpperCase()
             }
         }
-        let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/findOne?filter=' + JSON.stringify(loopBackFilter);
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks/findOne?filter=' + JSON.stringify(loopBackFilter);
         return axios({
             url: url,
             timeout: 20000,
@@ -129,9 +130,10 @@ export function fetchProduct(sku) {
             responseType: 'json'
         }).then(function(response) {
             dispatch({
-                type: 'FETCH_PRODUCT',
+                type: 'FETCH_RENTAL_PRODUCT',
                 payload: response.data
-            })
+            });
+            dispatch(getBookedDates(moment()));
         }).catch(function(error) {
             alert('Could not fetch product');
             console.log(error);
@@ -139,14 +141,96 @@ export function fetchProduct(sku) {
     }
 }
 
-export function getPricingOfShoppingCart(cart) {
+export function fetchAccessory(sku) {
+    return function(dispatch) {
+        let loopBackFilter = {
+            where: {
+                sku: sku.toUpperCase()
+            }
+        }
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/Accessories/findOne?filter=' + JSON.stringify(loopBackFilter);
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then(function(response) {
+            dispatch({
+                type: 'FETCH_RENTAL_PRODUCT',
+                payload: response.data
+            });
+            dispatch(getBookedDates(moment()));
+        }).catch(function(error) {
+            alert('Could not fetch product');
+            console.log(error);
+        });
+    }
+}
+
+export function getBookedDates(date) {
     return function(dispatch, getState) {
+        let obj = {
+            productId: getState().rentProductDetail._id,
+            month: date.month() + 1,
+            year: date.year()
+        }
+        let url = '/api/om/calendar/calendar/' + obj.productId + '/' + obj.month + '/' + obj.year;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then(function(response) {
+            response.data.productAvailability.expressDates = response.data.productAvailability.expressDates.map((date) => {
+                return moment(date);
+            });
+            response.data.bookedDates = response.data.bookedDates.map((date) => {
+                return moment(date);
+            });
+            dispatch({
+                type: 'FETCH_BOOKABLE_STATUS',
+                payload: response.data
+            })
+        }).catch(function(error) {
+            alert('Could not fetch bookable status');
+            console.log(error);
+        });
+    }
+}
+
+export function getDeliveryDates(date, isSixDay) {
+    return function(dispatch, getState) {
+        let productId = getState().rentProductDetail._id;
+        let url = '/api/om/calendar/booking/frontend/isBookable?productId=' + productId + '&date=' + date + '&isSixDay=' + isSixDay;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then(function(response) {
+            dispatch({
+                type: 'FETCH_DELIVERY_DATES',
+                payload: response.data.occassionDateResponse
+            });
+        }).catch(function(error) {
+            alert('Could not fetch delivery dates');
+            console.log(error);
+        });
+    }
+}
+
+export function getPricingOfRentalCart(cart, discountCode = '') {
+    return function(dispatch, getState) {
+        dispatch({
+            type: 'FETCH_RENTAL_PRODUCT',
+            payload: null
+        });
         let cartObject = {
-            "discountCode": "",
-            "products": cart,
+            "discountCode": discountCode,
+            "cartLines": cart,
             "userId": getState().customerDetail.email
         }
-        let url = '/api/shop-service/backend/getPricing';
+        let url = '/api/pricing/coupons/backend/get/';
         return axios({
             url: url,
             timeout: 20000,
@@ -155,13 +239,14 @@ export function getPricingOfShoppingCart(cart) {
             responseType: 'json'
         }).then(function(response) {
             dispatch({
-                type: 'FETCH_SHOP_PRICING',
+                type: 'FETCH_RENT_PRICING',
                 payload: response.data
             });
-            dispatch({
-                type: 'FETCH_PRODUCT',
-                payload: null
-            });
+            if (response.data.pricing.discountApplied) {
+                alert('Discount Applied');
+            } else {
+                alert('Invalid Discount Code');
+            }
         }).catch(function(error) {
             alert('Could not fetch pricing');
             console.log(error);
@@ -169,31 +254,71 @@ export function getPricingOfShoppingCart(cart) {
     }
 }
 
-export function addItemToCart(id) {
+export function addItemToCart(product, discountCode) {
     return function(dispatch, getState) {
-        let cart = getState().shopPricing ? Object.keys(getState().shopPricing.linePricing) : [];
-        if (cart.indexOf(id) == -1) {
-            cart.push(id);
+        let cart = getState().rentalPricing ? Object.keys(getState().rentalPricing.pricing.linePricing) : [];
+        let cartArray = getState().rentalPricing ? Object.keys(getState().rentalPricing.pricing.linePricing).map((item) => {
+            let cartObj = getState().rentalPricing.pricing.linePricing[item];
+            let cartItem = {
+                id: cartObj.lineId,
+                isSevenDay: cartObj.sixDay,
+                occassionDate: cartObj.occasionDate,
+                productId: cartObj.productId,
+                type: cartObj.type
+            }
+            return cartItem;
+        }) : [];
+        if (cart.indexOf(product.id) == -1) {
+            cartArray.push(product);
         }
-        dispatch(getPricingOfShoppingCart(cart));
+        dispatch(getPricingOfRentalCart(cartArray, discountCode));
         alert('Product added to cart');
     }
 }
 
-export function removeItemFromCart(id) {
+export function removeItemFromCart(id, discountCode) {
     return function(dispatch, getState) {
-        let cart = getState().shopPricing ? Object.keys(getState().shopPricing.linePricing) : [];
+        let cart = getState().rentalPricing ? Object.keys(getState().rentalPricing.pricing.linePricing) : [];
+        let cartArray = Object.keys(getState().rentalPricing.pricing.linePricing).map((item) => {
+            let cartObj = getState().rentalPricing.pricing.linePricing[item];
+            let cartItem = {
+                id: cartObj.lineId,
+                isSevenDay: cartObj.sixDay,
+                occassionDate: cartObj.occasionDate,
+                productId: cartObj.productId,
+                type: cartObj.type
+            }
+            return cartItem;
+        });
         if (cart.indexOf(id) !== -1) {
-            cart = cart.filter(e => e !== id);
+            cartArray = cartArray.filter(e => e.id !== id);
         }
-        dispatch(getPricingOfShoppingCart(cart));
+        dispatch(getPricingOfRentalCart(cartArray, discountCode));
         alert('Product removed from cart');
+    }
+}
+
+export function applyDiscount(discountCode) {
+    return function(dispatch, getState) {
+        let cart = getState().rentalPricing ? Object.keys(getState().rentalPricing.pricing.linePricing) : [];
+        let cartArray = getState().rentalPricing ? Object.keys(getState().rentalPricing.pricing.linePricing).map((item) => {
+            let cartObj = getState().rentalPricing.pricing.linePricing[item];
+            let cartItem = {
+                id: cartObj.lineId,
+                isSevenDay: cartObj.sixDay,
+                occassionDate: cartObj.occasionDate,
+                productId: cartObj.productId,
+                type: cartObj.type
+            }
+            return cartItem;
+        }) : [];
+        dispatch(getPricingOfRentalCart(cartArray, discountCode));
     }
 }
 
 export function placeOrder(orderObject) {
     return function(dispatch) {
-        let url = '/api/shop-service/backend/initiateOrder';
+        let url = '/api/om/orders/backend/initiate';
         return axios({
             url: url,
             timeout: 20000,
@@ -202,10 +327,10 @@ export function placeOrder(orderObject) {
             responseType: 'json'
         }).then(function(response) {
             dispatch({
-                type: 'FETCH_SHOP_PRICING',
+                type: 'FETCH_RENT_PRICING',
                 payload: null
             });
-            browserHistory.push('/shop?orderId=' + response.data.order.frontendOrderId);
+            browserHistory.push('/rent?orderId=' + response.data.order.frontendOrderId);
         }).catch(function(error) {
             alert('Could not initiate order');
             console.log(error);
@@ -215,7 +340,7 @@ export function placeOrder(orderObject) {
 
 export function confirmPayment(confirmPaymentObject) {
     return function(dispatch) {
-        let url = '/api/shop-service/backend/recordPayment';
+        let url = '/api/om/orders/backend/payment/confirm/';
         return axios({
             url: url,
             timeout: 20000,
@@ -224,10 +349,10 @@ export function confirmPayment(confirmPaymentObject) {
             responseType: 'json'
         }).then(function(response) {
             alert('Payment has been recorded');
+            browserHistory.push('/customer');
         }).catch(function(error) {
             alert('Could not confirm payment');
             console.log(error);
         });
     }
 }
-

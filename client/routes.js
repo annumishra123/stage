@@ -82,6 +82,11 @@ export default function getRoutes(store, req) {
                                                                     cb(null, require('./modules/Rent/components/RentOrders').default);
                                                                   });
                                                                 } } />
+      <Route path="/rent/create" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
+                                                                         require.ensure([], require => {
+                                                                           cb(null, require('./modules/Rent/components/CreateRentOrder').default);
+                                                                         });
+                                                                       } } />
     </Route>
     );
 }

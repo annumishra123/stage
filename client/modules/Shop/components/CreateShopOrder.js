@@ -80,7 +80,10 @@ class CreateShopOrder extends React.Component {
                </p>
                <a target="blank" href={ clientConfig.targetURL + '/shop/product/' + this.props.productDetail.id }>View Complete Product</a>
                <br/>
+               <br/>
                <button onClick={ this.addProductToCart.bind(this) }>Add Product</button>
+               <br/>
+               <br/>
              </div>
     }
   }
@@ -120,12 +123,14 @@ class CreateShopOrder extends React.Component {
                    </tbody>
                  </table>
                </div>
+               <br/>
                <p>Total Original Price:
                  { ' ' + this.props.shopPricing.totalOriginalPrice }
                </p>
                <p>Total Sale Price:
                  { ' ' + this.props.shopPricing.totalDiscountedPrice }
                </p>
+               <br/>
                <select onChange={ this.changePaymentMethod.bind(this) }>
                  <option value="">-- Select Payment Method --</option>
                  { clientConfig.paymentMethods.map((method, i) => {
@@ -139,8 +144,38 @@ class CreateShopOrder extends React.Component {
     }
   }
 
+  renderCustomerDetails() {
+    let address = this.props.customerDetail.shippingInfo.find(x => x.shippingId == this.props.selectedAddress);
+    return <div>
+             <h3>Customer Details</h3>
+             <br/>
+             <p> Name:
+               { ' ' + this.props.customerDetail.firstName + ' ' + this.props.customerDetail.lastName }
+             </p>
+             <p> Email:
+               { ' ' + this.props.customerDetail.email }
+             </p>
+             <p> Phone Number:
+               { ' ' + this.props.customerDetail.phoneNumber }
+             </p>
+             <p> Credit Points:
+               { ' ' + this.props.customerDetail.creditPoints }
+             </p>
+             <br/>
+             <h4>Selected Address:</h4>
+             <p>
+               { address.address + ',' }
+             </p>
+             <p>
+               { address.city + ', ' + address.state + ' - ' + address.pincode }
+             </p>
+             <br/>
+           </div>
+  }
+
   render() {
     return <section>
+             { this.renderCustomerDetails() }
              <h3>Create New Shop Order</h3>
              <br/>
              <label>SKU: </label>

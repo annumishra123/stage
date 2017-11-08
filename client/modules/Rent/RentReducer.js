@@ -33,3 +33,21 @@ export function rentalPricing(state = null, action) {
     }
     return state;
 }
+
+export function bookableStatus(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_BOOKABLE_STATUS':
+            return action.payload;
+            break;
+    }
+    return state;
+}
+
+export function deliveryDates(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_DELIVERY_DATES':
+            return action.payload;
+            break;
+    }
+    return state;
+}
