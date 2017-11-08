@@ -49,6 +49,7 @@ export function getCustomerDetail(email) {
                     type: 'FETCH_CUSTOMER_DETAIL',
                     payload: customer
                 });
+                dispatch(getCreditPoints(customer.email));
             } else {
                 dispatch({
                     type: 'FETCH_CUSTOMER_DETAIL',
@@ -114,5 +115,29 @@ export function selectAddress(id) {
             type: 'SELECT_ADDRESS',
             payload: id
         });
+    }
+}
+
+export function getCreditPoints(userId) {
+    return function (dispatch) {
+        if (userId) {
+            let url = '/api/credits/getAccount/';
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'post',
+                data: {
+                    "userId": userId
+                },
+                responseType: 'json'
+            }).then(function (response) {
+                dispatch({
+                    type: 'FETCH_CREDIT_POINTS',
+                    payload: response.data.availablePoints
+                })
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
     }
 }

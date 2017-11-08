@@ -158,9 +158,6 @@ class CreateShopOrder extends React.Component {
              <p> Phone Number:
                { ' ' + this.props.customerDetail.phoneNumber }
              </p>
-             <p> Credit Points:
-               { ' ' + this.props.customerDetail.creditPoints }
-             </p>
              <br/>
              <h4>Selected Address:</h4>
              <p>

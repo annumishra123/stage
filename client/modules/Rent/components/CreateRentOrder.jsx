@@ -291,7 +291,7 @@ class CreateRentOrder extends React.Component {
                    { ' ' + this.props.customerDetail.phoneNumber }
                  </p>
                  <p> Credit Points:
-                   { ' ' + this.props.customerDetail.creditPoints }
+                   { ' ' + this.props.creditPoints }
                  </p>
                  <br/>
                  <h4>Selected Address:</h4>
@@ -348,7 +348,8 @@ function mapStateToProps(state) {
         rentalPricing: state.rentalPricing,
         selectedAddress: state.selectedAddress,
         bookableStatus: state.bookableStatus,
-        deliveryDates: state.deliveryDates
+        deliveryDates: state.deliveryDates,
+        creditPoints: state.creditPoints
     };
 }
 
