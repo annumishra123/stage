@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, confirmPayment } from '../ShopActions.js';
+import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, getOrdersByPhoneNumber, confirmPayment } from '../ShopActions.js';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import clientConfig from '../../../config'
@@ -19,7 +19,8 @@ class ShopOrders extends React.Component {
             emailId: '',
             orderId: '',
             paymentMethod: '',
-            paymentStatus: ''
+            paymentStatus: '',
+            phoneNumber: ''
         };
     }
 
@@ -83,12 +84,22 @@ class ShopOrders extends React.Component {
         });
     }
 
+    handleChangePhoneNumber(e) {
+        this.setState({
+            phoneNumber: e.target.value
+        })
+    }
+
     getOrders() {
         this.props.getShopOrderListByDate(this.state.startDate, this.state.endDate);
     }
 
     getOrdersByUserId() {
         this.props.getOrdersByUserId(this.state.emailId);
+    }
+
+    getOrdersByPhoneNumber() {
+        this.props.getOrdersByPhoneNumber(this.state.phoneNumber);
     }
 
     showOrderDetail(id) {
@@ -245,7 +256,7 @@ class ShopOrders extends React.Component {
                                   </p>
                                   <br />
                                   <p><strong>SKU :</strong>
-                                    { line.product.sku }
+                                    { line.sku }
                                   </p>
                                   <br />
                                   <p><strong>DESIGNER NAME :</strong>
@@ -253,11 +264,11 @@ class ShopOrders extends React.Component {
                                   </p>
                                   <br />
                                   <p><strong>ORIGINAL PRICE :</strong>
-                                    { this.props.orderDetail.originalPrice }
+                                    { line.originalPrice }
                                   </p>
                                   <br />
                                   <p><strong>DISCOUNTED PRICE :</strong>
-                                    { this.props.orderDetail.discountedPrice }
+                                    { line.discountedPrice }
                                   </p>
                                   <br />
                                   <p><strong>PAYMENT METHOD :</strong>
@@ -265,7 +276,7 @@ class ShopOrders extends React.Component {
                                   </p>
                                   <br />
                                   <p><strong>STATUS :</strong>
-                                    { this.props.orderDetail.status }
+                                    { line.status }
                                   </p>
                                   <br/>
                                   { this.props.role === 'admin' ? <div>
@@ -291,7 +302,8 @@ class ShopOrders extends React.Component {
         return <section>
                  { !this.state.viewOrderDetail ?
                    <div>
-                     <h3>Shop Orders</h3>
+                     <h2>Shop Orders</h2>
+                     <hr/><br/>
                      <div>
                        <div>
                          <div>
@@ -322,6 +334,14 @@ class ShopOrders extends React.Component {
                            <button onClick={ this.showOrderDetail.bind(this, this.state.orderId) }>Search By Order Id</button>
                          </div>
                        </div>
+                       <br />
+                       <div>
+                         <h3>Phone Number</h3>
+                         <input type="text" onChange={ this.handleChangePhoneNumber.bind(this) } />
+                         <div>
+                           <button onClick={ this.getOrdersByPhoneNumber.bind(this) }>Search By Phone Number</button>
+                         </div>
+                       </div>
                      </div>
                      <br/>
                      { this.renderOrders() }
@@ -338,6 +358,7 @@ function matchDispatchToProps(dispatch) {
         getShopOrderListByDate,
         getOrdersByUserId,
         getOrderDetailByOrderId,
+        getOrdersByPhoneNumber,
         getOrderDetail,
         removeItem,
         confirmPayment

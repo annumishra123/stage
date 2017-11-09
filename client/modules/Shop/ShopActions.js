@@ -44,6 +44,34 @@ export function getOrdersByUserId(userId) {
     }
 }
 
+export function getOrdersByPhoneNumber(phoneNumber) {
+    return function(dispatch) {
+        let mobileRegex = /^\d{10}$/;
+        let isValid = mobileRegex.test(phoneNumber);
+        if (isValid) {
+            let url = '/api/myaccount/profile/backend/get/phonenumber/?phoneNumber=' + phoneNumber;
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'get',
+                responseType: 'json'
+            }).then(function(response) {
+                let customer = response.data;
+                if (customer) {
+                    dispatch(getOrdersByUserId(customer.email));
+                } else {
+                    alert('Customer not found.');
+                }
+            }).catch(function(error) {
+                alert('Customer not found.');
+                console.log(error);
+            });
+        } else {
+            alert('Enter a valid mobile number');
+        }
+    }
+}
+
 export function getOrderDetail(id) {
     return function(dispatch) {
         if (id) {

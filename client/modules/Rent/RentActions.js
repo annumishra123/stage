@@ -45,6 +45,34 @@ export function getOrdersByUserId(userId) {
     }
 }
 
+export function getOrdersByPhoneNumber(phoneNumber) {
+    return function(dispatch) {
+        let mobileRegex = /^\d{10}$/;
+        let isValid = mobileRegex.test(phoneNumber);
+        if (isValid) {
+            let url = '/api/myaccount/profile/backend/get/phonenumber/?phoneNumber=' + phoneNumber;
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'get',
+                responseType: 'json'
+            }).then(function(response) {
+                let customer = response.data;
+                if (customer) {
+                    dispatch(getOrdersByUserId(customer.email));
+                } else {
+                    alert('Customer not found.');
+                }
+            }).catch(function(error) {
+                alert('Customer not found.');
+                console.log(error);
+            });
+        } else {
+            alert('Enter a valid mobile number');
+        }
+    }
+}
+
 export function getOrderDetail(id) {
     return function(dispatch) {
         if (id) {
@@ -55,6 +83,7 @@ export function getOrderDetail(id) {
                 method: 'get',
                 responseType: 'json'
             }).then(function(response) {
+                dispatch(getMeasurementStatus(response.data.id));
                 dispatch({
                     type: 'FETCH_RENT_ORDER_DETAIL',
                     payload: response.data
@@ -64,6 +93,25 @@ export function getOrderDetail(id) {
                 console.log(error);
             });
         }
+    }
+}
+
+export function getMeasurementStatus(orderId) {
+    return function(dispatch) {
+        let url = '/api/om/orders/anonymous/measurement/match/' + orderId;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then(function(response) {
+            dispatch({
+                type: 'FETCH_MEASUREMENT_STATUS',
+                payload: response.data
+            })
+        }).catch(function(error) {
+            console.log(error);
+        });
     }
 }
 
@@ -82,7 +130,6 @@ export function removeItem(cancelRequest) {
             data: cancellationObject,
             responseType: 'json'
         }).then(function(response) {
-            debugger;
             dispatch(getOrderDetail(cancelRequest.frontendOrderId));
             alert('Product has been removed from the order');
         }).catch(function(error) {
@@ -107,7 +154,6 @@ export function cancelOrder(cancelRequest) {
             data: cancellationObject,
             responseType: 'json'
         }).then(function(response) {
-            debugger;
             dispatch(getOrderDetail(cancelRequest.frontendOrderId));
             alert('The order has been canceled');
         }).catch(function(error) {

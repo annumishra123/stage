@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, confirmPayment, cancelOrder } from '../RentActions.js';
+import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, confirmPayment, cancelOrder, getOrdersByPhoneNumber } from '../RentActions.js';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import clientConfig from '../../../config'
@@ -19,7 +19,8 @@ class RentOrders extends React.Component {
             emailId: '',
             orderId: '',
             paymentMethod: '',
-            paymentStatus: ''
+            paymentStatus: '',
+            phoneNumber: ''
         };
     }
 
@@ -83,12 +84,23 @@ class RentOrders extends React.Component {
         });
     }
 
+
+    handleChangePhoneNumber(e) {
+        this.setState({
+            phoneNumber: e.target.value
+        })
+    }
+
     getOrders() {
         this.props.getShopOrderListByDate(this.state.startDate, this.state.endDate);
     }
 
     getOrdersByUserId() {
         this.props.getOrdersByUserId(this.state.emailId);
+    }
+
+    getOrdersByPhoneNumber() {
+        this.props.getOrdersByPhoneNumber(this.state.phoneNumber);
     }
 
     showOrderDetail(id) {
@@ -178,6 +190,26 @@ class RentOrders extends React.Component {
         }
     }
 
+    renderMeasurementStatus(id) {
+        if (this.props.measurementStatus) {
+            let measurementObj = this.props.measurementStatus.measurementOption[Object.keys(this.props.measurementStatus.measurementOption).find(x => x == id)];
+            if (measurementObj) {
+                return <div>
+                         <p><strong>MEASUREMENT STATUS :</strong>
+                           { measurementObj.aggregatedMatchStatus }
+                         </p>
+                         <br/>
+                         { Object.keys(measurementObj.matches).map((measurement, i) => {
+                               return <p key={ i }>
+                                        { measurement.toUpperCase() } -
+                                        { measurementObj.matches[measurement] }
+                                      </p>
+                           }) }
+                       </div>;
+            }
+        }
+    }
+
     renderorderDetail() {
         if (this.props.orderDetail) {
 
@@ -194,6 +226,10 @@ class RentOrders extends React.Component {
                       <br />
                       <p><strong>STATUS :</strong>
                         { this.props.orderDetail.status }
+                      </p>
+                      <br />
+                      <p><strong>MEASUREMENT STATUS :</strong>
+                        { this.props.measurementStatus ? this.props.measurementStatus.aggregatedStatusLine : 'Unavailable' }
                       </p>
                       <br />
                       <p><strong>USER ID :</strong>
@@ -298,13 +334,11 @@ class RentOrders extends React.Component {
                                     { line.originalDeposit }
                                   </p>
                                   <br />
-                                  <p><strong>PAYMENT METHOD :</strong>
-                                    { this.props.orderDetail.paymentType }
-                                  </p>
-                                  <br />
                                   <p><strong>STATUS :</strong>
-                                    { this.props.orderDetail.status }
+                                    { line.currentStatus }
                                   </p>
+                                  <br/>
+                                  { this.renderMeasurementStatus(line.productId) }
                                   <br />
                                   { this.props.role === 'admin' ? <div>
                                                                     <select onChange={ this.changeCancelReason.bind(this) }>
@@ -318,6 +352,7 @@ class RentOrders extends React.Component {
                                                                     <button onClick={ this.removeItem.bind(this, line.id) }>Remove Item</button>
                                                                     <br />
                                                                   </div> : null }
+                                  <br/>
                                 </div>)
                         }) }
                       <br />
@@ -329,7 +364,9 @@ class RentOrders extends React.Component {
         return <section>
                  { !this.state.viewOrderDetail ?
                    <div>
-                     <h3>Rent Orders</h3>
+                     <h2>Rent Orders</h2>
+                     <hr/>
+                     <br/>
                      <div>
                        <div>
                          <div>
@@ -360,6 +397,14 @@ class RentOrders extends React.Component {
                            <button onClick={ this.showOrderDetail.bind(this, this.state.orderId) }>Search By Order Id</button>
                          </div>
                        </div>
+                       <br />
+                       <div>
+                         <h3>Phone Number</h3>
+                         <input type="text" onChange={ this.handleChangePhoneNumber.bind(this) } />
+                         <div>
+                           <button onClick={ this.getOrdersByPhoneNumber.bind(this) }>Search By Phone Number</button>
+                         </div>
+                       </div>
                      </div>
                      <br />
                      { this.renderOrders() }
@@ -376,6 +421,7 @@ function matchDispatchToProps(dispatch) {
         getShopOrderListByDate,
         getOrdersByUserId,
         getOrderDetailByOrderId,
+        getOrdersByPhoneNumber,
         getOrderDetail,
         removeItem,
         confirmPayment,
@@ -388,7 +434,8 @@ function mapStateToProps(state) {
         orders: state.rentOrders,
         orderDetail: state.rentOrderDetail,
         role: state.auth.role,
-        user: state.auth.email
+        user: state.auth.email,
+        measurementStatus: state.measurementStatus
     };
 }
 
