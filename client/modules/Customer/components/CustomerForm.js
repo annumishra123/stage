@@ -10,6 +10,10 @@ let CustomerForm = props => {
       <h3>Contact Info</h3>
       <br/>
       <div>
+        <label htmlFor="email">Email </label>
+        <Field name="email" component="input" type="text" />
+      </div>
+      <div>
         <label htmlFor="firstName">First Name </label>
         <Field name="firstName" component="input" type="text" />
       </div>

@@ -4,7 +4,7 @@ import { submit } from 'redux-form';
 
 const style = {
   padding: '10px 20px',
-  width: 140,
+  width: 300,
   display: 'block',
   margin: '20px auto',
   fontSize: '16px',

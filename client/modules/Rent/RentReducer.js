@@ -52,3 +52,12 @@ export function deliveryDates(state = null, action) {
     return state;
 }
 
+export function measurementStatus(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_MEASUREMENT_STATUS':
+            return action.payload;
+            break;
+    }
+    return state;
+}
+

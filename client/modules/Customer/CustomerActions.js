@@ -2,16 +2,16 @@ import axios from 'axios';
 import { reset, submit } from 'redux-form';
 
 export function createCustomer(customer) {
-    return function(dispatch, getState) {
+    return function(dispatch) {
         let isValid = false;
         let mobileRegex = /^\d{10}$/;
         let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (customer.firstName && customer.lastName && mobileRegex.test(customer.phoneNumber) && customer.dataSource && emailRegex.test(getState().form.createEmail.values.email)) {
+        if (customer.firstName && customer.lastName && mobileRegex.test(customer.phoneNumber) && customer.dataSource && emailRegex.test(customer.email)) {
             isValid = true;
         }
         if (isValid) {
             let cust = {
-                emailId: getState().form.createEmail.values.email,
+                emailId: customer.email,
                 firstName: customer.firstName,
                 lastName: customer.lastName,
                 phoneNumber: customer.phoneNumber,
@@ -42,6 +42,54 @@ export function getCustomerDetail(email) {
         let isValid = regex.test(email);
         if (isValid) {
             let url = '/api/myaccount/profile/backend/get/?emailId=' + email;
+            dispatch({
+                type: 'SELECT_ADDRESS',
+                payload: null
+            });
+            dispatch({
+                type: 'FETCH_CUSTOMER_DETAIL',
+                payload: null
+            });
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'get',
+                responseType: 'json'
+            }).then(function(response) {
+                let customer = response.data;
+                if (customer) {
+                    dispatch({
+                        type: 'FETCH_CUSTOMER_DETAIL',
+                        payload: customer
+                    });
+                    dispatch(getCreditPoints(customer.email));
+                } else {
+                    dispatch({
+                        type: 'FETCH_CUSTOMER_DETAIL',
+                        payload: null
+                    });
+                    alert('Customer not found.');
+                }
+            }).catch(function(error) {
+                dispatch({
+                    type: 'FETCH_CUSTOMER_DETAIL',
+                    payload: null
+                });
+                alert('Customer not found.');
+                console.log(error);
+            });
+        } else {
+            alert('Enter a valid email address');
+        }
+    }
+}
+
+export function getCustomerDetailByPhoneNumber(phoneNumber) {
+    return function(dispatch) {
+        let mobileRegex = /^\d{10}$/;
+        let isValid = mobileRegex.test(phoneNumber);
+        if (isValid) {
+            let url = '/api/myaccount/profile/backend/get/phonenumber/?phoneNumber=' + phoneNumber;
             dispatch({
                 type: 'SELECT_ADDRESS',
                 payload: null
