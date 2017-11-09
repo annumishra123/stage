@@ -108,7 +108,8 @@ class RentOrders extends React.Component {
     removeItem(lineId) {
         let cancelRequest = {
             lineId: lineId,
-            cancelReason: this.state.cancelReason
+            cancelReason: this.state.cancelReason,
+            frontendOrderId: this.props.orderDetail.frontendOrderId
         }
         let confirmCancel = confirm("Do you confirm to remove this item!");
         if (confirmCancel) {
@@ -119,7 +120,8 @@ class RentOrders extends React.Component {
     cancelOrder(orderId) {
         let cancelRequest = {
             orderId: orderId,
-            cancelReason: this.state.cancelReason
+            cancelReason: this.state.cancelReason,
+            frontendOrderId: this.props.orderDetail.frontendOrderId
         }
         let confirmCancel = confirm("Do you confirm to cancel this order!");
         if (confirmCancel) {
