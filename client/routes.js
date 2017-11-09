@@ -19,7 +19,16 @@ if (process.env.NODE_ENV !== 'production') {
   // Require async routes only in development for react-hot-reloader to work.
   // require('./modules/Post/pages/PostListPage/PostListPage');
 }
-
+if (process.env.NODE_ENV !== 'production') {
+  // Require async routes only in development for react-hot-reloader to work.
+  require('./modules/Dashboard/components/Login');
+  require('./modules/Dashboard/components/Navigation');
+  require('./modules/Shop/components/ShopOrders');
+  require('./modules/Shop/components/CreateShopOrder');
+  require('./modules/Customer/components/Customer');
+  require('./modules/Rent/components/RentOrders');
+  require('./modules/Rent/components/CreateRentOrder');
+}
 // react-router setup with code-splitting
 // More info: http://blog.mxstbr.com/2016/01/react-apps-with-pages/
 export default function getRoutes(store, req) {

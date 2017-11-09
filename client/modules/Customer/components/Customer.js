@@ -27,9 +27,6 @@ class Customer extends React.Component {
 
     saveAllCustomerDetails() {
         this.props.saveAllCustomerDetails();
-    // this.props.submit('createCustomer');
-    // this.props.submit('createAddress');
-    // this.props.submit('createMeasurements');
     }
 
     createShopOrder() {
