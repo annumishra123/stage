@@ -2,13 +2,13 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { submit } from 'redux-form'
+import { submit } from 'redux-form';
 import CustomerForm from './CustomerForm.js';
 import AddressForm from './AddressForm.js';
 import EmailForm from './EmailForm.js';
 import MeasurementsForm from './MeasurementsForm.js';
 import FormSubmitButton from './FormSubmitButton.js';
-import { selectAddress } from '../CustomerActions'
+import { selectAddress, saveAllCustomerDetails } from '../CustomerActions';
 
 const style = {
     padding: '10px 20px',
@@ -25,10 +25,11 @@ class Customer extends React.Component {
 
     componentDidMount() {}
 
-    saveCustomerDetails() {
-        this.props.submit('createCustomer');
-        this.props.submit('createAddress');
-        this.props.submit('createMeasurements');
+    saveAllCustomerDetails() {
+        this.props.saveAllCustomerDetails();
+    // this.props.submit('createCustomer');
+    // this.props.submit('createAddress');
+    // this.props.submit('createMeasurements');
     }
 
     createShopOrder() {
@@ -54,7 +55,7 @@ class Customer extends React.Component {
                   { this.props.role === 'admin' ? <FormSubmitButton formName="createAddress" text="Save Address" /> : <br/> }
                   <MeasurementsForm />
                   { this.props.role === 'admin' ? <FormSubmitButton formName="createMeasurements" text="Save Measurements" /> : <br/> }
-                  { this.props.role === 'admin' ? <button type="button" style={ style } onClick={ this.saveCustomerDetails.bind(this) }>Save All Information</button> : <br/> }
+                  { this.props.role === 'admin' ? <button type="button" style={ style } onClick={ this.saveAllCustomerDetails.bind(this) }>Save All Information</button> : <br/> }
                   { this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" style={ style } onClick={ this.createShopOrder.bind(this) }>New Shop Order</button> : <br/> }
                   { this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" style={ style } onClick={ this.createRentOrder.bind(this) }>New Rent Order</button> : <br/> }
                 </section>);
@@ -64,7 +65,8 @@ class Customer extends React.Component {
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         submit: submit,
-        selectAddress: selectAddress
+        selectAddress: selectAddress,
+        saveAllCustomerDetails: saveAllCustomerDetails
     }, dispatch);
 }
 
