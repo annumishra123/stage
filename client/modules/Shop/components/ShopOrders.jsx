@@ -166,9 +166,13 @@ class ShopOrders extends React.Component {
                                 <strong>USER ID :</strong>
                                 {order.userId}
                             </p>
-                            <p>
+                           <p>
                                 <strong>DATE OF ORDER :</strong>
                                 {moment(order.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}
+                            </p>
+                            <p>
+                                <strong>STATUS :</strong>
+                                {order.status}
                             </p>
                             <button onClick={this.showOrderDetail.bind(this, order.frontendOrderId)}>Order Detail</button>
                         </div>
