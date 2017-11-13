@@ -232,6 +232,10 @@ class ShopOrders extends React.Component {
                     {this.props.orderDetail.deliveryAddress.state}
                 </p>
                 <br />
+                <p><strong>PAYMENT TYPE :</strong>
+                    {this.props.orderDetail.paymentType}
+                </p>
+                <br />
                 {this.props.role === 'admin' ? <div>
                     <select onChange={this.changePaymentMethod.bind(this)}>
                         <option value="">-- Select Payment Method --</option>
@@ -284,10 +288,6 @@ class ShopOrders extends React.Component {
                             <br />
                             <p><strong>DISCOUNTED PRICE :</strong>
                                 {line.discountedPrice}
-                            </p>
-                            <br />
-                            <p><strong>PAYMENT METHOD :</strong>
-                                {line.paymentMethod}
                             </p>
                             <br />
                             <p><strong>STATUS :</strong>
