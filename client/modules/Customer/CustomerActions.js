@@ -2,7 +2,7 @@ import axios from 'axios';
 import { reset, submit } from 'redux-form';
 
 export function createCustomer(customer) {
-    return function(dispatch) {
+    return function (dispatch) {
         let isValid = false;
         let mobileRegex = /^\d{10}$/;
         let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -24,10 +24,10 @@ export function createCustomer(customer) {
                 method: 'post',
                 data: cust,
                 responseType: 'json'
-            }).then(function(response) {
+            }).then(function (response) {
                 dispatch(getCustomerDetail(cust.emailId));
                 alert('Customer information has been saved.');
-            }).catch(function(error) {
+            }).catch(function (error) {
                 console.log(error);
             });
         } else {
@@ -37,7 +37,7 @@ export function createCustomer(customer) {
 }
 
 export function getCustomerDetail(email) {
-    return function(dispatch) {
+    return function (dispatch) {
         let regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         let isValid = regex.test(email);
         if (isValid) {
@@ -55,7 +55,7 @@ export function getCustomerDetail(email) {
                 timeout: 20000,
                 method: 'get',
                 responseType: 'json'
-            }).then(function(response) {
+            }).then(function (response) {
                 let customer = response.data;
                 if (customer) {
                     dispatch({
@@ -70,7 +70,7 @@ export function getCustomerDetail(email) {
                     });
                     alert('Customer not found.');
                 }
-            }).catch(function(error) {
+            }).catch(function (error) {
                 dispatch({
                     type: 'FETCH_CUSTOMER_DETAIL',
                     payload: null
@@ -84,8 +84,17 @@ export function getCustomerDetail(email) {
     }
 }
 
+export function clearCustomerDetail() {
+    return function (dispatch) {
+        dispatch({
+            type: 'FETCH_CUSTOMER_DETAIL',
+            payload: null
+        });
+    }
+}
+
 export function getCustomerDetailByPhoneNumber(phoneNumber) {
-    return function(dispatch) {
+    return function (dispatch) {
         let mobileRegex = /^\d{10}$/;
         let isValid = mobileRegex.test(phoneNumber);
         if (isValid) {
@@ -103,7 +112,7 @@ export function getCustomerDetailByPhoneNumber(phoneNumber) {
                 timeout: 20000,
                 method: 'get',
                 responseType: 'json'
-            }).then(function(response) {
+            }).then(function (response) {
                 let customer = response.data;
                 if (customer) {
                     dispatch({
@@ -118,7 +127,7 @@ export function getCustomerDetailByPhoneNumber(phoneNumber) {
                     });
                     alert('Customer not found.');
                 }
-            }).catch(function(error) {
+            }).catch(function (error) {
                 dispatch({
                     type: 'FETCH_CUSTOMER_DETAIL',
                     payload: null
@@ -133,7 +142,7 @@ export function getCustomerDetailByPhoneNumber(phoneNumber) {
 }
 
 export function createMeasurements(measurements) {
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
         let isValidMeasurements = true;
         if (Object.keys(measurements).length > 0) {
             measurements.email = getState().customerDetail.email;
@@ -160,10 +169,10 @@ export function createMeasurements(measurements) {
                 method: 'post',
                 data: measurements,
                 responseType: 'json'
-            }).then(function(response) {
+            }).then(function (response) {
                 dispatch(getCustomerDetail(measurements.email));
                 alert('Customer measurements have been saved.');
-            }).catch(function(error) {
+            }).catch(function (error) {
                 alert("Customer measurements couldn't be saved.");
                 console.log(error);
             });
@@ -174,7 +183,7 @@ export function createMeasurements(measurements) {
 }
 
 export function createAddress(address) {
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
         let isValid = false;
         let pincodeRegex = /^[0-9]{6}$/;
         let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -190,11 +199,11 @@ export function createAddress(address) {
                 method: 'post',
                 data: address,
                 responseType: 'json'
-            }).then(function(response) {
+            }).then(function (response) {
                 dispatch(reset('createAddress'));
                 dispatch(getCustomerDetail(address.userId));
                 alert('New address has been saved.');
-            }).catch(function(error) {
+            }).catch(function (error) {
                 alert("Couldn't save new address.");
                 console.log(error);
             });
@@ -205,7 +214,7 @@ export function createAddress(address) {
 }
 
 export function saveAllCustomerDetails() {
-    return function(dispatch) {
+    return function (dispatch) {
         Promise.resolve(dispatch(submit('createCustomer'))).then((value) => {
             dispatch(submit('createAddress'));
             dispatch(submit('createMeasurements'));
@@ -214,7 +223,7 @@ export function saveAllCustomerDetails() {
 }
 
 export function selectAddress(id) {
-    return function(dispatch) {
+    return function (dispatch) {
         dispatch({
             type: 'SELECT_ADDRESS',
             payload: id
@@ -223,7 +232,7 @@ export function selectAddress(id) {
 }
 
 export function getCreditPoints(userId) {
-    return function(dispatch) {
+    return function (dispatch) {
         if (userId) {
             let url = '/api/credits/getAccount/';
             return axios({
@@ -234,12 +243,12 @@ export function getCreditPoints(userId) {
                     "userId": userId
                 },
                 responseType: 'json'
-            }).then(function(response) {
+            }).then(function (response) {
                 dispatch({
                     type: 'FETCH_CREDIT_POINTS',
                     payload: response.data.availablePoints
                 })
-            }).catch(function(error) {
+            }).catch(function (error) {
                 console.log(error);
             });
         }

@@ -2,6 +2,7 @@ import axios from 'axios';
 import clientConfig from '../../config';
 import { browserHistory } from 'react-router';
 import moment from 'moment';
+import { getCustomerDetail } from '../Customer/CustomerActions';
 
 export function getShopOrderListByDate(startDate, endDate) {
     return function(dispatch) {
@@ -37,7 +38,7 @@ export function getOrdersByUserId(userId) {
                 dispatch({
                     type: 'FETCH_RENT_ORDERS',
                     payload: response.data
-                })
+                })               
             }).catch(function(error) {
                 console.log(error);
             });
@@ -87,7 +88,8 @@ export function getOrderDetail(id) {
                 dispatch({
                     type: 'FETCH_RENT_ORDER_DETAIL',
                     payload: response.data
-                })
+                });
+                dispatch(getCustomerDetail(response.data.userId)); 
             }).catch(function(error) {
                 alert('Could not fetch order detail');
                 console.log(error);

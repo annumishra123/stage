@@ -1,6 +1,7 @@
 import axios from 'axios';
 import clientConfig from '../../config';
 import { browserHistory } from 'react-router'
+import { getCustomerDetail } from '../Customer/CustomerActions';
 
 export function getShopOrderListByDate(startDate, endDate) {
     return function(dispatch) {
@@ -85,7 +86,8 @@ export function getOrderDetail(id) {
                 dispatch({
                     type: 'FETCH_SHOP_ORDER_DETAIL',
                     payload: response.data
-                })
+                });
+                dispatch(getCustomerDetail(response.data.userId));
             }).catch(function(error) {
                 alert('Could not fetch order detail');
                 console.log(error);
