@@ -166,9 +166,13 @@ class ShopOrders extends React.Component {
                                 <strong>USER ID :</strong>
                                 {order.userId}
                             </p>
-                            <p>
+                           <p>
                                 <strong>DATE OF ORDER :</strong>
                                 {moment(order.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}
+                            </p>
+                            <p>
+                                <strong>STATUS :</strong>
+                                {order.status}
                             </p>
                             <button onClick={this.showOrderDetail.bind(this, order.frontendOrderId)}>Order Detail</button>
                         </div>
@@ -228,6 +232,10 @@ class ShopOrders extends React.Component {
                     {this.props.orderDetail.deliveryAddress.state}
                 </p>
                 <br />
+                <p><strong>PAYMENT TYPE :</strong>
+                    {this.props.orderDetail.paymentType}
+                </p>
+                <br />
                 {this.props.role === 'admin' ? <div>
                     <select onChange={this.changePaymentMethod.bind(this)}>
                         <option value="">-- Select Payment Method --</option>
@@ -280,10 +288,6 @@ class ShopOrders extends React.Component {
                             <br />
                             <p><strong>DISCOUNTED PRICE :</strong>
                                 {line.discountedPrice}
-                            </p>
-                            <br />
-                            <p><strong>PAYMENT METHOD :</strong>
-                                {line.paymentMethod}
                             </p>
                             <br />
                             <p><strong>STATUS :</strong>
