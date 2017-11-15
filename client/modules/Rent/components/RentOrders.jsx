@@ -322,6 +322,7 @@ class RentOrders extends React.Component {
                     <button onClick={this.cancelOrder.bind(this, this.props.orderDetail.id)}>Cancel Complete Order</button>
                     <br />
                 </div> : null}
+
                 <br />
                 <h3>ITEM DETAILS</h3>
                 <hr />
@@ -358,6 +359,30 @@ class RentOrders extends React.Component {
                             </p>
                             <br />
                             {this.renderMeasurementStatus(line.productId)}
+                            <br/>
+                            <p><strong>DISPATCH DATE :</strong>
+                                {moment(line.dispatchDateUTC).format("dddd, MMMM Do YYYY")}
+                            </p>
+                            <br />
+                            <p><strong>OCCASION DATE :</strong>
+                                {moment(line.occasionDateUTC).format("dddd, MMMM Do YYYY")}
+                            </p>
+                            <br />
+                            <p><strong>DELIVERY DATE :</strong>
+                                {moment(line.deliveryDateUTC).format("dddd, MMMM Do YYYY")}
+                            </p>
+                            <br/>
+                            <p><strong>PICK UP DATE :</strong>
+                                {moment(line.pickupDateUTC).format("dddd, MMMM Do YYYY")}
+                            </p>
+                            <br/>
+                            <p><strong>RECEIVED DATE :</strong>
+                                {moment(line.receivedDateUTC).format("dddd, MMMM Do YYYY")}
+                            </p>
+                            <br />
+                            <p><strong>AVAILABLE DATE :</strong>
+                                {moment(line.availableDateUTC).format("dddd, MMMM Do YYYY")}
+                            </p>
                             <br />
                             {this.props.role === 'admin' ? <div>
                                 <select onChange={this.changeCancelReason.bind(this)}>
