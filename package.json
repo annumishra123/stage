@@ -51,6 +51,7 @@
     "passport-jwt": "^3.0.0",
     "passport-local": "^1.0.0",
     "react": "^15.1.0",
+    "react-csv": "^1.0.8",
     "react-datepicker": "^0.53.0",
     "react-dom": "^15.1.0",
     "react-helmet": "^3.1.0",

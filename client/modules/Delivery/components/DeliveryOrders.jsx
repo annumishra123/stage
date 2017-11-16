@@ -7,6 +7,7 @@ import ReactTable from 'react-table';
 import moment from 'moment';
 import { getOrderListByDate } from '../DeliveryActions';
 import clientConfig from '../../../config';
+import { CSVLink } from 'react-csv';
 
 
 class RentOrders extends React.Component {
@@ -15,38 +16,8 @@ class RentOrders extends React.Component {
         this.state = {
             startDate: moment().startOf('day'),
             endDate: moment().endOf('day'),
-            dateType: 'deliveryDate',
-            viewOrderDetail: false
+            dateType: 'deliveryDate'
         };
-    }
-
-    componentDidMount() {
-        if (this.props.location.query.orderId) {
-            //this.props.getOrderDetail(this.props.location.query.orderId);
-            this.setState({
-                viewOrderDetail: true
-            });
-        } else {
-            this.setState({
-                viewOrderDetail: false
-            });
-        }
-    }
-
-    componentWillReceiveProps(next) {
-        if (this.props.location.query.orderId !== next.location.query.orderId) {
-            if (next.location.query.orderId) {
-                //this.props.getOrderDetail(next.location.query.orderId);
-                this.setState({
-                    viewOrderDetail: true,
-                    cancelReason: ''
-                });
-            } else {
-                this.setState({
-                    viewOrderDetail: false
-                });
-            }
-        }
     }
 
     handleChangeStartDate(date) {
@@ -65,14 +36,6 @@ class RentOrders extends React.Component {
         this.props.getOrderListByDate(this.state.dateType, this.state.startDate.unix() * 1000, this.state.endDate.unix() * 1000);
     }
 
-    showOrderDetail(id) {
-        browserHistory.push('/delivery?orderId=' + id);
-    }
-
-    showOrderList() {
-        browserHistory.goBack();
-    }
-
     handleChangeDateType(e) {
         this.setState({
             dateType: e.target.value
@@ -87,58 +50,48 @@ class RentOrders extends React.Component {
         if (this.props.orders) {
             if (this.props.orders.length > 0) {
                 return <div>
-                         <ReactTable data={ this.props.orders } ref={ (r) => this.deliveryTable = r } columns={ clientConfig.deliveryColumns } defaultPageSize={ 10 } className="-striped -highlight"
+                         <ReactTable filterable data={ this.props.orders } ref={ (r) => this.deliveryTable = r } columns={ clientConfig.deliveryColumns } defaultPageSize={ 10 } className="-striped -highlight"
                          />
-                         <button onClick={ this.exportDeliveryTable.bind(this) }>Export Table</button>
+                         <CSVLink data={ this.deliveryTable ? this.deliveryTable.getResolvedState().sortedData : [] } filename={ "Delivery Orders.csv" }>Export CSV</CSVLink>
                        </div>;
             }
         }
     }
 
-    renderorderDetail() {
-        if (this.props.orderDetail) {
-            return <section>Order Detail</section>;
-        }
-    }
-
     render() {
         return <section>
-                 { !this.state.viewOrderDetail ?
+                 <div>
+                   <h2>Rent Orders</h2>
+                   <hr />
+                   <br />
                    <div>
-                     <h2>Rent Orders</h2>
-                     <hr />
-                     <br />
                      <div>
                        <div>
-                         <div>
-                           <h3>Date Type</h3>
-                           <select onChange={ this.handleChangeDateType.bind(this) }>
-                             <option value="deliveryDate">Delivery</option>
-                             <option value="pickupDate">Pickup</option>
-                           </select>
-                         </div>
-                         <br/>
-                         <div>
-                           <h3>Start Date</h3>
-                           <DatePicker selected={ this.state.startDate } onChange={ this.handleChangeStartDate.bind(this) } />
-                         </div>
-                         <br/>
-                         <div>
-                           <h3>End Date</h3>
-                           <DatePicker selected={ this.state.endDate } onChange={ this.handleChangeEndDate.bind(this) } />
-                         </div>
+                         <h3>Date Type</h3>
+                         <select onChange={ this.handleChangeDateType.bind(this) }>
+                           <option value="deliveryDate">Delivery</option>
+                           <option value="pickupDate">Pickup</option>
+                         </select>
                        </div>
                        <br/>
                        <div>
-                         <button onClick={ this.getOrders.bind(this) }>Search</button>
+                         <h3>Start Date</h3>
+                         <DatePicker selected={ this.state.startDate } onChange={ this.handleChangeStartDate.bind(this) } />
+                       </div>
+                       <br/>
+                       <div>
+                         <h3>End Date</h3>
+                         <DatePicker selected={ this.state.endDate } onChange={ this.handleChangeEndDate.bind(this) } />
                        </div>
                      </div>
-                     <br />
-                     { this.renderOrders() }
-                   </div> :
-                   <div>
-                     { this.renderorderDetail() }
-                   </div> }
+                     <br/>
+                     <div>
+                       <button onClick={ this.getOrders.bind(this) }>Search</button>
+                     </div>
+                   </div>
+                   <br />
+                   { this.renderOrders() }
+                 </div>
                </section>
     }
 }
