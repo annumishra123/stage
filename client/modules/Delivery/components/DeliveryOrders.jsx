@@ -1,0 +1,162 @@
+import React from 'react';
+import { Link, browserHistory } from 'react-router';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import DatePicker from 'react-datepicker';
+import ReactTable from 'react-table';
+import moment from 'moment';
+import { getOrderListByDate } from '../DeliveryActions';
+import clientConfig from '../../../config';
+
+
+class RentOrders extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            startDate: moment().startOf('day'),
+            endDate: moment().endOf('day'),
+            dateType: 'deliveryDate',
+            viewOrderDetail: false
+        };
+    }
+
+    componentDidMount() {
+        if (this.props.location.query.orderId) {
+            //this.props.getOrderDetail(this.props.location.query.orderId);
+            this.setState({
+                viewOrderDetail: true
+            });
+        } else {
+            this.setState({
+                viewOrderDetail: false
+            });
+        }
+    }
+
+    componentWillReceiveProps(next) {
+        if (this.props.location.query.orderId !== next.location.query.orderId) {
+            if (next.location.query.orderId) {
+                //this.props.getOrderDetail(next.location.query.orderId);
+                this.setState({
+                    viewOrderDetail: true,
+                    cancelReason: ''
+                });
+            } else {
+                this.setState({
+                    viewOrderDetail: false
+                });
+            }
+        }
+    }
+
+    handleChangeStartDate(date) {
+        this.setState({
+            startDate: date,
+        });
+    }
+
+    handleChangeEndDate(date) {
+        this.setState({
+            endDate: date,
+        });
+    }
+
+    getOrders() {
+        this.props.getOrderListByDate(this.state.dateType, this.state.startDate.unix() * 1000, this.state.endDate.unix() * 1000);
+    }
+
+    showOrderDetail(id) {
+        browserHistory.push('/delivery?orderId=' + id);
+    }
+
+    showOrderList() {
+        browserHistory.goBack();
+    }
+
+    handleChangeDateType(e) {
+        this.setState({
+            dateType: e.target.value
+        });
+    }
+
+    exportDeliveryTable() {
+        console.log(this.deliveryTable.getResolvedState().sortedData);
+    }
+
+    renderOrders() {
+        if (this.props.orders) {
+            if (this.props.orders.length > 0) {
+                return <div>
+                         <ReactTable data={ this.props.orders } ref={ (r) => this.deliveryTable = r } columns={ clientConfig.deliveryColumns } defaultPageSize={ 10 } className="-striped -highlight"
+                         />
+                         <button onClick={ this.exportDeliveryTable.bind(this) }>Export Table</button>
+                       </div>;
+            }
+        }
+    }
+
+    renderorderDetail() {
+        if (this.props.orderDetail) {
+            return <section>Order Detail</section>;
+        }
+    }
+
+    render() {
+        return <section>
+                 { !this.state.viewOrderDetail ?
+                   <div>
+                     <h2>Rent Orders</h2>
+                     <hr />
+                     <br />
+                     <div>
+                       <div>
+                         <div>
+                           <h3>Date Type</h3>
+                           <select onChange={ this.handleChangeDateType.bind(this) }>
+                             <option value="deliveryDate">Delivery</option>
+                             <option value="pickupDate">Pickup</option>
+                           </select>
+                         </div>
+                         <br/>
+                         <div>
+                           <h3>Start Date</h3>
+                           <DatePicker selected={ this.state.startDate } onChange={ this.handleChangeStartDate.bind(this) } />
+                         </div>
+                         <br/>
+                         <div>
+                           <h3>End Date</h3>
+                           <DatePicker selected={ this.state.endDate } onChange={ this.handleChangeEndDate.bind(this) } />
+                         </div>
+                       </div>
+                       <br/>
+                       <div>
+                         <button onClick={ this.getOrders.bind(this) }>Search</button>
+                       </div>
+                     </div>
+                     <br />
+                     { this.renderOrders() }
+                   </div> :
+                   <div>
+                     { this.renderorderDetail() }
+                   </div> }
+               </section>
+    }
+}
+
+function matchDispatchToProps(dispatch) {
+    return bindActionCreators({
+        getOrderListByDate
+    }, dispatch);
+}
+
+function mapStateToProps(state) {
+    return {
+        orders: state.deliveryOrders,
+        orderDetail: state.deliveryOrderDetail,
+        role: state.auth.role,
+        user: state.auth.email
+    };
+}
+
+
+export default connect(mapStateToProps, matchDispatchToProps)(RentOrders);
