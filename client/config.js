@@ -163,7 +163,7 @@ const clientConfig = {
         accessor: 'product.retailprice'
     }, {
         Header: 'Status',
-        accessor: 'parentOrder.status'
+        accessor: 'currentStatus'
     }, {
         Header: 'Payment Type',
         accessor: 'parentOrder.paymentType'
