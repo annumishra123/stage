@@ -34,6 +34,9 @@ class RentOrders extends React.Component {
     }
 
     getOrders() {
+        this.setState({
+            csvData: null
+        });
         this.props.getOrderListByDate(this.state.dateType, this.state.startDate.unix() * 1000, this.state.endDate.unix() * 1000);
     }
 
