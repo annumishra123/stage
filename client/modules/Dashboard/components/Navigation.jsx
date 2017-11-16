@@ -5,35 +5,38 @@ import { connect } from 'react-redux';
 
 
 class Navigation extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    componentDidMount() {}
+  componentDidMount() {}
 
-    render() {
-        return <section>
-                 <ul>
-                   <li>
-                     <Link to="/customer">Create/Find Customer</Link>
-                   </li>
-                   <li>
-                     <Link to="/shop">Shop Orders</Link>
-                   </li>
-                   <li>
-                     <Link to="/rent">Rent Orders</Link>
-                   </li>
-                 </ul>
-               </section>
-    }
+  render() {
+    return <section>
+             <ul>
+               <li>
+                 <Link to="/customer">Create/Find Customer</Link>
+               </li>
+               <li>
+                 <Link to="/shop">Shop Orders</Link>
+               </li>
+               <li>
+                 <Link to="/rent">Rent Orders</Link>
+               </li>
+               <li>
+                 <Link to="/delivery">Delivery</Link>
+               </li>
+             </ul>
+           </section>
+  }
 }
 
 function matchDispatchToProps(dispatch) {
-    return bindActionCreators({}, dispatch);
+  return bindActionCreators({}, dispatch);
 }
 
 function mapStateToProps(state) {
-    return {};
+  return {};
 }
 
 

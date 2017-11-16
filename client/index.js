@@ -7,6 +7,7 @@ import { AppContainer } from 'react-hot-loader';
 import App from './App';
 import { configureStore } from './store';
 require('react-datepicker/dist/react-datepicker.css');
+import 'react-table/react-table.css';
 
 // Initialize store
 const store = configureStore(window.__INITIAL_STATE__);

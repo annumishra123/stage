@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const clientConfig = {
     serviceCities: [{
         city: 'Delhi',
@@ -87,7 +89,119 @@ const clientConfig = {
         'payu',
         'payumoney',
         'razorpay'
-    ]
+    ],
+    deliveryColumns: [{
+        Header: 'Order Id',
+        accessor: 'parentOrder.frontendOrderId'
+    }, {
+        Header: 'Email Id',
+        accessor: 'profile.email'
+    }, {
+        id: 'name',
+        Header: 'Name',
+        accessor: o => o.profile.firstName + ' ' + o.profile.lastName
+    }, {
+        Header: 'Phone',
+        accessor: 'profile.phoneNumber'
+    }, {
+        Header: 'Address',
+        accessor: 'deliveryAddress.address'
+    }, {
+        Header: 'City',
+        accessor: 'deliveryAddress.city'
+    }, {
+        Header: 'State',
+        accessor: 'deliveryAddress.state'
+    }, {
+        Header: 'Pincode',
+        accessor: 'deliveryAddress.pincode'
+    }, {
+        Header: 'Product Name',
+        accessor: 'product.name'
+    }, {
+        Header: 'SKU',
+        accessor: 'product.sku'
+    }, {
+        Header: 'Designer',
+        accessor: 'product.designer'
+    }, {
+        id: 'orderDate',
+        Header: 'Order Date',
+        accessor: o => moment(o.parentOrder.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a")
+    }, {
+        id: 'deliveryDate',
+        Header: 'Delivery Date',
+        accessor: o => moment(o.deliveryDateUTC).format("l")
+    }, {
+        id: 'occasionDate',
+        Header: 'Occasion Date',
+        accessor: o => moment(o.occasionDateUTC).format("l")
+    }, {
+        id: 'pickupDate',
+        Header: 'Pickup Date',
+        accessor: o => moment(o.pickupDateUTC).format("l")
+    }, {
+        id: 'grossAmount',
+        Header: 'Gross Amount',
+        accessor: o => o.originalPrice + o.originalDeposit
+    }, {
+        id: 'discount',
+        Header: 'Discount',
+        accessor: o => o.originalPrice - o.price
+    }, {
+        id: 'netAmount',
+        Header: 'Net Amount',
+        accessor: o => o.price + o.deposit
+    }, {
+        Header: 'Rental',
+        accessor: 'price'
+    }, {
+        Header: 'Deposit',
+        accessor: 'deposit'
+    }, {
+        Header: 'Retail Price',
+        accessor: 'product.retailprice'
+    }, {
+        Header: 'Status',
+        accessor: 'parentOrder.status'
+    }, {
+        Header: 'Payment Type',
+        accessor: 'parentOrder.paymentType'
+    }, {
+        Header: 'Discount Coupon',
+        accessor: 'parentOrder.discountCoupon'
+    }],
+
+    rentalColumns: [{
+        Header: 'Order Id',
+        accessor: 'frontendOrderId'
+    }, {
+        Header: 'User Id',
+        accessor: 'userId'
+    }, {
+        id: 'dateOrder',
+        Header: 'Date Of Order',
+        accessor: o => moment(o.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a")
+    }, {
+        Header: 'Status',
+        accessor: 'status'
+    }],
+
+    shopColumns: [{
+        Header: 'Order Id',
+        accessor: 'frontendOrderId'
+    }, {
+        Header: 'User Id',
+        accessor: 'userId'
+    }, {
+        id: 'dateOrder',
+        Header: 'Date Of Order',
+        accessor: o => moment(o.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a")
+    }, {
+        Header: 'Status',
+        accessor: 'status'
+    }]
 }
+
 
 export default clientConfig;
