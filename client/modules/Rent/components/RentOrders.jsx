@@ -2,11 +2,12 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, confirmPayment, cancelOrder, getOrdersByPhoneNumber } from '../RentActions.js';
+import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, confirmPayment, cancelOrder, getOrdersByPhoneNumber } from '../RentActions';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import clientConfig from '../../../config';
 import { clearCustomerDetail } from '../../Customer/CustomerActions';
+import ReactTable from 'react-table';
 
 
 class RentOrders extends React.Component {
@@ -24,6 +25,7 @@ class RentOrders extends React.Component {
             phoneNumber: ''
         };
     }
+    
 
     componentDidMount() {
         if (this.props.location.query.orderId) {
@@ -165,34 +167,15 @@ class RentOrders extends React.Component {
         this.props.confirmPayment(confirmPaymentObject);
     }
 
+
     renderOrders() {
         if (this.props.orders) {
             if (this.props.orders.length > 0) {
                 return <div>
-                    <hr />
-                    {this.props.orders.map(function (order, i) {
-                        return <div key={i} className="row">
-                            <br />
-                            <p>
-                                <strong>ORDER ID :</strong>
-                                {order.frontendOrderId}
-                            </p>
-                            <p>
-                                <strong>USER ID :</strong>
-                                {order.userId}
-                            </p>
-                            <p>
-                                <strong>DATE OF ORDER :</strong>
-                                {moment(order.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}
-                            </p>
-                            <p>
-                                <strong>STATUS :</strong>
-                                {order.status}
-                            </p>
-                            <button onClick={this.showOrderDetail.bind(this, order.frontendOrderId)}>Order Detail</button>
+                         <ReactTable data={ this.props.orders } columns={ clientConfig.rentalColumns } defaultPageSize={ 10 } className="-striped -highlight"
+                         />
+                            {/* <button onClick={this.showOrderDetail.bind(this, orders.frontendOrderId)}>Order Detail</button> */}
                         </div>
-                    }, this)}
-                </div>
             }
         }
     }

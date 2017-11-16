@@ -7,6 +7,8 @@ import DatePicker from 'react-datepicker';
 import { clearCustomerDetail } from '../../Customer/CustomerActions';
 import moment from 'moment';
 import clientConfig from '../../../config'
+import ReactTable from 'react-table';
+
 
 
 class ShopOrders extends React.Component {
@@ -154,30 +156,10 @@ class ShopOrders extends React.Component {
         if (this.props.orders) {
             if (this.props.orders.length > 0) {
                 return <div>
-                    <hr />
-                    {this.props.orders.map(function (order, i) {
-                        return <div key={i} className="row">
-                            <br />
-                            <p>
-                                <strong>ORDER ID :</strong>
-                                {order.frontendOrderId}
-                            </p>
-                            <p>
-                                <strong>USER ID :</strong>
-                                {order.userId}
-                            </p>
-                           <p>
-                                <strong>DATE OF ORDER :</strong>
-                                {moment(order.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}
-                            </p>
-                            <p>
-                                <strong>STATUS :</strong>
-                                {order.status}
-                            </p>
-                            <button onClick={this.showOrderDetail.bind(this, order.frontendOrderId)}>Order Detail</button>
+                         <ReactTable data={ this.props.orders } columns={ clientConfig.shopColumns } defaultPageSize={ 10 } className="-striped -highlight"
+                         />
+                            {/* <button onClick={this.showOrderDetail.bind(this, order.frontendOrderId)}>Order Detail</button> */}
                         </div>
-                    }, this)}
-                </div>
             }
         }
     }

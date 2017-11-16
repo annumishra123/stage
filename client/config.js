@@ -170,7 +170,38 @@ const clientConfig = {
     }, {
         Header: 'Discount Coupon',
         accessor: 'parentOrder.discountCoupon'
-    }]
+    }],
+    
+    rentalColumns: [{
+        Header: 'Order Id',
+        accessor: 'frontendOrderId'
+    }, {
+        Header: 'User Id',
+        accessor: 'userId'
+    }, {
+        id: 'dateOrder',
+        Header: 'Date Of Order',
+        accessor: o => moment(o.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a")
+    }, {
+        Header: 'Status',
+        accessor: 'status'
+    }],
+
+    shopColumns: [{
+        Header: 'Order Id',
+        accessor: 'frontendOrderId'
+    }, {
+        Header: 'User Id',
+        accessor: 'userId'
+    }, {
+        id: 'dateOrder',
+        Header: 'Date Of Order',
+        accessor: o => moment(o.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a")
+    }, {
+        Header: 'Status',
+        accessor: 'status'
+    }],
 }
+
 
 export default clientConfig;
