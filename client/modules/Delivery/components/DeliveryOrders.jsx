@@ -16,7 +16,8 @@ class RentOrders extends React.Component {
         this.state = {
             startDate: moment().startOf('day'),
             endDate: moment().endOf('day'),
-            dateType: 'deliveryDate'
+            dateType: 'deliveryDate',
+            csvData: null
         };
     }
 
@@ -42,17 +43,20 @@ class RentOrders extends React.Component {
         });
     }
 
-    exportDeliveryTable() {
-        console.log(this.deliveryTable.getResolvedState().sortedData);
+    generateExportLink() {
+        this.setState({
+            csvData: this.deliveryTable.getResolvedState().sortedData
+        });
     }
 
     renderOrders() {
         if (this.props.orders) {
             if (this.props.orders.length > 0) {
                 return <div>
-                         <ReactTable filterable data={ this.props.orders } ref={ (r) => this.deliveryTable = r } columns={ clientConfig.deliveryColumns } defaultPageSize={ 10 } className="-striped -highlight"
-                         />
-                         <CSVLink data={ this.deliveryTable ? this.deliveryTable.getResolvedState().sortedData : [] } filename={ "Delivery Orders.csv" }>Export CSV</CSVLink>
+                         <ReactTable filterable onSortedChange={ this.generateExportLink.bind(this) } onFilteredChange={ this.generateExportLink.bind(this) } data={ this.props.orders } ref={ (r) => this.deliveryTable = r } columns={ clientConfig.deliveryColumns }
+                           defaultPageSize={ 10 } className="-striped -highlight" />
+                         { !this.state.csvData ? <button onClick={ this.generateExportLink.bind(this) }>Generate Export Link</button> : null }
+                         { this.state.csvData ? <CSVLink data={ this.state.csvData } filename={ "Delivery Orders.csv" }>Export CSV</CSVLink> : null }
                        </div>;
             }
         }
