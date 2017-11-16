@@ -171,7 +171,7 @@ const clientConfig = {
         Header: 'Discount Coupon',
         accessor: 'parentOrder.discountCoupon'
     }],
-    
+
     rentalColumns: [{
         Header: 'Order Id',
         accessor: 'frontendOrderId'
@@ -200,7 +200,7 @@ const clientConfig = {
     }, {
         Header: 'Status',
         accessor: 'status'
-    }],
+    }]
 }
 
 
