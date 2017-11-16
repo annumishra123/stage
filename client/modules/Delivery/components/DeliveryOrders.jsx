@@ -61,7 +61,7 @@ class RentOrders extends React.Component {
     render() {
         return <section>
                  <div>
-                   <h2>Rent Orders</h2>
+                   <h2>Delivery Orders</h2>
                    <hr />
                    <br />
                    <div>
