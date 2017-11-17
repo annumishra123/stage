@@ -88,7 +88,8 @@ const clientConfig = {
         'ICICI',
         'payu',
         'payumoney',
-        'razorpay'
+        'razorpay',
+        'Mswipe'
     ],
     deliveryColumns: [{
         Header: 'Order Id',
