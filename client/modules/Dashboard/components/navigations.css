@@ -1,0 +1,57 @@
+.navigations {
+    background: rgba(0,0,0,0.5);
+    padding: -15px;
+}
+.navigations ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.navigations ul li {
+    width:50%;
+    height: 200px;
+    min-height: 50%;
+    float:left;
+    border: 1xp solid #000;
+}
+.navigations ul li a {
+    display: block;
+    height: 100%;
+    text-align: center;
+    color: #000;
+    font-family: 'Lato', sans-serif;
+    font-size: 19px;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    padding: 80px 0;
+    transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+}
+.navigations ul li:first-child a {
+    background: #b8b9b4;
+}
+.navigations ul li:nth-child(2) a {
+    background: #ecede7;
+}
+.navigations ul li:nth-child(3) a {
+    background: #ecede7;
+}
+.navigations ul li:last-child a {
+    background: #b8b9b4;
+}
+
+.navigations ul li:first-child:hover a {
+    background: #333;
+}
+.navigations ul li:nth-child(2):hover a {
+    background: #333;
+}
+.navigations ul li:nth-child(3):hover a {
+    background: #333;
+}
+.navigations ul li:last-child:hover a {
+    background: #333;
+}
+.navigations ul li:hover a {
+    color: #fff;
+}

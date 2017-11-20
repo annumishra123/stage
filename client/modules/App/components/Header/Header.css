@@ -1,6 +1,21 @@
 .header {
   background: #000;
 }
+.logOut {
+  background: transparent;
+  border: 0;
+  color: #fff;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  height: 25px;
+}
+.logOut img {
+  width: 17px !important;
+  height: 17px;
+  margin:0 5px -3px 0;
+}
 
 .content {
   width: 100%;

@@ -3,6 +3,9 @@ import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+// Import Style
+import styles from './navigations.css';
+
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -12,7 +15,7 @@ class Navigation extends React.Component {
   componentDidMount() {}
 
   render() {
-    return <section>
+    return <section className={ styles.navigations }>
              <ul>
                <li>
                  <Link to="/customer">Create/Find Customer</Link>
