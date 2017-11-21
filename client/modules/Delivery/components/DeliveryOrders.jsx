@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import ReactTable from 'react-table';
 import moment from 'moment';
-import { getOrderListByDate } from '../DeliveryActions';
+import { getOrderListByDate, changeDeliveryStatus } from '../DeliveryActions';
 import clientConfig from '../../../config';
 import { CSVLink } from 'react-csv';
+import ReactModal from 'react-modal';
 
 
 class RentOrders extends React.Component {
@@ -17,7 +18,11 @@ class RentOrders extends React.Component {
             startDate: moment().startOf('day'),
             endDate: moment().endOf('day'),
             dateType: 'deliveryDate',
-            csvData: null
+            csvData: null,
+            deliveryDate: moment().startOf('day'),
+            viewDeliveryModal: false,
+            awbNumber: '',
+            orderlineId: ''
         };
     }
 
@@ -46,15 +51,74 @@ class RentOrders extends React.Component {
         });
     }
 
+    handleChangeDeliveryDate(date) {
+        this.setState({
+            deliveryDate: date.startOf('day'),
+        });
+    }
+
     generateExportLink() {
         this.setState({
             csvData: this.deliveryTable.getResolvedState().sortedData
         });
     }
 
+    markDispatched() {
+        let deliveryObject = {
+            "action": "DISPATCHED",
+            "awbNumber": this.state.awbNumber,
+            "dateTimeUtcMs": this.state.deliveryDate.unix() * 1000,
+            "orderlineId": this.state.orderlineId
+        }
+        this.props.changeDeliveryStatus(deliveryObject);
+        this.hideDeliveryModal();
+    }
+
+    showDeliveryModal(id) {
+        this.setState({
+            viewDeliveryModal: true,
+            orderlineId: id,
+            deliveryDate: moment().startOf('day')
+        });
+    }
+
+    hideDeliveryModal() {
+        this.setState({
+            viewDeliveryModal: false,
+            orderlineId: ''
+        });
+    }
+
+    markReceived() {
+        let deliveryObject = {
+            "action": "RECEIVED",
+            "awbNumber": this.state.awbNumber,
+            "dateTimeUtcMs": this.state.deliveryDate.unix() * 1000,
+            "orderlineId": this.state.orderlineId
+        }
+        this.props.changeDeliveryStatus(deliveryObject);
+        this.hideDeliveryModal();
+    }
+
+    handleChangeAWBNumber(e) {
+        this.setState({
+            awbNumber: e.target.value
+        })
+    }
+
     renderOrders() {
         if (this.props.orders) {
             if (this.props.orders.length > 0) {
+                if (!clientConfig.deliveryColumns.find(o => o.id == 'changeDeliveryStatus')) {
+                    clientConfig.deliveryColumns.push({
+                        Header: '',
+                        id: 'changeDeliveryStatus',
+                        accessor: 'id',
+                        Cell: ({value}) => (<div>
+                                              <button onClick={ this.showDeliveryModal.bind(this, value) }>Dispatched/Received</button>
+                                            </div>)
+                    });
+                }
                 return <div>
                          <ReactTable filterable onSortedChange={ this.generateExportLink.bind(this) } onFilteredChange={ this.generateExportLink.bind(this) } data={ this.props.orders } ref={ (r) => this.deliveryTable = r } columns={ clientConfig.deliveryColumns }
                            defaultPageSize={ 10 } className="-striped -highlight" />
@@ -99,13 +163,30 @@ class RentOrders extends React.Component {
                    <br />
                    { this.renderOrders() }
                  </div>
+                 <ReactModal isOpen={ this.state.viewDeliveryModal } onRequestClose={ this.hideDeliveryModal.bind(this) } contentLabel="Change Delivery Status">
+                   <span onClick={ this.hideDeliveryModal.bind(this) }>x</span>
+                   <br/>
+                   <br/>
+                   <h3>Select Date: </h3>
+                   <DatePicker selected={ this.state.deliveryDate } onChange={ this.handleChangeDeliveryDate.bind(this) } />
+                   <br/>
+                   <h3>AWB Number: </h3>
+                   <input onChange={ this.handleChangeAWBNumber.bind(this) } />
+                   <br/>
+                   <br/>
+                   <button onClick={ this.markDispatched.bind(this) }>Mark Dispatched</button>
+                   <br/>
+                   <br/>
+                   <button onClick={ this.markReceived.bind(this) }>Mark Received</button>
+                 </ReactModal>
                </section>
     }
 }
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        getOrderListByDate
+        getOrderListByDate,
+        changeDeliveryStatus
     }, dispatch);
 }
 
