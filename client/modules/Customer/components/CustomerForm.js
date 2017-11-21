@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { createCustomer } from '../CustomerActions.js';
+import clientConfig from '../../../config';
 
 let CustomerForm = props => {
   const {handleSubmit} = props;
@@ -29,10 +30,11 @@ let CustomerForm = props => {
         <label htmlFor="dataSource">Source </label>
         <Field name="dataSource" component="select" type="text">
           <option value="">-- Select --</option>
-          <option value="store">Store</option>
-          <option value="office">Office</option>
-          <option value="phone">Phone</option>
-          <option value="whatsapp">Whatsapp</option>
+          { clientConfig.customerSource.map((source, i) => {
+              return <option key={ i } value={ source }>
+                       { source }
+                     </option>
+            }) }
         </Field>
       </div>
     </form>

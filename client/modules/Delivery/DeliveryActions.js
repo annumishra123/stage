@@ -3,7 +3,7 @@ import axios from 'axios';
 export function getOrderListByDate(dateParam, startDate, endDate) {
     return function(dispatch) {
         if (startDate && endDate && dateParam) {
-            let url = '/api/om/orders/backend/orderlines';
+            let url = '/api/om/orders/backend/orderlines/';
             return axios({
                 url: url,
                 timeout: 20000,
@@ -23,5 +23,22 @@ export function getOrderListByDate(dateParam, startDate, endDate) {
                 console.log(error);
             });
         }
+    }
+}
+
+export function changeDeliveryStatus(deliveryObject) {
+    return function(dispatch) {
+        let url = '/api/om/orders/backend/logistics/';
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            data: deliveryObject,
+            responseType: 'json'
+        }).then(function(response) {
+            alert('Delivery status has been changed');
+        }).catch(function(error) {
+            console.log(error);
+        });
     }
 }
