@@ -8,6 +8,7 @@ import App from './App';
 import { configureStore } from './store';
 require('react-datepicker/dist/react-datepicker.css');
 import 'react-table/react-table.css';
+import 'react-tabs/style/react-tabs.css';
 
 // Initialize store
 const store = configureStore(window.__INITIAL_STATE__);
