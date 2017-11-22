@@ -1,4 +1,5 @@
 import moment from 'moment';
+import React from 'react';
 
 const clientConfig = {
     serviceCities: [{
@@ -212,7 +213,52 @@ const clientConfig = {
         'office',
         'phone',
         'whatsapp'
-    ]
+    ],
+    shopLooksColumns: [{
+        Header: 'SKU',
+        accessor: 'sku'
+    }, {
+        Header: 'Name',
+        accessor: 'name'
+    }, {
+        id: 'image',
+        Header: 'Image',
+        accessor: o => <a target="blank" href={ o.frontimage }>Link</a>
+    }, {
+        Header: 'Location',
+        accessor: 'location'
+    }],
+    rentLooksColumns: [{
+        Header: 'Look No.',
+        accessor: 'looknumber'
+    }, {
+        Header: 'SKU',
+        accessor: 'sku'
+    }, {
+        Header: 'Name',
+        accessor: 'name'
+    }, {
+        id: 'image',
+        Header: 'Image',
+        accessor: o => <a target="blank" href={ o.frontimage }>Link</a>
+    }, {
+        Header: 'Location',
+        accessor: 'location'
+    }],
+    rentAccessoriesColumns: [{
+        Header: 'SKU',
+        accessor: 'sku'
+    }, {
+        Header: 'Name',
+        accessor: 'name'
+    }, {
+        id: 'image',
+        Header: 'Image',
+        accessor: o => <a target="blank" href={ o.image }>Link</a>
+    }, {
+        Header: 'Location',
+        accessor: 'location'
+    }]
 }
 
 

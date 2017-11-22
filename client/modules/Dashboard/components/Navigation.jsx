@@ -26,6 +26,9 @@ class Navigation extends React.Component {
                <li>
                  <Link to="/delivery">Delivery</Link>
                </li>
+               <li>
+                 <Link to="/inventory">Inventory</Link>
+               </li>
              </ul>
            </section>
   }
