@@ -2,13 +2,16 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { getCustomerDetail } from '../CustomerActions.js';
 
+// Import Style
+import styles from './customerForm.css';
+
 let EmailForm = props => {
   const {handleSubmit} = props;
   return (
     <form>
       <h3>Create/Find Customer</h3>
       <br/>
-      <div>
+      <div className={ styles.byMail }>
         <label htmlFor="email">Email </label>
         <Field name="email" component="input" type="email" />
       </div>

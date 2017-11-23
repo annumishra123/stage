@@ -1,5 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 
+// Import Style
+import styles from './login.css';
+
 class LoginForm extends Component {
     constructor(props, context) {
         super(props, context);
@@ -14,8 +17,8 @@ class LoginForm extends Component {
 
     render() {
         return (
-            <div className="login-form">
-              <h2 className="form-title">Login</h2>
+            <div className={ styles.loginForm }>
+              <h2>Login</h2>
               <br/>
               <input placeholder="Email address" type="email" className="form-field" ref="email" />
               <br/>

@@ -50,6 +50,14 @@ export function getCustomerDetail(email) {
                 type: 'FETCH_CUSTOMER_DETAIL',
                 payload: null
             });
+            dispatch({
+                type: 'FETCH_SHOP_PRICING',
+                payload: null
+            });
+            dispatch({
+                type: 'FETCH_RENT_PRICING',
+                payload: null
+            });
             return axios({
                 url: url,
                 timeout: 20000,
@@ -105,6 +113,14 @@ export function getCustomerDetailByPhoneNumber(phoneNumber) {
             });
             dispatch({
                 type: 'FETCH_CUSTOMER_DETAIL',
+                payload: null
+            });
+            dispatch({
+                type: 'FETCH_SHOP_PRICING',
+                payload: null
+            });
+            dispatch({
+                type: 'FETCH_RENT_PRICING',
                 payload: null
             });
             return axios({

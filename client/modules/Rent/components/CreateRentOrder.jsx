@@ -297,7 +297,7 @@ class CreateRentOrder extends React.Component {
     }
 
     renderCustomerDetails() {
-        if (this.props.customerDetail) {
+        if (this.props.customerDetail && this.props.selectedAddress) {
             let address = this.props.customerDetail.shippingInfo.find(x => x.shippingId == this.props.selectedAddress);
             return <div>
                      <h3>Customer Details</h3>

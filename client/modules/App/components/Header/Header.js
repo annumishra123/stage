@@ -24,8 +24,8 @@ export function Header(props, context) {
   return (
     <div className={ styles.header }>
       <div className={ styles.content }>
-        <h1 className={ styles['site-title'] }><Link to="/menu" >Stage3 - Dashboard</Link></h1>
-        { props.isAuthenticated ? <button style={ style } onClick={ logout }>Logout</button> : null }
+        <h1 className={ styles['site-title'] }><Link to="/menu" ><img src="https://res.cloudinary.com/stage3/image/upload/f_auto,q_auto:low/stage3-dashboard-white.png" alt="Stage3 Dashboard" /></Link></h1>
+        { props.isAuthenticated ? <button className={ styles.logOut } style={ style } onClick={ logout }><img src="https://res.cloudinary.com/stage3/image/upload/f_auto,q_auto:low/logout-icon.png" />Logout</button> : null }
       </div>
     </div>
     );

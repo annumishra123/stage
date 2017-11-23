@@ -10,6 +10,9 @@ import MeasurementsForm from './MeasurementsForm.js';
 import FormSubmitButton from './FormSubmitButton.js';
 import { selectAddress, saveAllCustomerDetails, getCustomerDetailByPhoneNumber } from '../CustomerActions';
 
+// Import Style
+import styles from './customerForm.css';
+
 const style = {
     padding: '10px 20px',
     width: 300,
@@ -50,14 +53,17 @@ class Customer extends React.Component {
     }
 
     render() {
-        return (<section>
+        return (<section className={ styles.createCustomer }>
                   <EmailForm />
-                  <FormSubmitButton formName="createEmail" text="Find Customer By Email" />
+                  <div className={ styles.byMailbtn }>
+                    <FormSubmitButton formName="createEmail" text="Find Customer By Email" />
+                  </div>
                   <br/>
                   <label htmlFor="email">Phone Number </label>
                   <input type="text" onChange={ this.handleChangeMobileNumber.bind(this) } />
-                  <button style={ style } onClick={ this.getCustomerDetailByPhoneNumber.bind(this) }>Find Customer By Number</button>
-                  <br/>
+                  <div className={ styles.byMailbtn }>
+                    <button style={ style } onClick={ this.getCustomerDetailByPhoneNumber.bind(this) }>Find Customer By Number</button>
+                  </div>
                   <CustomerForm />
                   { this.props.role === 'admin' ? <FormSubmitButton formName="createCustomer" text="Save Contact" /> : <br/> }
                   <AddressForm selectAddress={ this.selectAddress.bind(this) } />
