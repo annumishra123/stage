@@ -9,6 +9,9 @@ import moment from 'moment';
 import clientConfig from '../../../config'
 import ReactTable from 'react-table';
 
+// Import Style
+import styles from './shopOrder.css';
+
 
 class ShopOrders extends React.Component {
     constructor(props) {
@@ -159,11 +162,11 @@ class ShopOrders extends React.Component {
                         Header: '',
                         id: 'view',
                         accessor: 'frontendOrderId',
-                        Cell: ({value}) => (<button onClick={ this.showOrderDetail.bind(this, value) }>Order Detail</button>)
+                        Cell: ({value}) => (<button className={ styles.tableBtn } onClick={ this.showOrderDetail.bind(this, value) }>Order Detail</button>)
                     });
-                }                
+                }
                 return <div>
-                         <ReactTable filterable data={ this.props.orders } columns={ clientConfig.shopColumns } defaultPageSize={ 10 } className="-striped -highlight" />
+                         <ReactTable filterable data={ this.props.orders } columns={ clientConfig.shopColumns } defaultPageSize={ 10 } className="-striped -highlight data-table" />
                        </div>
             }
         }
@@ -173,51 +176,51 @@ class ShopOrders extends React.Component {
         if (this.props.orderDetail) {
 
             return (<div>
-                      <button onClick={ this.showOrderList.bind(this) }>Back</button>
-                      <br />
+                      <button onClick={ this.showOrderList.bind(this) } className={ styles.backBtn }>Back</button>
                       <br />
                       <h3>ORDER DETAILS</h3>
-                      <hr />
-                      <br />
-                      <p><strong> NAME :</strong>
-                        { this.props.details ? this.props.details.firstName + ' ' + this.props.details.lastName : null }
-                      </p>
-                      <br />
-                      <p><strong> CONTACT NUMBER :</strong>
-                        { this.props.details ? this.props.details.phoneNumber : null }
-                      </p>
-                      <br />
-                      <p><strong>ORDER DATE :</strong>
-                        { moment(this.props.orderDetail.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a") }
-                      </p>
-                      <br />
-                      <p><strong>STATUS :</strong>
-                        { this.props.orderDetail.status }
-                      </p>
-                      <br />
-                      <p><strong>USER ID :</strong>
-                        { this.props.orderDetail.userId }
-                      </p>
-                      <br />
-                      <p><strong>ORDER ID :</strong>
-                        { this.props.orderDetail.frontendOrderId }
-                      </p>
-                      <br />
-                      <p><strong>ADDRESS :</strong>
-                        { this.props.orderDetail.deliveryAddress.address }
-                      </p>
-                      <br />
-                      <p><strong>CITY :</strong>
-                        { this.props.orderDetail.deliveryAddress.city }
-                      </p>
-                      <br />
-                      <p><strong>PINCODE :</strong>
-                        { this.props.orderDetail.deliveryAddress.pincode }
-                      </p>
-                      <br />
-                      <p><strong>STATE :</strong>
-                        { this.props.orderDetail.deliveryAddress.state }
-                      </p>
+                      <table>
+                        <tr>
+                            <th>Name:</th>
+                            <td>{ this.props.details ? this.props.details.firstName + ' ' + this.props.details.lastName : null }</td>
+                        </tr>
+                        <tr>
+                            <th>Contact Number</th>
+                            <td>{ this.props.details ? this.props.details.phoneNumber : null }</td>
+                        </tr>
+                        <tr>
+                            <th>Order Date</th>
+                            <td>{ moment(this.props.orderDetail.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a") }</td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>{ this.props.orderDetail.status }</td>
+                        </tr>
+                        <tr>
+                            <th>User Id</th>
+                            <td>{ this.props.orderDetail.userId }</td>
+                        </tr>
+                        <tr>
+                            <th>Order Id</th>
+                            <td>{ this.props.orderDetail.frontendOrderId }</td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td>{ this.props.orderDetail.deliveryAddress.address }</td>
+                        </tr>
+                        <tr>
+                            <th>City</th>
+                            <td>{ this.props.orderDetail.deliveryAddress.city }</td>
+                        </tr>
+                        <tr>
+                            <th>Pincode</th>
+                            <td>{ this.props.orderDetail.deliveryAddress.pincode }</td>
+                        </tr>
+                        <tr>
+                            <th>State</th>
+                            <td>{ this.props.orderDetail.deliveryAddress.state }</td>
+                        </tr>
+                       </table>
                       <br />
                       <p><strong>PAYMENT TYPE :</strong>
                         { this.props.orderDetail.paymentType }
@@ -252,34 +255,36 @@ class ShopOrders extends React.Component {
                                                       </div> : null }
                       <br />
                       <h3>ITEM DETAILS</h3>
-                      <hr />
                       { this.props.orderDetail.orderLinesFrontend.map((line, i) => {
                             return (
                                 <div key={ i }>
                                   <br />
-                                  <p><strong>OUTFIT :</strong>
-                                    { line.product.name }
-                                  </p>
-                                  <br />
-                                  <p><strong>SKU :</strong>
-                                    { line.sku }
-                                  </p>
-                                  <br />
-                                  <p><strong>DESIGNER NAME :</strong>
-                                    { line.product.designer }
-                                  </p>
-                                  <br />
-                                  <p><strong>ORIGINAL PRICE :</strong>
-                                    { line.originalPrice }
-                                  </p>
-                                  <br />
-                                  <p><strong>DISCOUNTED PRICE :</strong>
-                                    { line.discountedPrice }
-                                  </p>
-                                  <br />
-                                  <p><strong>STATUS :</strong>
-                                    { line.status }
-                                  </p>
+                                  <table>
+                                    <tr>
+                                        <th>Outfit</th>
+                                        <td>{ line.product.name }</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Sku</th>
+                                        <td>{ line.sku }</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Designer Name</th>
+                                        <td>{ line.product.designer }</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Original Price</th>
+                                        <td>{ line.originalPrice }</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Discounted Price</th>
+                                        <td>{ line.discountedPrice }</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status</th>
+                                        <td>{ line.status }</td>
+                                    </tr>
+                                  </table>
                                   <br />
                                   { this.props.role === 'admin' ? <div>
                                                                     <select onChange={ this.changeCancelReason.bind(this) }>
@@ -301,45 +306,40 @@ class ShopOrders extends React.Component {
     }
 
     render() {
-        return <section>
+        return <section className={ styles.shopOrders }>
                  { !this.state.viewOrderDetail ?
                    <div>
                      <h2>Shop Orders</h2>
-                     <hr />
-                     <br />
                      <div>
-                       <div>
+                       <div className={ styles.width50 }>
                          <div>
-                           <h3>Start Date</h3>
+                           <h4>Start Date</h4>
                            <DatePicker selected={ this.state.startDate } onChange={ this.handleChangeStartDate.bind(this) } />
                          </div>
                          <div>
-                           <h3>End Date</h3>
+                           <h4>End Date</h4>
                            <DatePicker selected={ this.state.endDate } onChange={ this.handleChangeEndDate.bind(this) } />
                          </div>
                        </div>
                        <div>
                          <button onClick={ this.getOrders.bind(this) }>Search By Date</button>
                        </div>
-                       <br />
                        <div>
-                         <h3>Email Id</h3>
+                         <h4>Email Id</h4>
                          <input type="text" onChange={ this.handleChangeEmailId.bind(this) } />
                          <div>
                            <button onClick={ this.getOrdersByUserId.bind(this) }>Search By Email Id</button>
                          </div>
                        </div>
-                       <br />
                        <div>
-                         <h3>Order Id</h3>
+                         <h4>Order Id</h4>
                          <input type="text" onChange={ this.handleChangeOrderId.bind(this) } />
                          <div>
                            <button onClick={ this.showOrderDetail.bind(this, this.state.orderId) }>Search By Order Id</button>
                          </div>
                        </div>
-                       <br />
                        <div>
-                         <h3>Phone Number</h3>
+                         <h4>Phone Number</h4>
                          <input type="text" onChange={ this.handleChangePhoneNumber.bind(this) } />
                          <div>
                            <button onClick={ this.getOrdersByPhoneNumber.bind(this) }>Search By Phone Number</button>

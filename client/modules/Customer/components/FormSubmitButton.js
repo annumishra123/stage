@@ -2,12 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { submit } from 'redux-form';
 
+// Import Style
+import styles from './customerForm.css';
+
 const style = {
-  padding: '10px 20px',
-  width: 300,
-  display: 'block',
-  margin: '20px auto',
-  fontSize: '16px',
+
 };
 
 class SubmitButton extends React.Component {

@@ -72,3 +72,18 @@
     bottom: 5px;
     top: 5px;
 }
+
+@media (max-width: 767px) {
+    .loginForm {
+        width: 90%;
+    }
+    .loginForm h2 {
+        font-size: 20px;
+        margin: 30px 0 15px;
+    }
+    .loginForm input {
+        margin: 0 0 5px;
+    }
+
+
+}
