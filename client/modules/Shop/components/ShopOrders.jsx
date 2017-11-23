@@ -155,13 +155,13 @@ class ShopOrders extends React.Component {
         if (this.props.orders) {
             if (this.props.orders.length > 0) {
                 if (!clientConfig.shopColumns.find(o => o.id == 'view')) {
-                    clientConfig.shopColumns.push({
+                    clientConfig.shopColumns.unshift({
                         Header: '',
                         id: 'view',
                         accessor: 'frontendOrderId',
                         Cell: ({value}) => (<button onClick={ this.showOrderDetail.bind(this, value) }>Order Detail</button>)
                     });
-                }                
+                }
                 return <div>
                          <ReactTable filterable data={ this.props.orders } columns={ clientConfig.shopColumns } defaultPageSize={ 10 } className="-striped -highlight" />
                        </div>

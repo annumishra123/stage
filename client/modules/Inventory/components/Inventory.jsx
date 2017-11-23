@@ -50,7 +50,7 @@ class Inventory extends React.Component {
         if (this.props.rentCatalog) {
             if (this.props.rentCatalog.length > 0) {
                 if (!clientConfig.rentLooksColumns.find(o => o.id == 'changeLocation')) {
-                    clientConfig.rentLooksColumns.push({
+                    clientConfig.rentLooksColumns.unshift({
                         Header: '',
                         id: 'changeLocation',
                         accessor: '_id',
@@ -76,7 +76,7 @@ class Inventory extends React.Component {
         if (this.props.accessoryCatalog) {
             if (this.props.accessoryCatalog.length > 0) {
                 if (!clientConfig.rentAccessoriesColumns.find(o => o.id == 'changeLocation')) {
-                    clientConfig.rentAccessoriesColumns.push({
+                    clientConfig.rentAccessoriesColumns.unshift({
                         Header: '',
                         id: 'changeLocation',
                         accessor: '_id',
@@ -102,7 +102,7 @@ class Inventory extends React.Component {
         if (this.props.shopCatalog) {
             if (this.props.shopCatalog.length > 0) {
                 if (!clientConfig.shopLooksColumns.find(o => o.id == 'changeLocation')) {
-                    clientConfig.shopLooksColumns.push({
+                    clientConfig.shopLooksColumns.unshift({
                         Header: '',
                         id: 'changeLocation',
                         accessor: 'id',
