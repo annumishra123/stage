@@ -29,6 +29,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Rent/components/RentOrders');
   require('./modules/Rent/components/CreateRentOrder');
   require('./modules/Delivery/components/DeliveryOrders');
+  require('./modules/Inventory/components/Inventory');
 }
 // react-router setup with code-splitting
 // More info: http://blog.mxstbr.com/2016/01/react-apps-with-pages/
@@ -102,6 +103,11 @@ export default function getRoutes(store, req) {
                                                                         cb(null, require('./modules/Delivery/components/DeliveryOrders').default);
                                                                       });
                                                                     } } />
+      <Route path="/inventory" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
+                                                                       require.ensure([], require => {
+                                                                         cb(null, require('./modules/Inventory/components/Inventory').default);
+                                                                       });
+                                                                     } } />
     </Route>
     );
 }
