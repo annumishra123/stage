@@ -9,10 +9,10 @@ import bg from '../../header-bk.png';
 
 export function Footer() {
   return (
-    <div style={{ background: `#FFF url(${bg}) center` }} className={styles.footer}>
-      <p>&copy; 2017 &middot; Stage3</p>
+    <div className={ styles.footer }>
+      <p>© 2017 · Stage3</p>
     </div>
-  );
+    );
 }
 
 export default Footer;
