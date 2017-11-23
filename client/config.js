@@ -129,7 +129,7 @@ const clientConfig = {
     }, {
         id: 'orderDate',
         Header: 'Order Date',
-        accessor: o => moment(o.parentOrder.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a")
+        accessor: o => moment(o.parentOrder.orderDate).format("lll")
     }, {
         id: 'deliveryDate',
         Header: 'Delivery Date',
@@ -161,9 +161,6 @@ const clientConfig = {
         Header: 'Deposit',
         accessor: 'deposit'
     }, {
-        Header: 'Retail Price',
-        accessor: 'product.retailprice'
-    }, {
         Header: 'Status',
         accessor: 'currentStatus'
     }, {
@@ -182,7 +179,7 @@ const clientConfig = {
     }, {
         id: 'dateOrder',
         Header: 'Date Of Order',
-        accessor: o => moment(o.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a")
+        accessor: o => moment(o.orderDate).format("lll")
     }, {
         Header: 'Status',
         accessor: 'status'
@@ -196,7 +193,7 @@ const clientConfig = {
     }, {
         id: 'dateOrder',
         Header: 'Date Of Order',
-        accessor: o => moment(o.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a")
+        accessor: o => moment(o.orderDate).format("lll")
     }, {
         Header: 'Status',
         accessor: 'status'
