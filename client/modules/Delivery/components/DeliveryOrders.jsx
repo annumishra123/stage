@@ -17,7 +17,7 @@ class RentOrders extends React.Component {
         this.state = {
             startDate: moment().startOf('day'),
             endDate: moment().endOf('day'),
-            dateType: 'deliveryDate',
+            dateType: 'orderDate',
             csvData: null,
             deliveryDate: moment().startOf('day'),
             viewDeliveryModal: false,
@@ -110,7 +110,7 @@ class RentOrders extends React.Component {
         if (this.props.orders) {
             if (this.props.orders.length > 0) {
                 if (!clientConfig.deliveryColumns.find(o => o.id == 'changeDeliveryStatus')) {
-                    clientConfig.deliveryColumns.push({
+                    clientConfig.deliveryColumns.unshift({
                         Header: '',
                         id: 'changeDeliveryStatus',
                         accessor: 'id',
@@ -140,6 +140,7 @@ class RentOrders extends React.Component {
                        <div>
                          <h3>Date Type</h3>
                          <select onChange={ this.handleChangeDateType.bind(this) }>
+                           <option value="orderDate">Order</option>
                            <option value="deliveryDate">Delivery</option>
                            <option value="pickupDate">Pickup</option>
                          </select>

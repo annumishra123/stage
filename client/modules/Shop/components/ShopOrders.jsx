@@ -158,7 +158,7 @@ class ShopOrders extends React.Component {
         if (this.props.orders) {
             if (this.props.orders.length > 0) {
                 if (!clientConfig.shopColumns.find(o => o.id == 'view')) {
-                    clientConfig.shopColumns.push({
+                    clientConfig.shopColumns.unshift({
                         Header: '',
                         id: 'view',
                         accessor: 'frontendOrderId',
