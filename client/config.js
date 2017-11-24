@@ -127,6 +127,9 @@ const clientConfig = {
         Header: 'Designer',
         accessor: 'product.designer'
     }, {
+        Header: 'Measurements',
+        accessor: 'measurementStatus'
+    }, {
         id: 'orderDate',
         Header: 'Order Date',
         accessor: o => moment(o.parentOrder.orderDate).format("lll")
