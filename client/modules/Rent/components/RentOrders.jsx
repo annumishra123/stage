@@ -175,7 +175,7 @@ class RentOrders extends React.Component {
         if (this.props.orders) {
             if (this.props.orders.length > 0) {
                 if (!clientConfig.rentalColumns.find(o => o.id == 'view')) {
-                    clientConfig.rentalColumns.push({
+                    clientConfig.rentalColumns.unshift({
                         Header: '',
                         id: 'view',
                         accessor: 'frontendOrderId',
