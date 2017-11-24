@@ -133,15 +133,15 @@ const clientConfig = {
     }, {
         id: 'deliveryDate',
         Header: 'Delivery Date',
-        accessor: o => moment(o.deliveryDateUTC).format("l")
+        accessor: o => moment(o.deliveryDateUTC).format("DD-MM-YYYY")
     }, {
         id: 'occasionDate',
         Header: 'Occasion Date',
-        accessor: o => moment(o.occasionDateUTC).format("l")
+        accessor: o => moment(o.occasionDateUTC).format("DD-MM-YYYY")
     }, {
         id: 'pickupDate',
         Header: 'Pickup Date',
-        accessor: o => moment(o.pickupDateUTC).format("l")
+        accessor: o => moment(o.pickupDateUTC).format("DD-MM-YYYY")
     }, {
         id: 'grossAmount',
         Header: 'Gross Amount',
