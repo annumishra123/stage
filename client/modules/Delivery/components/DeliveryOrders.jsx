@@ -10,6 +10,9 @@ import clientConfig from '../../../config';
 import { CSVLink } from 'react-csv';
 import ReactModal from 'react-modal';
 
+// Import Style
+import styles from './deliveryOrders.css';
+
 
 class RentOrders extends React.Component {
     constructor(props) {
@@ -115,13 +118,13 @@ class RentOrders extends React.Component {
                         id: 'changeDeliveryStatus',
                         accessor: 'id',
                         Cell: ({value}) => (<div>
-                                              <button onClick={ this.showDeliveryModal.bind(this, value) }>Dispatched/Received</button>
+                                              <button className={ styles.tableBtn } onClick={ this.showDeliveryModal.bind(this, value) }>Dispatched/Received</button>
                                             </div>)
                     });
                 }
                 return <div>
                          <ReactTable filterable onSortedChange={ this.generateExportLink.bind(this) } onFilteredChange={ this.generateExportLink.bind(this) } data={ this.props.orders } ref={ (r) => this.deliveryTable = r } columns={ clientConfig.deliveryColumns }
-                           defaultPageSize={ 10 } className="-striped -highlight" />
+                           defaultPageSize={ 10 } className="data-table -striped -highlight" />
                          { !this.state.csvData ? <button onClick={ this.generateExportLink.bind(this) }>Generate Export Link</button> : null }
                          { this.state.csvData ? <CSVLink data={ this.state.csvData } filename={ "Delivery Orders.csv" }>Export CSV</CSVLink> : null }
                        </div>;
@@ -130,29 +133,26 @@ class RentOrders extends React.Component {
     }
 
     render() {
-        return <section>
+        return <section className={ styles.deliveryOrders }>
                  <div>
                    <h2>Delivery Orders</h2>
-                   <hr />
                    <br />
                    <div>
                      <div>
                        <div>
-                         <h3>Date Type</h3>
+                         <h4>Date Type</h4>
                          <select onChange={ this.handleChangeDateType.bind(this) }>
                            <option value="orderDate">Order</option>
                            <option value="deliveryDate">Delivery</option>
                            <option value="pickupDate">Pickup</option>
                          </select>
                        </div>
-                       <br/>
                        <div>
-                         <h3>Start Date</h3>
+                         <h4>Start Date</h4>
                          <DatePicker selected={ this.state.startDate } onChange={ this.handleChangeStartDate.bind(this) } />
                        </div>
-                       <br/>
                        <div>
-                         <h3>End Date</h3>
+                         <h4>End Date</h4>
                          <DatePicker selected={ this.state.endDate } onChange={ this.handleChangeEndDate.bind(this) } />
                        </div>
                      </div>
@@ -164,20 +164,14 @@ class RentOrders extends React.Component {
                    <br />
                    { this.renderOrders() }
                  </div>
-                 <ReactModal isOpen={ this.state.viewDeliveryModal } onRequestClose={ this.hideDeliveryModal.bind(this) } contentLabel="Change Delivery Status">
-                   <span onClick={ this.hideDeliveryModal.bind(this) }>x</span>
-                   <br/>
+                 <ReactModal className={ styles.statusPop } isOpen={ this.state.viewDeliveryModal } onRequestClose={ this.hideDeliveryModal.bind(this) } contentLabel="Change Delivery Status">
+                   <span onClick={ this.hideDeliveryModal.bind(this) }>×</span>
                    <br/>
                    <h3>Select Date: </h3>
                    <DatePicker selected={ this.state.deliveryDate } onChange={ this.handleChangeDeliveryDate.bind(this) } />
-                   <br/>
                    <h3>AWB Number: </h3>
                    <input onChange={ this.handleChangeAWBNumber.bind(this) } />
-                   <br/>
-                   <br/>
                    <button onClick={ this.markDispatched.bind(this) }>Mark Dispatched</button>
-                   <br/>
-                   <br/>
                    <button onClick={ this.markReceived.bind(this) }>Mark Received</button>
                  </ReactModal>
                </section>
