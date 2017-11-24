@@ -1,0 +1,116 @@
+.rentOrders h3 {
+    color: #000;
+    font-family: 'Lato', sans-serif;
+    font-size: 24px;
+    letter-spacing: 1px;
+    text-align: left;
+    margin: 25px 0 15px;
+}
+.rentOrders h4 {
+    color: #000;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    text-align: left;
+    margin: 25px 0 15px;
+}
+.rentOrders label {
+    color: #333;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    width: 170px;
+    display: inline-block;
+}
+.rentOrders input {
+    border: 1px solid rgab(0,0,0,0.5);
+    padding: 8px;
+    margin: 0 0 10px;
+    color: #333;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    width: 350px;
+}
+.rentOrders select {
+    border: 1px solid rgab(0,0,0,0.5);
+    color: #000;
+    padding: 12px 10px;
+    margin: 0 10px 10px 0;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    width: 350px;
+}
+.rentOrders button {
+    background: #333;
+    border:0;
+    color: #fff;
+    display: inline-block !important;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    padding: 12px 30px;
+    margin: 10px 15px 10px 0;
+    letter-spacing: 1px;
+    width: 350px;
+    cursor: pointer;
+}
+.width50 > div {
+    width: 50%;
+    float:left;
+}
+.data-table button {
+    width: auto;
+    padding: 5px;
+    font-size: 14px;
+}
+.tableBtn {
+    width: auto !important;
+    padding: 7px 10px !important;
+    font-size: 14px !important;
+    margin: 0 !important;
+}
+.backBtn {
+    background: transparent !important;
+    width: auto !important;
+    color: #333 !important;
+    text-decoration: underline;
+    padding: 0 !important;
+}
+table {
+    width: 100%;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+
+
+@media (max-width: 767px){
+.rentOrders {
+    padding: 10px;
+}
+.rentOrders h3 {
+    font-size: 19px;
+    margin: 15px 0 10px;
+}
+.rentOrders h4 {
+    margin: 15px 0 5px;
+}
+.rentOrders input {
+    width: 100%;
+}
+.rentOrders button {
+    font-size: 13px;
+    margin: 5px 0 !important;
+    width: 100%;
+}
+.rentOrders select {
+    width:100%;
+}
+
+}

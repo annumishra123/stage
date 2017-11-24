@@ -7,6 +7,9 @@ import clientConfig from '../../../config';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
+// Import Style
+import styles from './rentOrders.css';
+
 
 class CreateRentOrder extends React.Component {
     constructor(props) {
@@ -328,7 +331,7 @@ class CreateRentOrder extends React.Component {
     }
 
     render() {
-        return <section>
+        return <section className={ styles.rentOrders }>
                  { this.renderCustomerDetails() }
                  <h3>Create New Rent Order</h3>
                  <br />
