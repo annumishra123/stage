@@ -21,6 +21,13 @@ const userSchema = new Schema({
         type: 'String',
         required: true
     },
+    name: {
+        type: 'String',
+        required: true
+    },
+    owner: {
+        type: 'String'
+    },
     dateAdded: {
         type: 'Date',
         default: Date.now,

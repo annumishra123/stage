@@ -32,6 +32,10 @@ class Navigation extends React.Component {
                <li>
                  <Link to="/inventory">Inventory</Link>
                </li>
+               { this.props.role == 'superuser' ? <li>
+                                                    <Link>Create User
+                                                    <br/>(coming soon)</Link>
+                                                  </li> : null }
              </ul>
            </section>
   }
@@ -42,7 +46,9 @@ function matchDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    role: state.auth.role
+  };
 }
 
 
