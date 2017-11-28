@@ -31,6 +31,8 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Delivery/components/DeliveryOrders');
   require('./modules/Inventory/components/Inventory');
   require('./modules/Dashboard/components/Users');
+  require('./modules/Designer/components/Orders');
+  require('./modules/Designer/components/Inventory');
 }
 // react-router setup with code-splitting
 // More info: http://blog.mxstbr.com/2016/01/react-apps-with-pages/
@@ -134,6 +136,16 @@ export default function getRoutes(store, req) {
                                                                         cb(null, require('./modules/Inventory/components/Inventory').default);
                                                                       });
                                                                     } } />
+      <Route path="/designer/inventory" onEnter={ checkUser } getComponent={ (nextState, cb) => {
+                                                                               require.ensure([], require => {
+                                                                                 cb(null, require('./modules/Designer/components/Inventory').default);
+                                                                               });
+                                                                             } } />
+      <Route path="/designer/orders" onEnter={ checkUser } getComponent={ (nextState, cb) => {
+                                                                            require.ensure([], require => {
+                                                                              cb(null, require('./modules/Designer/components/Orders').default);
+                                                                            });
+                                                                          } } />
     </Route>
     );
 }

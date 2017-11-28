@@ -20,7 +20,9 @@ export function loginSuccess(user) {
     isAuthenticated: true,
     token: user.token,
     role: user.role,
-    email: user.email
+    email: user.email,
+    name: user.name,
+    owner: user.owner
   };
 }
 
@@ -39,7 +41,9 @@ export function requestLogout() {
     isAuthenticated: false,
     isFetching: false,
     role: '',
-    email: ''
+    email: '',
+    name: '',
+    owner: ''
   }
 }
 
@@ -57,7 +61,9 @@ export function tokenValid(user) {
     isFetching: false,
     isAuthenticated: true,
     role: user.role,
-    email: user.email
+    email: user.email,
+    name: user.name,
+    owner: user.owner
   };
 }
 

@@ -16,27 +16,37 @@ class Navigation extends React.Component {
 
   render() {
     return <section className={ styles.navigations }>
-             <ul>
-               <li>
-                 <Link to="/customer">Create/Find Customer</Link>
-               </li>
-               <li>
-                 <Link to="/shop">Shop Orders</Link>
-               </li>
-               <li>
-                 <Link to="/rent">Rent Orders</Link>
-               </li>
-               <li>
-                 <Link to="/delivery">Delivery</Link>
-               </li>
-               <li>
-                 <Link to="/inventory">Inventory</Link>
-               </li>
-               { this.props.role == 'superuser' ? <li>
-                                                    <Link>Create User
-                                                    <br/>(coming soon)</Link>
-                                                  </li> : null }
-             </ul>
+             { this.props.role !== 'designer' ? <ul>
+                                                  <li>
+                                                    <Link to="/customer">Create/Find Customer</Link>
+                                                  </li>
+                                                  <li>
+                                                    <Link to="/shop">Shop Orders</Link>
+                                                  </li>
+                                                  <li>
+                                                    <Link to="/rent">Rent Orders</Link>
+                                                  </li>
+                                                  <li>
+                                                    <Link to="/delivery">Delivery</Link>
+                                                  </li>
+                                                  <li>
+                                                    <Link to="/inventory">Inventory</Link>
+                                                  </li>
+                                                  { this.props.role == 'superuser' ? <li>
+                                                                                       <Link>Create User
+                                                                                       <br/>(coming soon)</Link>
+                                                                                     </li> : null }
+                                                </ul> : <div>
+                                                          <h1>{ this.props.owner.toUpperCase() }</h1>
+                                                          <ul>
+                                                            <li>
+                                                              <Link to="/designer/inventory">Inventory</Link>
+                                                            </li>
+                                                            <li>
+                                                              { /* <Link to="/designer/orders">Orders</Link> */ }
+                                                            </li>
+                                                          </ul>
+                                                        </div> }
            </section>
   }
 }
@@ -47,7 +57,8 @@ function matchDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    role: state.auth.role
+    role: state.auth.role,
+    owner: state.auth.owner
   };
 }
 

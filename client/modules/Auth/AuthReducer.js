@@ -6,7 +6,9 @@ const initialState = {
   loaded: false,
   role: '',
   message: '',
-  email: ''
+  email: '',
+  owner: '',
+  name: ''
 };
 
 const authReducer = (state = initialState, action) => {
@@ -25,7 +27,9 @@ const authReducer = (state = initialState, action) => {
         isFetching: action.isFetching,
         loaded: true,
         role: action.role,
-        email: action.email
+        email: action.email,
+        owner: action.owner,
+        name: action.name
       };
     case ActionTypes.TOKEN_INVALID:
       return {
@@ -49,7 +53,9 @@ const authReducer = (state = initialState, action) => {
         isFetching: false,
         message: '',
         role: action.role,
-        email: action.email
+        email: action.email,
+        owner: action.owner,
+        name: action.name
       };
     case ActionTypes.LOGIN_FALIURE:
       return {
@@ -65,7 +71,9 @@ const authReducer = (state = initialState, action) => {
         isFetching: action.isFetching,
         message: '',
         role: action.role,
-        email: action.email
+        email: action.email,
+        owner: action.owner,
+        name: action.name
       };
     default:
       return state;
