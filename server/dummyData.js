@@ -53,7 +53,7 @@ export default function () {
         owner: ''
       });
 
-      viewer.password = viewer.generateHash('warehouse@123');
+      viewer.password = viewer.generateHash('marketing@123');
 
       viewer.save();
     }
