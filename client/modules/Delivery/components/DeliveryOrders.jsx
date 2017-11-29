@@ -112,7 +112,7 @@ class RentOrders extends React.Component {
     renderOrders() {
         if (this.props.orders) {
             if (this.props.orders.length > 0) {
-                if (!clientConfig.deliveryColumns.find(o => o.id == 'changeDeliveryStatus')) {
+                if (!clientConfig.deliveryColumns.find(o => o.id == 'changeDeliveryStatus') && this.props.role !== 'viewer') {
                     clientConfig.deliveryColumns.unshift({
                         Header: '',
                         id: 'changeDeliveryStatus',

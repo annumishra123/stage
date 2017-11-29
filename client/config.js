@@ -258,6 +258,18 @@ const clientConfig = {
     }, {
         Header: 'Location',
         accessor: 'location'
+    }],
+    designerInventoryColumns: [{
+        Header: 'Name',
+        accessor: 'name'
+    }, {
+        id: '3day',
+        Header: '3 Days Rental',
+        accessor: o => Math.round(o.discountedrentalprice * 3)
+    }, {
+        id: '6day',
+        Header: '6 Days Rental',
+        accessor: o => Math.round(o.discountedrentalprice * 4.2)
     }]
 }
 

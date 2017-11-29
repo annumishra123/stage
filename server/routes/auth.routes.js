@@ -34,7 +34,9 @@ router.post('/login', (req, res, next) => {
                     ok: true,
                     token,
                     role: user.role,
-                    email: user.email
+                    email: user.email,
+                    name: user.name,
+                    owner: user.owner
                 },
             });
         }
@@ -48,7 +50,9 @@ router.get('/me', passport.authenticate('jwt', {
         user: {
             ok: true,
             role: req.user.role,
-            email: req.user.email
+            email: req.user.email,
+            name: req.user.name,
+            owner: req.user.owner
         },
     });
 });

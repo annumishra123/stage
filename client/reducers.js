@@ -12,6 +12,7 @@ import auth from './modules/Auth/AuthReducer';
 import { customerDetail, selectedAddress, creditPoints } from './modules/Customer/CustomerReducer';
 import { deliveryOrders } from './modules/Delivery/DeliveryReducer';
 import { accessoryCatalog, rentCatalog, shopCatalog } from './modules/Inventory/InventoryReducer';
+import { designerInventory } from './modules/Designer/DesignerReducer';
 import { reducer as formReducer } from 'redux-form';
 
 // Combine all reducers into one root reducer
@@ -37,5 +38,6 @@ export default combineReducers({
   measurementStatus,
   accessoryCatalog,
   rentCatalog,
-  shopCatalog
+  shopCatalog,
+  designerInventory
 });
