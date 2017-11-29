@@ -104,7 +104,7 @@ app.post("/createuser", passport.authenticate('jwt', {
   session: false,
 }), (req, res) => {
   if (req.user.role === 'superuser') {
-    if (req.body.email && req.body.role && req.body.password && req.body.name && req.body.owner) {
+    if (req.body.email && req.body.role && req.body.password && req.body.name) {
       User.findOne({
         'email': req.body.email
       }, function(err, user) {
@@ -131,10 +131,10 @@ app.post("/createuser", passport.authenticate('jwt', {
           });
         } else if (user) {
           user.set({
-            role: req.body.role
+            role: req.body.role,
+            password: user.generateHash(req.body.password)
           });
-          user.password = user.generateHash(req.body.password);
-          user.save.then(item => {
+          user.save().then(item => {
             res.json({
               status: 'SUCCESS'
             });

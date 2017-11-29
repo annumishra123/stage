@@ -11,7 +11,7 @@ export default function () {
         isAdmin: true,
         cuid: cuid(),
         role: 'superuser',
-        name: 'Volcantis',
+        name: 'volcantis',
         owner: ''
       });
 
@@ -29,12 +29,31 @@ export default function () {
         email: 'warehouse@stage3.co',
         isAdmin: true,
         cuid: cuid(),
-        role: 'viewer',
+        role: 'delivery',
         name: 'warehouse',
         owner: ''
       });
 
-      viewer.password = viewer.generateHash('stage@123');
+      viewer.password = viewer.generateHash('warehouse@123');
+
+      viewer.save();
+    }
+  });
+
+  User.findOne({
+    'email': 'marketing@stage3.co'
+  }, function(err, user) {
+    if (!user) {
+      const viewer = new User({
+        email: 'marketing@stage3.co',
+        isAdmin: true,
+        cuid: cuid(),
+        role: 'viewer',
+        name: 'marketing',
+        owner: ''
+      });
+
+      viewer.password = viewer.generateHash('marketing@123');
 
       viewer.save();
     }
@@ -53,7 +72,7 @@ export default function () {
         owner: ''
       });
 
-      admin.password = admin.generateHash('stage@123');
+      admin.password = admin.generateHash('store@123');
 
       admin.save();
     }
