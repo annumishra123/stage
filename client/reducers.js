@@ -9,7 +9,7 @@ import intl from './modules/Intl/IntlReducer';
 import { orders, orderDetail, productDetail, shopPricing } from './modules/Shop/ShopReducer';
 import { rentOrders, rentOrderDetail, rentProductDetail, rentalPricing, bookableStatus, deliveryDates, measurementStatus } from './modules/Rent/RentReducer';
 import auth from './modules/Auth/AuthReducer';
-import { customerDetail, selectedAddress, creditPoints } from './modules/Customer/CustomerReducer';
+import { customerDetail, selectedAddress, creditPoints, customerComments } from './modules/Customer/CustomerReducer';
 import { deliveryOrders } from './modules/Delivery/DeliveryReducer';
 import { accessoryCatalog, rentCatalog, shopCatalog } from './modules/Inventory/InventoryReducer';
 import { designerInventory } from './modules/Designer/DesignerReducer';
@@ -39,5 +39,6 @@ export default combineReducers({
   accessoryCatalog,
   rentCatalog,
   shopCatalog,
-  designerInventory
+  designerInventory,
+  customerComments
 });

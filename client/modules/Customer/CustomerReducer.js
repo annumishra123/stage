@@ -24,3 +24,12 @@ export function creditPoints(state = null, action) {
     }
     return state;
 }
+
+export function customerComments(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_CUSTOMER_COMMENTS':
+            return action.payload;
+            break;
+    }
+    return state;
+}
