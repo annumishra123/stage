@@ -79,7 +79,7 @@ class Customer extends React.Component {
                                       { comment.comment }
                                     </td>
                                     <td>
-                                      { moment(comment.createdtimestamp).format('lll') }
+                                      { moment.unix(comment.createdtimestamp).format('lll') }
                                     </td>
                                   </tr>
                        }) }
