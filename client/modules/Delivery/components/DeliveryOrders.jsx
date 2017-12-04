@@ -31,13 +31,13 @@ class RentOrders extends React.Component {
 
     handleChangeStartDate(date) {
         this.setState({
-            startDate: date,
+            startDate: date.startOf('day'),
         });
     }
 
     handleChangeEndDate(date) {
         this.setState({
-            endDate: date,
+            endDate: date.endOf('day'),
         });
     }
 
