@@ -270,7 +270,8 @@ const clientConfig = {
         id: '6day',
         Header: '6 Days Rental',
         accessor: o => Math.round(o.discountedrentalprice * 4.2)
-    }]
+    }],
+    dashboardTargetURL: 'https://www.stage3.co'
 }
 
 
