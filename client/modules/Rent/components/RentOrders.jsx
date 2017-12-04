@@ -64,13 +64,13 @@ class RentOrders extends React.Component {
 
     handleChangeStartDate(date) {
         this.setState({
-            startDate: date,
+            startDate: date.startOf('day'),
         });
     }
 
     handleChangeEndDate(date) {
         this.setState({
-            endDate: date,
+            endDate: date.endOf('day'),
         });
     }
 
@@ -194,21 +194,25 @@ class RentOrders extends React.Component {
             let measurementObj = this.props.measurementStatus.measurementOption[Object.keys(this.props.measurementStatus.measurementOption).find(x => x == id)];
             if (measurementObj) {
                 return <div>
-                    <h4>Measurement Status</h4>
-                        <table>
-                            <tr>
-                                <th>Measurement Status</th>
-                                <td>{ measurementObj.aggregatedMatchStatus }</td>
-                            </tr>
-                        
-
-                         { Object.keys(measurementObj.matches).map((measurement, i) => {
-                               return <tr key={ i }>
-                                        <th>{ measurement.toUpperCase() }</th>
-                                        <td>{ measurementObj.matches[measurement] }</td>
-                                      </tr>
-                           }) }
-                           </table>
+                         <h4>Measurement Status</h4>
+                         <table>
+                           <tr>
+                             <th>Measurement Status</th>
+                             <td>
+                               { measurementObj.aggregatedMatchStatus }
+                             </td>
+                           </tr>
+                           { Object.keys(measurementObj.matches).map((measurement, i) => {
+                                 return <tr key={ i }>
+                                          <th>
+                                            { measurement.toUpperCase() }
+                                          </th>
+                                          <td>
+                                            { measurementObj.matches[measurement] }
+                                          </td>
+                                        </tr>
+                             }) }
+                         </table>
                        </div>;
             }
         }
@@ -224,75 +228,109 @@ class RentOrders extends React.Component {
                       <br />
                       <table>
                         <tr>
-                            <th>Name</th>
-                            <td>{ this.props.details ? this.props.details.firstName + ' ' + this.props.details.lastName : null }</td>
+                          <th>Name</th>
+                          <td>
+                            { this.props.details ? this.props.details.firstName + ' ' + this.props.details.lastName : null }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Contact Number</th>
-                            <td>{ this.props.details ? this.props.details.phoneNumber : null }</td>
+                          <th>Contact Number</th>
+                          <td>
+                            { this.props.details ? this.props.details.phoneNumber : null }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Order Date</th>
-                            <td>{ moment(this.props.orderDetail.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a") }</td>
+                          <th>Order Date</th>
+                          <td>
+                            { moment(this.props.orderDetail.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a") }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Status</th>
-                            <td>{ this.props.orderDetail.status }</td>
+                          <th>Status</th>
+                          <td>
+                            { this.props.orderDetail.status }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Measurement Status</th>
-                            <td>{ this.props.measurementStatus ? this.props.measurementStatus.aggregatedStatusLine : 'Unavailable' }</td>
+                          <th>Measurement Status</th>
+                          <td>
+                            { this.props.measurementStatus ? this.props.measurementStatus.aggregatedStatusLine : 'Unavailable' }
+                          </td>
                         </tr>
                         <tr>
-                            <th>User Id</th>
-                            <td>{ this.props.orderDetail.userId }</td>
+                          <th>User Id</th>
+                          <td>
+                            { this.props.orderDetail.userId }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Order Id</th>
-                            <td>{ this.props.orderDetail.frontendOrderId }</td>
+                          <th>Order Id</th>
+                          <td>
+                            { this.props.orderDetail.frontendOrderId }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Address</th>
-                            <td>{ this.props.orderDetail.shippingInformationObj.address }</td>
+                          <th>Address</th>
+                          <td>
+                            { this.props.orderDetail.shippingInformationObj.address }
+                          </td>
                         </tr>
                         <tr>
-                            <th>City</th>
-                            <td>{ this.props.orderDetail.shippingInformationObj.city }</td>
+                          <th>City</th>
+                          <td>
+                            { this.props.orderDetail.shippingInformationObj.city }
+                          </td>
                         </tr>
                         <tr>
-                            <th>State</th>
-                            <td>{ this.props.orderDetail.shippingInformationObj.state }</td>
+                          <th>State</th>
+                          <td>
+                            { this.props.orderDetail.shippingInformationObj.state }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Pincode</th>
-                            <td>{ this.props.orderDetail.shippingInformationObj.pincode }</td>
+                          <th>Pincode</th>
+                          <td>
+                            { this.props.orderDetail.shippingInformationObj.pincode }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Discount Coupon</th>
-                            <td>{ this.props.orderDetail.discountCoupon }</td>
+                          <th>Discount Coupon</th>
+                          <td>
+                            { this.props.orderDetail.discountCoupon }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Total Original Rent</th>
-                            <td>{ this.props.orderDetail.totalRentalPrice }</td>
+                          <th>Total Original Rent</th>
+                          <td>
+                            { this.props.orderDetail.totalRentalPrice }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Total Rent To Pay</th>
-                            <td>{ this.props.orderDetail.totalDiscountedRentalPrice }</td>
+                          <th>Total Rent To Pay</th>
+                          <td>
+                            { this.props.orderDetail.totalDiscountedRentalPrice }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Total Deposit Amount</th>
-                            <td>{ this.props.orderDetail.totalDepositPrice }</td>
+                          <th>Total Deposit Amount</th>
+                          <td>
+                            { this.props.orderDetail.totalDepositPrice }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Payment Type</th>
-                            <td>{ this.props.orderDetail.paymentType }</td>
+                          <th>Payment Type</th>
+                          <td>
+                            { this.props.orderDetail.paymentType }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Credit Points Earned</th>
-                            <td>{ this.props.orderDetail.creditPointsForOrder }</td>
+                          <th>Credit Points Earned</th>
+                          <td>
+                            { this.props.orderDetail.creditPointsForOrder }
+                          </td>
                         </tr>
-                       </table>
-                       <br/>
+                      </table>
+                      <br/>
                       { this.props.role === 'admin' ? <div>
                                                         <select onChange={ this.changePaymentMethod.bind(this) }>
                                                           <option value="">-- Select Payment Method --</option>
@@ -328,72 +366,101 @@ class RentOrders extends React.Component {
                                   <br />
                                   <table>
                                     <tr>
-                                        <th>Outfit</th>
-                                        <td>{ line.product.name }</td>
+                                      <th>Outfit</th>
+                                      <td>
+                                        { line.product.name }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Sku</th>
-                                        <td>{ line.product.sku }</td>
+                                      <th>Sku</th>
+                                      <td>
+                                        { line.product.sku }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Designer Name</th>
-                                        <td>{ line.product.designer }</td>
+                                      <th>Designer Name</th>
+                                      <td>
+                                        { line.product.designer }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Original Price</th>
-                                        <td>{ line.originalPrice }</td>
+                                      <th>Original Price</th>
+                                      <td>
+                                        { line.originalPrice }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Discounted Price</th>
-                                        <td>{ line.price }</td>
+                                      <th>Discounted Price</th>
+                                      <td>
+                                        { line.price }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Deposit Price</th>
-                                        <td>{ line.originalDeposit }</td>
+                                      <th>Deposit Price</th>
+                                      <td>
+                                        { line.originalDeposit }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Status</th>
-                                        <td>{ line.currentStatus }</td>
+                                      <th>Status</th>
+                                      <td>
+                                        { line.currentStatus }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Deposit Price</th>
-                                        <td>{ line.originalDeposit }</td>
+                                      <th>Deposit Price</th>
+                                      <td>
+                                        { line.originalDeposit }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Deposit Price</th>
-                                        <td>{ line.originalDeposit }</td>
+                                      <th>Deposit Price</th>
+                                      <td>
+                                        { line.originalDeposit }
+                                      </td>
                                     </tr>
                                   </table>
                                   { this.renderMeasurementStatus(line.productId) }
                                   <h4>Delivery Dates</h4>
                                   <table>
                                     <tr>
-                                        <th>Dispatch Date</th>
-                                        <td>{ moment(line.dispatchDateUTC).format("dddd, MMMM Do YYYY") }</td>
+                                      <th>Dispatch Date</th>
+                                      <td>
+                                        { moment(line.dispatchDateUTC).format("dddd, MMMM Do YYYY") }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Occasion Date</th>
-                                        <td>{ moment(line.occasionDateUTC).format("dddd, MMMM Do YYYY") }</td>
+                                      <th>Occasion Date</th>
+                                      <td>
+                                        { moment(line.occasionDateUTC).format("dddd, MMMM Do YYYY") }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Delivery Date</th>
-                                        <td>{ moment(line.deliveryDateUTC).format("dddd, MMMM Do YYYY") }</td>
+                                      <th>Delivery Date</th>
+                                      <td>
+                                        { moment(line.deliveryDateUTC).format("dddd, MMMM Do YYYY") }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Pick Up Date</th>
-                                        <td>{ moment(line.pickupDateUTC).format("dddd, MMMM Do YYYY") }</td>
+                                      <th>Pick Up Date</th>
+                                      <td>
+                                        { moment(line.pickupDateUTC).format("dddd, MMMM Do YYYY") }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Received Date</th>
-                                        <td>{ moment(line.receivedDateUTC).format("dddd, MMMM Do YYYY") }</td>
+                                      <th>Received Date</th>
+                                      <td>
+                                        { moment(line.receivedDateUTC).format("dddd, MMMM Do YYYY") }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Available Date</th>
-                                        <td>{ moment(line.deliveryDateUTC).format("dddd, MMMM Do YYYY") }</td>
+                                      <th>Available Date</th>
+                                      <td>
+                                        { moment(line.deliveryDateUTC).format("dddd, MMMM Do YYYY") }
+                                      </td>
                                     </tr>
                                   </table>
-                                    <br/>                      
-                                  
+                                  <br/>
                                   { this.props.role === 'admin' ? <div>
                                                                     <select onChange={ this.changeCancelReason.bind(this) }>
                                                                       <option value="">-- Select Reason --</option>

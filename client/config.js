@@ -270,6 +270,36 @@ const clientConfig = {
         id: '6day',
         Header: '6 Days Rental',
         accessor: o => Math.round(o.discountedrentalprice * 4.2)
+    }],
+    designerOrderColumns: [{
+        Header: 'Order Id',
+        accessor: 'orderId'
+    }, {
+        id: 'name',
+        Header: 'Name',
+        accessor: o => <a target="blank" href={ o.image }>
+                         { o.outfitname }
+                       </a>
+    }, {
+        id: 'orderDate',
+        Header: 'Order Date',
+        accessor: o => moment(o.orderDate).format("lll")
+    }, {
+        id: 'pickupDate',
+        Header: 'Service Date',
+        accessor: o => moment(o.pickupDateUTC).format("lll")
+    }, {
+        id: 'rent',
+        Header: 'Rent',
+        accessor: o => o.rentPaid
+    }, {
+        id: 'share',
+        Header: 'Share',
+        accessor: o => o.rentPaid / 2
+    }, {
+        id: 'gst',
+        Header: 'GST',
+        accessor: o => (o.rentPaid / 2) >= 1000 ? (o.rentPaid / 2) * 0.12 : (o.rentPaid / 2) * 0.05
     }]
 }
 

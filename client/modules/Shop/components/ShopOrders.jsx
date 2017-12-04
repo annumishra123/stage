@@ -63,13 +63,13 @@ class ShopOrders extends React.Component {
 
     handleChangeStartDate(date) {
         this.setState({
-            startDate: date,
+            startDate: date.startOf('day'),
         });
     }
 
     handleChangeEndDate(date) {
         this.setState({
-            endDate: date,
+            endDate: date.endOf('day'),
         });
     }
 
@@ -181,46 +181,66 @@ class ShopOrders extends React.Component {
                       <h3>ORDER DETAILS</h3>
                       <table>
                         <tr>
-                            <th>Name:</th>
-                            <td>{ this.props.details ? this.props.details.firstName + ' ' + this.props.details.lastName : null }</td>
+                          <th>Name:</th>
+                          <td>
+                            { this.props.details ? this.props.details.firstName + ' ' + this.props.details.lastName : null }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Contact Number</th>
-                            <td>{ this.props.details ? this.props.details.phoneNumber : null }</td>
+                          <th>Contact Number</th>
+                          <td>
+                            { this.props.details ? this.props.details.phoneNumber : null }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Order Date</th>
-                            <td>{ moment(this.props.orderDetail.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a") }</td>
+                          <th>Order Date</th>
+                          <td>
+                            { moment(this.props.orderDetail.orderDate).format("dddd, MMMM Do YYYY, h:mm:ss a") }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Status</th>
-                            <td>{ this.props.orderDetail.status }</td>
+                          <th>Status</th>
+                          <td>
+                            { this.props.orderDetail.status }
+                          </td>
                         </tr>
                         <tr>
-                            <th>User Id</th>
-                            <td>{ this.props.orderDetail.userId }</td>
+                          <th>User Id</th>
+                          <td>
+                            { this.props.orderDetail.userId }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Order Id</th>
-                            <td>{ this.props.orderDetail.frontendOrderId }</td>
+                          <th>Order Id</th>
+                          <td>
+                            { this.props.orderDetail.frontendOrderId }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Address</th>
-                            <td>{ this.props.orderDetail.deliveryAddress.address }</td>
+                          <th>Address</th>
+                          <td>
+                            { this.props.orderDetail.deliveryAddress.address }
+                          </td>
                         </tr>
                         <tr>
-                            <th>City</th>
-                            <td>{ this.props.orderDetail.deliveryAddress.city }</td>
+                          <th>City</th>
+                          <td>
+                            { this.props.orderDetail.deliveryAddress.city }
+                          </td>
                         </tr>
                         <tr>
-                            <th>Pincode</th>
-                            <td>{ this.props.orderDetail.deliveryAddress.pincode }</td>
+                          <th>Pincode</th>
+                          <td>
+                            { this.props.orderDetail.deliveryAddress.pincode }
+                          </td>
                         </tr>
                         <tr>
-                            <th>State</th>
-                            <td>{ this.props.orderDetail.deliveryAddress.state }</td>
+                          <th>State</th>
+                          <td>
+                            { this.props.orderDetail.deliveryAddress.state }
+                          </td>
                         </tr>
-                       </table>
+                      </table>
                       <br />
                       <p><strong>PAYMENT TYPE :</strong>
                         { this.props.orderDetail.paymentType }
@@ -261,28 +281,40 @@ class ShopOrders extends React.Component {
                                   <br />
                                   <table>
                                     <tr>
-                                        <th>Outfit</th>
-                                        <td>{ line.product.name }</td>
+                                      <th>Outfit</th>
+                                      <td>
+                                        { line.product.name }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Sku</th>
-                                        <td>{ line.sku }</td>
+                                      <th>Sku</th>
+                                      <td>
+                                        { line.sku }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Designer Name</th>
-                                        <td>{ line.product.designer }</td>
+                                      <th>Designer Name</th>
+                                      <td>
+                                        { line.product.designer }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Original Price</th>
-                                        <td>{ line.originalPrice }</td>
+                                      <th>Original Price</th>
+                                      <td>
+                                        { line.originalPrice }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Discounted Price</th>
-                                        <td>{ line.discountedPrice }</td>
+                                      <th>Discounted Price</th>
+                                      <td>
+                                        { line.discountedPrice }
+                                      </td>
                                     </tr>
                                     <tr>
-                                        <th>Status</th>
-                                        <td>{ line.status }</td>
+                                      <th>Status</th>
+                                      <td>
+                                        { line.status }
+                                      </td>
                                     </tr>
                                   </table>
                                   <br />

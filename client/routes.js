@@ -33,6 +33,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Dashboard/components/Users');
   require('./modules/Designer/components/Orders');
   require('./modules/Designer/components/Inventory');
+  require('./modules/Designer/components/Invoice');
 }
 // react-router setup with code-splitting
 // More info: http://blog.mxstbr.com/2016/01/react-apps-with-pages/
@@ -186,6 +187,11 @@ export default function getRoutes(store, req) {
                                                                                   cb(null, require('./modules/Designer/components/Orders').default);
                                                                                 });
                                                                               } } />
+      <Route path="/designer/invoice" onEnter={ checkDesigner } getComponent={ (nextState, cb) => {
+                                                                                 require.ensure([], require => {
+                                                                                   cb(null, require('./modules/Designer/components/Invoice').default);
+                                                                                 });
+                                                                               } } />
     </Route>
     );
 }

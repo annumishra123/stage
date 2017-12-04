@@ -43,7 +43,10 @@ class Navigation extends React.Component {
                                                               <Link to="/designer/inventory">Inventory</Link>
                                                             </li>
                                                             <li>
-                                                              { /* <Link to="/designer/orders">Orders</Link> */ }
+                                                              <Link to="/designer/orders">Orders</Link>
+                                                            </li>
+                                                            <li>
+                                                              <Link to="/designer/invoice">Invoice</Link>
                                                             </li>
                                                           </ul>
                                                         </div> }

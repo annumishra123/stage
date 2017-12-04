@@ -130,9 +130,9 @@ class Inventory extends React.Component {
                  <br/>
                  <Tabs>
                    <TabList>
-                     <Tab>Shop Catalog</Tab>
-                     <Tab>Rent Catalog</Tab>
-                     <Tab>Accessory Catalog</Tab>
+                     <Tab>Shop</Tab>
+                     <Tab>Rent</Tab>
+                     <Tab>Accessory</Tab>
                    </TabList>
                    <TabPanel>
                      { this.renderShopLooks() }
