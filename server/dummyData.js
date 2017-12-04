@@ -91,7 +91,7 @@ export default function () {
         owner: 'mani bhatia'
       });
 
-      designer.password = superUser.generateHash('designer@123');
+      designer.password = designer.generateHash('designer@123');
 
       designer.save();
     }
