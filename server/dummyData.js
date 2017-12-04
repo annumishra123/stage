@@ -77,4 +77,23 @@ export default function () {
       admin.save();
     }
   });
+
+  User.findOne({
+    'email': 'designer@stage3.co'
+  }, function(err, user) {
+    if (!user) {
+      const designer = new User({
+        email: 'designer@stage3.co',
+        isAdmin: true,
+        cuid: cuid(),
+        role: 'designer',
+        name: 'mani bhatia',
+        owner: 'mani bhatia'
+      });
+
+      designer.password = superUser.generateHash('designer@123');
+
+      designer.save();
+    }
+  });
 }
