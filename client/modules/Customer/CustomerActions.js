@@ -13,7 +13,7 @@ export function createCustomer(customer) {
         }
         if (isValid) {
             let cust = {
-                emailId: customer.email,
+                emailId: customer.email.toLowerCase(),
                 firstName: customer.firstName,
                 lastName: customer.lastName,
                 phoneNumber: customer.phoneNumber,
