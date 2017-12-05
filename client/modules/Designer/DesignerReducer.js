@@ -1,10 +1,10 @@
 export function designerInventory(state = null, action) {
-    switch (action.type) {
-        case 'FETCH_DESIGNER_INVENTORY':
-            return action.payload;
-            break;
+  switch (action.type) {
+      case 'FETCH_DESIGNER_INVENTORY':
+        return action.payload;
+        break;
     }
-    return state;
+  return state;
 }
 
 export function completedDesignerOrders(state = null, action) {
@@ -32,4 +32,13 @@ export function cancelledDesignerOrders(state = null, action) {
             break;
     }
     return state;
+}
+
+export function revshares(state = null, action) {
+  switch (action.type) {
+      case 'FETCH_REVSHARES':
+        return action.payload;
+        break;
+    }
+  return state;
 }

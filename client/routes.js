@@ -34,6 +34,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Designer/components/Orders');
   require('./modules/Designer/components/Inventory');
   require('./modules/Designer/components/Invoice');
+  require('./modules/Designer/components/Owner');
 }
 // react-router setup with code-splitting
 // More info: http://blog.mxstbr.com/2016/01/react-apps-with-pages/
@@ -49,6 +50,26 @@ export default function getRoutes(store, req) {
     function checkAuth() {
       const {auth: {isAuthenticated, role}} = store.getState();
       if (role !== 'superuser' || (!isAuthenticated)) {
+        replace('/');
+      }
+      cb();
+    }
+    if (typeof window !== 'undefined') {
+      const {auth: {loaded}} = store.getState();
+      if (!loaded) {
+        store.dispatch(Actions.checkToken(token)).then(checkAuth);
+      } else {
+        checkAuth();
+      }
+    } else {
+      cb();
+    }
+  };
+
+  const checkAdmin = (nextState, replace, cb) => {
+    function checkAuth() {
+      const {auth: {isAuthenticated, role}} = store.getState();
+      if ((!isAuthenticated) || role !== 'admin') {
         replace('/');
       }
       cb();
@@ -192,6 +213,11 @@ export default function getRoutes(store, req) {
                                                                                    cb(null, require('./modules/Designer/components/Invoice').default);
                                                                                  });
                                                                                } } />
+      <Route path="/owners" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
+                                                                    require.ensure([], require => {
+                                                                      cb(null, require('./modules/Designer/components/Owner').default);
+                                                                    });
+                                                                  } } />
     </Route>
     );
 }
