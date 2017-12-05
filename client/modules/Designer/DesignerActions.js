@@ -3,7 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 export function getDesignerInventory(owner) {
-    return function (dispatch) {
+    return function(dispatch) {
         let loopbackFilter = {
             where: {
                 designer: owner,
@@ -124,7 +124,7 @@ export function getCancelledOrders(owner, startDate, endDate) {
 
 export function createOwner(owner) {
     console.log(owner)
-    return function (dispatch) {
+    return function(dispatch) {
         let url = '/api/revshare/api/owners/';
         axios({
             url,
@@ -142,7 +142,7 @@ export function createOwner(owner) {
 }
 
 export function getOwners() {
-    return function (dispatch) {
+    return function(dispatch) {
         let url = '/api/revshare/api/owners/';
         axios({
             url,

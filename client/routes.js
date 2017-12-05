@@ -43,19 +43,39 @@ export default function getRoutes(store, req) {
 
   if (req && req.session) {
     token = req.session.token ? req.session.token : null;
-    // console.log(token);
+  // console.log(token);
   }
 
   const checkSuperUser = (nextState, replace, cb) => {
     function checkAuth() {
-      const { auth: { isAuthenticated, role } } = store.getState();
+      const {auth: {isAuthenticated, role}} = store.getState();
       if (role !== 'superuser' || (!isAuthenticated)) {
         replace('/');
       }
       cb();
     }
     if (typeof window !== 'undefined') {
-      const { auth: { loaded } } = store.getState();
+      const {auth: {loaded}} = store.getState();
+      if (!loaded) {
+        store.dispatch(Actions.checkToken(token)).then(checkAuth);
+      } else {
+        checkAuth();
+      }
+    } else {
+      cb();
+    }
+  };
+
+  const checkAdmin = (nextState, replace, cb) => {
+    function checkAuth() {
+      const {auth: {isAuthenticated, role}} = store.getState();
+      if ((!isAuthenticated) || role !== 'admin') {
+        replace('/');
+      }
+      cb();
+    }
+    if (typeof window !== 'undefined') {
+      const {auth: {loaded}} = store.getState();
       if (!loaded) {
         store.dispatch(Actions.checkToken(token)).then(checkAuth);
       } else {
@@ -68,14 +88,14 @@ export default function getRoutes(store, req) {
 
   const checkUser = (nextState, replace, cb) => {
     function checkAuth() {
-      const { auth: { isAuthenticated, role } } = store.getState();
+      const {auth: {isAuthenticated, role}} = store.getState();
       if ((!isAuthenticated) || role == 'designer') {
         replace('/');
       }
       cb();
     }
     if (typeof window !== 'undefined') {
-      const { auth: { loaded } } = store.getState();
+      const {auth: {loaded}} = store.getState();
       if (!loaded) {
         store.dispatch(Actions.checkToken(token)).then(checkAuth);
       } else {
@@ -88,14 +108,14 @@ export default function getRoutes(store, req) {
 
   const checkAuth = (nextState, replace, cb) => {
     function checkAuth() {
-      const { auth: { isAuthenticated, role } } = store.getState();
+      const {auth: {isAuthenticated, role}} = store.getState();
       if (!isAuthenticated) {
         replace('/');
       }
       cb();
     }
     if (typeof window !== 'undefined') {
-      const { auth: { loaded } } = store.getState();
+      const {auth: {loaded}} = store.getState();
       if (!loaded) {
         store.dispatch(Actions.checkToken(token)).then(checkAuth);
       } else {
@@ -108,14 +128,14 @@ export default function getRoutes(store, req) {
 
   const checkDesigner = (nextState, replace, cb) => {
     function checkAuth() {
-      const { auth: { isAuthenticated, role } } = store.getState();
+      const {auth: {isAuthenticated, role}} = store.getState();
       if ((!isAuthenticated) || role !== 'designer') {
         replace('/');
       }
       cb();
     }
     if (typeof window !== 'undefined') {
-      const { auth: { loaded } } = store.getState();
+      const {auth: {loaded}} = store.getState();
       if (!loaded) {
         store.dispatch(Actions.checkToken(token)).then(checkAuth);
       } else {
@@ -127,77 +147,77 @@ export default function getRoutes(store, req) {
   };
 
   return (
-    <Route path="/" component={App}>
-      <IndexRoute getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Dashboard/components/Login').default);
-        });
-      }} />
-      <Route path="/users" onEnter={checkSuperUser} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Dashboard/components/Users').default);
-        });
-      }} />
-      <Route path="/menu" onEnter={checkAuth} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Dashboard/components/Navigation').default);
-        });
-      }} />
-      <Route path="/shop" onEnter={checkUser} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Shop/components/ShopOrders').default);
-        });
-      }} />
-      <Route path="/shop/create" onEnter={checkUser} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Shop/components/CreateShopOrder').default);
-        });
-      }} />
-      <Route path="/customer" onEnter={checkUser} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Customer/components/Customer').default);
-        });
-      }} />
-      <Route path="/rent" onEnter={checkUser} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Rent/components/RentOrders').default);
-        });
-      }} />
-      <Route path="/rent/create" onEnter={checkUser} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Rent/components/CreateRentOrder').default);
-        });
-      }} />
-      <Route path="/delivery" onEnter={checkUser} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Delivery/components/DeliveryOrders').default);
-        });
-      }} />
-      <Route path="/inventory" onEnter={checkUser} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Inventory/components/Inventory').default);
-        });
-      }} />
-      <Route path="/designer/inventory" onEnter={checkDesigner} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Designer/components/Inventory').default);
-        });
-      }} />
-      <Route path="/designer/orders" onEnter={checkDesigner} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Designer/components/Orders').default);
-        });
-      }} />
-      <Route path="/designer/invoice" onEnter={checkDesigner} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Designer/components/Invoice').default);
-        });
-      }} />
-      <Route path="/owners" onEnter={checkUser} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Designer/components/Owner').default);
-        });
-      }} />
+    <Route path="/" component={ App }>
+      <IndexRoute getComponent={ (nextState, cb) => {
+                                   require.ensure([], require => {
+                                     cb(null, require('./modules/Dashboard/components/Login').default);
+                                   });
+                                 } } />
+      <Route path="/users" onEnter={ checkSuperUser } getComponent={ (nextState, cb) => {
+                                                                       require.ensure([], require => {
+                                                                         cb(null, require('./modules/Dashboard/components/Users').default);
+                                                                       });
+                                                                     } } />
+      <Route path="/menu" onEnter={ checkAuth } getComponent={ (nextState, cb) => {
+                                                                 require.ensure([], require => {
+                                                                   cb(null, require('./modules/Dashboard/components/Navigation').default);
+                                                                 });
+                                                               } } />
+      <Route path="/shop" onEnter={ checkUser } getComponent={ (nextState, cb) => {
+                                                                 require.ensure([], require => {
+                                                                   cb(null, require('./modules/Shop/components/ShopOrders').default);
+                                                                 });
+                                                               } } />
+      <Route path="/shop/create" onEnter={ checkUser } getComponent={ (nextState, cb) => {
+                                                                        require.ensure([], require => {
+                                                                          cb(null, require('./modules/Shop/components/CreateShopOrder').default);
+                                                                        });
+                                                                      } } />
+      <Route path="/customer" onEnter={ checkUser } getComponent={ (nextState, cb) => {
+                                                                     require.ensure([], require => {
+                                                                       cb(null, require('./modules/Customer/components/Customer').default);
+                                                                     });
+                                                                   } } />
+      <Route path="/rent" onEnter={ checkUser } getComponent={ (nextState, cb) => {
+                                                                 require.ensure([], require => {
+                                                                   cb(null, require('./modules/Rent/components/RentOrders').default);
+                                                                 });
+                                                               } } />
+      <Route path="/rent/create" onEnter={ checkUser } getComponent={ (nextState, cb) => {
+                                                                        require.ensure([], require => {
+                                                                          cb(null, require('./modules/Rent/components/CreateRentOrder').default);
+                                                                        });
+                                                                      } } />
+      <Route path="/delivery" onEnter={ checkUser } getComponent={ (nextState, cb) => {
+                                                                     require.ensure([], require => {
+                                                                       cb(null, require('./modules/Delivery/components/DeliveryOrders').default);
+                                                                     });
+                                                                   } } />
+      <Route path="/inventory" onEnter={ checkUser } getComponent={ (nextState, cb) => {
+                                                                      require.ensure([], require => {
+                                                                        cb(null, require('./modules/Inventory/components/Inventory').default);
+                                                                      });
+                                                                    } } />
+      <Route path="/designer/inventory" onEnter={ checkDesigner } getComponent={ (nextState, cb) => {
+                                                                                   require.ensure([], require => {
+                                                                                     cb(null, require('./modules/Designer/components/Inventory').default);
+                                                                                   });
+                                                                                 } } />
+      <Route path="/designer/orders" onEnter={ checkDesigner } getComponent={ (nextState, cb) => {
+                                                                                require.ensure([], require => {
+                                                                                  cb(null, require('./modules/Designer/components/Orders').default);
+                                                                                });
+                                                                              } } />
+      <Route path="/designer/invoice" onEnter={ checkDesigner } getComponent={ (nextState, cb) => {
+                                                                                 require.ensure([], require => {
+                                                                                   cb(null, require('./modules/Designer/components/Invoice').default);
+                                                                                 });
+                                                                               } } />
+      <Route path="/owners" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
+                                                                    require.ensure([], require => {
+                                                                      cb(null, require('./modules/Designer/components/Owner').default);
+                                                                    });
+                                                                  } } />
     </Route>
-  );
+    );
 }

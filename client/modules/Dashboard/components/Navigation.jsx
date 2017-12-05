@@ -12,48 +12,48 @@ class Navigation extends React.Component {
     super(props);
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   render() {
-    return (<section className={styles.navigations}>
-      {this.props.role !== 'designer' ? <ul>
-        <li>
-          <Link to="/customer">Create/Find Customer</Link>
-        </li>
-        <li>
-          <Link to="/shop">Shop Orders</Link>
-        </li>
-        <li>
-          <Link to="/rent">Rent Orders</Link>
-        </li>
-        <li>
-          <Link to="/delivery">Delivery</Link>
-        </li>
-        <li>
-          <Link to="/inventory">Inventory</Link>
-        </li>
-        <li>
-          <Link to="/owners">Revshare</Link>
-        </li>
-        {this.props.role == 'superuser' ? <li>
-          <Link>Create User
-                                                                                       <br />(coming soon)</Link>
-        </li> : null}
-      </ul> : <div>
-          <h1>{this.props.owner.toUpperCase()}</h1>
-          <ul>
-            <li>
-              <Link to="/designer/inventory">Inventory</Link>
-            </li>
-            <li>
-              <Link to="/designer/orders">Orders</Link>
-            </li>
-            <li>
-              <Link to="/designer/invoice">Invoice</Link>
-            </li>
-          </ul>
-        </div>}
-    </section>);
+    return (<section className={ styles.navigations }>
+              { this.props.role !== 'designer' ? <ul>
+                                                   <li>
+                                                     <Link to="/customer">Create/Find Customer</Link>
+                                                   </li>
+                                                   <li>
+                                                     <Link to="/shop">Shop Orders</Link>
+                                                   </li>
+                                                   <li>
+                                                     <Link to="/rent">Rent Orders</Link>
+                                                   </li>
+                                                   <li>
+                                                     <Link to="/delivery">Delivery</Link>
+                                                   </li>
+                                                   <li>
+                                                     <Link to="/inventory">Inventory</Link>
+                                                   </li>
+                                                   { this.props.role == 'admin' ? <li>
+                                                                                    <Link to="/owners">Revshare</Link>
+                                                                                  </li> : null }
+                                                   { this.props.role == 'superuser' ? <li>
+                                                                                        <Link>Create User
+                                                                                        <br />(coming soon)</Link>
+                                                                                      </li> : null }
+                                                 </ul> : <div>
+                                                           <h1>{ this.props.owner.toUpperCase() }</h1>
+                                                           <ul>
+                                                             <li>
+                                                               <Link to="/designer/inventory">Inventory</Link>
+                                                             </li>
+                                                             <li>
+                                                               <Link to="/designer/orders">Orders</Link>
+                                                             </li>
+                                                             <li>
+                                                               <Link to="/designer/invoice">Invoice</Link>
+                                                             </li>
+                                                           </ul>
+                                                         </div> }
+            </section>);
   }
 }
 
