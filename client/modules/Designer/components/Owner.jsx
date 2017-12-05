@@ -6,61 +6,61 @@ import ReactTable from 'react-table';
 import moment from 'moment';
 import { getOwners } from '../DesignerActions';
 import clientConfig from '../../../config';
-import FormSubmitButton from '../../Customer/components/FormSubmitButton.js'
+import FormSubmitButton from '../../Customer/components/FormSubmitButton.js';
 import OwnerForm from './OwnerForm.jsx';
 
 
 class Owner extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            month: moment().month() + 1,
-            year: moment().year(),
-            designer: '',
-            isDelhi: true
-        }
+  constructor(props) {
+      super(props);
+      this.state = {
+          month: moment().month() + 1,
+          year: moment().year(),
+          designer: '',
+          isDelhi: true,
+        };
     }
 
-    componentDidMount() {
-        this.props.getOwners()
+  componentDidMount() {
+      this.props.getOwners();
     }
 
-    renderOwners() {
-        if (this.props.revshares) {
-            if (this.props.revshares.length > 0) {
-                return (<div>
+  renderOwners() {
+      if (this.props.revshares) {
+          if (this.props.revshares.length > 0) {
+              return (<div>
                     <ReactTable filterable data={this.props.revshares} columns={clientConfig.ownersColumns} defaultPageSize={5} className="-striped -highlight" />
                 </div>);
             }
         }
     }
 
-    handleChangeMonth(e) {
-        this.setState({
-            month: e.target.value
+  handleChangeMonth(e) {
+      this.setState({
+          month: e.target.value,
         });
     }
 
-    handleChangeDesigner(e) {
-        this.setState({
-            designer: e.target.value
+  handleChangeDesigner(e) {
+      this.setState({
+          designer: e.target.value,
         });
     }
 
-    handleChangeYear(e) {
-        this.setState({
-            year: e.target.value
+  handleChangeYear(e) {
+      this.setState({
+          year: e.target.value,
         });
     }
 
-    handleChangeCity(value) {
-        this.setState({
-            isDelhi: value
+  handleChangeCity(value) {
+      this.setState({
+          isDelhi: value,
         });
     }
 
-    render() {
-        return <section>
+  render() {
+      return (<section>
             <h1>Owners</h1>
             <br />
             {this.renderOwners()}
@@ -100,20 +100,20 @@ class Owner extends React.Component {
             <input type="radio" name="city" onClick={this.handleChangeCity.bind(this, false)} />
             <label>Other</label>
             <br />
-            <a target="blank" href={'/api/revshare/api/owners/invoice?owner=' + encodeURI(this.state.designer) + '&month=' + this.state.month + '&year=' + this.state.year + '&ut=' + this.state.isDelhi}>Generate Invoice</a>
-        </section>;
+            <a target="blank" href={'/api/revshare/api/owners/invoice?owner=' + encodeURIComponent(this.state.designer) + '&month=' + this.state.month + '&year=' + this.state.year + '&ut=' + this.state.isDelhi}>Generate Invoice</a>
+        </section>);
     }
 }
 
 function matchDispatchToProps(dispatch) {
-    return bindActionCreators({
-        getOwners,
+  return bindActionCreators({
+      getOwners,
     }, dispatch);
 }
 
 function mapStateToProps(state) {
-    return {
-        revshares: state.revshares,
+  return {
+      revshares: state.revshares,
     };
 }
 
