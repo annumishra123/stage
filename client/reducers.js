@@ -13,6 +13,7 @@ import { customerDetail, selectedAddress, creditPoints, customerComments } from 
 import { deliveryOrders } from './modules/Delivery/DeliveryReducer';
 import { accessoryCatalog, rentCatalog, shopCatalog } from './modules/Inventory/InventoryReducer';
 import { designerInventory, cancelledDesignerOrders, completedDesignerOrders, pendingDesignerOrders } from './modules/Designer/DesignerReducer';
+import { revshares } from './modules/Designer/DesignerReducer';
 import { reducer as formReducer } from 'redux-form';
 
 // Combine all reducers into one root reducer
@@ -43,5 +44,7 @@ export default combineReducers({
   customerComments,
   completedDesignerOrders,
   cancelledDesignerOrders,
-  pendingDesignerOrders
+  pendingDesignerOrders,
+  customerComments,
+  revshares,
 });
