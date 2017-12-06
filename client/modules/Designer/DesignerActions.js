@@ -9,7 +9,7 @@ export function getDesignerInventory(owner) {
                 designer: owner,
             },
         };
-        let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks?filter=' + JSON.stringify(loopbackFilter);
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks?filter=' + encodeURIComponent(JSON.stringify(loopbackFilter));
         return axios({
             url,
             timeout: 20000,
@@ -41,7 +41,7 @@ export function getCompletedOrders(owner, startDate, endDate) {
                 }]
             }
         };
-        let url = '/api/revshare/api/orderlinelogs?filter=' + JSON.stringify(loopbackFilter);
+        let url = '/api/revshare/api/orderlinelogs?filter=' + encodeURIComponent(JSON.stringify(loopbackFilter));
         return axios({
             url: url,
             timeout: 20000,
@@ -73,7 +73,7 @@ export function getPendingOrders(owner) {
                 }]
             }
         };
-        let url = '/api/revshare/api/orderlinelogs?filter=' + JSON.stringify(loopbackFilter);
+        let url = '/api/revshare/api/orderlinelogs?filter=' + encodeURIComponent(JSON.stringify(loopbackFilter));
         return axios({
             url: url,
             timeout: 20000,
@@ -105,7 +105,7 @@ export function getCancelledOrders(owner, startDate, endDate) {
                 }]
             }
         };
-        let url = '/api/revshare/api/orderlinelogs?filter=' + JSON.stringify(loopbackFilter);
+        let url = '/api/revshare/api/orderlinelogs?filter=' + encodeURIComponent(JSON.stringify(loopbackFilter));
         return axios({
             url: url,
             timeout: 20000,
