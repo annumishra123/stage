@@ -132,10 +132,16 @@ class RentOrders extends React.Component {
         }
     }
 
+    renderOrderCount() {
+        if (this.props.orders) {
+            return '(' + this.props.orders.length + ')';
+        }
+    }
+
     render() {
         return <section className={ styles.deliveryOrders }>
                  <div>
-                   <h2>Delivery Orders</h2>
+                   <h2>Delivery Orders { this.renderOrderCount() }</h2>
                    <br />
                    <div>
                      <div>
