@@ -33,7 +33,7 @@ export function getCompletedOrders(owner, startDate, endDate) {
                 and: [{
                     owner: owner
                 }, {
-                    dispatchDateUTC: {
+                    pickupDateUTC: {
                         between: [startDate, endDate]
                     }
                 }, {
@@ -65,7 +65,7 @@ export function getPendingOrders(owner) {
                 and: [{
                     owner: owner
                 }, {
-                    dispatchDateUTC: {
+                    pickupDateUTC: {
                         gt: moment().unix() * 1000
                     }
                 }, {
@@ -97,7 +97,7 @@ export function getCancelledOrders(owner, startDate, endDate) {
                 and: [{
                     owner: owner
                 }, {
-                    dispatchDateUTC: {
+                    pickupDateUTC: {
                         between: [startDate, endDate]
                     }
                 }, {
