@@ -134,7 +134,7 @@ class RentOrders extends React.Component {
 
     renderOrderCount() {
         if (this.props.orders) {
-            return '(' + this.props.orders.length + ')';
+            return <h3 style={ { color: 'green' } }>{ '[ ' + this.props.orders.filter((order) => order.product.type == 'product').length + ' Looks & ' + this.props.orders.filter((order) => order.product.type == 'accessory').length + ' Accessories ]' }</h3>;
         }
     }
 

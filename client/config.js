@@ -307,7 +307,13 @@ const clientConfig = {
   }, {
     id: 'gst',
     Header: 'GST',
-    accessor: o => (o.rentPaid / 2) >= 1000 ? (o.rentPaid / 2) * 0.12 : (o.rentPaid / 2) * 0.05
+    accessor: o => {
+      if (o.rentPaid > 999) {
+        return ((o.rentPaid) > 1999 ? (o.rentPaid / 2.24) * 0.12 : (o.rentPaid / 2.24) * 0.05).toFixed(2);
+      } else {
+        return ((o.rentPaid) > 1999 ? (o.rentPaid / 2.1) * 0.12 : (o.rentPaid / 2.1) * 0.05).toFixed(2);
+      }
+    }
   }]
 }
 
