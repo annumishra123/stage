@@ -303,15 +303,21 @@ const clientConfig = {
   }, {
     id: 'share',
     Header: 'Share',
-    accessor: o => o.rentPaid / 2
+    accessor: o => {
+      if (o.rentPaid > 999) {
+        return (o.rentPaid / 2.24).toFixed(2);
+      } else {
+        return (o.rentPaid / 2.1).toFixed(2);
+      }
+    }
   }, {
     id: 'gst',
     Header: 'GST',
     accessor: o => {
       if (o.rentPaid > 999) {
-        return ((o.rentPaid) > 1999 ? (o.rentPaid / 2.24) * 0.12 : (o.rentPaid / 2.24) * 0.05).toFixed(2);
+        return ((o.rentPaid / 2.24) > 999 ? (o.rentPaid / 2.24) * 0.12 : (o.rentPaid / 2.24) * 0.05).toFixed(2);
       } else {
-        return ((o.rentPaid) > 1999 ? (o.rentPaid / 2.1) * 0.12 : (o.rentPaid / 2.1) * 0.05).toFixed(2);
+        return ((o.rentPaid / 2.1) > 999 ? (o.rentPaid / 2.1) * 0.12 : (o.rentPaid / 2.1) * 0.05).toFixed(2);
       }
     }
   }]
