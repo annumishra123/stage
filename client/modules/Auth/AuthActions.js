@@ -1,6 +1,7 @@
 import * as ActionTypes from './constants';
 import fetch from 'isomorphic-fetch';
 import { browserHistory } from 'react-router';
+import axios from 'axios';
 
 const baseURL = typeof window === 'undefined' ? process.env.BASE_URL || (`http://localhost:${(process.env.PORT || 8000)}`) : '';
 
@@ -147,5 +148,33 @@ export function logoutUser() {
     localStorage.removeItem('token');
     browserHistory.push('/');
     dispatch(requestLogout());
+  }
+}
+
+export function changePassword(password) {
+  return function(dispatch) {
+    let url = '/auth/changepassword';
+    let token = localStorage.getItem('token');
+    if (token) {
+      return axios({
+        url: url,
+        timeout: 20000,
+        method: 'post',
+        data: {
+          "password": password
+        },
+        headers: {
+          Authorization: 'JWT ' + token
+        },
+        responseType: 'json'
+      }).then(function(response) {
+        if (response.data.status == 'SUCCESS') {
+          alert('Password has been changed');
+          browserHistory.push('/menu');
+        }
+      }).catch(function(error) {
+        console.log(error);
+      });
+    }
   }
 }

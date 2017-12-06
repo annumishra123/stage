@@ -33,7 +33,7 @@ class Navigation extends React.Component {
                                                      <Link to="/inventory">Inventory</Link>
                                                    </li>
                                                    { this.props.role == 'admin' ? <li>
-                                                                                    <Link to="/owners">Revshare</Link>
+                                                                                    <Link to="/owners">Rev-share</Link>
                                                                                   </li> : null }
                                                    { this.props.role == 'superuser' ? <li>
                                                                                         <Link>Create User
@@ -50,6 +50,9 @@ class Navigation extends React.Component {
                                                              </li>
                                                              <li>
                                                                <Link to="/designer/invoice">Invoice</Link>
+                                                             </li>
+                                                             <li>
+                                                               <Link to="/login/update">Change Password</Link>
                                                              </li>
                                                            </ul>
                                                          </div> }
