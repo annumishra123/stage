@@ -195,15 +195,18 @@ class RentOrders extends React.Component {
         return <div>
                  <h4>Measurement Status</h4>
                  <table>
+                   <tbody>
                    <tr>
                      <th>AGGREGATE STATUS</th>
                      <td>
                        { measurementObj.aggregatedMatchStatus }
                      </td>
                    </tr>
+                   </tbody>
                  </table>
                  <br/>
                  <table>
+                   <tbody>
                    <tr>
                      <th></th>
                      <td>Status</td>
@@ -222,10 +225,11 @@ class RentOrders extends React.Component {
                                   { measurementObj.productMeasurements[measurement].min + '-' + measurementObj.productMeasurements[measurement].max }
                                 </td>
                                 <td>
-                                  { this.props.measurementStatus.userMeasurements[measurement] }
+                                  { this.props.measurementStatus.userMeasurements ? this.props.measurementStatus.userMeasurements[measurement] : null }
                                 </td>
                               </tr>
                      }) }
+                     </tbody>
                  </table>
                </div>;
       }
