@@ -29,6 +29,10 @@ class RentOrders extends React.Component {
         };
     }
 
+    componentDidMount() {
+        this.props.getOrderListByDate(this.state.dateType, this.state.startDate.unix() * 1000, this.state.endDate.unix() * 1000);
+    }
+
     handleChangeStartDate(date) {
         this.setState({
             startDate: date.startOf('day'),
