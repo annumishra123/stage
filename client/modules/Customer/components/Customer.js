@@ -111,8 +111,8 @@ class Customer extends React.Component {
                     <input type="text" onChange={ this.handleChangeComment.bind(this) } />
                     <button onClick={ this.saveComment.bind(this) }>Save Comment</button>
                   </div>
-                  { this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" style={ style } onClick={ this.createShopOrder.bind(this) }>New Shop Order</button> : <br/> }
-                  { this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" style={ style } onClick={ this.createRentOrder.bind(this) }>New Rent Order</button> : <br/> }
+                  { this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" className={ styles.marginSides } style={ style } onClick={ this.createShopOrder.bind(this) }>New Shop Order</button> : <br/> }
+                  { this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" className={ styles.marginSides } style={ style } onClick={ this.createRentOrder.bind(this) }>New Rent Order</button> : <br/> }
                 </section>);
     }
 }

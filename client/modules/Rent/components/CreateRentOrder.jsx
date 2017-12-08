@@ -165,34 +165,39 @@ class CreateRentOrder extends React.Component {
     renderProductPreview() {
         if (this.props.productDetail) {
             let gender = this.props.productDetail.gender == 'male' ? 'men' : 'women';
-            return <div>
-                     <img src={ this.props.productDetail.looknumber ? this.props.productDetail.frontimage : this.props.productDetail.image } style={ { width: '200px' } } />
-                     <p>
-                       Designer:
-                       { ' ' + this.props.productDetail.designer }
-                     </p>
-                     <p>
-                       Name:
-                       { ' ' + this.props.productDetail.name }
-                     </p>
-                     { this.props.productDetail.looknumber ? <p>
-                                                               Discounted Rental Price:
-                                                               { ' ' + this.state.days == 3 ? Math.round(this.props.productDetail.discountedrentalprice * 3) : Math.round(this.props.productDetail.discountedrentalprice * 4.2) }
-                                                             </p> : null }
-                     <p>
-                       Rental Price:
-                       { ' ' + this.state.days == 3 ? Math.round(this.props.productDetail.rentalprice * 3) : Math.round(this.props.productDetail.rentalprice * 4.2) }
-                     </p>
-                     <p>
-                       Deposit Price:
-                       { ' ' + this.state.days == 3 ? Math.round(this.props.productDetail.depositprice * 3) : Math.round(this.props.productDetail.depositprice * 4.2) }
-                     </p>
-                     { this.props.productDetail.looknumber ? <a target="blank" href={ clientConfig.targetURL + '/' + gender + '/' + this.props.productDetail.url + '/p/' + this.props.productDetail.looknumber }>View Complete Product</a> : null }
-                     <div>
+            return <div className={ styles.orderRentView }>
+                     <figure>
+                       <img src={ this.props.productDetail.looknumber ? this.props.productDetail.frontimage : this.props.productDetail.image } style={ { width: '200px' } } />
+                     </figure>
+                     <div className={ styles.width70 }>
+                       <p>
+                         Designer:
+                         { ' ' + this.props.productDetail.designer }
+                       </p>
+                       <p>
+                         Name:
+                         { ' ' + this.props.productDetail.name }
+                       </p>
+                       { this.props.productDetail.looknumber ? <p>
+                                                                 Discounted Rental Price:
+                                                                 { ' ' + this.state.days == 3 ? Math.round(this.props.productDetail.discountedrentalprice * 3) : Math.round(this.props.productDetail.discountedrentalprice * 4.2) }
+                                                               </p> : null }
+                       <p>
+                         Rental Price:
+                         { ' ' + this.state.days == 3 ? Math.round(this.props.productDetail.rentalprice * 3) : Math.round(this.props.productDetail.rentalprice * 4.2) }
+                       </p>
+                       <p>
+                         Deposit Price:
+                         { ' ' + this.state.days == 3 ? Math.round(this.props.productDetail.depositprice * 3) : Math.round(this.props.productDetail.depositprice * 4.2) }
+                       </p>
+                     </div>
+                     { this.props.productDetail.looknumber ? <a className={ styles.link } target="blank" href={ clientConfig.targetURL + '/' + gender + '/' + this.props.productDetail.url + '/p/' + this.props.productDetail.looknumber }>View Complete Product</a> : null }
+                     <div className={ styles.rentalPeriod }>
                        <br />
-                       <p>Rental Period:</p>
+                       <h4>Rental Period:</h4>
                        <input type="radio" name="days" defaultChecked={ true } onChange={ this.selectDays.bind(this, 3) } />
                        <label>3 Days</label>
+                       <br/>
                        <input type="radio" name="days" onChange={ this.selectDays.bind(this, 6) } />
                        <label>6 Days</label>
                      </div>
@@ -334,7 +339,6 @@ class CreateRentOrder extends React.Component {
         return <section className={ styles.rentOrders }>
                  { this.renderCustomerDetails() }
                  <h3>Create New Rent Order</h3>
-                 <br />
                  <h4>Find Product</h4>
                  <label>Look Number: </label>
                  <input type="text" onChange={ this.handleChangeLookNumber.bind(this) } />

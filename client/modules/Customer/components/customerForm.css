@@ -83,6 +83,9 @@
     letter-spacing: 1px;
     width: 300px;
 }
+.marginSides {
+    margin: 0 15px 0 0 !important;
+}
 
 
 @media (max-width: 767px){
@@ -108,6 +111,9 @@
 }
 .createCustomer select {
     width:100%;
+}
+.marginSides {
+    margin: 0 auto !important;
 }
 
 }
