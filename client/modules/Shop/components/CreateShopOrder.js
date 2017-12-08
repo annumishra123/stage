@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import { fetchProduct, addItemToCart, placeOrder, removeItemFromCart } from '../ShopActions';
 import clientConfig from '../../../config';
 
+// Import Style
+import styles from './shopOrder.css';
+
 
 class CreateShopOrder extends React.Component {
   constructor(props) {
@@ -72,25 +75,27 @@ class CreateShopOrder extends React.Component {
 
   renderProductPreview() {
     if (this.props.productDetail) {
-      return <div>
+      return <div className={ styles.orderShopView }>
                <img src={ this.props.productDetail.frontimage } style={ { width: '200px' } } />
-               <p>
-                 Designer:
-                 { ' ' + this.props.productDetail.designer }
-               </p>
-               <p>
-                 Name:
-                 { ' ' + this.props.productDetail.name }
-               </p>
-               <p>
-                 Sale Price:
-                 { ' ' + this.props.productDetail.saleprice }
-               </p>
-               <p>
-                 Original Price:
-                 { ' ' + this.props.productDetail.originalretailprice }
-               </p>
-               <a target="blank" href={ clientConfig.targetURL + '/shop/product/' + this.props.productDetail.id }>View Complete Product</a>
+               <div className={ styles.width70 }>
+                 <p>
+                   Designer:
+                   { ' ' + this.props.productDetail.designer }
+                 </p>
+                 <p>
+                   Name:
+                   { ' ' + this.props.productDetail.name }
+                 </p>
+                 <p>
+                   Sale Price:
+                   { ' ' + this.props.productDetail.saleprice }
+                 </p>
+                 <p>
+                   Original Price:
+                   { ' ' + this.props.productDetail.originalretailprice }
+                 </p>
+               </div>
+               <a className={ styles.link } target="blank" href={ clientConfig.targetURL + '/shop/product/' + this.props.productDetail.id }>View Complete Product</a>
                <br />
                <br />
                <button onClick={ this.addProductToCart.bind(this) }>Add Product</button>
@@ -193,7 +198,7 @@ class CreateShopOrder extends React.Component {
   }
 
   render() {
-    return <section>
+    return <section className={ styles.shopOrders }>
              { this.renderCustomerDetails() }
              <h3>Create New Shop Order</h3>
              <br />

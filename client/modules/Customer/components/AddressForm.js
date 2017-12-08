@@ -4,6 +4,9 @@ import { Field, reduxForm } from 'redux-form';
 import { createAddress } from '../CustomerActions.js';
 import clientConfig from '../../../config.js';
 
+// Import Style
+import styles from './customerForm.css';
+
 let AddressForm = props => {
   const {handleSubmit, selectAddress} = props;
   const handleCityChange = function(e) {
@@ -19,14 +22,12 @@ let AddressForm = props => {
   }
   const renderSavedAddress = function() {
     if (props.addresses && props.addresses.length > 0) {
-      return <div>
+      return <div className={ styles.savedAddresses }>
                <h3>Saved Addresses</h3>
                <br/>
                { props.addresses.map((address, i) => {
                    return <div key={ i }>
-                            <div>
-                              { props.role === 'admin' ? <input name="shippingId" type="radio" value={ address.shippingId } checked={ address.shippingId == props.selectedAddress } onChange={ handleSelectAddress } /> : null }
-                            </div>
+                            { props.role === 'admin' ? <input name="shippingId" type="radio" value={ address.shippingId } checked={ address.shippingId == props.selectedAddress } onChange={ handleSelectAddress } /> : null }
                             <div>
                               <label htmlFor="address">Address :
                                 { address.address }
