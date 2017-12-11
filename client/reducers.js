@@ -12,7 +12,7 @@ import auth from './modules/Auth/AuthReducer';
 import { customerDetail, selectedAddress, creditPoints, customerComments } from './modules/Customer/CustomerReducer';
 import { deliveryOrders } from './modules/Delivery/DeliveryReducer';
 import { accessoryCatalog, rentCatalog, shopCatalog } from './modules/Inventory/InventoryReducer';
-import { designerInventory, cancelledDesignerOrders, completedDesignerOrders, pendingDesignerOrders } from './modules/Designer/DesignerReducer';
+import { designerInventory, cancelledDesignerOrders, completedDesignerOrders, pendingDesignerOrders, designerShare } from './modules/Designer/DesignerReducer';
 import { revshares } from './modules/Designer/DesignerReducer';
 import { reducer as formReducer } from 'redux-form';
 
@@ -47,4 +47,5 @@ export default combineReducers({
   pendingDesignerOrders,
   customerComments,
   revshares,
+  designerShare
 });

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
-import { getOwners, getCompletedOrders, getPendingOrders, getCancelledOrders } from '../DesignerActions';
+import { getOwners, getCompletedOrders, getPendingOrders, getCancelledOrders, getOwnerShare } from '../DesignerActions';
 import clientConfig from '../../../config';
 import FormSubmitButton from '../../Customer/components/FormSubmitButton.js';
 import OwnerForm from './OwnerForm.jsx';
@@ -29,19 +29,19 @@ class Owner extends React.Component {
         this.props.getOwners();
     }
 
-  renderOwners() {
-      if (this.props.revshares) {
-          if (this.props.revshares.length > 0) {
-              return (<div>
-                    <ReactTable filterable data={this.props.revshares} columns={clientConfig.ownersColumns} defaultPageSize={5} className="-striped -highlight" />
-                </div>);
+    renderOwners() {
+        if (this.props.revshares) {
+            if (this.props.revshares.length > 0) {
+                return (<div>
+                          <ReactTable filterable data={ this.props.revshares } columns={ clientConfig.ownersColumns } defaultPageSize={ 5 } className="-striped -highlight" />
+                        </div>);
             }
         }
     }
 
-  handleChangeMonth(e) {
-      this.setState({
-          month: e.target.value,
+    handleChangeMonth(e) {
+        this.setState({
+            month: e.target.value,
         });
     }
 
@@ -51,15 +51,15 @@ class Owner extends React.Component {
         }, this.refreshDesignerOrders);
     }
 
-  handleChangeYear(e) {
-      this.setState({
-          year: e.target.value,
+    handleChangeYear(e) {
+        this.setState({
+            year: e.target.value,
         });
     }
 
-  handleChangeCity(value) {
-      this.setState({
-          isDelhi: value,
+    handleChangeCity(value) {
+        this.setState({
+            isDelhi: value,
         });
     }
 
@@ -80,6 +80,7 @@ class Owner extends React.Component {
     }
 
     refreshDesignerOrders() {
+        this.props.getOwnerShare(this.state.designer);
         this.props.getCompletedOrders(this.state.designer, this.state.startDate.unix() * 1000, this.state.endDate.unix() * 1000);
         this.props.getPendingOrders(this.state.designer);
         this.props.getCancelledOrders(this.state.designer, this.state.startDate.unix() * 1000, this.state.endDate.unix() * 1000);
@@ -101,25 +102,43 @@ class Owner extends React.Component {
 
     renderCompletedOrders() {
         if (this.props.completedDesignerOrders) {
-            return <div>
-                     <ReactTable filterable data={ this.props.completedDesignerOrders } columns={ clientConfig.designerOrderColumns } defaultPageSize={ 10 } className="-striped -highlight" />
-                   </div>;
+            if (this.props.designerShare) {
+                let completedDesignerOrders = this.props.completedDesignerOrders;
+                completedDesignerOrders.map((order) => {
+                    order.share = this.props.designerShare;
+                });
+                return <div>
+                         <ReactTable filterable data={ completedDesignerOrders } columns={ clientConfig.designerOrderColumns } defaultPageSize={ 10 } className="-striped -highlight" />
+                       </div>;
+            }
         }
     }
 
     renderPendingOrders() {
         if (this.props.pendingDesignerOrders) {
-            return <div>
-                     <ReactTable filterable data={ this.props.pendingDesignerOrders } columns={ clientConfig.designerOrderColumns } defaultPageSize={ 10 } className="-striped -highlight" />
-                   </div>;
+            if (this.props.designerShare) {
+                let pendingDesignerOrders = this.props.pendingDesignerOrders;
+                pendingDesignerOrders.map((order) => {
+                    order.share = this.props.designerShare;
+                });
+                return <div>
+                         <ReactTable filterable data={ pendingDesignerOrders } columns={ clientConfig.designerOrderColumns } defaultPageSize={ 10 } className="-striped -highlight" />
+                       </div>;
+            }
         }
     }
 
     renderCancelledOrders() {
         if (this.props.cancelledDesignerOrders) {
-            return <div>
-                     <ReactTable filterable data={ this.props.cancelledDesignerOrders } columns={ clientConfig.designerOrderColumns } defaultPageSize={ 10 } className="-striped -highlight" />
-                   </div>;
+            if (this.props.designerShare) {
+                let cancelledDesignerOrders = this.props.cancelledDesignerOrders;
+                cancelledDesignerOrders.map((order) => {
+                    order.share = this.props.designerShare;
+                });
+                return <div>
+                         <ReactTable filterable data={ cancelledDesignerOrders } columns={ clientConfig.designerOrderColumns } defaultPageSize={ 10 } className="-striped -highlight" />
+                       </div>;
+            }
         }
     }
 
@@ -170,8 +189,8 @@ class Owner extends React.Component {
                  <h1>Orders</h1>
                  <br/>
                  <h4>Designer:
-                                                                                                             { ' ' + this.state.designer.toUpperCase() }
-                                                                                                           </h4>
+                                                                                                                                                                                                                                                                                                                                                                                           { ' ' + this.state.designer.toUpperCase() }
+                                                                                                                                                                                                                                                                                                                                                                                         </h4>
                  <br/>
                  { this.renderDateFilter() }
                  <br/>
@@ -200,7 +219,8 @@ function matchDispatchToProps(dispatch) {
         getOwners,
         getCompletedOrders,
         getPendingOrders,
-        getCancelledOrders
+        getCancelledOrders,
+        getOwnerShare
     }, dispatch);
 }
 
@@ -212,7 +232,8 @@ function mapStateToProps(state) {
         revshares: state.revshares,
         role: state.auth.role,
         owner: state.auth.owner,
-        user: state.auth.email
+        user: state.auth.email,
+        designerShare: state.designerShare ? state.designerShare.revenueshare : null
     };
 }
 
