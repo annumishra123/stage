@@ -159,3 +159,27 @@ export function getOwners() {
         });
     };
 }
+
+export function getOwnerShare(owner) {
+    return function(dispatch) {
+        let loopbackFilter = {
+            where: {
+                ownername: owner
+            }
+        };
+        let url = '/api/revshare/api/owners/?filter=' + encodeURIComponent(JSON.stringify(loopbackFilter));
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json',
+        }).then((response) => {
+            dispatch({
+                type: 'FETCH_DESIGNER_SHARE',
+                payload: response.data[0]
+            })
+        }).catch((error) => {
+            console.log(error);
+        });
+    };
+}
