@@ -4,6 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { changePassword } from '../AuthActions';
 
+// Import Style
+import styles from './login.css';
+
 
 class ChangePassword extends React.Component {
     constructor(props) {
@@ -39,7 +42,9 @@ class ChangePassword extends React.Component {
     }
 
     render() {
-        return <section>
+        return <section className={ styles.forgotPassword }>
+                 <h1>Reset Password</h1>
+                 <br/>
                  <label>New Password</label>
                  <input type="password" value={ this.state.password } onChange={ this.handleChangePassword.bind(this) } />
                  <br/>

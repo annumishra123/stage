@@ -9,6 +9,9 @@ import { getCancelledOrders, getPendingOrders, getCompletedOrders, getOwnerShare
 import clientConfig from '../../../config';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
+// Import Style
+import styles from './designer.css';
+
 
 class Orders extends React.Component {
     constructor(props) {
@@ -59,16 +62,16 @@ class Orders extends React.Component {
     }
 
     renderDateFilter() {
-        return <div>
-                 <div>
+        return <div className={ styles.orderStartEnd }>
+                 <div className={ styles.width50 }>
                    <h4>Start Date</h4>
                    <DatePicker selected={ this.state.startDate } onChange={ this.handleChangeStartDate.bind(this) } />
                  </div>
-                 <div>
+                 <div className={ styles.width50 }>
                    <h4>End Date</h4>
                    <DatePicker selected={ this.state.endDate } onChange={ this.handleChangeEndDate.bind(this) } />
                  </div>
-                 <button onClick={ this.refreshDesignerOrders.bind(this) }>Refresh</button>
+                 <button onClick={ this.refreshDesignerOrders.bind(this) }><img src="https://res.cloudinary.com/stage3/image/upload/f_auto,q_auto:low/icon-refresh.png" alt="refresh" />Refresh</button>
                </div>;
     }
 
@@ -115,7 +118,7 @@ class Orders extends React.Component {
     }
 
     render() {
-        return <section>
+        return <section className={ styles.designerOrder }>
                  <h1>Orders</h1>
                  <br/>
                  { this.renderDateFilter() }

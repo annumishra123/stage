@@ -7,6 +7,9 @@ import moment from 'moment';
 import { getDesignerInventory } from '../DesignerActions';
 import clientConfig from '../../../config';
 
+// Import Style
+import styles from './designer.css';
+
 
 class Invoice extends React.Component {
     constructor(props) {
@@ -37,7 +40,7 @@ class Invoice extends React.Component {
     }
 
     render() {
-        return <section>
+        return <section className={ styles.designerInvoice }>
                  <h1>Create Invoice</h1>
                  <br/>
                  <select defaultValue={ this.state.month } onChange={ this.handleChangeMonth.bind(this) }>

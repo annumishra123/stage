@@ -1,6 +1,14 @@
 .navigations {
     padding: -15px;
 }
+.navigations h1 {
+    color: #000;
+    font-family: "Lato";
+    letter-spacing: 4px;
+    font-size: 30px;
+    text-align: center;
+    margin: 20px 0 20px;
+}
 .navigations ul {
     list-style: none;
     margin: 0;
@@ -38,6 +46,12 @@
 
 
 @media (max-width: 767px){
+    .navigations h1 {
+        letter-spacing: 2px;
+        font-size: 22px;
+        text-align: center;
+        margin: 10px 0 10px;
+    }
     .navigations ul li {
         width: 100%;
         height: 80px;
