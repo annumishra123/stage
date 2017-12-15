@@ -196,40 +196,40 @@ class RentOrders extends React.Component {
                  <h4>Measurement Status</h4>
                  <table>
                    <tbody>
-                   <tr>
-                     <th>AGGREGATE STATUS</th>
-                     <td>
-                       { measurementObj.aggregatedMatchStatus }
-                     </td>
-                   </tr>
+                     <tr>
+                       <th>AGGREGATE STATUS</th>
+                       <td>
+                         { measurementObj.aggregatedMatchStatus }
+                       </td>
+                     </tr>
                    </tbody>
                  </table>
                  <br/>
                  <table>
                    <tbody>
-                   <tr>
-                     <th></th>
-                     <td>Status</td>
-                     <td>Product</td>
-                     <td>Customer</td>
-                   </tr>
-                   { Object.keys(measurementObj.matches).map((measurement, i) => {
-                       return <tr key={ i }>
-                                <th>
-                                  { measurement.toUpperCase() }
-                                </th>
-                                <td>
-                                  { measurementObj.matches[measurement] }
-                                </td>
-                                <td>
-                                  { measurementObj.productMeasurements[measurement].min + '-' + measurementObj.productMeasurements[measurement].max }
-                                </td>
-                                <td>
-                                  { this.props.measurementStatus.userMeasurements ? this.props.measurementStatus.userMeasurements[measurement] : null }
-                                </td>
-                              </tr>
-                     }) }
-                     </tbody>
+                     <tr>
+                       <th></th>
+                       <td>Status</td>
+                       <td>Product</td>
+                       <td>Customer</td>
+                     </tr>
+                     { Object.keys(measurementObj.matches).map((measurement, i) => {
+                         return <tr key={ i }>
+                                  <th>
+                                    { measurement.toUpperCase() }
+                                  </th>
+                                  <td>
+                                    { measurementObj.matches[measurement] }
+                                  </td>
+                                  <td>
+                                    { measurementObj.productMeasurements[measurement].min + '-' + measurementObj.productMeasurements[measurement].max }
+                                  </td>
+                                  <td>
+                                    { this.props.measurementStatus.userMeasurements ? this.props.measurementStatus.userMeasurements[measurement] : null }
+                                  </td>
+                                </tr>
+                       }) }
+                   </tbody>
                  </table>
                </div>;
       }
@@ -399,6 +399,12 @@ class RentOrders extends React.Component {
                             <th>Designer Name</th>
                             <td>
                               { line.product.designer }
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>Order Type</th>
+                            <td>
+                              { line.orderType }
                             </td>
                           </tr>
                           <tr>
