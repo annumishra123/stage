@@ -142,6 +142,40 @@ class Owner extends React.Component {
         }
     }
 
+    renderOrderTotal() {
+        if (this.props.completedDesignerOrders) {
+            let total = 0;
+            let totalGST = 0;
+            this.props.completedDesignerOrders.map((order) => {
+                if (order.rentPaid > 999) {
+                    total += ((order.rentPaid * (this.props.designerShare / 100)) / 1.12);
+                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.12) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.05);
+                } else {
+                    total += ((order.rentPaid * (this.props.designerShare / 100)) / 1.05);
+                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.05) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.05);
+                }
+            });
+            return <h3>COMPLETED - [ SHARE: <span style={ { color: "green" } }>₹{ total.toFixed(2) }</span> & GST: <span style={ { color: "green" } }>₹{ totalGST.toFixed(2) }</span> ]</h3>;
+        }
+    }
+
+    renderPendingOrderTotal() {
+        if (this.props.pendingDesignerOrders) {
+            let total = 0;
+            let totalGST = 0;
+            this.props.pendingDesignerOrders.map((order) => {
+                if (order.rentPaid > 999) {
+                    total += ((order.rentPaid * (this.props.designerShare / 100)) / 1.12);
+                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.12) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.05);
+                } else {
+                    total += ((order.rentPaid * (this.props.designerShare / 100)) / 1.05);
+                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.05) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.05);
+                }
+            });
+            return <h3>PENDING - [ SHARE: <span style={ { color: "green" } }>₹{ total.toFixed(2) }</span> & GST: <span style={ { color: "green" } }>₹{ totalGST.toFixed(2) }</span> ]</h3>;
+        }
+    }
+
     render() {
         return <section>
                  <h1>Owners</h1>
@@ -185,31 +219,35 @@ class Owner extends React.Component {
                  <br/>
                  <a target="blank" href={ '/api/revshare/api/owners/invoice?owner=' + this.state.designer + '&month=' + this.state.month + '&year=' + this.state.year + '&ut=' + this.state.isDelhi }>Generate Invoice</a>
                  <br/>
-                 <br/>
-                 <h1>Orders</h1>
-                 <br/>
-                 <h4>Designer:
-                                                                                                                                                                                                                                                                                                                                                                                           { ' ' + this.state.designer.toUpperCase() }
-                                                                                                                                                                                                                                                                                                                                                                                         </h4>
-                 <br/>
-                 { this.renderDateFilter() }
-                 <br/>
-                 <Tabs>
-                   <TabList>
-                     <Tab>Completed</Tab>
-                     <Tab>Pending</Tab>
-                     <Tab>Cancelled</Tab>
-                   </TabList>
-                   <TabPanel>
-                     { this.renderCompletedOrders() }
-                   </TabPanel>
-                   <TabPanel>
-                     { this.renderPendingOrders() }
-                   </TabPanel>
-                   <TabPanel>
-                     { this.renderCancelledOrders() }
-                   </TabPanel>
-                 </Tabs>
+                 { this.state.designer ? <div>
+                                           <br/>
+                                           <h1>Orders</h1>
+                                           <br/>
+                                           <h4>Designer:{ ' ' + this.state.designer.toUpperCase() }</h4>
+                                           <br/>
+                                           { this.renderOrderTotal() }
+                                           <br/>
+                                           { this.renderPendingOrderTotal() }
+                                           <br/>
+                                           { this.renderDateFilter() }
+                                           <br/>
+                                           <Tabs>
+                                             <TabList>
+                                               <Tab>Completed</Tab>
+                                               <Tab>Pending</Tab>
+                                               <Tab>Cancelled</Tab>
+                                             </TabList>
+                                             <TabPanel>
+                                               { this.renderCompletedOrders() }
+                                             </TabPanel>
+                                             <TabPanel>
+                                               { this.renderPendingOrders() }
+                                             </TabPanel>
+                                             <TabPanel>
+                                               { this.renderCancelledOrders() }
+                                             </TabPanel>
+                                           </Tabs>
+                                         </div> : null }
                </section>;
     }
 }
