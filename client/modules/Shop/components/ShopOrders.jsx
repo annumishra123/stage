@@ -219,25 +219,25 @@ class ShopOrders extends React.Component {
                   <tr>
                     <th>Address</th>
                     <td>
-                      { this.props.orderDetail.deliveryAddress.address }
+                      { this.props.orderDetail.deliveryAddress ? this.props.orderDetail.deliveryAddress.address : null }
                     </td>
                   </tr>
                   <tr>
                     <th>City</th>
                     <td>
-                      { this.props.orderDetail.deliveryAddress.city }
+                      { this.props.orderDetail.deliveryAddress ? this.props.orderDetail.deliveryAddress.city : null }
                     </td>
                   </tr>
                   <tr>
                     <th>Pincode</th>
                     <td>
-                      { this.props.orderDetail.deliveryAddress.pincode }
+                      { this.props.orderDetail.deliveryAddress ? this.props.orderDetail.deliveryAddress.pincode : null }
                     </td>
                   </tr>
                   <tr>
                     <th>State</th>
                     <td>
-                      { this.props.orderDetail.deliveryAddress.state }
+                      { this.props.orderDetail.deliveryAddress ? this.props.orderDetail.deliveryAddress.state : null }
                     </td>
                   </tr>
                 </table>

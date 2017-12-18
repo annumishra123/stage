@@ -290,25 +290,25 @@ class RentOrders extends React.Component {
                   <tr>
                     <th>Address</th>
                     <td>
-                      { this.props.orderDetail.shippingInformationObj.address }
+                      { this.props.orderDetail.shippingInformationObj ? this.props.orderDetail.shippingInformationObj.address : null }
                     </td>
                   </tr>
                   <tr>
                     <th>City</th>
                     <td>
-                      { this.props.orderDetail.shippingInformationObj.city }
+                      { this.props.orderDetail.shippingInformationObj ? this.props.orderDetail.shippingInformationObj.city : null }
                     </td>
                   </tr>
                   <tr>
                     <th>State</th>
                     <td>
-                      { this.props.orderDetail.shippingInformationObj.state }
+                      { this.props.orderDetail.shippingInformationObj ? this.props.orderDetail.shippingInformationObj.state : null }
                     </td>
                   </tr>
                   <tr>
                     <th>Pincode</th>
                     <td>
-                      { this.props.orderDetail.shippingInformationObj.pincode }
+                      { this.props.orderDetail.shippingInformationObj ? this.props.orderDetail.shippingInformationObj.pincode : null }
                     </td>
                   </tr>
                   <tr>
