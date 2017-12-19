@@ -11,6 +11,8 @@ import FormSubmitButton from '../../Customer/components/FormSubmitButton.js';
 import OwnerForm from './OwnerForm.jsx';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
+// Import Style
+import styles from './designer.css';
 
 class Owner extends React.Component {
     constructor(props) {
@@ -155,7 +157,7 @@ class Owner extends React.Component {
                     totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.05) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.05);
                 }
             });
-            return <h3>COMPLETED - [ SHARE: <span style={ { color: "green" } }>₹{ total.toFixed(2) }</span> & GST: <span style={ { color: "green" } }>₹{ totalGST.toFixed(2) }</span> ]</h3>;
+            return <p>Completed - Share: <strong><span style={ { color: "green" } }>₹{ total.toFixed(2) }</span></strong> & GST: <strong><span style={ { color: "green" } }>₹{ totalGST.toFixed(2) }</span></strong></p>;
         }
     }
 
@@ -172,12 +174,12 @@ class Owner extends React.Component {
                     totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.05) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.05);
                 }
             });
-            return <h3>PENDING - [ SHARE: <span style={ { color: "green" } }>₹{ total.toFixed(2) }</span> & GST: <span style={ { color: "green" } }>₹{ totalGST.toFixed(2) }</span> ]</h3>;
+            return <p>Pending - Share: <strong><span style={ { color: "green" } }>₹{ total.toFixed(2) }</span></strong> & GST: <strong><span style={ { color: "green" } }>₹{ totalGST.toFixed(2) }</span></strong></p>;
         }
     }
 
     render() {
-        return <section>
+        return <section className={ styles.owners}>
                  <h1>Owners</h1>
                  <br />
                  { this.renderOwners() }
@@ -217,13 +219,13 @@ class Owner extends React.Component {
                  <input type="radio" name="city" onClick={ this.handleChangeCity.bind(this, false) } />
                  <label> Other </label>
                  <br/>
-                 <a target="blank" href={ '/api/revshare/api/owners/invoice?owner=' + this.state.designer + '&month=' + this.state.month + '&year=' + this.state.year + '&ut=' + this.state.isDelhi }>Generate Invoice</a>
+                 <a target="blank" className={ styles.link } href={ '/api/revshare/api/owners/invoice?owner=' + this.state.designer + '&month=' + this.state.month + '&year=' + this.state.year + '&ut=' + this.state.isDelhi }>Generate Invoice</a>
                  <br/>
                  { this.state.designer ? <div>
                                            <br/>
                                            <h1>Orders</h1>
                                            <br/>
-                                           <h4>Designer:{ ' ' + this.state.designer.toUpperCase() }</h4>
+                                           <p>Designer:{ ' ' + this.state.designer.toUpperCase() }</p>
                                            <br/>
                                            { this.renderOrderTotal() }
                                            <br/>

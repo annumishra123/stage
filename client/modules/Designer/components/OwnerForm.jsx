@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { createOwner } from '../DesignerActions.js';
 
 // Import Style
-// import styles from './customerForm.css';
+import styles from './designer.css';
 
 let EmailForm = props => {
   const {handleSubmit} = props;
@@ -11,7 +11,7 @@ let EmailForm = props => {
     <form>
       <h1>Create Owner</h1>
       <br />
-      <div>
+      <div className={ styles.createOwner }>
         <label htmlFor="owners">Owner Name </label>
         <Field name="ownername" component="input" type="text" />
         <br/>
