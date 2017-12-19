@@ -44,13 +44,22 @@
 }
 .createCustomer input {
     border: 1px solid rgab(0,0,0,0.5);
-    padding: 8px;
+    padding: 12px;
     margin: 0 0 10px;
     color: #333;
     font-family: 'Lato', sans-serif;
     font-size: 14px;
     letter-spacing: 1px;
     width: 350px;
+}
+.createCustomer input[type="radio"] {
+    width:20px;
+    float:left;
+    margin: 3px 5px 0 0;
+}
+.savedAddresses > div > div {
+    margin: 0 0 0 30px;
+    line-height: 26px;
 }
 .createCustomer select {
     border: 1px solid rgab(0,0,0,0.5);
@@ -73,6 +82,9 @@
     margin: 10px 15px 10px 0;
     letter-spacing: 1px;
     width: 300px;
+}
+.marginSides {
+    margin: 0 15px 0 0 !important;
 }
 
 
@@ -99,6 +111,9 @@
 }
 .createCustomer select {
     width:100%;
+}
+.marginSides {
+    margin: 0 auto !important;
 }
 
 }

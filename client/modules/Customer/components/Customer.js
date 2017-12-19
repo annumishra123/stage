@@ -8,7 +8,8 @@ import AddressForm from './AddressForm.js';
 import EmailForm from './EmailForm.js';
 import MeasurementsForm from './MeasurementsForm.js';
 import FormSubmitButton from './FormSubmitButton.js';
-import { selectAddress, saveAllCustomerDetails, getCustomerDetailByPhoneNumber } from '../CustomerActions';
+import moment from 'moment';
+import { selectAddress, saveAllCustomerDetails, getCustomerDetailByPhoneNumber, createComment } from '../CustomerActions';
 
 // Import Style
 import styles from './customerForm.css';
@@ -24,6 +25,9 @@ const style = {
 class Customer extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            comment: ''
+        };
     }
 
     saveAllCustomerDetails() {
@@ -52,6 +56,37 @@ class Customer extends React.Component {
         this.props.getCustomerDetailByPhoneNumber(this.state.phoneNumber);
     }
 
+    handleChangeComment(e) {
+        this.setState({
+            comment: e.target.value
+        });
+    }
+
+    saveComment() {
+        this.props.createComment(this.state.comment);
+    }
+
+    renderComments() {
+        if (this.props.customerComments && this.props.customerComments.length > 0) {
+            return <table>
+                     <tr>
+                       <th>Comment</th>
+                       <th>Date</th>
+                     </tr>
+                     { this.props.customerComments.map((comment) => {
+                           return <tr>
+                                    <td>
+                                      { comment.comment }
+                                    </td>
+                                    <td>
+                                      { moment.unix(comment.createdtimestamp).format('lll') }
+                                    </td>
+                                  </tr>
+                       }) }
+                   </table>
+        }
+    }
+
     render() {
         return (<section className={ styles.createCustomer }>
                   <EmailForm />
@@ -71,8 +106,13 @@ class Customer extends React.Component {
                   <MeasurementsForm />
                   { this.props.role === 'admin' ? <FormSubmitButton formName="createMeasurements" text="Save Measurements" /> : <br/> }
                   { this.props.role === 'admin' ? <button type="button" style={ style } onClick={ this.saveAllCustomerDetails.bind(this) }>Save All Information</button> : <br/> }
-                  { this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" style={ style } onClick={ this.createShopOrder.bind(this) }>New Shop Order</button> : <br/> }
-                  { this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" style={ style } onClick={ this.createRentOrder.bind(this) }>New Rent Order</button> : <br/> }
+                  { this.renderComments() }
+                  <div>
+                    <input type="text" onChange={ this.handleChangeComment.bind(this) } />
+                    <button onClick={ this.saveComment.bind(this) }>Save Comment</button>
+                  </div>
+                  { this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" className={ styles.marginSides } style={ style } onClick={ this.createShopOrder.bind(this) }>New Shop Order</button> : <br/> }
+                  { this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" className={ styles.marginSides } style={ style } onClick={ this.createRentOrder.bind(this) }>New Rent Order</button> : <br/> }
                 </section>);
     }
 }
@@ -82,7 +122,8 @@ function matchDispatchToProps(dispatch) {
         submit: submit,
         selectAddress: selectAddress,
         saveAllCustomerDetails: saveAllCustomerDetails,
-        getCustomerDetailByPhoneNumber: getCustomerDetailByPhoneNumber
+        getCustomerDetailByPhoneNumber: getCustomerDetailByPhoneNumber,
+        createComment: createComment
     }, dispatch);
 }
 
@@ -90,7 +131,8 @@ function mapStateToProps(state) {
     return {
         role: state.auth.role,
         customerDetail: state.customerDetail,
-        selectedAddress: state.selectedAddress
+        selectedAddress: state.selectedAddress,
+        customerComments: state.customerComments
     };
 }
 

@@ -9,9 +9,11 @@ import intl from './modules/Intl/IntlReducer';
 import { orders, orderDetail, productDetail, shopPricing } from './modules/Shop/ShopReducer';
 import { rentOrders, rentOrderDetail, rentProductDetail, rentalPricing, bookableStatus, deliveryDates, measurementStatus } from './modules/Rent/RentReducer';
 import auth from './modules/Auth/AuthReducer';
-import { customerDetail, selectedAddress, creditPoints } from './modules/Customer/CustomerReducer';
+import { customerDetail, selectedAddress, creditPoints, customerComments } from './modules/Customer/CustomerReducer';
 import { deliveryOrders } from './modules/Delivery/DeliveryReducer';
 import { accessoryCatalog, rentCatalog, shopCatalog } from './modules/Inventory/InventoryReducer';
+import { designerInventory, cancelledDesignerOrders, completedDesignerOrders, pendingDesignerOrders, designerShare } from './modules/Designer/DesignerReducer';
+import { revshares } from './modules/Designer/DesignerReducer';
 import { reducer as formReducer } from 'redux-form';
 
 // Combine all reducers into one root reducer
@@ -37,5 +39,13 @@ export default combineReducers({
   measurementStatus,
   accessoryCatalog,
   rentCatalog,
-  shopCatalog
+  shopCatalog,
+  designerInventory,
+  customerComments,
+  completedDesignerOrders,
+  cancelledDesignerOrders,
+  pendingDesignerOrders,
+  customerComments,
+  revshares,
+  designerShare
 });

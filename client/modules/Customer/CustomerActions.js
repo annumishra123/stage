@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { reset, submit } from 'redux-form';
+import clientConfig from '../../config';
+import moment from 'moment';
 
 export function createCustomer(customer) {
     return function(dispatch) {
@@ -11,7 +13,7 @@ export function createCustomer(customer) {
         }
         if (isValid) {
             let cust = {
-                emailId: customer.email,
+                emailId: customer.email.toLowerCase(),
                 firstName: customer.firstName,
                 lastName: customer.lastName,
                 phoneNumber: customer.phoneNumber,
@@ -71,6 +73,7 @@ export function getCustomerDetail(email) {
                         payload: customer
                     });
                     dispatch(getCreditPoints(customer.email));
+                    dispatch(getCustomerComments(customer.email));
                 } else {
                     dispatch({
                         type: 'FETCH_CUSTOMER_DETAIL',
@@ -136,6 +139,7 @@ export function getCustomerDetailByPhoneNumber(phoneNumber) {
                         payload: customer
                     });
                     dispatch(getCreditPoints(customer.email));
+                    dispatch(getCustomerComments(customer.email));
                 } else {
                     dispatch({
                         type: 'FETCH_CUSTOMER_DETAIL',
@@ -154,6 +158,57 @@ export function getCustomerDetailByPhoneNumber(phoneNumber) {
         } else {
             alert('Enter a valid email address');
         }
+    }
+}
+
+export function createComment(comment) {
+    return function(dispatch, getState) {
+        let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let url = clientConfig.targetURL + '/api/cart/api/UserComments';
+        if (emailRegex.test(getState().form.createCustomer.values.email) && comment) {
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'post',
+                data: {
+                    user: getState().form.createCustomer.values.email,
+                    comment: comment,
+                    createdtimestamp: moment().unix()
+                },
+                responseType: 'json'
+            }).then(function(response) {
+                dispatch(getCustomerComments(response.data.user));
+            }).catch(function(error) {
+                alert("Comment couldn't be saved");
+                console.log(error);
+            });
+        } else {
+            alert('Enter valid data');
+        }
+    }
+}
+
+export function getCustomerComments(email) {
+    return function(dispatch) {
+        let filter = {
+            where: {
+                user: email
+            }
+        };
+        let url = clientConfig.targetURL + '/api/cart/api/UserComments?filter=' + JSON.stringify(filter);
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then(function(response) {
+            dispatch({
+                type: 'FETCH_CUSTOMER_COMMENTS',
+                payload: response.data
+            });
+        }).catch(function(error) {
+            console.log(error);
+        });
     }
 }
 
@@ -187,9 +242,9 @@ export function createMeasurements(measurements) {
                 responseType: 'json'
             }).then(function(response) {
                 dispatch(getCustomerDetail(measurements.email));
-                alert('Customer measurements have been saved.');
+                alert('Customer measurements have been saved');
             }).catch(function(error) {
-                alert("Customer measurements couldn't be saved.");
+                alert("Customer measurements couldn't be saved");
                 console.log(error);
             });
         } else {

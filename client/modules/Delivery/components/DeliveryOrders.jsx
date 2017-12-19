@@ -29,15 +29,19 @@ class RentOrders extends React.Component {
         };
     }
 
+    componentDidMount() {
+        this.props.getOrderListByDate(this.state.dateType, this.state.startDate.unix() * 1000, this.state.endDate.unix() * 1000);
+    }
+
     handleChangeStartDate(date) {
         this.setState({
-            startDate: date,
+            startDate: date.startOf('day'),
         });
     }
 
     handleChangeEndDate(date) {
         this.setState({
-            endDate: date,
+            endDate: date.endOf('day'),
         });
     }
 
@@ -112,7 +116,7 @@ class RentOrders extends React.Component {
     renderOrders() {
         if (this.props.orders) {
             if (this.props.orders.length > 0) {
-                if (!clientConfig.deliveryColumns.find(o => o.id == 'changeDeliveryStatus')) {
+                if (!clientConfig.deliveryColumns.find(o => o.id == 'changeDeliveryStatus') && (this.props.role == 'delivery' || this.props.role == 'admin')) {
                     clientConfig.deliveryColumns.unshift({
                         Header: '',
                         id: 'changeDeliveryStatus',
@@ -132,10 +136,16 @@ class RentOrders extends React.Component {
         }
     }
 
+    renderOrderCount() {
+        if (this.props.orders) {
+            return <h3 style={ { color: 'green' } }>{ '[ ' + this.props.orders.filter((order) => order.product.type == 'product').length + ' Looks & ' + this.props.orders.filter((order) => order.product.type == 'accessory').length + ' Accessories ]' }</h3>;
+        }
+    }
+
     render() {
         return <section className={ styles.deliveryOrders }>
                  <div>
-                   <h2>Delivery Orders</h2>
+                   <h2>Delivery Orders { this.renderOrderCount() }</h2>
                    <br />
                    <div>
                      <div>
