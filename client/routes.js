@@ -36,6 +36,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Designer/components/Invoice');
   require('./modules/Designer/components/Owner');
   require('./modules/Auth/components/ChangePassword');
+  require('./modules/CMS/components/Instagram');
 }
 
 // react-router setup with code-splitting
@@ -214,6 +215,11 @@ export default function getRoutes(store, req) {
                                                                       cb(null, require('./modules/Designer/components/Owner').default);
                                                                     });
                                                                   } } />
+      <Route path="/cms/instagram" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
+                                                                           require.ensure([], require => {
+                                                                             cb(null, require('./modules/CMS/components/Instagram').default);
+                                                                           });
+                                                                         } } />
       <Route path="/login/update" onEnter={ checkDesigner } getComponent={ (nextState, cb) => {
                                                                              require.ensure([], require => {
                                                                                cb(null, require('./modules/Auth/components/ChangePassword').default);

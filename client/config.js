@@ -320,6 +320,33 @@ const clientConfig = {
         return (((o.rentPaid * (o.share / 100)) / 1.05) > 999 ? ((o.rentPaid * (o.share / 100)) / 1.05) * 0.12 : ((o.rentPaid * (o.share / 100)) / 1.05) * 0.05).toFixed(2);
       }
     }
+  }],
+  cloudinaryURL: 'https://api.cloudinary.com/v1_1/stage3/image/upload',
+  cloudinarySecret: 'vTv6e1DZArggBN4v_uj7UdDBwaU',
+  cloudinaryKey: '788223477814326',
+  instagramFeedColumns: [{
+    Header: 'Title',
+    accessor: 'title'
+  }, {
+    Header: 'URL',
+    accessor: 'url'
+  }, {
+    Header: 'Type',
+    accessor: 'type',
+  }, {
+    id: 'image',
+    Header: 'Image',
+    accessor: o => {
+      return <a target="blank" href={ o.image }>
+                                         Link
+                                       </a>;
+    }
+  }, {
+    id: 'date',
+    Header: 'Created',
+    accessor: o => {
+      return moment(o.createdTimestamp * 1000).format("lll");
+    }
   }]
 }
 
