@@ -52,13 +52,13 @@ class Instagram extends React.Component {
                  <br/>
                  <h1>Create Feed</h1>
                  <br/>
-                 <input type="text" onChange={ this.changeTitle.bind(this) } placeholder="Title" />
+                 <input type="text" value={ this.state.title } onChange={ this.changeTitle.bind(this) } placeholder="Title" />
                  <br/>
                  <br/>
-                 <input type="text" onChange={ this.changeURL.bind(this) } placeholder="Target URL" />
+                 <input type="text" value={ this.state.url } onChange={ this.changeURL.bind(this) } placeholder="Target URL" />
                  <br/>
                  <br/>
-                 <select type="text" onChange={ this.changeType.bind(this) } placeholder="Type">
+                 <select type="text" value={ this.state.type } onChange={ this.changeType.bind(this) } placeholder="Type">
                    <option value=""> -- Select Type -- </option>
                    <option value="rent">Rent</option>
                    <option value="shop">Shop</option>
