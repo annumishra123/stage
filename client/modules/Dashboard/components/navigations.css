@@ -1,5 +1,6 @@
 .navigations {
     padding: -15px;
+    overflow: hidden;
 }
 .navigations h1 {
     color: #000;
