@@ -443,6 +443,12 @@ class RentOrders extends React.Component {
                               { line.originalDeposit }
                             </td>
                           </tr>
+                          <tr>
+                            <th>Order Source</th>
+                            <td>
+                              { line.orderType.split('_')[1] }
+                            </td>
+                          </tr>
                         </table>
                         { this.renderMeasurementStatus(line.productId) }
                         <h4>Delivery Dates</h4>
