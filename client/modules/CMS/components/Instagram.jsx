@@ -7,6 +7,9 @@ import { createInstagramFeed, fetchInstagramFeeds, deleteInstagramFeed } from '.
 import ReactTable from 'react-table';
 import clientConfig from '../../../config';
 
+// Import Style
+import styles from './instagram.css';
+
 
 class Instagram extends React.Component {
     constructor(props) {
@@ -48,24 +51,18 @@ class Instagram extends React.Component {
     }
 
     renderNewFeed() {
-        return <div>
+        return <div className={ styles.instagramFeed }>
                  <br/>
                  <h1>Create Feed</h1>
                  <br/>
                  <input type="text" value={ this.state.title } onChange={ this.changeTitle.bind(this) } placeholder="Title" />
-                 <br/>
-                 <br/>
                  <input type="text" value={ this.state.url } onChange={ this.changeURL.bind(this) } placeholder="Target URL" />
-                 <br/>
-                 <br/>
                  <select type="text" value={ this.state.type } onChange={ this.changeType.bind(this) } placeholder="Type">
                    <option value=""> -- Select Type -- </option>
                    <option value="rent">Rent</option>
                    <option value="shop">Shop</option>
                  </select>
-                 <br/>
-                 <br/>
-                 <div className="drop-zone">
+                 <div className={ styles.dropzone }>
                    <Dropzone onDrop={ this.onDrop.bind(this) } multiple={ false } accept={ 'application/pdf, image/*' }>
                      <div className="dropzone">Drop or click to select an image.</div>
                    </Dropzone>
