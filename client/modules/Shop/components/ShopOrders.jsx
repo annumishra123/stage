@@ -172,6 +172,13 @@ class ShopOrders extends React.Component {
     }
   }
 
+  renderLastModifier(modifier) {
+    if(modifier) {
+      let modifiers = modifier.split(',');
+      return modifiers[modifiers.length - 1];
+    }
+  }
+
   renderOrderDetail() {
     if (this.props.orderDetail) {
 
@@ -202,6 +209,18 @@ class ShopOrders extends React.Component {
                     <th>Status</th>
                     <td>
                       { this.props.orderDetail.status }
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Last Modifier</th>
+                    <td>
+                      { this.renderLastModifier(this.props.orderDetail.modifier) }
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Last Modified Date</th>
+                    <td>
+                      { moment(this.props.orderDetail.lastModifiedDate).format("dddd, MMMM Do YYYY, h:mm:ss a") }
                     </td>
                   </tr>
                   <tr>

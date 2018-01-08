@@ -236,6 +236,13 @@ class RentOrders extends React.Component {
     }
   }
 
+  renderLastModifier(modifier) {
+    if(modifier) {
+      let modifiers = modifier.split(',');
+      return modifiers[modifiers.length - 1];
+    }
+  }
+
   renderorderDetail() {
     if (this.props.orderDetail) {
 
@@ -339,6 +346,18 @@ class RentOrders extends React.Component {
                     <th>Payment Type</th>
                     <td>
                       { this.props.orderDetail.paymentType }
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Last Modifier</th>
+                    <td>
+                      { this.renderLastModifier(this.props.orderDetail.modifier) }
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Last Modified Date</th>
+                    <td>
+                      { moment(this.props.orderDetail.lastModifiedDate).format("dddd, MMMM Do YYYY, h:mm:ss a") }
                     </td>
                   </tr>
                   <tr>
