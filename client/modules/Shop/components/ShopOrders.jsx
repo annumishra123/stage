@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, getOrdersByPhoneNumber, confirmPayment } from '../ShopActions.js';
+import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, getOrdersByPhoneNumber, confirmPayment, getOrdersBySKU } from '../ShopActions.js';
 import DatePicker from 'react-datepicker';
 import { clearCustomerDetail } from '../../Customer/CustomerActions';
 import moment from 'moment';
@@ -97,6 +97,12 @@ class ShopOrders extends React.Component {
     })
   }
 
+  handleChangeSKU(e) {
+    this.setState({
+      sku: e.target.value
+    });
+  }
+
   getOrders() {
     this.props.getShopOrderListByDate(this.state.startDate, this.state.endDate);
   }
@@ -107,6 +113,10 @@ class ShopOrders extends React.Component {
 
   getOrdersByPhoneNumber() {
     this.props.getOrdersByPhoneNumber(this.state.phoneNumber);
+  }
+
+  getOrdersBySKU() {
+    this.props.getOrdersBySKU(this.state.sku);
   }
 
   showOrderDetail(id) {
@@ -402,6 +412,13 @@ class ShopOrders extends React.Component {
                        <button onClick={ this.getOrdersByPhoneNumber.bind(this) }>Search By Phone Number</button>
                      </div>
                    </div>
+                   <div>
+                     <h4>SKU</h4>
+                     <input type="text" onChange={ this.handleChangeSKU.bind(this) } />
+                     <div>
+                       <button onClick={ this.getOrdersBySKU.bind(this) }>Search By SKU</button>
+                     </div>
+                   </div>
                  </div>
                  <br />
                  { this.renderOrders() }
@@ -422,7 +439,8 @@ function matchDispatchToProps(dispatch) {
     getOrderDetail,
     removeItem,
     confirmPayment,
-    clearCustomerDetail
+    clearCustomerDetail,
+    getOrdersBySKU
   }, dispatch);
 }
 
