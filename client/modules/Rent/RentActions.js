@@ -408,8 +408,8 @@ export function placeOrder(orderObject) {
 }
 
 export function confirmPayment(confirmPaymentObject) {
-    return function(dispatch) {
-        let url = '/api/om/orders/backend/payment/confirm/';
+    return function(dispatch, getState) {
+        let url = '/api/om/orders/backend/payment/confirm/?modifier=' + getState().auth.email;
         return axios({
             url: url,
             timeout: 20000,
