@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, confirmPayment, cancelOrder, getOrdersByPhoneNumber } from '../RentActions';
+import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, confirmPayment, cancelOrder, getOrdersByPhoneNumber, getOrdersByLookNumber } from '../RentActions';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import clientConfig from '../../../config';
@@ -25,7 +25,8 @@ class RentOrders extends React.Component {
       orderId: '',
       paymentMethod: '',
       paymentStatus: '',
-      phoneNumber: ''
+      phoneNumber: '',
+      sku: ''
     };
   }
 
@@ -98,6 +99,12 @@ class RentOrders extends React.Component {
     })
   }
 
+  handleChangeLookNumber(e) {
+    this.setState({
+      sku: e.target.value
+    });
+  }
+
   getOrders() {
     this.props.getShopOrderListByDate(this.state.startDate, this.state.endDate);
   }
@@ -108,6 +115,10 @@ class RentOrders extends React.Component {
 
   getOrdersByPhoneNumber() {
     this.props.getOrdersByPhoneNumber(this.state.phoneNumber);
+  }
+
+  getOrdersByLookNumber() {
+    this.props.getOrdersByLookNumber(this.state.sku);
   }
 
   showOrderDetail(id) {
@@ -236,6 +247,13 @@ class RentOrders extends React.Component {
     }
   }
 
+  renderLastModifier(modifier) {
+    if(modifier) {
+      let modifiers = modifier.split(',');
+      return modifiers[modifiers.length - 1];
+    }
+  }
+
   renderorderDetail() {
     if (this.props.orderDetail) {
 
@@ -342,6 +360,18 @@ class RentOrders extends React.Component {
                     </td>
                   </tr>
                   <tr>
+                    <th>Last Modifier</th>
+                    <td>
+                      { this.renderLastModifier(this.props.orderDetail.modifier) }
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Last Modified Date</th>
+                    <td>
+                      { moment(this.props.orderDetail.lastModifiedDate).format("dddd, MMMM Do YYYY, h:mm:ss a") }
+                    </td>
+                  </tr>
+                  <tr>
                     <th>Credit Points Earned</th>
                     <td>
                       { this.props.orderDetail.creditPointsForOrder }
@@ -441,6 +471,12 @@ class RentOrders extends React.Component {
                             <th>Deposit Price</th>
                             <td>
                               { line.originalDeposit }
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>Order Source</th>
+                            <td>
+                              { line.orderType.split('_')[1] }
                             </td>
                           </tr>
                         </table>
@@ -545,6 +581,13 @@ class RentOrders extends React.Component {
                        <button onClick={ this.getOrdersByPhoneNumber.bind(this) }>Search By Phone Number</button>
                      </div>
                    </div>
+                   {/* <div>
+                     <h4>Look Number</h4>
+                     <input type="text" onChange={ this.handleChangeLookNumber.bind(this) } />
+                     <div>
+                       <button onClick={ this.getOrdersByLookNumber.bind(this) }>Search By Look Number</button>
+                     </div>
+                   </div> */}
                  </div>
                  <br />
                  { this.renderOrders() }
@@ -566,7 +609,8 @@ function matchDispatchToProps(dispatch) {
     removeItem,
     confirmPayment,
     cancelOrder,
-    clearCustomerDetail
+    clearCustomerDetail,
+    getOrdersByLookNumber
   }, dispatch);
 }
 

@@ -172,6 +172,10 @@ const clientConfig = {
   }, {
     Header: 'Discount Coupon',
     accessor: 'parentOrder.discountCoupon',
+  }, {
+    id: 'source',
+    Header: 'Source',
+    accessor: o => o.orderType.split('_')[1]
   }],
   rentalColumns: [{
     Header: 'Order Id',
@@ -338,8 +342,8 @@ const clientConfig = {
     Header: 'Image',
     accessor: o => {
       return <a target="blank" href={ o.image }>
-                                         Link
-                                       </a>;
+                                                                                             Link
+                                                                                           </a>;
     }
   }, {
     id: 'date',
