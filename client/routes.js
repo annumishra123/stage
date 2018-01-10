@@ -17,10 +17,6 @@ if (typeof require.ensure !== 'function') {
  */
 if (process.env.NODE_ENV !== 'production') {
   // Require async routes only in development for react-hot-reloader to work.
-  // require('./modules/Post/pages/PostListPage/PostListPage');
-}
-if (process.env.NODE_ENV !== 'production') {
-  // Require async routes only in development for react-hot-reloader to work.
   require('./modules/Dashboard/components/Login');
   require('./modules/Dashboard/components/Navigation');
   require('./modules/Shop/components/ShopOrders');
