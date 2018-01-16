@@ -38,7 +38,7 @@ export function getOrdersByUserId(userId) {
                 dispatch({
                     type: 'FETCH_RENT_ORDERS',
                     payload: response.data
-                })               
+                })
             }).catch(function(error) {
                 console.log(error);
             });
@@ -74,6 +74,30 @@ export function getOrdersByPhoneNumber(phoneNumber) {
     }
 }
 
+export function getOrdersByLookNumber(looknumber) {
+    return function(dispatch) {
+        if (looknumber) {
+            let url = '/api/inventory-manager/getOrderLinesForSku?looknumber=' + looknumber.toUpperCase();
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'get',
+                responseType: 'json'
+            }).then(function(response) {
+                dispatch({
+                    type: 'FETCH_RENT_ORDERS',
+                    payload: response.data
+                });
+            }).catch(function(error) {
+                alert('Look number not found.');
+                console.log(error);
+            });
+        } else {
+            alert('Enter a valid Look Number');
+        }
+    }
+}
+
 export function getOrderDetail(id) {
     return function(dispatch) {
         if (id) {
@@ -89,7 +113,7 @@ export function getOrderDetail(id) {
                     type: 'FETCH_RENT_ORDER_DETAIL',
                     payload: response.data
                 });
-                dispatch(getCustomerDetail(response.data.userId)); 
+                dispatch(getCustomerDetail(response.data.userId));
             }).catch(function(error) {
                 alert('Could not fetch order detail');
                 console.log(error);
