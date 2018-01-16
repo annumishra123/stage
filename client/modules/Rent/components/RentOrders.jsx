@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, confirmPayment, cancelOrder, getOrdersByPhoneNumber, getOrdersByLookNumber } from '../RentActions';
+import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, confirmPayment, cancelOrder, getOrdersByPhoneNumber } from '../RentActions';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import clientConfig from '../../../config';
@@ -25,8 +25,7 @@ class RentOrders extends React.Component {
       orderId: '',
       paymentMethod: '',
       paymentStatus: '',
-      phoneNumber: '',
-      sku: ''
+      phoneNumber: ''
     };
   }
 
@@ -99,12 +98,6 @@ class RentOrders extends React.Component {
     })
   }
 
-  handleChangeLookNumber(e) {
-    this.setState({
-      sku: e.target.value
-    });
-  }
-
   getOrders() {
     this.props.getShopOrderListByDate(this.state.startDate, this.state.endDate);
   }
@@ -115,10 +108,6 @@ class RentOrders extends React.Component {
 
   getOrdersByPhoneNumber() {
     this.props.getOrdersByPhoneNumber(this.state.phoneNumber);
-  }
-
-  getOrdersByLookNumber() {
-    this.props.getOrdersByLookNumber(this.state.sku);
   }
 
   showOrderDetail(id) {
@@ -581,13 +570,6 @@ class RentOrders extends React.Component {
                        <button onClick={ this.getOrdersByPhoneNumber.bind(this) }>Search By Phone Number</button>
                      </div>
                    </div>
-                   {/* <div>
-                     <h4>Look Number</h4>
-                     <input type="text" onChange={ this.handleChangeLookNumber.bind(this) } />
-                     <div>
-                       <button onClick={ this.getOrdersByLookNumber.bind(this) }>Search By Look Number</button>
-                     </div>
-                   </div> */}
                  </div>
                  <br />
                  { this.renderOrders() }
@@ -609,8 +591,7 @@ function matchDispatchToProps(dispatch) {
     removeItem,
     confirmPayment,
     cancelOrder,
-    clearCustomerDetail,
-    getOrdersByLookNumber
+    clearCustomerDetail
   }, dispatch);
 }
 

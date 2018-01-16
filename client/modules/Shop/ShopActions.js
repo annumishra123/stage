@@ -73,30 +73,6 @@ export function getOrdersByPhoneNumber(phoneNumber) {
     }
 }
 
-export function getOrdersBySKU(sku) {
-    return function(dispatch) {
-        if (sku) {
-            let url = '/api/inventory-manager/getOrderLinesForSku?sku=' + sku.toUpperCase();
-            return axios({
-                url: url,
-                timeout: 20000,
-                method: 'get',
-                responseType: 'json'
-            }).then(function(response) {
-                dispatch({
-                    type: 'FETCH_SHOP_ORDERS',
-                    payload: response.data
-                });
-            }).catch(function(error) {
-                alert('SKU not found.');
-                console.log(error);
-            });
-        } else {
-            alert('Enter a valid SKU');
-        }
-    }
-}
-
 export function getOrderDetail(id) {
     return function(dispatch) {
         if (id) {
