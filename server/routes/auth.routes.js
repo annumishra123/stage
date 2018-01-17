@@ -108,6 +108,8 @@ router.post("/createuser", passport.authenticate('jwt', {
                 } else if (user) {
                     user.set({
                         role: req.body.role,
+                        name: req.body.name,
+                        owner: req.body.owner,
                         password: user.generateHash(req.body.password)
                     });
                     user.save().then(item => {
