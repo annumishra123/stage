@@ -155,6 +155,34 @@ router.post("/changepassword", passport.authenticate('jwt', {
                 }
             });
         } else {
+            res.status(400).send('Bad Request');0
+        }
+    } else {
+        res.status(401).send('Unauthorized');
+    }
+});
+
+router.get("/deleteuser", passport.authenticate('jwt', {
+    session: false,
+}), (req, res) => {
+    if (req.user) {
+        if (req.user.role === 'superuser' && req.query.email) {
+            User.findOne({
+                'email': req.query.email
+            }, function(err, user) {
+                if (user) {
+                    user.remove().then(item => {
+                        res.json({
+                            status: 'DELETED'
+                        });
+                    }).catch(err => {
+                        res.status(400).json({
+                            status: 'FAILED'
+                        });
+                    });
+                }
+            });
+        } else {
             res.status(400).send('Bad Request');
         }
     } else {
