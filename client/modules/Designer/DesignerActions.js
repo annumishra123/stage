@@ -6,7 +6,7 @@ export function getDesignerInventory(owner) {
     return function(dispatch) {
         let loopbackFilter = {
             where: {
-                designer: owner,
+                owner: owner
             },
         };
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks?filter=' + encodeURIComponent(JSON.stringify(loopbackFilter));

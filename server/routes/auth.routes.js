@@ -86,12 +86,12 @@ router.post("/createuser", passport.authenticate('jwt', {
             }, function(err, user) {
                 if (!user) {
                     var newUser = new User({
-                        email: req.body.email,
+                        email: req.body.email.trim().toLowerCase(),
                         isAdmin: true,
                         cuid: cuid(),
-                        role: req.body.role,
-                        name: req.body.name,
-                        owner: req.body.owner,
+                        role: req.body.role.trim(),
+                        name: req.body.name.trim(),
+                        owner: req.body.owner.trim(),
                         dateAdded: Date.now()
                     });
                     newUser.password = newUser.generateHash(req.body.password);
@@ -107,7 +107,9 @@ router.post("/createuser", passport.authenticate('jwt', {
                     });
                 } else if (user) {
                     user.set({
-                        role: req.body.role,
+                        role: req.body.role.trim(),
+                        name: req.body.name.trim(),
+                        owner: req.body.owner.trim(),
                         password: user.generateHash(req.body.password)
                     });
                     user.save().then(item => {
@@ -144,6 +146,34 @@ router.post("/changepassword", passport.authenticate('jwt', {
                     user.save().then(item => {
                         res.json({
                             status: 'SUCCESS'
+                        });
+                    }).catch(err => {
+                        res.status(400).json({
+                            status: 'FAILED'
+                        });
+                    });
+                }
+            });
+        } else {
+            res.status(400).send('Bad Request');0
+        }
+    } else {
+        res.status(401).send('Unauthorized');
+    }
+});
+
+router.get("/deleteuser", passport.authenticate('jwt', {
+    session: false,
+}), (req, res) => {
+    if (req.user) {
+        if (req.user.role === 'superuser' && req.query.email) {
+            User.findOne({
+                'email': req.query.email
+            }, function(err, user) {
+                if (user) {
+                    user.remove().then(item => {
+                        res.json({
+                            status: 'DELETED'
                         });
                     }).catch(err => {
                         res.status(400).json({
