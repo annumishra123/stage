@@ -20,6 +20,56 @@ export function fetchShopCatalog() {
     }
 }
 
+export function fetchShopProduct(id) {
+    return function(dispatch) {
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/'+id;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then((response) => {
+            dispatch({
+                type: 'FETCH_SHOP_PRODUCT',
+                payload: response.data
+            });
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+}
+
+export function clearShopProduct() {
+    return function(dispatch) {
+        dispatch({
+            type: 'FETCH_SHOP_PRODUCT',
+                payload: null
+        });
+    }
+}
+
+export function updateShopProduct(product) {
+    return function(dispatch) {
+        debugger;
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/'+product.id+'/replace';
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            responseType: 'json',
+            data: product
+        }).then((response) => {
+            console.log(response.data)
+            dispatch({
+                type: 'FETCH_SHOP_PRODUCT',
+                payload: response.data
+            });
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+}
+
 export function fetchRentCatalog() {
     return function(dispatch) {
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks';
@@ -39,6 +89,57 @@ export function fetchRentCatalog() {
     }
 }
 
+export function fetchRentProduct(id) {
+    return function(dispatch) {
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks/'+id;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then((response) => {
+            dispatch({
+                type: 'FETCH_RENT_PRODUCT',
+                payload: response.data
+            });
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+}
+
+export function updateRentProduct(product) {
+    return function(dispatch) {
+        debugger;
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks/'+product.id+'/replace';
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            responseType: 'json',
+            data: product
+        }).then((response) => {
+            console.log(response.data)
+            dispatch({
+                type: 'FETCH_RENT_PRODUCT',
+                payload: response.data
+            });
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+}
+
+export function clearRentProduct() {
+    return function(dispatch) {
+        dispatch({
+            type: 'FETCH_RENT_PRODUCT',
+                payload: null
+        });
+    }
+}
+
+
 export function fetchAccessoryCatalog() {
     return function(dispatch) {
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/Accessories';
@@ -57,6 +158,57 @@ export function fetchAccessoryCatalog() {
         });
     }
 }
+
+export function fetchAccessory(id) {
+    return function(dispatch) {
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/Accessories/'+id;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then((response) => {
+            dispatch({
+                type: 'FETCH_ACCESSORY',
+                payload: response.data
+            });
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+}
+
+export function updateAccessory(product) {
+    return function(dispatch) {
+        debugger;
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/Accessories/'+product.id+'/replace';
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            responseType: 'json',
+            data: product
+        }).then((response) => {
+            console.log(response.data)
+            dispatch({
+                type: 'FETCH_ACCESSORY',
+                payload: response.data
+            });
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+}
+
+export function clearAccessory() {
+    return function(dispatch) {
+        dispatch({
+            type: 'FETCH_ACCESSORY',
+                payload: null
+        });
+    }
+}
+
 
 export function changeShopLookLocation(id, location) {
     return function(dispatch) {
