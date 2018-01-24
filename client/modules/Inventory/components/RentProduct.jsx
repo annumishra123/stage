@@ -136,6 +136,19 @@ class RentProduct extends React.Component {
         }
     }
 
+    renderMeasurements() {
+        debugger;
+        if(Object.keys(this.state.rentProduct.measurements).length > 0) {
+            return Object.keys(this.state.rentProduct.measurements).map((line, i) => {
+                return
+                <div key={i}>
+                    <label>{line}</label>
+                    {/* <input type="text" defaultValue={line.chest.min} onChange={this.handleChangeProductMeasurements.bind(this)} /> */}
+                </div>;
+            })
+        }
+    }
+
     render() {
         if (this.state.rentProduct) {
             return (<div>
@@ -189,9 +202,9 @@ class RentProduct extends React.Component {
                     <input type="text" defaultValue={this.state.rentProduct.size} onChange={this.handleChangeProductSize.bind(this)} />
                 </div>
                 <div>
-                    <h4>Measurements: </h4>
-                    <textarea type="text" defaultValue={JSON.stringify(this.state.rentProduct.measurements)} onChange={this.handleChangeProductMeasurements.bind(this)} />
-                </div>
+                <h4>Measurements: </h4>
+                {this.renderMeasurements()}
+            </div>
                 <div>
                     <h4>Composition: </h4>
                     <input type="text" defaultValue={this.state.rentProduct.composition} onChange={this.handleChangeProductComposition.bind(this)} />

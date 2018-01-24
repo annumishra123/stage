@@ -25,7 +25,7 @@ class ShopProduct extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.shopProduct) {
+        if (nextProps.shopProduct) {
             this.setState({
                 shopProduct: nextProps.shopProduct
             });
@@ -101,8 +101,8 @@ class ShopProduct extends React.Component {
         browserHistory.push('/inventory/shop/' + id);
     }
 
-    updateShopProductDetails(){
-     this.props.updateShopProduct(this.state.shopProduct);
+    updateShopProductDetails() {
+        this.props.updateShopProduct(this.state.shopProduct);
     }
 
     renderShopLooks() {
@@ -170,10 +170,6 @@ class ShopProduct extends React.Component {
                     <input type="text" defaultValue={this.state.shopProduct.size} onChange={this.handleChangeProductSize.bind(this)} />
                 </div>
                 <div>
-                    <h4>Measurements: </h4>
-                    <textarea type="text" defaultValue={JSON.stringify(this.state.shopProduct.measurements)} onChange={this.handleChangeProductMeasurements.bind(this)} />
-                </div>
-                <div>
                     <h4>Composition: </h4>
                     <input type="text" defaultValue={this.state.shopProduct.composition} onChange={this.handleChangeProductComposition.bind(this)} />
                 </div>
@@ -195,11 +191,11 @@ class ShopProduct extends React.Component {
                 </div>
                 <button onClick={this.updateShopProductDetails.bind(this)}>Update Product</button>
             </div>)
+        }
+        else{
+            return null;
+        }
 
-        }
-        else {
-            return <h1>Not Available</h1>;
-        }
     }
 }
 
