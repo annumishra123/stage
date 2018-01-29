@@ -44,14 +44,14 @@ export default function getRoutes(store, req) {
 
   const checkSuperUser = (nextState, replace, cb) => {
     function checkAuth() {
-      const { auth: { role } } = store.getState();
+      const {auth: {role}} = store.getState();
       if (role !== 'superuser') {
         replace('/');
       }
       cb();
     }
     if (typeof window !== 'undefined') {
-      const { auth: { role } } = store.getState();
+      const {auth: {role}} = store.getState();
       if (!role && localStorage.getItem('token')) {
         store.dispatch(Actions.checkToken(localStorage.getItem('token'))).then(checkAuth);
       } else {
@@ -64,14 +64,14 @@ export default function getRoutes(store, req) {
 
   const checkAdmin = (nextState, replace, cb) => {
     function checkAuth() {
-      const { auth: { role } } = store.getState();
+      const {auth: {role}} = store.getState();
       if (role !== 'admin' && role !== 'superuser') {
         replace('/');
       }
       cb();
     }
     if (typeof window !== 'undefined') {
-      const { auth: { role } } = store.getState();
+      const {auth: {role}} = store.getState();
       if (!role && localStorage.getItem('token')) {
         store.dispatch(Actions.checkToken(localStorage.getItem('token'))).then(checkAuth);
       } else {
@@ -84,14 +84,14 @@ export default function getRoutes(store, req) {
 
   const checkEmployee = (nextState, replace, cb) => {
     function checkAuth() {
-      const { auth: { role } } = store.getState();
+      const {auth: {role}} = store.getState();
       if (role !== 'admin' && role !== 'viewer' && role !== 'superuser' && role !== 'delivery') {
         replace('/');
       }
       cb();
     }
     if (typeof window !== 'undefined') {
-      const { auth: { role } } = store.getState();
+      const {auth: {role}} = store.getState();
       if (!role && localStorage.getItem('token')) {
         store.dispatch(Actions.checkToken(localStorage.getItem('token'))).then(checkAuth);
       } else {
@@ -104,14 +104,14 @@ export default function getRoutes(store, req) {
 
   const checkAuth = (nextState, replace, cb) => {
     function checkAuth() {
-      const { auth: { role } } = store.getState();
+      const {auth: {role}} = store.getState();
       if (role !== 'admin' && role !== 'viewer' && role !== 'superuser' && role !== 'delivery' && role !== 'designer') {
         replace('/');
       }
       cb();
     }
     if (typeof window !== 'undefined') {
-      const { auth: { role } } = store.getState();
+      const {auth: {role}} = store.getState();
       if (!role && localStorage.getItem('token')) {
         store.dispatch(Actions.checkToken(localStorage.getItem('token'))).then(checkAuth);
       } else {
@@ -124,14 +124,14 @@ export default function getRoutes(store, req) {
 
   const checkDesigner = (nextState, replace, cb) => {
     function checkAuth() {
-      const { auth: { role } } = store.getState();
+      const {auth: {role}} = store.getState();
       if (role !== 'designer') {
         replace('/');
       }
       cb();
     }
     if (typeof window !== 'undefined') {
-      const { auth: { role } } = store.getState();
+      const {auth: {role}} = store.getState();
       if (!role && localStorage.getItem('token')) {
         store.dispatch(Actions.checkToken(localStorage.getItem('token'))).then(checkAuth);
       } else {
@@ -224,21 +224,21 @@ export default function getRoutes(store, req) {
                                                                                cb(null, require('./modules/Auth/components/ChangePassword').default);
                                                                              });
                                                                            } } />
-      <Route path="/inventory/shop/:id" onEnter={checkEmployee} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Inventory/components/ShopProduct').default);
-        });
-      }} />
-      <Route path="/inventory/rent/:id" onEnter={checkEmployee} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Inventory/components/RentProduct').default);
-        });
-      }} />
-      <Route path="/inventory/accessory/:id" onEnter={checkEmployee} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Inventory/components/Accessory').default);
-        });
-      }} />
+      <Route path="/inventory/shop/:id" onEnter={ checkEmployee } getComponent={ (nextState, cb) => {
+                                                                                   require.ensure([], require => {
+                                                                                     cb(null, require('./modules/Inventory/components/ShopProduct').default);
+                                                                                   });
+                                                                                 } } />
+      <Route path="/inventory/rent/:id" onEnter={ checkEmployee } getComponent={ (nextState, cb) => {
+                                                                                   require.ensure([], require => {
+                                                                                     cb(null, require('./modules/Inventory/components/RentProduct').default);
+                                                                                   });
+                                                                                 } } />
+      <Route path="/inventory/accessory/:id" onEnter={ checkEmployee } getComponent={ (nextState, cb) => {
+                                                                                        require.ensure([], require => {
+                                                                                          cb(null, require('./modules/Inventory/components/Accessory').default);
+                                                                                        });
+                                                                                      } } />
     </Route>
-  );
+    );
 }
