@@ -16,7 +16,11 @@ class RentProduct extends React.Component {
             location: '',
             viewOrderDetails: false,
             tabIndex: 0,
-            rentProduct: null
+            rentProduct: null,
+            measurementType: null,
+            minMeasurement: 0,
+            maxMeasurement: 0,
+            loosingMeasurement: 0
         }
     }
 
@@ -124,116 +128,194 @@ class RentProduct extends React.Component {
                         Header: '',
                         id: 'edit',
                         accessor: 'id',
-                        Cell: ({ value }) => <div>
-                            <button onClick={this.viewRentLook.bind(this, value)}>Edit Product</button>
-                        </div>
+                        Cell: ({value}) => <div>
+                                             <button onClick={ this.viewRentLook.bind(this, value) }>Edit Product</button>
+                                           </div>
                     });
                 }
                 return <div>
-                    <ReactTable filterable data={this.props.rentCatalog} columns={clientConfig.rentLooksColumns} defaultPageSize={10} className="-striped -highlight" />
-                </div>;
+                         <ReactTable filterable data={ this.props.rentCatalog } columns={ clientConfig.rentLooksColumns } defaultPageSize={ 10 } className="-striped -highlight" />
+                       </div>;
             }
         }
     }
 
-    renderMeasurements() {
-        debugger;
-        if(Object.keys(this.state.rentProduct.measurements).length > 0) {
-            return Object.keys(this.state.rentProduct.measurements).map((line, i) => {
-                return
-                <div key={i}>
-                    <label>{line}</label>
-                    {/* <input type="text" defaultValue={line.chest.min} onChange={this.handleChangeProductMeasurements.bind(this)} /> */}
-                </div>;
-            })
+    handleChangeMeasurementType(e) {
+        this.setState({
+            measurementType: e.target.value
+        })
+    }
+
+    handleChangeMinMeasurement(e) {
+        this.setState({
+            minMeasurement: e.target.value
+        })
+    }
+
+    handleChangeMaxMeasurement(e) {
+        this.setState({
+            maxMeasurement: e.target.value
+        })
+    }
+
+    handleChangeLoosingMeasurement(e) {
+        this.setState({
+            loosingMeasurement: e.target.value
+        })
+    }
+
+    addNewMeasurement() {
+        if (this.state.measurementType) {
+            let rentProduct = this.state.rentProduct;
+            rentProduct.measurements[this.state.measurementType] = {
+                min: this.state.minMeasurement,
+                max: this.state.maxMeasurement,
+                loosing: this.state.loosingMeasurement
+            };
+            this.setState({
+                rentProduct: rentProduct
+            });
         }
     }
+
+    removeMeasurement(type) {
+        let rentProduct = this.state.rentProduct;
+        delete rentProduct.measurements[type];
+        this.setState({
+            rentProduct: rentProduct
+        });
+    }
+
+    renderMeasurements() {
+        if (Object.keys(this.state.rentProduct.measurements).length > 0) {
+            let measurements = Object.keys(this.state.rentProduct.measurements);
+            return <div>
+                     { measurements.map((line, i) => {
+                           return <div key={ i }>
+                                    <br/>
+                                    <label><b>{ line.toUpperCase() }</b></label>
+                                    <br/>
+                                    <br/>
+                                    <label>MIN: </label>
+                                    <input type="text" disabled={ true } value={ this.state.rentProduct.measurements[line].min } onChange={ this.handleChangeProductMeasurements.bind(this) } />
+                                    <label>MAX: </label>
+                                    <input type="text" disabled={ true } value={ this.state.rentProduct.measurements[line].max } onChange={ this.handleChangeProductMeasurements.bind(this) } />
+                                    <label>LOOSING: </label>
+                                    <input type="text" disabled={ true } value={ this.state.rentProduct.measurements[line].loosing } onChange={ this.handleChangeProductMeasurements.bind(this) } />
+                                    <button onClick={ this.removeMeasurement.bind(this, line) }>DELETE</button>
+                                    <br/>
+                                  </div>;
+                       }) }
+                     <br/>
+                   </div>
+        }
+    }
+
+    renderNewMeasurements() {}
 
     render() {
         if (this.state.rentProduct) {
             return (<div>
-                <button onClick={this.renderRentLooks.bind(this)}>Back</button>
-                <div>
-                    <h4>Sku: </h4>
-                    <input type="text" value={this.state.rentProduct.sku} onChange={this.handleChangeProductSku.bind(this)} />
-                </div>
-                <div>
-                    <h4>Name: </h4>
-                    <input type="text" defaultValue={this.state.rentProduct.name} onChange={this.handleChangeProductName.bind(this)} />
-                </div>
-                <div>
-                    <h4>Designer: </h4>
-                    <input type="text" defaultValue={this.state.rentProduct.designer} onChange={this.handleChangeProductDesigner.bind(this)} />
-                </div>
-                <div>
-                    <h4>Description: </h4>
-                    <textarea type="text" defaultValue={this.state.rentProduct.description} onChange={this.handleChangeProductDescription.bind(this)} />
-                </div>
-                <div>
-                    <h4>Occasion: </h4>
-                    <input type="text" defaultValue={this.state.rentProduct.occasion} onChange={this.handleChangeProductOccasion.bind(this)} />
-                </div>
-                <div>
-                    <h4>Retail Price: </h4>
-                    <input type="text" defaultValue={this.state.rentProduct.retailprice} onChange={this.handleChangeProductRetailPrice.bind(this)} />
-                </div>
-                <div>
-                    <h4>Rental Price: </h4>
-                    <input type="text" defaultValue={this.state.rentProduct.rentalprice} onChange={this.handleChangeProductRentalPrice.bind(this)} />
-                </div>
-                <div>
-                    <h4>Discounted Rental Price: </h4>
-                    <input type="text" defaultValue={this.state.rentProduct.discountedrentalprice} onChange={this.handleChangeProductDiscountedRentalPrice.bind(this)} />
-                </div>
-                <div>
-                    <h4>Accessories: </h4>
-                    <textarea type="text" defaultValue={JSON.stringify(this.state.rentProduct.accessories)} onChange={this.handleChangeProductAccessories.bind(this)} />
-                </div>
-                <div>
-                    <h4>Gender: </h4>
-                    <input type="text" defaultValue={this.state.rentProduct.gender} onChange={this.handleChangeProductGender.bind(this)} />
-                </div>
-                <div>
-                    <h4>Image: </h4>
-                    <input type="text" defaultValue={this.state.rentProduct.frontimage} onChange={this.handleChangeProductImage.bind(this)} />
-                </div>
-                <div>
-                    <h4>Size: </h4>
-                    <input type="text" defaultValue={this.state.rentProduct.size} onChange={this.handleChangeProductSize.bind(this)} />
-                </div>
-                <div>
-                <h4>Measurements: </h4>
-                {this.renderMeasurements()}
-            </div>
-                <div>
-                    <h4>Composition: </h4>
-                    <input type="text" defaultValue={this.state.rentProduct.composition} onChange={this.handleChangeProductComposition.bind(this)} />
-                </div>
-                <div>
-                    <h4>Status: </h4>
-                    <input type="text" defaultValue={this.state.rentProduct.status} onChange={this.handleChangeProductStatus.bind(this)} />
-                </div>
-                <div>
-                    <h4>Category: </h4>
-                    <input type="text" defaultValue={this.state.rentProduct.categories} onChange={this.handleChangeProductCategory.bind(this)} />
-                </div>
-                <div>
-                    <h4>Color: </h4>
-                    <input type="text" defaultValue={this.state.rentProduct.color} onChange={this.handleChangeProductColor.bind(this)} />
-                </div>
-                <div>
-                    <h4>Owner: </h4>
-                    <input type="text" defaultValue={this.state.rentProduct.owner} onChange={this.handleChangeProductOwner.bind(this)} />
-                </div>
-                <div>
-                    <h4>Location: </h4>
-                    <input type="text" defaultValue={this.state.rentProduct.location} onChange={this.handleChangeProductLocation.bind(this)} />
-                </div>
-                <button onClick={this.updateRentProductDetails.bind(this)}>Update Product</button>
-            </div>)
+                      <button onClick={ this.renderRentLooks.bind(this) }>Back</button>
+                      <div>
+                        <h4>Sku: </h4>
+                        <input type="text" value={ this.state.rentProduct.sku } onChange={ this.handleChangeProductSku.bind(this) } />
+                      </div>
+                      <div>
+                        <h4>Name: </h4>
+                        <input type="text" defaultValue={ this.state.rentProduct.name } onChange={ this.handleChangeProductName.bind(this) } />
+                      </div>
+                      <div>
+                        <h4>Designer: </h4>
+                        <input type="text" defaultValue={ this.state.rentProduct.designer } onChange={ this.handleChangeProductDesigner.bind(this) } />
+                      </div>
+                      <div>
+                        <h4>Description: </h4>
+                        <textarea type="text" defaultValue={ this.state.rentProduct.description } onChange={ this.handleChangeProductDescription.bind(this) } />
+                      </div>
+                      <div>
+                        <h4>Occasion: </h4>
+                        <input type="text" defaultValue={ this.state.rentProduct.occasion } onChange={ this.handleChangeProductOccasion.bind(this) } />
+                      </div>
+                      <div>
+                        <h4>Retail Price: </h4>
+                        <input type="text" defaultValue={ this.state.rentProduct.retailprice } onChange={ this.handleChangeProductRetailPrice.bind(this) } />
+                      </div>
+                      <div>
+                        <h4>Rental Price: </h4>
+                        <input type="text" defaultValue={ this.state.rentProduct.rentalprice } onChange={ this.handleChangeProductRentalPrice.bind(this) } />
+                      </div>
+                      <div>
+                        <h4>Discounted Rental Price: </h4>
+                        <input type="text" defaultValue={ this.state.rentProduct.discountedrentalprice } onChange={ this.handleChangeProductDiscountedRentalPrice.bind(this) } />
+                      </div>
+                      <div>
+                        <h4>Accessories: </h4>
+                        <textarea type="text" defaultValue={ JSON.stringify(this.state.rentProduct.accessories) } onChange={ this.handleChangeProductAccessories.bind(this) } />
+                      </div>
+                      <div>
+                        <h4>Gender: </h4>
+                        <input type="text" defaultValue={ this.state.rentProduct.gender } onChange={ this.handleChangeProductGender.bind(this) } />
+                      </div>
+                      <div>
+                        <h4>Image: </h4>
+                        <input type="text" defaultValue={ this.state.rentProduct.frontimage } onChange={ this.handleChangeProductImage.bind(this) } />
+                      </div>
+                      <div>
+                        <h4>Size: </h4>
+                        <input type="text" defaultValue={ this.state.rentProduct.size } onChange={ this.handleChangeProductSize.bind(this) } />
+                      </div>
+                      <div>
+                        <h4>Measurements: </h4>
+                        { this.renderMeasurements() }
+                        <select onChange={ this.handleChangeMeasurementType.bind(this) }>
+                          <option value="">SELECT TYPE</option>
+                          { clientConfig.measurements.map((type, i) => {
+                                return <option key={ i } value={ type }>
+                                         { type.toUpperCase() }
+                                       </option>
+                            }) }
+                        </select>
+                        <br/>
+                        <br/>
+                        <label>MIN: </label>
+                        <input type="text" value={ this.state.minMeasurement } onChange={ this.handleChangeMinMeasurement.bind(this) } />
+                        <label>MAX: </label>
+                        <input type="text" value={ this.state.maxMeasurement } onChange={ this.handleChangeMaxMeasurement.bind(this) } />
+                        <label>LOOSING: </label>
+                        <input type="text" value={ this.state.loosingMeasurement } onChange={ this.handleChangeLoosingMeasurement.bind(this) } />
+                        <button onClick={ this.addNewMeasurement.bind(this) }>ADD</button>
+                        <br/>
+                        <br/>
+                      </div>
+                      <div>
+                        <h4>Composition: </h4>
+                        <input type="text" defaultValue={ this.state.rentProduct.composition } onChange={ this.handleChangeProductComposition.bind(this) } />
+                      </div>
+                      <div>
+                        <h4>Status: </h4>
+                        <input type="text" defaultValue={ this.state.rentProduct.status } onChange={ this.handleChangeProductStatus.bind(this) } />
+                      </div>
+                      <div>
+                        <h4>Category: </h4>
+                        <input type="text" defaultValue={ this.state.rentProduct.categories } onChange={ this.handleChangeProductCategory.bind(this) } />
+                      </div>
+                      <div>
+                        <h4>Color: </h4>
+                        <input type="text" defaultValue={ this.state.rentProduct.color } onChange={ this.handleChangeProductColor.bind(this) } />
+                      </div>
+                      <div>
+                        <h4>Owner: </h4>
+                        <input type="text" defaultValue={ this.state.rentProduct.owner } onChange={ this.handleChangeProductOwner.bind(this) } />
+                      </div>
+                      <div>
+                        <h4>Location: </h4>
+                        <input type="text" defaultValue={ this.state.rentProduct.location } onChange={ this.handleChangeProductLocation.bind(this) } />
+                      </div>
+                      <button onClick={ this.updateRentProductDetails.bind(this) }>Update Product</button>
+                    </div>)
 
-        }
-        else {
+        } else {
             return <h1>Not Available</h1>;
         }
     }

@@ -22,7 +22,7 @@ export function fetchShopCatalog() {
 
 export function fetchShopProduct(id) {
     return function(dispatch) {
-        let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/'+id;
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/' + id;
         return axios({
             url: url,
             timeout: 20000,
@@ -43,7 +43,7 @@ export function clearShopProduct() {
     return function(dispatch) {
         dispatch({
             type: 'FETCH_SHOP_PRODUCT',
-                payload: null
+            payload: null
         });
     }
 }
@@ -51,7 +51,7 @@ export function clearShopProduct() {
 export function updateShopProduct(product) {
     return function(dispatch) {
         debugger;
-        let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/'+product.id+'/replace';
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/' + product.id + '/replace';
         return axios({
             url: url,
             timeout: 20000,
@@ -91,7 +91,7 @@ export function fetchRentCatalog() {
 
 export function fetchRentProduct(id) {
     return function(dispatch) {
-        let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks/'+id;
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks/' + id;
         return axios({
             url: url,
             timeout: 20000,
@@ -110,16 +110,15 @@ export function fetchRentProduct(id) {
 
 export function updateRentProduct(product) {
     return function(dispatch) {
-        debugger;
-        let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks/'+product.id+'/replace';
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks/' + product._id;
+        delete product._id;
         return axios({
             url: url,
             timeout: 20000,
-            method: 'post',
+            method: 'patch',
             responseType: 'json',
             data: product
         }).then((response) => {
-            console.log(response.data)
             dispatch({
                 type: 'FETCH_RENT_PRODUCT',
                 payload: response.data
@@ -134,7 +133,7 @@ export function clearRentProduct() {
     return function(dispatch) {
         dispatch({
             type: 'FETCH_RENT_PRODUCT',
-                payload: null
+            payload: null
         });
     }
 }
@@ -161,7 +160,7 @@ export function fetchAccessoryCatalog() {
 
 export function fetchAccessory(id) {
     return function(dispatch) {
-        let url = clientConfig.targetURL + '/catalogv2/catalogv2/Accessories/'+id;
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/Accessories/' + id;
         return axios({
             url: url,
             timeout: 20000,
@@ -181,7 +180,7 @@ export function fetchAccessory(id) {
 export function updateAccessory(product) {
     return function(dispatch) {
         debugger;
-        let url = clientConfig.targetURL + '/catalogv2/catalogv2/Accessories/'+product.id+'/replace';
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/Accessories/' + product.id + '/replace';
         return axios({
             url: url,
             timeout: 20000,
@@ -204,7 +203,7 @@ export function clearAccessory() {
     return function(dispatch) {
         dispatch({
             type: 'FETCH_ACCESSORY',
-                payload: null
+            payload: null
         });
     }
 }
