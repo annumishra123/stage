@@ -10,6 +10,7 @@ import clientConfig from '../../../config';
 import FormSubmitButton from '../../Customer/components/FormSubmitButton.js';
 import OwnerForm from './OwnerForm.jsx';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { CSVLink } from 'react-csv';
 
 // Import Style
 import styles from './designer.css';
@@ -82,10 +83,19 @@ class Owner extends React.Component {
     }
 
     refreshDesignerOrders() {
+        this.setState({
+            csvData: null
+        });
         this.props.getOwnerShare(this.state.designer);
         this.props.getCompletedOrders(this.state.designer, this.state.startDate.unix() * 1000, this.state.endDate.unix() * 1000);
         this.props.getPendingOrders(this.state.designer);
         this.props.getCancelledOrders(this.state.designer, this.state.startDate.unix() * 1000, this.state.endDate.unix() * 1000);
+    }
+
+    generateExportLink() {
+        this.setState({
+            csvData: this.designerTable.getResolvedState().sortedData
+        });
     }
 
     renderDateFilter() {
@@ -110,7 +120,10 @@ class Owner extends React.Component {
                     order.share = this.props.designerShare;
                 });
                 return <div>
-                         <ReactTable filterable data={ completedDesignerOrders } columns={ clientConfig.designerOrderColumns } defaultPageSize={ 10 } className="-striped -highlight" />
+                         <ReactTable filterable data={ completedDesignerOrders } columns={ clientConfig.designerOrderColumns } defaultPageSize={ 10 } ref={ (r) => this.designerTable = r } onSortedChange={ this.generateExportLink.bind(this) }
+                           onFilteredChange={ this.generateExportLink.bind(this) } className="-striped -highlight" />
+                         { !this.state.csvData ? <button onClick={ this.generateExportLink.bind(this) }>Generate Export Link</button> : null }
+                         { this.state.csvData ? <CSVLink data={ this.state.csvData } filename={ this.state.designer + '_' + this.state.startDate.format('ll') + '_' + this.state.endDate.format('ll') + '.csv' }>Export CSV</CSVLink> : null }
                        </div>;
             }
         }
@@ -179,7 +192,7 @@ class Owner extends React.Component {
     }
 
     render() {
-        return <section className={ styles.owners}>
+        return <section className={ styles.owners }>
                  <h1>Owners</h1>
                  <br />
                  { this.renderOwners() }
@@ -225,7 +238,9 @@ class Owner extends React.Component {
                                            <br/>
                                            <h1>Orders</h1>
                                            <br/>
-                                           <p>Designer:{ ' ' + this.state.designer.toUpperCase() }</p>
+                                           <p>Designer:
+                                             { ' ' + this.state.designer.toUpperCase() }
+                                           </p>
                                            <br/>
                                            { this.renderOrderTotal() }
                                            <br/>
