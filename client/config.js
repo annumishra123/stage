@@ -242,6 +242,9 @@ const clientConfig = {
     Header: 'Name',
     accessor: 'name',
   }, {
+    Header: 'Owner',
+    accessor: 'owner',
+  }, {
     id: 'image',
     Header: 'Image',
     accessor: o => <a target="blank" href={ o.frontimage }>Link</a>,
