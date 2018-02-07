@@ -30,6 +30,9 @@ class RentProduct extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.rentProduct) {
+            let rentProduct = nextProps.rentProduct;
+            rentProduct.size = rentProduct.size.join(',');
+            rentProduct.color = rentProduct.color.join(',');
             this.setState({
                 rentProduct: nextProps.rentProduct
             });
@@ -67,9 +70,23 @@ class RentProduct extends React.Component {
     handleChangeProductDiscountedRentalPrice(e) {
         this.state.rentProduct.discountedRentalPrice = e.target.value;
     }
+    
+    handleChangeProductAccessoriesName(e){
+        this.setState({
+            name: e.target.value
+        })
+    }
 
-    handleChangeProductAccessories(e) {
-        this.state.rentProduct.accessories = e.target.value;
+    handleChangeProductAccessoriesSku(e){
+        this.setState({
+            sku: e.target.value
+        })
+    }
+
+    handleChangeProductAccessoriesDesigner(e){
+        this.setState({
+            designer: e.target.value
+        })
     }
 
     handleChangeProductGender(e) {
@@ -117,6 +134,9 @@ class RentProduct extends React.Component {
     }
 
     updateRentProductDetails() {
+        let product = this.state.rentProduct;
+        product.size = product.size? product.size.split(',').map(function(size){return size.trim()}) : product.size;
+        product.color =  product.color? product.color.split(',').map(function(color){return color.trim()}) : product.color;
         this.props.updateRentProduct(this.state.rentProduct);
     }
 
@@ -251,8 +271,22 @@ class RentProduct extends React.Component {
                       </div>
                       <div>
                         <h4>Accessories: </h4>
-                        <textarea type="text" defaultValue={ JSON.stringify(this.state.rentProduct.accessories) } onChange={ this.handleChangeProductAccessories.bind(this) } />
-                      </div>
+                        { this.state.rentProduct.accessories.map((line, i) => {
+                    return (
+                      <div key={ i }>
+                          <br/>
+                            <h4>NAME: </h4>
+                            <input type="text" defaultValue={ line.name } onChange={ this.handleChangeProductAccessoriesName.bind(this) }/>
+                            <br/>
+                            <h4>SKU: </h4>
+                            <input type="text" defaultValue={ line.sku } onChange={ this.handleChangeProductAccessoriesSku.bind(this) }/>
+                            <br/>
+                            <h4>DESIGNER: </h4>
+                            <input type="text" defaultValue={ line.designer } onChange={ this.handleChangeProductAccessoriesDesigner.bind(this) }/>
+                            <br/>
+                          </div>)})}
+                          </div>
+                          <br/>
                       <div>
                         <h4>Gender: </h4>
                         <input type="text" defaultValue={ this.state.rentProduct.gender } onChange={ this.handleChangeProductGender.bind(this) } />
