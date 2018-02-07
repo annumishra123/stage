@@ -135,8 +135,8 @@ class RentProduct extends React.Component {
 
     updateRentProductDetails() {
         let product = this.state.rentProduct;
-        product.size = product.size? product.size.split(',').map(function(a){return a.trim()}) : product.size;
-        product.color =  product.color? product.color.split(',').map(function(b){return b.trim()}) : product.color;
+        product.size = product.size? product.size.split(',').map(function(size){return size.trim()}) : product.size;
+        product.color =  product.color? product.color.split(',').map(function(color){return color.trim()}) : product.color;
         this.props.updateRentProduct(this.state.rentProduct);
     }
 
