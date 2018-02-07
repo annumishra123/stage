@@ -15,6 +15,7 @@ import { instagramFeeds } from './modules/CMS/CMSReducer';
 import { accessoryCatalog, rentCatalog, shopCatalog, rentProduct, shopProduct, updateProduct, updateRentProduct, accessory, updateAccessory } from './modules/Inventory/InventoryReducer';
 import { designerInventory, cancelledDesignerOrders, completedDesignerOrders, pendingDesignerOrders, designerShare } from './modules/Designer/DesignerReducer';
 import { revshares } from './modules/Designer/DesignerReducer';
+import { revShareOrderLine } from './modules/ManualOrder/ManualOrderReducer';
 import { reducer as formReducer } from 'redux-form';
 
 // Combine all reducers into one root reducer
@@ -55,5 +56,6 @@ export default combineReducers({
   accessory,
   updateRentProduct,
   updateProduct,
-  updateAccessory
+  updateAccessory,
+  revShareOrderLine
 });

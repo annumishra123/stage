@@ -119,9 +119,18 @@ class Owner extends React.Component {
                 completedDesignerOrders.map((order) => {
                     order.share = this.props.designerShare;
                 });
+                if (!clientConfig.designerOrderColumns.find(o => o.id == 'edit') && this.props.role == 'admin') {
+                    clientConfig.designerOrderColumns.unshift({
+                        Header: '',
+                        id: 'edit',
+                        accessor: '_id',
+                        Cell: ({value}) => <Link className={ styles.tableBtn } to={ '/order/manual/' + this.state.designer + '/' + value }>Edit</Link>
+                    });
+                }
                 return <div>
                          <ReactTable filterable data={ completedDesignerOrders } columns={ clientConfig.designerOrderColumns } defaultPageSize={ 10 } ref={ (r) => this.designerTable = r } onSortedChange={ this.generateExportLink.bind(this) }
                            onFilteredChange={ this.generateExportLink.bind(this) } className="-striped -highlight" />
+                         <br/>
                          { !this.state.csvData ? <button onClick={ this.generateExportLink.bind(this) }>Generate Export Link</button> : null }
                          { this.state.csvData ? <CSVLink data={ this.state.csvData } filename={ this.state.designer + '_' + this.state.startDate.format('ll') + '_' + this.state.endDate.format('ll') + '.csv' }>Export CSV</CSVLink> : null }
                        </div>;
@@ -136,6 +145,14 @@ class Owner extends React.Component {
                 pendingDesignerOrders.map((order) => {
                     order.share = this.props.designerShare;
                 });
+                if (!clientConfig.designerOrderColumns.find(o => o.id == 'edit') && this.props.role == 'admin') {
+                    clientConfig.designerOrderColumns.unshift({
+                        Header: '',
+                        id: 'edit',
+                        accessor: '_id',
+                        Cell: ({value}) => <Link className={ styles.tableBtn } to={ '/order/manual/' + this.state.designer + '/' + value }>Edit</Link>
+                    });
+                }
                 return <div>
                          <ReactTable filterable data={ pendingDesignerOrders } columns={ clientConfig.designerOrderColumns } defaultPageSize={ 10 } className="-striped -highlight" />
                        </div>;
@@ -150,6 +167,14 @@ class Owner extends React.Component {
                 cancelledDesignerOrders.map((order) => {
                     order.share = this.props.designerShare;
                 });
+                if (!clientConfig.designerOrderColumns.find(o => o.id == 'edit') && this.props.role == 'admin') {
+                    clientConfig.designerOrderColumns.unshift({
+                        Header: '',
+                        id: 'edit',
+                        accessor: '_id',
+                        Cell: ({value}) => <Link className={ styles.tableBtn } to={ '/order/manual/' + this.state.designer + '/' + value }>Edit</Link>
+                    });
+                }
                 return <div>
                          <ReactTable filterable data={ cancelledDesignerOrders } columns={ clientConfig.designerOrderColumns } defaultPageSize={ 10 } className="-striped -highlight" />
                        </div>;
@@ -241,6 +266,9 @@ class Owner extends React.Component {
                                            <p>Designer:
                                              { ' ' + this.state.designer.toUpperCase() }
                                            </p>
+                                           <br/>
+                                           <Link to={ '/order/manual/' + this.state.designer }>Add Manual Order</Link>
+                                           <br/>
                                            <br/>
                                            { this.renderOrderTotal() }
                                            <br/>
