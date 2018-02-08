@@ -33,6 +33,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Designer/components/Owner');
   require('./modules/Auth/components/ChangePassword');
   require('./modules/CMS/components/Instagram');
+  require('./modules/ManualOrder/components/ManualOrder');
 }
 
 // react-router setup with code-splitting
@@ -221,6 +222,16 @@ export default function getRoutes(store, req) {
                                                                                cb(null, require('./modules/Auth/components/ChangePassword').default);
                                                                              });
                                                                            } } />
+      <Route path="/order/manual/:owner" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
+                                                                                 require.ensure([], require => {
+                                                                                   cb(null, require('./modules/ManualOrder/components/ManualOrder').default);
+                                                                                 });
+                                                                               } } />
+      <Route path="/order/manual/:owner/:id" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
+                                                                                     require.ensure([], require => {
+                                                                                       cb(null, require('./modules/ManualOrder/components/ManualOrder').default);
+                                                                                     });
+                                                                                   } } />
     </Route>
     );
 }
