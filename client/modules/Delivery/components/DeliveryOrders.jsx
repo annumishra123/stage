@@ -145,7 +145,7 @@ class RentOrders extends React.Component {
     render() {
         return <section className={ styles.deliveryOrders }>
                  <div>
-                   <h2>Delivery Orders { this.renderOrderCount() }</h2>
+                   <h2>Orders { this.renderOrderCount() }</h2>
                    <br />
                    <div>
                      <div>
