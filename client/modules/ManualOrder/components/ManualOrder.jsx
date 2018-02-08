@@ -34,7 +34,11 @@ class ManualOrder extends React.Component {
     updateOrderLine() {
         let orderLine = this.state.orderLine;
         orderLine.lastUpdatedTime = moment().unix() * 1000;
-        this.props.updateOrderline(orderLine);
+        if (orderLine.outfitname && orderLine.designer && orderLine.rentPaid && orderLine.pickupDateUTC && orderLine.orderDate && orderLine.orderCity) {
+            this.props.updateOrderline(orderLine);
+        } else {
+            alert('Please Enter Valid Data');
+        }
     }
 
     generateLetterId() {
@@ -57,13 +61,17 @@ class ManualOrder extends React.Component {
 
     saveOrderLine() {
         let orderLine = this.state.newOrderLine;
-        orderLine._id = _.uuid().replace(/-/g, '');
-        orderLine.orderId = 'STAGE3-MANUAL-' + this.generateLetterId() + '-' + this.generateNumericId();
-        orderLine.lastUpdatedTime = moment().unix() * 1000;
-        orderLine.owner = this.props.params.owner;
-        orderLine.status = 'MANUAL';
-        orderLine.isCancelled = false;
-        this.props.createOrderline(orderLine);
+        if (orderLine.outfitname && orderLine.designer && orderLine.rentPaid && orderLine.pickupDateUTC && orderLine.orderDate && orderLine.orderCity) {
+            orderLine._id = _.uuid().replace(/-/g, '');
+            orderLine.orderId = 'STAGE3-MANUAL-' + this.generateLetterId() + '-' + this.generateNumericId();
+            orderLine.lastUpdatedTime = moment().unix() * 1000;
+            orderLine.owner = this.props.params.owner;
+            orderLine.status = 'MANUAL';
+            orderLine.isCancelled = false;
+            this.props.createOrderline(orderLine);
+        } else {
+            alert('Please Enter Valid Data');
+        }
     }
 
     deleteOrderLine() {
