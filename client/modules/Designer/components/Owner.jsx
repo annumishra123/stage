@@ -119,7 +119,7 @@ class Owner extends React.Component {
                 completedDesignerOrders.map((order) => {
                     order.share = this.props.designerShare;
                 });
-                if (!clientConfig.designerOrderColumns.find(o => o.id == 'edit') && this.props.role == 'admin') {
+                if (!clientConfig.designerOrderColumns.find(o => o.id == 'edit') && this.props.role == 'admin' && this.props.user == 'rishi@stage3.co') {
                     clientConfig.designerOrderColumns.unshift({
                         Header: '',
                         id: 'edit',
@@ -145,7 +145,7 @@ class Owner extends React.Component {
                 pendingDesignerOrders.map((order) => {
                     order.share = this.props.designerShare;
                 });
-                if (!clientConfig.designerOrderColumns.find(o => o.id == 'edit') && this.props.role == 'admin') {
+                if (!clientConfig.designerOrderColumns.find(o => o.id == 'edit') && this.props.role == 'admin' && this.props.user == 'rishi@stage3.co') {
                     clientConfig.designerOrderColumns.unshift({
                         Header: '',
                         id: 'edit',
@@ -167,7 +167,7 @@ class Owner extends React.Component {
                 cancelledDesignerOrders.map((order) => {
                     order.share = this.props.designerShare;
                 });
-                if (!clientConfig.designerOrderColumns.find(o => o.id == 'edit') && this.props.role == 'admin') {
+                if (!clientConfig.designerOrderColumns.find(o => o.id == 'edit') && this.props.role == 'admin' && this.props.user == 'rishi@stage3.co') {
                     clientConfig.designerOrderColumns.unshift({
                         Header: '',
                         id: 'edit',
@@ -266,8 +266,10 @@ class Owner extends React.Component {
                                            <p>Designer:
                                              { ' ' + this.state.designer.toUpperCase() }
                                            </p>
-                                           <br/>
-                                           <Link className={ styles.manualBtn } to={ '/order/manual/' + this.state.designer }>+ Add Manual Order</Link>
+                                           { this.props.user == 'rishi@stage3.co' ? <div>
+                                                                                      <br/>
+                                                                                      <Link className={ styles.manualBtn } to={ '/order/manual/' + this.state.designer }>+ Add Manual Order</Link>
+                                                                                    </div> : null }
                                            <br/>
                                            { this.renderOrderTotal() }
                                            <br/>
