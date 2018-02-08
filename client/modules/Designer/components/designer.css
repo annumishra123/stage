@@ -160,10 +160,11 @@
     text-decoration: none;
 }
 .owners .width40 {
-    width: 300px;
+    width: 190px;
     float: left;
 }
-.owners .width40 div {
+.owners .width40 > div,
+.owners .width40 > div > div {
     width: 100%;
 }
 .owners .width40 input {
@@ -226,6 +227,9 @@
     /* owner */
     .owners {
         padding: 10px;
+    }
+    .owners .refresh {
+        display: block;
     }
 
 

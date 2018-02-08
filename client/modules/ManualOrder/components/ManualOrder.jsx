@@ -7,6 +7,9 @@ import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import _ from 'lodash-uuid';
 
+// Import Style
+import styles from './ManualOrder.css';
+
 
 class ManualOrder extends React.Component {
     constructor(props) {
@@ -139,6 +142,7 @@ class ManualOrder extends React.Component {
             return <div>
                      { this.state.orderLine.image ? <img src={ this.state.orderLine.image } style={ { width: '200px' } } /> : null }
                      <br/>
+                     <div className={ styles.manualdetail }>
                      <label>Order Id </label>
                      <input disabled={ true } type="text" value={ this.state.orderLine.orderId } />
                      <br/>
@@ -169,6 +173,7 @@ class ManualOrder extends React.Component {
                      <DatePicker selected={ moment(this.state.orderLine.orderDate) } onChange={ this.handleChangeOrderDate.bind(this) } />
                      <button onClick={ this.updateOrderLine.bind(this) }>Save</button>
                      { this.state.orderLine.status == 'MANUAL' ? <button onClick={ this.deleteOrderLine.bind(this) }>Delete</button> : null }
+                    </div>
                    </div>
         }
     }
@@ -222,7 +227,7 @@ class ManualOrder extends React.Component {
     }
 
     renderCreateOrderLine() {
-        return <div>
+        return <div className={ styles.manualdetail }>
                  <label>Name </label>
                  <input type="text" onChange={ this.handleChangeNewName.bind(this) } />
                  <br/>
@@ -253,7 +258,7 @@ class ManualOrder extends React.Component {
     }
 
     render() {
-        return <section>
+        return <section className={ styles.ManualOrder }>
                  <h1>{ this.props.params.id ? 'Update' : 'Create' } Order Line</h1>
                  <br/>
                  { this.props.user == 'rishi@stage3.co' ? this.props.params.id ? this.renderUpdateOrderline() : this.renderCreateOrderLine() : this.renderAuthenticationIssue() }
