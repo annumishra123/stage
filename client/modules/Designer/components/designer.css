@@ -228,6 +228,9 @@
     .owners {
         padding: 10px;
     }
+    .owners .refresh {
+        display: block;
+    }
 
 
 
