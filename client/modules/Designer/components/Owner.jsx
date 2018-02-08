@@ -100,15 +100,15 @@ class Owner extends React.Component {
 
     renderDateFilter() {
         return <div>
-                 <div>
+                 <div className={ styles.width40 }>
                    <h4>Start Date</h4>
                    <DatePicker selected={ this.state.startDate } onChange={ this.handleChangeStartDate.bind(this) } />
                  </div>
-                 <div>
+                 <div className={ styles.width40 }>
                    <h4>End Date</h4>
                    <DatePicker selected={ this.state.endDate } onChange={ this.handleChangeEndDate.bind(this) } />
                  </div>
-                 <button onClick={ this.refreshDesignerOrders.bind(this) }>Refresh</button>
+                 <button className={ styles.refresh } onClick={ this.refreshDesignerOrders.bind(this) }>Refresh</button>
                </div>;
     }
 
@@ -195,7 +195,7 @@ class Owner extends React.Component {
                     totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.05) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.05);
                 }
             });
-            return <p>Completed - Share: <strong><span style={ { color: "green" } }>₹{ total.toFixed(2) }</span></strong> & GST: <strong><span style={ { color: "green" } }>₹{ totalGST.toFixed(2) }</span></strong></p>;
+            return <p>Completed - Share: <strong><span style={ { color: "green" } }>₹{ total.toFixed(2) }</span></strong> | GST: <strong><span style={ { color: "green" } }>₹{ totalGST.toFixed(2) }</span></strong></p>;
         }
     }
 
@@ -212,7 +212,7 @@ class Owner extends React.Component {
                     totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.05) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.05);
                 }
             });
-            return <p>Pending - Share: <strong><span style={ { color: "green" } }>₹{ total.toFixed(2) }</span></strong> & GST: <strong><span style={ { color: "green" } }>₹{ totalGST.toFixed(2) }</span></strong></p>;
+            return <p>Pending - Share: <strong><span style={ { color: "green" } }>₹{ total.toFixed(2) }</span></strong> | GST: <strong><span style={ { color: "green" } }>₹{ totalGST.toFixed(2) }</span></strong></p>;
         }
     }
 
@@ -267,8 +267,7 @@ class Owner extends React.Component {
                                              { ' ' + this.state.designer.toUpperCase() }
                                            </p>
                                            <br/>
-                                           <Link to={ '/order/manual/' + this.state.designer }>Add Manual Order</Link>
-                                           <br/>
+                                           <Link className={ styles.manualBtn } to={ '/order/manual/' + this.state.designer }>+ Add Manual Order</Link>
                                            <br/>
                                            { this.renderOrderTotal() }
                                            <br/>
