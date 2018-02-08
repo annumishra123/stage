@@ -251,11 +251,17 @@ class ManualOrder extends React.Component {
                </div>
     }
 
+    renderAuthenticationIssue() {
+        return <div>
+                 <p>You don't have the rights to view this page!</p>
+               </div>
+    }
+
     render() {
         return <section className={ styles.ManualOrder }>
                  <h1>{ this.props.params.id ? 'Update' : 'Create' } Order Line</h1>
                  <br/>
-                 { this.props.params.id ? this.renderUpdateOrderline() : this.renderCreateOrderLine() }
+                 { this.props.user == 'rishi@stage3.co' ? this.props.params.id ? this.renderUpdateOrderline() : this.renderCreateOrderLine() : this.renderAuthenticationIssue() }
                </section>
     }
 }
