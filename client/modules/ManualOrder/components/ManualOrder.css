@@ -1,0 +1,91 @@
+* {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+}
+
+.ManualOrder {
+    overflow: hidden;
+}
+.manualdetail {
+    width: 60%;
+    float:left;
+}
+.ManualOrder img {
+    float:left;
+    margin: 0 30px 0 0;
+    width: 320px !important;
+}
+.ManualOrder h1 {
+    color: #000;
+    font-size: 30px;
+    letter-spacing: 1.5px;
+    font-weight: 400;
+    margin: 15px 0;
+    text-align: center;
+}
+.ManualOrder label {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    line-height: 26px;
+    letter-spacing: 0.5px;
+    margin: 5px 0;
+    width: 150px;
+    display: inline-block;
+}
+.ManualOrder input {
+    width: 300px;
+    padding: 5px;
+}
+.manualdetail > div {
+    display: inline-block;
+}
+.manualdetail button {
+    background: #000;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    padding: 10px 30px;
+    margin: 15px 0;
+    border: 0;
+    clear:both;
+    display: block;
+    color: #fff;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+
+
+@media (max-width: 767px){
+    .ManualOrder h1 {
+        font-size: 20px;
+        letter-spacing: 0.5px;
+        margin: 10px 0;
+    }
+    .ManualOrder img {
+        float: none;
+        margin: 0 auto;
+        width: 60% !important;
+        display: block;
+    }
+    .manualdetail {
+        width: 90%;
+        float: none;
+        margin: 10px auto;
+    }
+    .ManualOrder label {
+        width: 100px;
+        line-height: 20px;
+        font-size: 13px;
+        margin: 8px 0;
+    }
+    .ManualOrder input {
+        width: 65%;
+    }
+    .manualdetail button {
+        width: 100%;
+    }
+
+
+}
+

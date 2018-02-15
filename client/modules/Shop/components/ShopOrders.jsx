@@ -183,7 +183,7 @@ class ShopOrders extends React.Component {
   }
 
   renderLastModifier(modifier) {
-    if(modifier) {
+    if (modifier) {
       let modifiers = modifier.split(',');
       return modifiers[modifiers.length - 1];
     }
@@ -349,6 +349,12 @@ class ShopOrders extends React.Component {
                             <th>Status</th>
                             <td>
                               { line.status }
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>Payment Method</th>
+                            <td>
+                              { line.paymentMethod }
                             </td>
                           </tr>
                         </table>
