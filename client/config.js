@@ -285,6 +285,10 @@ const clientConfig = {
     id: 'Revenue Share',
     Header: 'Revenue Share (%)',
     accessor: 'revenueshare',
+  }, {
+    id: 'gst',
+    Header: 'GST (%)',
+    accessor: 'GST',
   }],
   designerOrderColumns: [{
     Header: 'Order Id',
