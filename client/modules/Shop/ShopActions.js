@@ -176,10 +176,10 @@ export function fetchProduct(sku) {
     }
 }
 
-export function getPricingOfShoppingCart(cart) {
+export function getPricingOfShoppingCart(cart, discountCode) {
     return function(dispatch, getState) {
         let cartObject = {
-            "discountCode": "",
+            "discountCode": discountCode,
             "products": cart,
             "userId": getState().customerDetail.email
         }
@@ -206,24 +206,24 @@ export function getPricingOfShoppingCart(cart) {
     }
 }
 
-export function addItemToCart(id) {
+export function addItemToCart(id, discountCode) {
     return function(dispatch, getState) {
         let cart = getState().shopPricing ? Object.keys(getState().shopPricing.linePricing) : [];
         if (cart.indexOf(id) == -1) {
             cart.push(id);
         }
-        dispatch(getPricingOfShoppingCart(cart));
+        dispatch(getPricingOfShoppingCart(cart, discountCode));
         alert('Product added to cart');
     }
 }
 
-export function removeItemFromCart(id) {
+export function removeItemFromCart(id, discountCode) {
     return function(dispatch, getState) {
         let cart = getState().shopPricing ? Object.keys(getState().shopPricing.linePricing) : [];
         if (cart.indexOf(id) !== -1) {
             cart = cart.filter(e => e !== id);
         }
-        dispatch(getPricingOfShoppingCart(cart));
+        dispatch(getPricingOfShoppingCart(cart, discountCode));
         alert('Product removed from cart');
     }
 }
