@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { fetchProduct, addItemToCart, placeOrder, removeItemFromCart } from '../ShopActions';
+import { fetchProduct, addItemToCart, placeOrder, removeItemFromCart, getPricingOfShoppingCart } from '../ShopActions';
 import clientConfig from '../../../config';
 
 // Import Style
@@ -15,7 +15,8 @@ class CreateShopOrder extends React.Component {
     this.state = {
       sku: '',
       paymentMethod: '',
-      source: ''
+      source: '',
+      discountCode: ''
     }
   }
 
@@ -48,11 +49,22 @@ class CreateShopOrder extends React.Component {
   }
 
   addProductToCart() {
-    this.props.addItemToCart(this.props.productDetail.id);
+    this.props.addItemToCart(this.props.productDetail.id, this.state.discountCode);
   }
 
   removeProductFromCart(id) {
-    this.props.removeItemFromCart(id);
+    this.props.removeItemFromCart(id, this.state.discountCode);
+  }
+
+  handleDiscountCodeChange(e) {
+    this.setState({
+      discountCode: e.target.value
+    });
+  }
+
+  applyDiscount() {
+    let cart = this.props.shopPricing ? Object.keys(this.props.shopPricing.linePricing) : [];
+    this.props.getPricingOfShoppingCart(cart, this.state.discountCode);
   }
 
   placeOrder() {
@@ -60,7 +72,7 @@ class CreateShopOrder extends React.Component {
       let orderObject = {
         billingAddressId: this.props.selectedAddress,
         cartLines: Object.keys(this.props.shopPricing.linePricing),
-        discountCoupon: '',
+        discountCoupon: this.state.discountCode,
         isFrontend: false,
         paymentMethod: this.state.paymentMethod,
         shippingAddressId: this.props.selectedAddress,
@@ -140,6 +152,11 @@ class CreateShopOrder extends React.Component {
                    </tbody>
                  </table>
                </div>
+               <div>
+                 <input type="text" onChange={ this.handleDiscountCodeChange.bind(this) } placeholder="Enter Code" />
+                 <button onClick={ this.applyDiscount.bind(this) }>Apply Discount</button>
+                 { this.props.shopPricing.discountApplied ? <p style={ { color: 'green' } }>Discount Applied</p> : null }
+               </div>
                <br />
                <p>Total Original Price:
                  { ' ' + this.props.shopPricing.totalOriginalPrice }
@@ -218,7 +235,8 @@ function matchDispatchToProps(dispatch) {
     fetchProduct,
     addItemToCart,
     placeOrder,
-    removeItemFromCart
+    removeItemFromCart,
+    getPricingOfShoppingCart
   }, dispatch);
 }
 
