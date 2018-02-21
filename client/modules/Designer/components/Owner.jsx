@@ -258,7 +258,7 @@ class Owner extends React.Component {
                  <input type="radio" name="city" onClick={ this.handleChangeCity.bind(this, false) } />
                  <label> Other </label>
                  <br/>
-                 <a target="blank" className={ styles.link } href={ '/api/revshare/api/owners/invoice?owner=' + this.state.designer + '&month=' + this.state.month + '&year=' + this.state.year + '&ut=' + this.state.isDelhi }>Generate Invoice</a>
+                 <a target="blank" className={ styles.link } href={ '/api/revshare/api/owners/invoice?owner=' + encodeURIComponent(this.state.designer) + '&month=' + this.state.month + '&year=' + this.state.year + '&ut=' + this.state.isDelhi }>Generate Invoice</a>
                  <br/>
                  { this.state.designer ? <div>
                                            <br/>
