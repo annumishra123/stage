@@ -67,7 +67,7 @@ class Invoice extends React.Component {
                  <label> Other City</label>
                  <br/>
                  <br/>
-                 <a target="blank" href={ '/api/revshare/api/owners/invoice?owner=' + this.props.owner + '&month=' + this.state.month + '&year=' + this.state.year + '&ut=' + this.state.isDelhi }>Generate Invoice</a>
+                 <a target="blank" href={ '/api/revshare/api/owners/invoice?owner=' + encodeURIComponent(this.props.owner) + '&month=' + this.state.month + '&year=' + this.state.year + '&ut=' + this.state.isDelhi }>Generate Invoice</a>
                  <br/>
                </section>
     }
