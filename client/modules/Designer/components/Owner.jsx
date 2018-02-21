@@ -223,6 +223,7 @@ class Owner extends React.Component {
                  { this.renderOwners() }
                  <br/>
                  <OwnerForm />
+                 <br/>
                  <FormSubmitButton formName="createOwner" text="Create Owner" />
                  <br/>
                  <br/>
