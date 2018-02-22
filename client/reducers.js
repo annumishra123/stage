@@ -13,6 +13,7 @@ import { customerDetail, selectedAddress, creditPoints, customerComments } from 
 import { deliveryOrders } from './modules/Delivery/DeliveryReducer';
 import { accessoryCatalog, rentCatalog, shopCatalog } from './modules/Inventory/InventoryReducer';
 import { instagramFeeds } from './modules/CMS/CMSReducer';
+import { accessoryCatalog, rentCatalog, shopCatalog, shopStock } from './modules/Inventory/InventoryReducer';
 import { designerInventory, cancelledDesignerOrders, completedDesignerOrders, pendingDesignerOrders, designerShare } from './modules/Designer/DesignerReducer';
 import { revshares } from './modules/Designer/DesignerReducer';
 import { revShareOrderLine } from './modules/ManualOrder/ManualOrderReducer';
@@ -51,5 +52,6 @@ export default combineReducers({
   revshares,
   designerShare,
   instagramFeeds,
-  revShareOrderLine
+  revShareOrderLine,
+  shopStock
 });

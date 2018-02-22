@@ -355,8 +355,8 @@ const clientConfig = {
     Header: 'Image',
     accessor: o => {
       return <a target="blank" href={ o.image }>
-                                                                                             Link
-                                                                                           </a>;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           Link
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </a>;
     }
   }, {
     id: 'date',
@@ -364,6 +364,44 @@ const clientConfig = {
     accessor: o => {
       return moment(o.createdTimestamp * 1000).format("lll");
     }
+  }],
+  measurements: [
+    'chest',
+    'bicep',
+    'underBust',
+    'mainWaist',
+    'lowWaist',
+    'hip',
+    'shoulder',
+    'thigh',
+    'trouserLength',
+    'stomach',
+    'crotch',
+    'neck',
+    'inseem',
+    'sleeves'
+  ],
+  shopStockColumns: [{
+    Header: 'SKU',
+    accessor: 'sku',
+  }, {
+    Header: 'Name',
+    accessor: 'product.name',
+  }, {
+    Header: 'Status',
+    accessor: 'product.status',
+  }, {
+    Header: 'Quantity',
+    accessor: 'product.quantity',
+  }, {
+    Header: 'Available',
+    accessor: 'numberOfQuantitesAvailable',
+  }, {
+    Header: 'Ordered',
+    accessor: 'numberOfOrdersPlaced',
+  }, {
+    Header: 'Cancelled',
+    accessor: 'numberOfOrdersCancelled',
   }]
 }
 

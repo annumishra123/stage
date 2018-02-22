@@ -38,6 +38,9 @@ class Navigation extends React.Component {
                                                    { this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
                                                                                                                       <Link to="/cms/instagram">Instagram</Link>
                                                                                                                     </li> : null }
+                                                   { this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
+                                                                                                                      <Link to="/inventory/shop/stock">Shop Stock</Link>
+                                                                                                                    </li> : null }
                                                    { this.props.role == 'superuser' ? <li>
                                                                                         <Link>Create User
                                                                                         <br />(coming soon)</Link>
