@@ -37,6 +37,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Auth/components/ChangePassword');
   require('./modules/CMS/components/Instagram');
   require('./modules/ManualOrder/components/ManualOrder');
+  require('./modules/Inventory/components/ShopStockManager');
 }
 
 // react-router setup with code-splitting
@@ -225,6 +226,11 @@ export default function getRoutes(store, req) {
                                                                                cb(null, require('./modules/Auth/components/ChangePassword').default);
                                                                              });
                                                                            } } />
+      <Route path="/inventory/shop/stock" onEnter={ checkAdmin } getComponent={ (nextState, cb) => {
+                                                                                  require.ensure([], require => {
+                                                                                    cb(null, require('./modules/Inventory/components/ShopStockManager').default);
+                                                                                  });
+                                                                                } } />
       <Route path="/inventory/shop/:id" onEnter={ checkEmployee } getComponent={ (nextState, cb) => {
                                                                                    require.ensure([], require => {
                                                                                      cb(null, require('./modules/Inventory/components/ShopProduct').default);
