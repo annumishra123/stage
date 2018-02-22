@@ -20,7 +20,7 @@ let EmailForm = props => {
         <label htmlFor="owners">Revenue Share (%) </label>
         <Field name="revenueshare" component="input" type="number" />
         <br/>
-        <Field name="gst" component="input" type="checkbox" />
+        <Field name="gst" component="input" type="checkbox" defaultChecked= {false} />
         <label htmlFor="owners">GST </label>
       </div>
     </form>
