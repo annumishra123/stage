@@ -287,10 +287,10 @@ const clientConfig = {
     accessor: 'revenueshare',
   }, {
     id: 'Gst',
-    Header: 'GST (%)',
+    Header: 'GST',
     accessor: o => {
       if (o.gst == false) {
-        return null
+        return 'null'
       } else {
         return 'Yes'
       }
