@@ -290,6 +290,7 @@ export function updateShopStock(id, sku, quantity) {
             },
             responseType: 'json'
         }).then((response) => {
+            alert('Quantity has been updated');
             dispatch(fetchShopStock());
         }).catch((error) => {
             console.log(error);
