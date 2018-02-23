@@ -5,13 +5,16 @@ import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import { fetchShopStock, updateShopStock } from '../InventoryActions';
 import clientConfig from '../../../config';
+import ReactModal from 'react-modal';
 
 
 class ShopStockManager extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            quantity: 0
+            quantity: 0,
+            viewModal: false,
+            row: null
         }
     }
 
@@ -22,6 +25,21 @@ class ShopStockManager extends React.Component {
     handleChangeQuantity(e) {
         this.setState({
             quantity: e.target.value
+        });
+    }
+
+    showModal(row) {
+        this.setState({
+            viewModal: true,
+            row: row
+        });
+    }
+
+    hideModal() {
+        this.setState({
+            viewModal: false,
+            row: null,
+            quantity: 0
         });
     }
 
@@ -38,6 +56,8 @@ class ShopStockManager extends React.Component {
             }
         }
         this.setState({
+            viewModal: false,
+            row: null,
             quantity: 0
         });
     }
@@ -50,12 +70,7 @@ class ShopStockManager extends React.Component {
                         Header: 'Quantity',
                         id: 'edit',
                         accessor: (row) => row,
-                        Cell: ({row}) => <div>
-                                           <input onChange={ this.handleChangeQuantity.bind(this) } value={ this.state.quantity } type="number" />
-                                           <button onClick={ this.updateQuantity.bind(this, row) }>
-                                             { this.state.quantity == 0 ? 'Reconcile' : 'Update' }
-                                           </button>
-                                         </div>
+                        Cell: ({row}) => <button onClick={ this.showModal.bind(this, row) }>Update</button>
                     });
                 }
                 return <div>
@@ -70,6 +85,14 @@ class ShopStockManager extends React.Component {
                  <h1>Shop Stock Manager</h1>
                  <br/>
                  { this.renderShopStock() }
+                 <ReactModal isOpen={ this.state.viewModal } onRequestClose={ this.hideModal.bind(this) } contentLabel="Update Quantity">
+                   <span onClick={ this.hideModal.bind(this) }>×</span>
+                   <br/>
+                   <input onChange={ this.handleChangeQuantity.bind(this) } value={ this.state.quantity } type="number" />
+                   <button onClick={ this.updateQuantity.bind(this, this.state.row) }>
+                     { this.state.quantity == 0 ? 'Reconcile' : 'Update' }
+                   </button>
+                 </ReactModal>
                </section>
     }
 }
