@@ -1,3 +1,12 @@
+section h1 {
+    color: #000;
+    font-family: 'Lato', sans-serif;
+    font-size: 24px;
+    letter-spacing: 1px;
+    text-align: left;
+    margin: 25px 0 15px;
+}
+
 .stockPopup {
     width: 350px;
     height: 190px;
