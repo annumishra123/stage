@@ -7,6 +7,9 @@ import { fetchShopStock, updateShopStock } from '../InventoryActions';
 import clientConfig from '../../../config';
 import ReactModal from 'react-modal';
 
+// Import Style
+import styles from './inventory.css';
+
 
 class ShopStockManager extends React.Component {
     constructor(props) {
@@ -85,9 +88,10 @@ class ShopStockManager extends React.Component {
                  <h1>Shop Stock Manager</h1>
                  <br/>
                  { this.renderShopStock() }
-                 <ReactModal isOpen={ this.state.viewModal } onRequestClose={ this.hideModal.bind(this) } contentLabel="Update Quantity">
+                 <ReactModal className={ styles.stockPopup } isOpen={ this.state.viewModal } onRequestClose={ this.hideModal.bind(this) } contentLabel="Update Quantity">
                    <span onClick={ this.hideModal.bind(this) }>×</span>
                    <br/>
+                   <h3>Stock Manager</h3>
                    <input onChange={ this.handleChangeQuantity.bind(this) } value={ this.state.quantity } type="number" />
                    <button onClick={ this.updateQuantity.bind(this, this.state.row) }>
                      { this.state.quantity == 0 ? 'Reconcile' : 'Update' }
