@@ -545,7 +545,7 @@ class RentOrders extends React.Component {
     return <section className={ styles.rentOrders }>
              { !this.state.viewOrderDetail ?
                <div>
-                 <h2>Rent Orders</h2>
+                 <h3>Rent Orders</h3>
                  <div>
                    <div className={ styles.width50 }>
                      <div>

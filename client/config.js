@@ -286,9 +286,15 @@ const clientConfig = {
     Header: 'Revenue Share (%)',
     accessor: 'revenueshare',
   }, {
-    id: 'gst',
-    Header: 'GST (%)',
-    accessor: 'GST',
+    id: 'Gst',
+    Header: 'GST',
+    accessor: o => {
+      if (o.gst == false) {
+        return 'null'
+      } else {
+        return 'Yes'
+      }
+    }
   }],
   designerOrderColumns: [{
     Header: 'Order Id',
@@ -349,8 +355,8 @@ const clientConfig = {
     Header: 'Image',
     accessor: o => {
       return <a target="blank" href={ o.image }>
-                                                                                                                                                                                                                                                         Link
-                                                                                                                                                                                                                                                       </a>;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           Link
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </a>;
     }
   }, {
     id: 'date',
@@ -374,7 +380,29 @@ const clientConfig = {
     'neck',
     'inseem',
     'sleeves'
-  ]
+  ],
+  shopStockColumns: [{
+    Header: 'SKU',
+    accessor: 'sku',
+  }, {
+    Header: 'Name',
+    accessor: 'product.name',
+  }, {
+    Header: 'Status',
+    accessor: 'product.status',
+  }, {
+    Header: 'Quantity',
+    accessor: 'product.quantity',
+  }, {
+    Header: 'Available',
+    accessor: 'numberOfQuantitesAvailable',
+  }, {
+    Header: 'Ordered',
+    accessor: 'numberOfOrdersPlaced',
+  }, {
+    Header: 'Cancelled',
+    accessor: 'numberOfOrdersCancelled',
+  }]
 }
 
 

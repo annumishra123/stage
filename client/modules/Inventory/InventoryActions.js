@@ -256,3 +256,44 @@ export function changeRentAccessoryLocation(id, location) {
         });
     }
 }
+
+export function fetchShopStock() {
+    return function(dispatch) {
+        let url = '/api/inventory-manager/getInventoryStatus';
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then((response) => {
+            dispatch({
+                type: 'FETCH_SHOP_STOCK',
+                payload: response.data
+            });
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+}
+
+export function updateShopStock(id, sku, quantity) {
+    return function(dispatch) {
+        let url = '/api/inventory-manager/updateInventory';
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            data: {
+                productId: id,
+                quantityDiff: quantity,
+                sku: sku
+            },
+            responseType: 'json'
+        }).then((response) => {
+            alert('Quantity has been updated');
+            dispatch(fetchShopStock());
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+}
