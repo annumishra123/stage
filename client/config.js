@@ -355,8 +355,8 @@ const clientConfig = {
     Header: 'Image',
     accessor: o => {
       return <a target="blank" href={ o.image }>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           Link
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </a>;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Link
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </a>;
     }
   }, {
     id: 'date',
@@ -402,6 +402,12 @@ const clientConfig = {
   }, {
     Header: 'Cancelled',
     accessor: 'numberOfOrdersCancelled',
+  }, {
+    id: 'sold',
+    Header: 'Sold',
+    accessor: o => {
+      return o.numberOfOrdersPlaced - o.numberOfOrdersCancelled;
+    }
   }]
 }
 
