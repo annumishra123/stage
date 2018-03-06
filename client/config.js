@@ -290,7 +290,7 @@ const clientConfig = {
     Header: 'GST',
     accessor: o => {
       if (o.gst == false) {
-        return 'null'
+        return 'No'
       } else {
         return 'Yes'
       }
