@@ -456,6 +456,12 @@ class RentOrders extends React.Component {
                             </td>
                           </tr>
                           <tr>
+                            <th>Loss</th>
+                            <td>
+                              { line.price - line.invoicePrice }
+                            </td>
+                          </tr>
+                          <tr>
                             <th>Status</th>
                             <td>
                               { line.currentStatus }
