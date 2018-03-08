@@ -3,7 +3,7 @@ import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
-import { fetchAccessoryCatalog, fetchRentCatalog, fetchShopCatalog, changeShopLookLocation, changeRentLookLocation, changeRentAccessoryLocation } from '../InventoryActions';
+import { fetchAccessoryCatalog, fetchRentCatalog, fetchShopCatalog, changeShopLookLocation, changeRentLookLocation, changeRentAccessoryLocation, fetchShopProduct, fetchRentProduct, fetchAccessory, updateShopProduct, updateRentProduct, updateAccessory, clearShopProduct, clearRentProduct, clearAccessory } from '../InventoryActions';
 import clientConfig from '../../../config';
 import { CSVLink } from 'react-csv';
 import ReactModal from 'react-modal';
@@ -14,7 +14,9 @@ class Inventory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            location: ''
+            location: '',
+            viewOrderDetails: false,
+            tabIndex: 0,
         }
     }
 
@@ -26,6 +28,19 @@ class Inventory extends React.Component {
 
     handleChangeLocation(e) {
         this.state.location = e.target.value;
+    }
+
+
+    viewRentLook(id) {
+        browserHistory.push('/inventory/rent/' + id);
+    }
+
+    viewShopLook(id) {
+        browserHistory.push('/inventory/shop/' + id);
+    }
+
+    viewAccessory(id) {
+        browserHistory.push('/inventory/accessory/' + id);
     }
 
     changeRentLooksLocation(id) {
@@ -46,28 +61,39 @@ class Inventory extends React.Component {
         }
     }
 
+
+    renderProductDetail(tab) {
+        switch (tab) {
+            case 0:
+                return <div>{this.renderShopProductDetail()}</div>;
+                break;
+            case 1:
+                return <div>Rent Product Detail</div>;
+                break;
+            case 2:
+                return <div>Accessory Detail</div>;
+                break;
+        }
+
+    }
+
+
     renderRentLooks() {
         if (this.props.rentCatalog) {
             if (this.props.rentCatalog.length > 0) {
-                if (!clientConfig.rentLooksColumns.find(o => o.id == 'changeLocation') && (this.props.role == 'admin' || this.props.role == 'delivery')) {
+                if (!clientConfig.rentLooksColumns.find(o => o.id == 'edit') && (this.props.role == 'admin')) {
                     clientConfig.rentLooksColumns.unshift({
                         Header: '',
-                        id: 'changeLocation',
+                        id: 'edit',
                         accessor: '_id',
-                        Cell: ({value}) => <div>
-                                             <select onChange={ this.handleChangeLocation.bind(this) }>
-                                               <option value=""> -- Select Location -- </option>
-                                               <option value="store">Store</option>
-                                               <option value="office">Office</option>
-                                               <option value="customer">Customer</option>
-                                             </select>
-                                             <button onClick={ this.changeRentLooksLocation.bind(this, value) }>Change</button>
-                                           </div>
+                        Cell: ({ value }) => <div>
+                           <button onClick={this.viewRentLook.bind(this, value)}>Edit Product</button>
+                        </div>
                     });
                 }
                 return <div>
-                         <ReactTable filterable data={ this.props.rentCatalog } columns={ clientConfig.rentLooksColumns } defaultPageSize={ 10 } className="-striped -highlight" />
-                       </div>;
+                    <ReactTable filterable data={this.props.rentCatalog} columns={clientConfig.rentLooksColumns} defaultPageSize={10} className="-striped -highlight" />
+                </div>;
             }
         }
     }
@@ -80,20 +106,14 @@ class Inventory extends React.Component {
                         Header: '',
                         id: 'changeLocation',
                         accessor: '_id',
-                        Cell: ({value}) => <div>
-                                             <select onChange={ this.handleChangeLocation.bind(this) }>
-                                               <option value=""> -- Select Location -- </option>
-                                               <option value="store">Store</option>
-                                               <option value="office">Office</option>
-                                               <option value="customer">Customer</option>
-                                             </select>
-                                             <button onClick={ this.changeRentAccessoriesLocation.bind(this, value) }>Change</button>
-                                           </div>
+                        Cell: ({ value }) => <div>
+                            <button onClick={this.viewAccessory.bind(this, value)}>Edit Accessory</button>
+                        </div>
                     });
                 }
                 return <div>
-                         <ReactTable filterable data={ this.props.accessoryCatalog } columns={ clientConfig.rentAccessoriesColumns } defaultPageSize={ 10 } className="-striped -highlight" />
-                       </div>;
+                    <ReactTable filterable data={this.props.accessoryCatalog} columns={clientConfig.rentAccessoriesColumns} defaultPageSize={10} className="-striped -highlight" />
+                </div>;
             }
         }
     }
@@ -101,50 +121,56 @@ class Inventory extends React.Component {
     renderShopLooks() {
         if (this.props.shopCatalog) {
             if (this.props.shopCatalog.length > 0) {
-                if (!clientConfig.shopLooksColumns.find(o => o.id == 'changeLocation') && (this.props.role == 'admin' || this.props.role == 'delivery')) {
+                if (!clientConfig.shopLooksColumns.find(o => o.id == 'edit') && (this.props.role == 'admin')) {
                     clientConfig.shopLooksColumns.unshift({
                         Header: '',
-                        id: 'changeLocation',
+                        id: 'edit',
                         accessor: 'id',
-                        Cell: ({value}) => <div>
-                                             <select onChange={ this.handleChangeLocation.bind(this) }>
-                                               <option value=""> -- Select Location -- </option>
-                                               <option value="store">Store</option>
-                                               <option value="office">Office</option>
-                                               <option value="customer">Customer</option>
-                                             </select>
-                                             <button onClick={ this.changeShopLooksLocation.bind(this, value) }>Change</button>
-                                           </div>
+                        Cell: ({ value }) => <div>
+                            <button onClick={this.viewShopLook.bind(this, value)}>Edit Product</button>
+                        </div>
                     });
                 }
                 return <div>
-                         <ReactTable filterable data={ this.props.shopCatalog } columns={ clientConfig.shopLooksColumns } defaultPageSize={ 10 } className="-striped -highlight" />
-                       </div>;
+                    <ReactTable filterable data={this.props.shopCatalog} columns={clientConfig.shopLooksColumns} defaultPageSize={10} className="-striped -highlight" />
+                </div>;
             }
         }
     }
 
+    handleTabChange(tabIndex) {
+        this.setState({ tabIndex: tabIndex });
+    }
+
     render() {
         return <section>
-                 <h1>Inventory</h1>
-                 <br/>
-                 <Tabs>
-                   <TabList>
-                     <Tab>Shop</Tab>
-                     <Tab>Rent</Tab>
-                     <Tab>Accessory</Tab>
-                   </TabList>
-                   <TabPanel>
-                     { this.renderShopLooks() }
-                   </TabPanel>
-                   <TabPanel>
-                     { this.renderRentLooks() }
-                   </TabPanel>
-                   <TabPanel>
-                     { this.renderRentAccessories() }
-                   </TabPanel>
-                 </Tabs>
-               </section>
+            {!this.state.viewOrderDetails ?
+                <div>
+                    <h1>Inventory</h1>
+                    <br />
+                    <Tabs selectedIndex={this.state.tabIndex} onSelect={this.handleTabChange.bind(this)}>
+                        <TabList>
+                            <Tab>Shop</Tab>
+                            <Tab>Rent</Tab>
+                            <Tab>Accessory</Tab>
+                        </TabList>
+                        <TabPanel>
+                            {this.renderShopLooks()}
+                        </TabPanel>
+                        <TabPanel>
+                            {this.renderRentLooks()}
+                        </TabPanel>
+                        <TabPanel>
+                            {this.renderRentAccessories()}
+                        </TabPanel>
+                    </Tabs>
+                </div> :
+                <div>{this.renderProductDetail(this.state.tabIndex)}</div>}
+        </section>
+    }
+
+    componentWillUnmount() {
+        this.props.clearShopProduct();
     }
 }
 
@@ -155,7 +181,16 @@ function matchDispatchToProps(dispatch) {
         fetchShopCatalog,
         changeShopLookLocation,
         changeRentLookLocation,
-        changeRentAccessoryLocation
+        changeRentAccessoryLocation,
+        fetchShopProduct,
+        updateShopProduct,
+        clearShopProduct,
+        fetchRentProduct,
+        updateRentProduct,
+        clearRentProduct,
+        fetchAccessory,
+        updateAccessory,
+        clearAccessory
     }, dispatch);
 }
 
@@ -165,7 +200,10 @@ function mapStateToProps(state) {
         rentCatalog: state.rentCatalog,
         shopCatalog: state.shopCatalog,
         role: state.auth.role,
-        user: state.auth.email
+        user: state.auth.email,
+        shopProduct: state.shopProduct,
+        rentProduct: state.rentProduct,
+        accessory: state.accessory
     };
 }
 

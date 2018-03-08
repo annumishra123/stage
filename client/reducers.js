@@ -12,7 +12,7 @@ import auth from './modules/Auth/AuthReducer';
 import { customerDetail, selectedAddress, creditPoints, customerComments } from './modules/Customer/CustomerReducer';
 import { deliveryOrders } from './modules/Delivery/DeliveryReducer';
 import { instagramFeeds } from './modules/CMS/CMSReducer';
-import { accessoryCatalog, rentCatalog, shopCatalog, shopStock } from './modules/Inventory/InventoryReducer';
+import { accessoryCatalog, rentCatalog, shopCatalog, rentProduct, shopProduct, updateProduct, updateRentProduct, accessory, updateAccessory, shopStock } from './modules/Inventory/InventoryReducer';
 import { designerInventory, cancelledDesignerOrders, completedDesignerOrders, pendingDesignerOrders, designerShare } from './modules/Designer/DesignerReducer';
 import { revshares } from './modules/Designer/DesignerReducer';
 import { revShareOrderLine } from './modules/ManualOrder/ManualOrderReducer';
@@ -51,6 +51,12 @@ export default combineReducers({
   revshares,
   designerShare,
   instagramFeeds,
+  rentProduct,
+  shopProduct,
+  accessory,
+  updateRentProduct,
+  updateProduct,
+  updateAccessory,
   revShareOrderLine,
   shopStock
 });
