@@ -126,7 +126,7 @@ class Inventory extends React.Component {
                         id: 'edit',
                         accessor: '_id',
                         Cell: ({value}) => <div>
-                                             <button onClick={ this.viewAccessory.bind(this, value) }>Edit Accessory</button>
+                                             {/*<button onClick={ this.viewAccessory.bind(this, value) }>Edit Accessory</button>*/}
                                            </div>
                     });
                 }
@@ -163,7 +163,7 @@ class Inventory extends React.Component {
                         id: 'edit',
                         accessor: 'id',
                         Cell: ({value}) => <div>
-                                             <button onClick={ this.viewShopLook.bind(this, value) }>Edit Product</button>
+                                             {/*<button onClick={ this.viewShopLook.bind(this, value) }>Edit Product</button>*/}
                                            </div>
                     });
                 }
