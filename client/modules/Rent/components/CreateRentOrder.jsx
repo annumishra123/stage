@@ -229,6 +229,7 @@ class CreateRentOrder extends React.Component {
                              <th style={ { width: '100px' } }>Original Price</th>
                              <th style={ { width: '100px' } }>Rent Price</th>
                              <th style={ { width: '100px' } }>Deposit Price</th>
+                             <th style={ { width: '100px' } }>Loss</th>
                              <th style={ { width: '100px' } }>Occasion Date</th>
                              <th style={ { width: '100px' } }>Type</th>
                              <th style={ { width: '100px' } }>Days</th>
@@ -249,6 +250,9 @@ class CreateRentOrder extends React.Component {
                                           </td>
                                           <td>
                                             { this.props.rentalPricing.pricing.linePricing[item].totalOriginalDeposit }
+                                          </td>
+                                          <td>
+                                            { this.props.rentalPricing.pricing.linePricing[item].totalDiscountedPrice - this.props.rentalPricing.pricing.linePricing[item].invoicePrice }
                                           </td>
                                           <td>
                                             { moment(this.props.rentalPricing.pricing.linePricing[item].occasionDate).format('ll') }

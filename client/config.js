@@ -164,8 +164,12 @@ const clientConfig = {
     Header: 'Deposit',
     accessor: 'deposit',
   }, {
-    Header: 'Status',
-    accessor: 'currentStatus',
+    Header: 'Deposit',
+    accessor: 'deposit',
+  }, {
+    id: 'loss',
+    Header: 'Loss',
+    accessor: o => o.price - o.invoicePrice,
   }, {
     Header: 'Payment Type',
     accessor: 'parentOrder.paymentType',
@@ -206,14 +210,16 @@ const clientConfig = {
     accessor: 'status',
   }],
   orderSource: [
-    'store',
+    'store-hkv',
+    'store-rjg',
     'office',
     'phone',
     'whatsapp',
     'sheet',
   ],
   customerSource: [
-    'store',
+    'store-hkv',
+    'store-rjg',
     'office',
     'phone',
     'whatsapp',
@@ -290,7 +296,7 @@ const clientConfig = {
     Header: 'GST',
     accessor: o => {
       if (o.gst == false) {
-        return 'null'
+        return 'No'
       } else {
         return 'Yes'
       }
@@ -355,8 +361,8 @@ const clientConfig = {
     Header: 'Image',
     accessor: o => {
       return <a target="blank" href={ o.image }>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           Link
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </a>;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Link
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </a>;
     }
   }, {
     id: 'date',
@@ -402,6 +408,12 @@ const clientConfig = {
   }, {
     Header: 'Cancelled',
     accessor: 'numberOfOrdersCancelled',
+  }, {
+    id: 'sold',
+    Header: 'Sold',
+    accessor: o => {
+      return o.numberOfOrdersPlaced - o.numberOfOrdersCancelled;
+    }
   }]
 }
 
