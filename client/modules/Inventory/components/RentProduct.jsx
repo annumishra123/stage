@@ -9,6 +9,9 @@ import { CSVLink } from 'react-csv';
 import ReactModal from 'react-modal';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
+// Import Style
+import styles from './inventory.css';
+
 class RentProduct extends React.Component {
     constructor(props) {
         super(props);
@@ -235,8 +238,8 @@ class RentProduct extends React.Component {
 
     render() {
         if (this.state.rentProduct) {
-            return (<div>
-                <button onClick={this.renderRentLooks.bind(this)}>Back</button>
+            return (<div className={ styles.rentStatus }>
+                <button className={ styles.backBtn } onClick={this.renderRentLooks.bind(this)}>Back</button>
                 {/*} <div>
                         <h4>Sku: </h4>
                         <input type="text" value={ this.state.rentProduct.sku } onChange={ this.handleChangeProductSku.bind(this) } />
@@ -327,7 +330,7 @@ class RentProduct extends React.Component {
                         <input type="text" defaultValue={ this.state.rentProduct.composition } onChange={ this.handleChangeProductComposition.bind(this) } />
                       </div>*/}
                 <div>
-                    <label> Status </label>
+                    <h3> Status </h3>
                     <br/>
                     <input type="radio" name="status" onClick={this.handleChangeProductStatus.bind(this, true)} />
                     <label> True </label>
