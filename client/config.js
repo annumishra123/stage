@@ -210,14 +210,16 @@ const clientConfig = {
     accessor: 'status',
   }],
   orderSource: [
-    'store',
+    'store-hkv',
+    'store-rjg',
     'office',
     'phone',
     'whatsapp',
     'sheet',
   ],
   customerSource: [
-    'store',
+    'store-hkv',
+    'store-rjg',
     'office',
     'phone',
     'whatsapp',
@@ -359,8 +361,8 @@ const clientConfig = {
     Header: 'Image',
     accessor: o => {
       return <a target="blank" href={ o.image }>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Link
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </a>;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Link
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </a>;
     }
   }, {
     id: 'date',
