@@ -123,6 +123,7 @@ export function updateRentProduct(product) {
                 type: 'FETCH_RENT_PRODUCT',
                 payload: response.data
             });
+            alert('The product has been updated');
         }).catch((error) => {
             console.log(error);
         });
