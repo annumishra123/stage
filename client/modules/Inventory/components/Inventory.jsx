@@ -120,16 +120,16 @@ class Inventory extends React.Component {
     renderRentAccessories() {
         if (this.props.accessoryCatalog) {
             if (this.props.accessoryCatalog.length > 0) {
-                if (!clientConfig.rentAccessoriesColumns.find(o => o.id == 'edit') && (this.props.role == 'admin')) {
-                    clientConfig.rentAccessoriesColumns.unshift({
-                        Header: '',
-                        id: 'edit',
-                        accessor: '_id',
-                        Cell: ({value}) => <div>
-                                             {/*<button onClick={ this.viewAccessory.bind(this, value) }>Edit Accessory</button>*/}
-                                           </div>
-                    });
-                }
+                // if (!clientConfig.rentAccessoriesColumns.find(o => o.id == 'edit') && (this.props.role == 'admin')) {
+                //     clientConfig.rentAccessoriesColumns.unshift({
+                //         Header: '',
+                //         id: 'edit',
+                //         accessor: '_id',
+                //         Cell: ({value}) => <div>
+                //                              {<button onClick={ this.viewAccessory.bind(this, value) }>Edit Accessory</button>}
+                //                            </div>
+                //     });
+                // }
                 if (!clientConfig.rentAccessoriesColumns.find(o => o.id == 'changeLocation') && (this.props.role == 'admin' || this.props.role == 'delivery')) {
                     clientConfig.rentAccessoriesColumns.unshift({
                         Header: '',
@@ -157,16 +157,16 @@ class Inventory extends React.Component {
     renderShopLooks() {
         if (this.props.shopCatalog) {
             if (this.props.shopCatalog.length > 0) {
-                if (!clientConfig.shopLooksColumns.find(o => o.id == 'edit') && (this.props.role == 'admin')) {
-                    clientConfig.shopLooksColumns.unshift({
-                        Header: '',
-                        id: 'edit',
-                        accessor: 'id',
-                        Cell: ({value}) => <div>
-                                             {/*<button onClick={ this.viewShopLook.bind(this, value) }>Edit Product</button>*/}
-                                           </div>
-                    });
-                }
+                // if (!clientConfig.shopLooksColumns.find(o => o.id == 'edit') && (this.props.role == 'admin')) {
+                //     clientConfig.shopLooksColumns.unshift({
+                //         Header: '',
+                //         id: 'edit',
+                //         accessor: 'id',
+                //         Cell: ({value}) => <div>
+                //                              {<button onClick={ this.viewShopLook.bind(this, value) }>Edit Product</button>}
+                //                            </div>
+                //     });
+                // }
                 if (!clientConfig.shopLooksColumns.find(o => o.id == 'changeLocation') && (this.props.role == 'admin' || this.props.role == 'delivery')) {
                     clientConfig.shopLooksColumns.unshift({
                         Header: '',
