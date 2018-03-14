@@ -121,6 +121,13 @@ const clientConfig = {
     Header: 'Product Name',
     accessor: 'product.name',
   }, {
+    Header: 'Look No.',
+    accessor: 'product.lookNumber',
+  }, {
+    id: 'gender',
+    Header: 'Gender',
+    accessor: o => o.product.url ? o.product.url.split('/')[0] : '',
+  }, {
     Header: 'SKU',
     accessor: 'product.sku',
   }, {
@@ -236,7 +243,7 @@ const clientConfig = {
   }, {
     id: 'image',
     Header: 'Image',
-    accessor: o => <a target="blank" href={ o.frontimage }>Link</a>,
+    accessor: o => <a target="blank" href={o.frontimage}>Link</a>,
   }, {
     Header: 'Location',
     accessor: 'location',
@@ -256,7 +263,7 @@ const clientConfig = {
   }, {
     id: 'image',
     Header: 'Image',
-    accessor: o => <a target="blank" href={ o.frontimage }>Link</a>,
+    accessor: o => <a target="blank" href={o.frontimage}>Link</a>,
   }, {
     Header: 'Location',
     accessor: 'location',
@@ -270,7 +277,7 @@ const clientConfig = {
   }, {
     id: 'image',
     Header: 'Image',
-    accessor: o => <a target="blank" href={ o.image }>Link</a>,
+    accessor: o => <a target="blank" href={o.image}>Link</a>,
   }, {
     Header: 'Location',
     accessor: 'location',
@@ -311,9 +318,9 @@ const clientConfig = {
   }, {
     id: 'name',
     Header: 'Name',
-    accessor: o => <a target="blank" href={ o.image }>
-                     { o.outfitname }
-                   </a>
+    accessor: o => <a target="blank" href={o.image}>
+      {o.outfitname}
+    </a>
   }, {
     id: 'orderDate',
     Header: 'Order Date',
@@ -363,8 +370,8 @@ const clientConfig = {
     id: 'image',
     Header: 'Image',
     accessor: o => {
-      return <a target="blank" href={ o.image }>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   Link
+      return <a target="blank" href={o.image}>
+        Link
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </a>;
     }
   }, {
