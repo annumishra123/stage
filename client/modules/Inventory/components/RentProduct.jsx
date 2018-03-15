@@ -136,12 +136,16 @@ class RentProduct extends React.Component {
         browserHistory.push('/inventory/rent/' + id);
     }
 
+    viewInventory() {
+        browserHistory.push('/inventory/');
+    }
+
     updateRentProductDetails() {
         let product = this.state.rentProduct;
-        product.size = product.size ? product.size.split(',').map(function(size) {
+        product.size = product.size ? product.size.split(',').map(function (size) {
             return size.trim()
         }) : product.size;
-        product.color = product.color ? product.color.split(',').map(function(color) {
+        product.color = product.color ? product.color.split(',').map(function (color) {
             return color.trim()
         }) : product.color;
         this.props.updateRentProduct(this.state.rentProduct);
@@ -155,14 +159,14 @@ class RentProduct extends React.Component {
                         Header: '',
                         id: 'edit',
                         accessor: 'id',
-                        Cell: ({value}) => <div>
-                                             <button onClick={ this.viewRentLook.bind(this, value) }>Edit Product</button>
-                                           </div>
+                        Cell: ({ value }) => <div>
+                            <button onClick={this.viewRentLook.bind(this, value)}>Edit Product</button>
+                        </div>
                     });
                 }
                 return <div>
-                         <ReactTable filterable data={ this.props.rentCatalog } columns={ clientConfig.rentLooksColumns } defaultPageSize={ 10 } className="-striped -highlight" />
-                       </div>;
+                    <ReactTable filterable data={this.props.rentCatalog} columns={clientConfig.rentLooksColumns} defaultPageSize={10} className="-striped -highlight" />
+                </div>;
             }
         }
     }
@@ -217,34 +221,34 @@ class RentProduct extends React.Component {
         if (Object.keys(this.state.rentProduct.measurements).length > 0) {
             let measurements = Object.keys(this.state.rentProduct.measurements);
             return <div>
-                     { measurements.map((line, i) => {
-                           return <div key={ i }>
-                                    <br />
-                                    <label><b>{ line.toUpperCase() }</b></label>
-                                    <br />
-                                    <br />
-                                    <label>MIN: </label>
-                                    <input type="text" disabled={ true } value={ this.state.rentProduct.measurements[line].min } onChange={ this.handleChangeProductMeasurements.bind(this) } />
-                                    <label>MAX: </label>
-                                    <input type="text" disabled={ true } value={ this.state.rentProduct.measurements[line].max } onChange={ this.handleChangeProductMeasurements.bind(this) } />
-                                    <label>LOOSING: </label>
-                                    <input type="text" disabled={ true } value={ this.state.rentProduct.measurements[line].loosing } onChange={ this.handleChangeProductMeasurements.bind(this) } />
-                                    <button onClick={ this.removeMeasurement.bind(this, line) }>DELETE</button>
-                                    <br />
-                                  </div>;
-                       }) }
-                     <br />
-                   </div>
+                {measurements.map((line, i) => {
+                    return <div key={i}>
+                        <br />
+                        <label><b>{line.toUpperCase()}</b></label>
+                        <br />
+                        <br />
+                        <label>MIN: </label>
+                        <input type="text" disabled={true} value={this.state.rentProduct.measurements[line].min} onChange={this.handleChangeProductMeasurements.bind(this)} />
+                        <label>MAX: </label>
+                        <input type="text" disabled={true} value={this.state.rentProduct.measurements[line].max} onChange={this.handleChangeProductMeasurements.bind(this)} />
+                        <label>LOOSING: </label>
+                        <input type="text" disabled={true} value={this.state.rentProduct.measurements[line].loosing} onChange={this.handleChangeProductMeasurements.bind(this)} />
+                        <button onClick={this.removeMeasurement.bind(this, line)}>DELETE</button>
+                        <br />
+                    </div>;
+                })}
+                <br />
+            </div>
         }
     }
 
-    renderNewMeasurements() {}
+    renderNewMeasurements() { }
 
     render() {
         if (this.state.rentProduct) {
-            return (<div className={ styles.rentStatus }>
-                      <button className={ styles.backBtn } onClick={ this.renderRentLooks.bind(this) }>Back</button>
-                      { /*} <div>
+            return (<div className={styles.rentStatus}>
+                <button className={styles.backBtn} onClick={this.viewInventory.bind(this)}>Back</button>
+                { /*} <div>
                                                         <h4>Sku: </h4>
                                                         <input type="text" value={ this.state.rentProduct.sku } onChange={ this.handleChangeProductSku.bind(this) } />
                                                       </div>
@@ -333,16 +337,17 @@ class RentProduct extends React.Component {
                                                         <h4>Composition: </h4>
                                                         <input type="text" defaultValue={ this.state.rentProduct.composition } onChange={ this.handleChangeProductComposition.bind(this) } />
                                                       </div>*/ }
-                      <div>
-                        <h3> Status </h3>
-                        <br/>
-                        <input type="radio" name="status" defaultChecked={ this.state.rentProduct.status } onClick={ this.handleChangeProductStatus.bind(this, true) } />
-                        <label> True </label>
-                        <br />
-                        <input type="radio" name="status" defaultChecked={ !this.state.rentProduct.status } onClick={ this.handleChangeProductStatus.bind(this, false) } />
-                        <label> False </label>
-                      </div>
-                      { /*<div>
+                <div>
+                    {this.state.rentProduct.name}
+                    <br />
+                    <br />
+                    <input type="radio" name="status" defaultChecked={this.state.rentProduct.status} onClick={this.handleChangeProductStatus.bind(this, true)} />
+                    <label> Enable </label>
+                    <br />
+                    <input type="radio" name="status" defaultChecked={!this.state.rentProduct.status} onClick={this.handleChangeProductStatus.bind(this, false)} />
+                    <label> Disable </label>
+                </div>
+                { /*<div>
                                                         <h4>Category: </h4>
                                                         <input type="text" defaultValue={ this.state.rentProduct.categories } onChange={ this.handleChangeProductCategory.bind(this) } />
                                                       </div>
@@ -358,8 +363,8 @@ class RentProduct extends React.Component {
                                                         <h4>Location: </h4>
                                                         <input type="text" defaultValue={ this.state.rentProduct.location } onChange={ this.handleChangeProductLocation.bind(this) } />
                                                       </div>*/ }
-                      <button onClick={ this.updateRentProductDetails.bind(this) }>Update Product</button>
-                    </div>)
+                <button onClick={this.updateRentProductDetails.bind(this)}>Update Product</button>
+            </div>)
 
         } else {
             return <h1>Not Available</h1>;
