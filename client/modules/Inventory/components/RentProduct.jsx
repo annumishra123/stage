@@ -338,7 +338,7 @@ class RentProduct extends React.Component {
                                                         <input type="text" defaultValue={ this.state.rentProduct.composition } onChange={ this.handleChangeProductComposition.bind(this) } />
                                                       </div>*/ }
                 <div>
-                    {this.state.rentProduct.name}
+                    <h3>{this.state.rentProduct.name}</h3>
                     <br />
                     <br />
                     <input type="radio" name="status" defaultChecked={this.state.rentProduct.status} onClick={this.handleChangeProductStatus.bind(this, true)} />
