@@ -91,7 +91,7 @@ const clientConfig = {
     'payumoney',
     'razorpay',
     'Mswipe',
-    'ezepay'
+    'ezetap'
   ],
   deliveryColumns: [{
     Header: 'Order Id',
