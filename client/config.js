@@ -375,9 +375,7 @@ const clientConfig = {
     id: 'image',
     Header: 'Image',
     accessor: o => {
-      return <a target="blank" href={o.image}>
-        Link
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </a>;
+      return <a target="blank" href={o.image}>Link</a>;
     }
   }, {
     id: 'date',
@@ -429,6 +427,45 @@ const clientConfig = {
     accessor: o => {
       return o.numberOfOrdersPlaced - o.numberOfOrdersCancelled;
     }
+  }],
+  rentalCouponColumns: [{
+    Header: 'Name',
+    accessor: 'couponText',
+  }, {
+    Header: 'Type',
+    accessor: 'type',
+  }, {
+    id: 'configs',
+    Header: 'Description',
+    accessor: o => {
+      return Object.keys(o.configs).map((config) => {
+        return ' ' + config + ': ' + o.configs[config];
+      }).join(',');
+    }
+  }, {
+    id: 'created',
+    Header: 'Created',
+    accessor: o => {
+      return moment(o.creationTime).format("lll");
+    }
+  }, {
+    id: 'validity',
+    Header: 'Validity',
+    accessor: o => {
+      return moment(o.dateTillValidMillisUTC).format("lll");
+    }
+  }, {
+    id: 'isAdvertized',
+    Header: 'Advertized',
+    accessor: o => { return o.isAdvertized ? 'Yes' : 'No'; }
+  }, {
+    id: 'isDeleted',
+    Header: 'Deleted',
+    accessor: o => { return o.isDeleted ? 'Yes' : 'No'; }
+  }, {
+    id: 'isReusable',
+    Header: 'Reusable',
+    accessor: o => { return o.isReusable ? 'Yes' : 'No'; }
   }]
 }
 
