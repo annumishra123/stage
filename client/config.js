@@ -219,6 +219,9 @@ const clientConfig = {
   }, {
     Header: 'Status',
     accessor: 'status',
+  }, {
+    Header: 'Source',
+    accessor: 'source',
   }],
   orderSource: [
     'store-hkv',
