@@ -129,6 +129,78 @@ th, td {
 }
 
 
+/*==== coupons ======*/
+.coupon h3 {
+    color: #000;
+    font-family: 'Lato', sans-serif;
+    font-size: 24px;
+    letter-spacing: 1px;
+    text-align: left;
+    margin: 25px 0 15px;
+}
+.coupon h4 {
+    color: #000;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    text-align: left;
+    margin: 25px 0 15px;
+}
+.coupon p {
+    letter-spacing: 1px;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    line-height: 28px;
+}
+.coupon label {
+    color: #333;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    width: 170px;
+    display: inline-block;
+}
+.coupon input {
+    border: 1px solid rgab(0,0,0,0.5);
+    padding: 12px;
+    margin: 0 0 10px;
+    color: #333;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    width: 350px;
+}
+.coupon input[type="checkbox"] {
+    width: 30px;
+}
+.couponCalendar {
+    display: inline-block !important;
+}
+.coupon select {
+    border: 1px solid rgab(0,0,0,0.5);
+    color: #000;
+    padding: 12px 10px;
+    margin: 0 10px 10px 0;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    width: 350px;
+}
+.coupon button {
+    background: #333;
+    border:0;
+    color: #fff;
+    display: inline-block !important;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    padding: 12px 30px;
+    margin: 10px 15px 10px 0;
+    letter-spacing: 1px;
+    width: 350px;
+    cursor: pointer;
+}
+
+
 @media (max-width: 767px){
 .rentOrders {
     padding: 10px;
@@ -164,6 +236,23 @@ th, td {
     width: auto;
     float:left;
     margin: 0;
+}
+
+/* coupon */
+.coupon {
+    padding: 15px;
+}
+.coupon h1 {
+    margin: 5px 0 15px;
+}
+.coupon select {
+    width: 100%;
+}
+.coupon label {
+    margin: 0 0 5px;
+}
+.coupon input {
+    width: 100%;
 }
 
 
