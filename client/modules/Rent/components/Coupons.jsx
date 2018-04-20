@@ -8,6 +8,9 @@ import ReactTable from 'react-table';
 import Datetime from 'react-datetime';
 import moment from 'moment';
 
+// Import Style
+import styles from './rentOrders.css';
+
 class Coupons extends React.Component {
     constructor(props) {
         super(props);
@@ -77,7 +80,7 @@ class Coupons extends React.Component {
     }
 
     render() {
-        return <section>
+        return <section className={ styles.coupon }>
             <h1>New Coupon</h1>
             <label>Coupon Type </label>
             <select onChange={(e) => { this.setState({ type: e.target.value, configs: {} }) }}>
@@ -93,11 +96,16 @@ class Coupons extends React.Component {
             </div> : null}
             <label>Coupon Name </label>
             <input type="text" placeholder="Name" onChange={(e) => { this.setState({ couponText: e.target.value }) }} />
+            <br/>
+            <br/>
             <div><input type="checkbox" onChange={(e) => { this.setState({ isAdvertized: e.target.checked }) }} /><label> Advertize</label></div>
             <div><input type="checkbox" onChange={(e) => { this.setState({ isReusable: e.target.checked }) }} /><label> Reusable</label></div>
+            <br/>
+            <br/>
             <label>Valid Till </label>
-            <Datetime defaultValue={this.state.dateTillValidMillisUTC} onChange={(date) => this.handleChangeDate(date)} /><br />
-            <button onClick={() => { this.createCoupon() }}>Create Coupon</button>
+            <div className={ styles.couponCalendar }>
+            <Datetime  defaultValue={this.state.dateTillValidMillisUTC} onChange={(date) => this.handleChangeDate(date)} /></div><br />
+            <button className={ styles.createCoupon } onClick={() => { this.createCoupon() }}>Create Coupon</button>
             <br />
             {this.renderCoupons()}
         </section>
