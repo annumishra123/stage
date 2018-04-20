@@ -352,6 +352,12 @@ class ShopOrders extends React.Component {
                             </td>
                           </tr>
                           <tr>
+                            <th>Order Source</th>
+                            <td>
+                              { line.source }
+                            </td>
+                          </tr>
+                          <tr>
                             <th>Payment Method</th>
                             <td>
                               { line.paymentMethod }
