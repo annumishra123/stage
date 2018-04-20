@@ -186,7 +186,7 @@ th, td {
     letter-spacing: 1px;
     width: 350px;
 }
-.coupon button {
+.coupon button.createCoupon {
     background: #333;
     border:0;
     color: #fff;
@@ -252,6 +252,9 @@ th, td {
     margin: 0 0 5px;
 }
 .coupon input {
+    width: 100%;
+}
+.coupon button.createCoupon {
     width: 100%;
 }
 

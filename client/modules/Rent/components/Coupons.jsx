@@ -105,7 +105,7 @@ class Coupons extends React.Component {
             <label>Valid Till </label>
             <div className={ styles.couponCalendar }>
             <Datetime  defaultValue={this.state.dateTillValidMillisUTC} onChange={(date) => this.handleChangeDate(date)} /></div><br />
-            <button onClick={() => { this.createCoupon() }}>Create Coupon</button>
+            <button className={ styles.createCoupon } onClick={() => { this.createCoupon() }}>Create Coupon</button>
             <br />
             {this.renderCoupons()}
         </section>
