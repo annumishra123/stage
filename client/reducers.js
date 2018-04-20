@@ -7,7 +7,7 @@ import { combineReducers } from 'redux';
 import app from './modules/App/AppReducer';
 import intl from './modules/Intl/IntlReducer';
 import { orders, orderDetail, productDetail, shopPricing } from './modules/Shop/ShopReducer';
-import { rentOrders, rentOrderDetail, rentProductDetail, rentalPricing, bookableStatus, deliveryDates, measurementStatus } from './modules/Rent/RentReducer';
+import { rentOrders, rentOrderDetail, rentProductDetail, rentalPricing, bookableStatus, deliveryDates, measurementStatus, allCoupons } from './modules/Rent/RentReducer';
 import auth from './modules/Auth/AuthReducer';
 import { customerDetail, selectedAddress, creditPoints, customerComments } from './modules/Customer/CustomerReducer';
 import { deliveryOrders } from './modules/Delivery/DeliveryReducer';
@@ -58,5 +58,6 @@ export default combineReducers({
   updateProduct,
   updateAccessory,
   revShareOrderLine,
-  shopStock
+  shopStock,
+  allCoupons
 });

@@ -5,7 +5,7 @@ import moment from 'moment';
 import { getCustomerDetail } from '../Customer/CustomerActions';
 
 export function getShopOrderListByDate(startDate, endDate) {
-    return function(dispatch) {
+    return function (dispatch) {
         if (startDate && endDate) {
             let url = '/api/om/orders/backend/get/byDateRange/' + startDate + '/' + endDate;
             return axios({
@@ -13,12 +13,12 @@ export function getShopOrderListByDate(startDate, endDate) {
                 timeout: 20000,
                 method: 'get',
                 responseType: 'json'
-            }).then(function(response) {
+            }).then(function (response) {
                 dispatch({
                     type: 'FETCH_RENT_ORDERS',
                     payload: response.data
                 })
-            }).catch(function(error) {
+            }).catch(function (error) {
                 console.log(error);
             });
         }
@@ -26,7 +26,7 @@ export function getShopOrderListByDate(startDate, endDate) {
 }
 
 export function getOrdersByUserId(userId) {
-    return function(dispatch) {
+    return function (dispatch) {
         if (userId) {
             let url = '/api/om/orders/backend/get/byUserId/' + userId + '/';
             return axios({
@@ -34,12 +34,12 @@ export function getOrdersByUserId(userId) {
                 timeout: 20000,
                 method: 'get',
                 responseType: 'json'
-            }).then(function(response) {
+            }).then(function (response) {
                 dispatch({
                     type: 'FETCH_RENT_ORDERS',
                     payload: response.data
                 })
-            }).catch(function(error) {
+            }).catch(function (error) {
                 console.log(error);
             });
         }
@@ -47,7 +47,7 @@ export function getOrdersByUserId(userId) {
 }
 
 export function getOrdersByPhoneNumber(phoneNumber) {
-    return function(dispatch) {
+    return function (dispatch) {
         let mobileRegex = /^\d{10}$/;
         let isValid = mobileRegex.test(phoneNumber);
         if (isValid) {
@@ -57,14 +57,14 @@ export function getOrdersByPhoneNumber(phoneNumber) {
                 timeout: 20000,
                 method: 'get',
                 responseType: 'json'
-            }).then(function(response) {
+            }).then(function (response) {
                 let customer = response.data;
                 if (customer) {
                     dispatch(getOrdersByUserId(customer.email));
                 } else {
                     alert('Customer not found.');
                 }
-            }).catch(function(error) {
+            }).catch(function (error) {
                 alert('Customer not found.');
                 console.log(error);
             });
@@ -75,7 +75,7 @@ export function getOrdersByPhoneNumber(phoneNumber) {
 }
 
 export function getOrdersByLookNumber(looknumber) {
-    return function(dispatch) {
+    return function (dispatch) {
         if (looknumber) {
             let url = '/api/inventory-manager/getOrderLinesForSku?looknumber=' + looknumber.toUpperCase();
             return axios({
@@ -83,12 +83,12 @@ export function getOrdersByLookNumber(looknumber) {
                 timeout: 20000,
                 method: 'get',
                 responseType: 'json'
-            }).then(function(response) {
+            }).then(function (response) {
                 dispatch({
                     type: 'FETCH_RENT_ORDERS',
                     payload: response.data
                 });
-            }).catch(function(error) {
+            }).catch(function (error) {
                 alert('Look number not found.');
                 console.log(error);
             });
@@ -99,7 +99,7 @@ export function getOrdersByLookNumber(looknumber) {
 }
 
 export function getOrderDetail(id) {
-    return function(dispatch) {
+    return function (dispatch) {
         if (id) {
             let url = '/api/om/orders/backend/view/' + id + '/';
             return axios({
@@ -107,14 +107,14 @@ export function getOrderDetail(id) {
                 timeout: 20000,
                 method: 'get',
                 responseType: 'json'
-            }).then(function(response) {
+            }).then(function (response) {
                 dispatch(getMeasurementStatus(response.data.id));
                 dispatch({
                     type: 'FETCH_RENT_ORDER_DETAIL',
                     payload: response.data
                 });
                 dispatch(getCustomerDetail(response.data.userId));
-            }).catch(function(error) {
+            }).catch(function (error) {
                 alert('Could not fetch order detail');
                 console.log(error);
             });
@@ -123,26 +123,26 @@ export function getOrderDetail(id) {
 }
 
 export function getMeasurementStatus(orderId) {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = '/api/om/orders/anonymous/measurement/match/' + orderId;
         return axios({
             url: url,
             timeout: 20000,
             method: 'get',
             responseType: 'json'
-        }).then(function(response) {
+        }).then(function (response) {
             dispatch({
                 type: 'FETCH_MEASUREMENT_STATUS',
                 payload: response.data
             })
-        }).catch(function(error) {
+        }).catch(function (error) {
             console.log(error);
         });
     }
 }
 
 export function removeItem(cancelRequest) {
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
         let cancellationObject = {
             cancellationReason: cancelRequest.cancelReason,
             cancellationUser: getState().auth.email,
@@ -155,10 +155,10 @@ export function removeItem(cancelRequest) {
             method: 'post',
             data: cancellationObject,
             responseType: 'json'
-        }).then(function(response) {
+        }).then(function (response) {
             dispatch(getOrderDetail(cancelRequest.frontendOrderId));
             alert('Product has been removed from the order');
-        }).catch(function(error) {
+        }).catch(function (error) {
             alert('Could not change order status');
             console.log(error);
         });
@@ -166,7 +166,7 @@ export function removeItem(cancelRequest) {
 }
 
 export function cancelOrder(cancelRequest) {
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
         let cancellationObject = {
             cancellationReason: cancelRequest.cancelReason,
             cancellationUser: getState().auth.email,
@@ -179,10 +179,10 @@ export function cancelOrder(cancelRequest) {
             method: 'post',
             data: cancellationObject,
             responseType: 'json'
-        }).then(function(response) {
+        }).then(function (response) {
             dispatch(getOrderDetail(cancelRequest.frontendOrderId));
             alert('The order has been canceled');
-        }).catch(function(error) {
+        }).catch(function (error) {
             alert('Could not change order status');
             console.log(error);
         });
@@ -190,7 +190,7 @@ export function cancelOrder(cancelRequest) {
 }
 
 export function fetchProduct(looknumber) {
-    return function(dispatch) {
+    return function (dispatch) {
         let loopBackFilter = {
             where: {
                 looknumber: looknumber.toUpperCase()
@@ -202,13 +202,13 @@ export function fetchProduct(looknumber) {
             timeout: 20000,
             method: 'get',
             responseType: 'json'
-        }).then(function(response) {
+        }).then(function (response) {
             dispatch({
                 type: 'FETCH_RENTAL_PRODUCT',
                 payload: response.data
             });
             dispatch(getBookedDates(moment()));
-        }).catch(function(error) {
+        }).catch(function (error) {
             alert('Could not fetch product');
             console.log(error);
         });
@@ -216,7 +216,7 @@ export function fetchProduct(looknumber) {
 }
 
 export function fetchAccessory(sku) {
-    return function(dispatch) {
+    return function (dispatch) {
         let loopBackFilter = {
             where: {
                 sku: sku.toUpperCase()
@@ -228,13 +228,13 @@ export function fetchAccessory(sku) {
             timeout: 20000,
             method: 'get',
             responseType: 'json'
-        }).then(function(response) {
+        }).then(function (response) {
             dispatch({
                 type: 'FETCH_RENTAL_PRODUCT',
                 payload: response.data
             });
             dispatch(getBookedDates(moment()));
-        }).catch(function(error) {
+        }).catch(function (error) {
             alert('Could not fetch product');
             console.log(error);
         });
@@ -242,7 +242,7 @@ export function fetchAccessory(sku) {
 }
 
 export function getBookedDates(date) {
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
         let obj = {
             productId: getState().rentProductDetail._id,
             month: date.month() + 1,
@@ -254,7 +254,7 @@ export function getBookedDates(date) {
             timeout: 20000,
             method: 'get',
             responseType: 'json'
-        }).then(function(response) {
+        }).then(function (response) {
             response.data.productAvailability.expressDates = response.data.productAvailability.expressDates.map((date) => {
                 return moment(date);
             });
@@ -265,7 +265,7 @@ export function getBookedDates(date) {
                 type: 'FETCH_BOOKABLE_STATUS',
                 payload: response.data
             })
-        }).catch(function(error) {
+        }).catch(function (error) {
             alert('Could not fetch bookable status');
             console.log(error);
         });
@@ -273,7 +273,7 @@ export function getBookedDates(date) {
 }
 
 export function getDeliveryDates(date, isSixDay) {
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
         let productId = getState().rentProductDetail._id;
         let url = '/api/om/calendar/booking/frontend/isBookable?productId=' + productId + '&date=' + date + '&isSixDay=' + isSixDay;
         return axios({
@@ -281,12 +281,12 @@ export function getDeliveryDates(date, isSixDay) {
             timeout: 20000,
             method: 'get',
             responseType: 'json'
-        }).then(function(response) {
+        }).then(function (response) {
             dispatch({
                 type: 'FETCH_DELIVERY_DATES',
                 payload: response.data.occassionDateResponse
             });
-        }).catch(function(error) {
+        }).catch(function (error) {
             alert('Could not fetch delivery dates');
             console.log(error);
         });
@@ -294,7 +294,7 @@ export function getDeliveryDates(date, isSixDay) {
 }
 
 export function getPricingOfRentalCart(cart, discountCode = '') {
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
         dispatch({
             type: 'FETCH_RENTAL_PRODUCT',
             payload: null
@@ -311,12 +311,12 @@ export function getPricingOfRentalCart(cart, discountCode = '') {
             method: 'post',
             data: cartObject,
             responseType: 'json'
-        }).then(function(response) {
+        }).then(function (response) {
             dispatch({
                 type: 'FETCH_RENT_PRICING',
                 payload: response.data
             });
-        }).catch(function(error) {
+        }).catch(function (error) {
             alert('Could not fetch pricing');
             console.log(error);
         });
@@ -324,7 +324,7 @@ export function getPricingOfRentalCart(cart, discountCode = '') {
 }
 
 export function addItemToCart(product, discountCode) {
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
         let cart = getState().rentalPricing ? Object.keys(getState().rentalPricing.pricing.linePricing) : [];
         let cartArray = getState().rentalPricing ? Object.keys(getState().rentalPricing.pricing.linePricing).map((item) => {
             let cartObj = getState().rentalPricing.pricing.linePricing[item];
@@ -346,7 +346,7 @@ export function addItemToCart(product, discountCode) {
 }
 
 export function removeItemFromCart(id, discountCode) {
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
         let cart = getState().rentalPricing ? Object.keys(getState().rentalPricing.pricing.linePricing) : [];
         let cartArray = Object.keys(getState().rentalPricing.pricing.linePricing).map((item) => {
             let cartObj = getState().rentalPricing.pricing.linePricing[item];
@@ -368,7 +368,7 @@ export function removeItemFromCart(id, discountCode) {
 }
 
 export function applyDiscount(discountCode) {
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
         let cart = getState().rentalPricing ? Object.keys(getState().rentalPricing.pricing.linePricing) : [];
         let cartArray = getState().rentalPricing ? Object.keys(getState().rentalPricing.pricing.linePricing).map((item) => {
             let cartObj = getState().rentalPricing.pricing.linePricing[item];
@@ -386,7 +386,7 @@ export function applyDiscount(discountCode) {
 }
 
 export function placeOrder(orderObject) {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = '/api/om/orders/backend/initiate';
         return axios({
             url: url,
@@ -394,13 +394,13 @@ export function placeOrder(orderObject) {
             method: 'post',
             data: orderObject,
             responseType: 'json'
-        }).then(function(response) {
+        }).then(function (response) {
             dispatch({
                 type: 'FETCH_RENT_PRICING',
                 payload: null
             });
             browserHistory.push('/rent?orderId=' + response.data.order.frontendOrderId);
-        }).catch(function(error) {
+        }).catch(function (error) {
             alert('Could not initiate order');
             console.log(error);
         });
@@ -408,7 +408,7 @@ export function placeOrder(orderObject) {
 }
 
 export function confirmPayment(confirmPaymentObject) {
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
         let url = '/api/om/orders/backend/payment/confirm/?modifier=' + getState().auth.email;
         return axios({
             url: url,
@@ -416,13 +416,70 @@ export function confirmPayment(confirmPaymentObject) {
             method: 'post',
             data: confirmPaymentObject,
             responseType: 'json'
-        }).then(function(response) {
+        }).then(function (response) {
             alert('Payment has been recorded');
             browserHistory.push('/customer');
-        }).catch(function(error) {
+        }).catch(function (error) {
             alert('Could not confirm payment');
             console.log(error);
         });
     }
 }
 
+export function getAllCoupons(page, size) {
+    return function (dispatch) {
+        let url = '/api/pricing/coupons/backend/getAll/coupons/?page=' + page + '&int=' + size;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then(function (response) {
+            dispatch({
+                type: 'FETCH_ALL_COUPONS',
+                payload: response.data
+            })
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+}
+
+export function createCoupon(couponObject, page, size) {
+    if (couponObject.configs && couponObject.couponText && couponObject.type) {
+        return function (dispatch) {
+            let url = '/api/pricing/coupons/backend/create/coupon/';
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'post',
+                data: couponObject,
+                responseType: 'json'
+            }).then(function (response) {
+                dispatch(getAllCoupons(page, size));
+                alert('Coupon has been created');
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    } else {
+        alert('Enter valid coupon data');
+    }
+}
+
+export function deleteCoupon(couponName, page, size) {
+    return function (dispatch) {
+        let url = '/api/pricing/coupons/backend/delete/coupon/' + couponName;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'delete',
+            responseType: 'json'
+        }).then(function (response) {
+            dispatch(getAllCoupons(page, size));
+            alert('Coupon has been deleted');
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+}

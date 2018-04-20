@@ -91,6 +91,8 @@ const clientConfig = {
     'payumoney',
     'razorpay',
     'Mswipe',
+    'ezetap',
+    'advance cash paid'
   ],
   deliveryColumns: [{
     Header: 'Order Id',
@@ -120,6 +122,13 @@ const clientConfig = {
   }, {
     Header: 'Product Name',
     accessor: 'product.name',
+  }, {
+    Header: 'Look No.',
+    accessor: 'product.lookNumber',
+  }, {
+    id: 'gender',
+    Header: 'Gender',
+    accessor: o => o.product.url ? o.product.url.split('/')[0] : '',
   }, {
     Header: 'SKU',
     accessor: 'product.sku',
@@ -171,6 +180,9 @@ const clientConfig = {
     Header: 'Loss',
     accessor: o => o.price - o.invoicePrice,
   }, {
+    Header: 'Status',
+    accessor: 'currentStatus',
+  }, {
     Header: 'Payment Type',
     accessor: 'parentOrder.paymentType',
   }, {
@@ -208,6 +220,9 @@ const clientConfig = {
   }, {
     Header: 'Status',
     accessor: 'status',
+  }, {
+    Header: 'Source',
+    accessor: 'source',
   }],
   orderSource: [
     'store-hkv',
@@ -233,7 +248,7 @@ const clientConfig = {
   }, {
     id: 'image',
     Header: 'Image',
-    accessor: o => <a target="blank" href={ o.frontimage }>Link</a>,
+    accessor: o => <a target="blank" href={o.frontimage}>Link</a>,
   }, {
     Header: 'Location',
     accessor: 'location',
@@ -253,7 +268,7 @@ const clientConfig = {
   }, {
     id: 'image',
     Header: 'Image',
-    accessor: o => <a target="blank" href={ o.frontimage }>Link</a>,
+    accessor: o => <a target="blank" href={o.frontimage}>Link</a>,
   }, {
     Header: 'Location',
     accessor: 'location',
@@ -267,7 +282,7 @@ const clientConfig = {
   }, {
     id: 'image',
     Header: 'Image',
-    accessor: o => <a target="blank" href={ o.image }>Link</a>,
+    accessor: o => <a target="blank" href={o.image}>Link</a>,
   }, {
     Header: 'Location',
     accessor: 'location',
@@ -308,9 +323,9 @@ const clientConfig = {
   }, {
     id: 'name',
     Header: 'Name',
-    accessor: o => <a target="blank" href={ o.image }>
-                     { o.outfitname }
-                   </a>
+    accessor: o => <a target="blank" href={o.image}>
+      {o.outfitname}
+    </a>
   }, {
     id: 'orderDate',
     Header: 'Order Date',
@@ -360,9 +375,7 @@ const clientConfig = {
     id: 'image',
     Header: 'Image',
     accessor: o => {
-      return <a target="blank" href={ o.image }>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Link
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </a>;
+      return <a target="blank" href={o.image}>Link</a>;
     }
   }, {
     id: 'date',
@@ -414,6 +427,45 @@ const clientConfig = {
     accessor: o => {
       return o.numberOfOrdersPlaced - o.numberOfOrdersCancelled;
     }
+  }],
+  rentalCouponColumns: [{
+    Header: 'Name',
+    accessor: 'couponText',
+  }, {
+    Header: 'Type',
+    accessor: 'type',
+  }, {
+    id: 'configs',
+    Header: 'Description',
+    accessor: o => {
+      return Object.keys(o.configs).map((config) => {
+        return ' ' + config + ': ' + o.configs[config];
+      }).join(',');
+    }
+  }, {
+    id: 'created',
+    Header: 'Created',
+    accessor: o => {
+      return moment(o.creationTime).format("lll");
+    }
+  }, {
+    id: 'validity',
+    Header: 'Validity',
+    accessor: o => {
+      return moment(o.dateTillValidMillisUTC).format("lll");
+    }
+  }, {
+    id: 'isAdvertized',
+    Header: 'Advertized',
+    accessor: o => { return o.isAdvertized ? 'Yes' : 'No'; }
+  }, {
+    id: 'isDeleted',
+    Header: 'Deleted',
+    accessor: o => { return o.isDeleted ? 'Yes' : 'No'; }
+  }, {
+    id: 'isReusable',
+    Header: 'Reusable',
+    accessor: o => { return o.isReusable ? 'Yes' : 'No'; }
   }]
 }
 

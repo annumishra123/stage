@@ -61,3 +61,12 @@ export function measurementStatus(state = null, action) {
     return state;
 }
 
+export function allCoupons(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_ALL_COUPONS':
+            return action.payload;
+            break;
+    }
+    return state;
+}
+

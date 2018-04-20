@@ -40,19 +40,15 @@ class Orders extends React.Component {
     }
 
     handleChangeStartDate(date) {
-        if (date.unix() <= moment().unix()) {
-            this.setState({
-                startDate: date.startOf('day')
-            });
-        }
+        this.setState({
+            startDate: date.startOf('day')
+        });
     }
 
     handleChangeEndDate(date) {
-        if (date.unix() <= moment().endOf('day').unix()) {
-            this.setState({
-                endDate: date.endOf('day')
-            });
-        }
+        this.setState({
+            endDate: date.endOf('day')
+        });
     }
 
     refreshDesignerOrders() {
@@ -62,17 +58,17 @@ class Orders extends React.Component {
     }
 
     renderDateFilter() {
-        return <div className={ styles.orderStartEnd }>
-                 <div className={ styles.width50 }>
-                   <h4>Start Date</h4>
-                   <DatePicker selected={ this.state.startDate } onChange={ this.handleChangeStartDate.bind(this) } />
-                 </div>
-                 <div className={ styles.width50 }>
-                   <h4>End Date</h4>
-                   <DatePicker selected={ this.state.endDate } onChange={ this.handleChangeEndDate.bind(this) } />
-                 </div>
-                 <button onClick={ this.refreshDesignerOrders.bind(this) }><img src="https://res.cloudinary.com/stage3/image/upload/f_auto,q_auto:low/icon-refresh.png" alt="refresh" />Refresh</button>
-               </div>;
+        return <div className={styles.orderStartEnd}>
+            <div className={styles.width50}>
+                <h4>Start Date</h4>
+                <DatePicker selected={this.state.startDate} onChange={this.handleChangeStartDate.bind(this)} />
+            </div>
+            <div className={styles.width50}>
+                <h4>End Date</h4>
+                <DatePicker selected={this.state.endDate} onChange={this.handleChangeEndDate.bind(this)} />
+            </div>
+            <button onClick={this.refreshDesignerOrders.bind(this)}><img src="https://res.cloudinary.com/stage3/image/upload/f_auto,q_auto:low/icon-refresh.png" alt="refresh" />Refresh</button>
+        </div>;
     }
 
     renderCompletedOrders() {
@@ -83,8 +79,8 @@ class Orders extends React.Component {
                     order.share = this.props.designerShare;
                 });
                 return <div>
-                         <ReactTable filterable data={ completedDesignerOrders } columns={ clientConfig.designerOrderColumns } defaultPageSize={ 10 } className="-striped -highlight" />
-                       </div>;
+                    <ReactTable filterable data={completedDesignerOrders} columns={clientConfig.designerOrderColumns} defaultPageSize={10} className="-striped -highlight" />
+                </div>;
             }
         }
     }
@@ -97,8 +93,8 @@ class Orders extends React.Component {
                     order.share = this.props.designerShare;
                 });
                 return <div>
-                         <ReactTable filterable data={ pendingDesignerOrders } columns={ clientConfig.designerOrderColumns } defaultPageSize={ 10 } className="-striped -highlight" />
-                       </div>;
+                    <ReactTable filterable data={pendingDesignerOrders} columns={clientConfig.designerOrderColumns} defaultPageSize={10} className="-striped -highlight" />
+                </div>;
             }
         }
     }
@@ -111,8 +107,8 @@ class Orders extends React.Component {
                     order.share = this.props.designerShare;
                 });
                 return <div>
-                         <ReactTable filterable data={ cancelledDesignerOrders } columns={ clientConfig.designerOrderColumns } defaultPageSize={ 10 } className="-striped -highlight" />
-                       </div>;
+                    <ReactTable filterable data={cancelledDesignerOrders} columns={clientConfig.designerOrderColumns} defaultPageSize={10} className="-striped -highlight" />
+                </div>;
             }
         }
     }
@@ -130,7 +126,7 @@ class Orders extends React.Component {
                     totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.05) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.05);
                 }
             });
-            return <h3>COMPLETED - [ SHARE: <span style={ { color: "green" } }>₹{ total.toFixed(2) }</span> & GST: <span style={ { color: "green" } }>₹{ totalGST.toFixed(2) }</span> ]</h3>;
+            return <h3>COMPLETED - [ SHARE: <span style={{ color: "green" }}>₹{total.toFixed(2)}</span> & GST: <span style={{ color: "green" }}>₹{totalGST.toFixed(2)}</span> ]</h3>;
         }
     }
 
@@ -147,37 +143,37 @@ class Orders extends React.Component {
                     totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.05) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.05);
                 }
             });
-            return <h3>PENDING - [ SHARE: <span style={ { color: "green" } }>₹{ total.toFixed(2) }</span> & GST: <span style={ { color: "green" } }>₹{ totalGST.toFixed(2) }</span> ]</h3>;
+            return <h3>PENDING - [ SHARE: <span style={{ color: "green" }}>₹{total.toFixed(2)}</span> & GST: <span style={{ color: "green" }}>₹{totalGST.toFixed(2)}</span> ]</h3>;
         }
     }
 
     render() {
-        return <section className={ styles.designerOrder }>
-                 <h1>Orders</h1>
-                 <br/>
-                 { this.renderOrderTotal() }
-                 <br/>
-                 { this.renderPendingOrderTotal() }
-                 <br/>
-                 { this.renderDateFilter() }
-                 <br/>
-                 <Tabs>
-                   <TabList>
-                     <Tab>Completed</Tab>
-                     <Tab>Pending</Tab>
-                     <Tab>Cancelled</Tab>
-                   </TabList>
-                   <TabPanel>
-                     { this.renderCompletedOrders() }
-                   </TabPanel>
-                   <TabPanel>
-                     { this.renderPendingOrders() }
-                   </TabPanel>
-                   <TabPanel>
-                     { this.renderCancelledOrders() }
-                   </TabPanel>
-                 </Tabs>
-               </section>
+        return <section className={styles.designerOrder}>
+            <h1>Orders</h1>
+            <br />
+            {this.renderOrderTotal()}
+            <br />
+            {this.renderPendingOrderTotal()}
+            <br />
+            {this.renderDateFilter()}
+            <br />
+            <Tabs>
+                <TabList>
+                    <Tab>Completed</Tab>
+                    <Tab>Pending</Tab>
+                    <Tab>Cancelled</Tab>
+                </TabList>
+                <TabPanel>
+                    {this.renderCompletedOrders()}
+                </TabPanel>
+                <TabPanel>
+                    {this.renderPendingOrders()}
+                </TabPanel>
+                <TabPanel>
+                    {this.renderCancelledOrders()}
+                </TabPanel>
+            </Tabs>
+        </section>
     }
 }
 

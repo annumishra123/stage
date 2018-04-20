@@ -6,9 +6,10 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import App from './App';
 import { configureStore } from './store';
-require('react-datepicker/dist/react-datepicker.css');
+import 'react-datepicker/dist/react-datepicker.css';
 import 'react-table/react-table.css';
 import 'react-tabs/style/react-tabs.css';
+import 'react-datetime/css/react-datetime.css';
 
 // Initialize store
 const store = configureStore(window.__INITIAL_STATE__);
@@ -16,7 +17,7 @@ const mountApp = document.getElementById('root');
 
 render(
   <AppContainer>
-    <App store={ store } />
+    <App store={store} />
   </AppContainer>,
   mountApp
 );
@@ -29,7 +30,7 @@ if (module.hot) {
     const NextApp = require('./App').default; // eslint-disable-line global-require
     render(
       <AppContainer>
-        <NextApp store={ store } />
+        <NextApp store={store} />
       </AppContainer>,
       mountApp
     );
