@@ -136,6 +136,9 @@ const clientConfig = {
     Header: 'Designer',
     accessor: 'product.designer',
   }, {
+    Header: 'Owner',
+    accessor: 'product.owner',
+  }, {
     Header: 'Measurements',
     accessor: 'measurementStatus',
   }, {
