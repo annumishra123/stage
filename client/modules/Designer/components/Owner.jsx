@@ -22,7 +22,7 @@ class Owner extends React.Component {
             month: moment().month() + 1,
             year: moment().year(),
             designer: '',
-            isDelhi: true,
+            isDelhi: 1,
             startDate: moment().startOf('month'),
             endDate: moment().endOf('day')
         }
@@ -249,9 +249,9 @@ class Owner extends React.Component {
             </select>
             <input type="number" defaultValue={this.state.year} onChange={this.handleChangeYear.bind(this)} />
             <br />
-            <input type="radio" name="city" onClick={this.handleChangeCity.bind(this, true)} defaultChecked={true} />
+            <input type="radio" name="city" onClick={this.handleChangeCity.bind(this, 1)} defaultChecked={true} />
             <label> Delhi </label>
-            <input type="radio" name="city" onClick={this.handleChangeCity.bind(this, false)} />
+            <input type="radio" name="city" onClick={this.handleChangeCity.bind(this, 0)} />
             <label> Other </label>
             <br />
             <a target="blank" className={styles.link} href={'/api/revshare/api/owners/invoice?owner=' + encodeURIComponent(this.state.designer) + '&month=' + this.state.month + '&year=' + this.state.year + '&ut=' + this.state.isDelhi}>Generate Invoice</a>
