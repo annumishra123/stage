@@ -57,7 +57,7 @@
     "react-datepicker": "^0.53.0",
     "react-datetime": "^2.14.0",
     "react-dom": "^15.1.0",
-    "react-dropzone": "^4.2.3",
+    "react-dropzone": "^4.2.10",
     "react-helmet": "^3.1.0",
     "react-intl": "^2.1.2",
     "react-modal": "^3.1.2",
