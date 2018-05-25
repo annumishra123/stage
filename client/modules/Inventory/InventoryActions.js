@@ -70,6 +70,23 @@ export function updateShopProduct(product) {
     }
 }
 
+export function uploadShopCSV(shopFiles) {
+    let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/importCSV';
+    var file = new FormData();
+    file.append('file', shopFiles[0]);
+    return function (dispatch) {
+        return axios({
+            method: 'POST',
+            url: url,
+            data: file,
+        }).then(function (response) {
+            alert('Document Uploaded');
+        }).catch(function (error) {
+            console.log(error);
+        });
+    };
+}
+
 export function uploadCSV(files) {
     let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks/importCSV';
     var file = new FormData();
@@ -78,7 +95,24 @@ export function uploadCSV(files) {
         return axios({
             method: 'POST',
             url: url,
-            data:  file,
+            data: file,
+        }).then(function (response) {
+            alert('Document Uploaded');
+        }).catch(function (error) {
+            console.log(error);
+        });
+    };
+}
+
+export function uploadAccessoryCSV(accessoryFiles) {
+    let url = clientConfig.targetURL + '/catalogv2/catalogv2/Accessories/importCSV';
+    var file = new FormData();
+    file.append('file', accessoryFiles[0]);
+    return function (dispatch) {
+        return axios({
+            method: 'POST',
+            url: url,
+            data: file,
         }).then(function (response) {
             alert('Document Uploaded');
         }).catch(function (error) {

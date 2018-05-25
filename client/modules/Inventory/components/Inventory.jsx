@@ -3,7 +3,7 @@ import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
-import { fetchAccessoryCatalog, fetchRentCatalog, fetchShopCatalog, changeShopLookLocation, changeRentLookLocation, changeRentAccessoryLocation, fetchShopProduct, fetchRentProduct, fetchAccessory, updateShopProduct, updateRentProduct, updateAccessory, clearShopProduct, clearRentProduct, clearAccessory, uploadCSV } from '../InventoryActions';
+import { fetchAccessoryCatalog, fetchRentCatalog, fetchShopCatalog, changeShopLookLocation, changeRentLookLocation, changeRentAccessoryLocation, fetchShopProduct, fetchRentProduct, fetchAccessory, updateShopProduct, updateRentProduct, updateAccessory, clearShopProduct, clearRentProduct, clearAccessory, uploadCSV, uploadShopCSV, uploadAccessoryCSV } from '../InventoryActions';
 import clientConfig from '../../../config';
 import { CSVLink } from 'react-csv';
 import ReactModal from 'react-modal';
@@ -19,6 +19,8 @@ class Inventory extends React.Component {
             viewOrderDetails: false,
             tabIndex: 0,
             files: [],
+            shopFiles: [],
+            accessoryFiles: [],
         }
     }
 
@@ -40,6 +42,26 @@ class Inventory extends React.Component {
 
     uploadCSV() {
         this.props.uploadCSV(this.state.files);
+    }
+
+    handleShopOnDrop(shopFiles) {
+        this.setState({
+            shopFiles
+        });
+    }
+
+    uploadShopCSV() {
+        this.props.uploadShopCSV(this.state.shopFiles);
+    }
+
+    handleAccessoryOnDrop(accessoryFiles) {
+        this.setState({
+            accessoryFiles
+        });
+    }
+
+    uploadAccessoryCSV() {
+        this.props.uploadAccessoryCSV(this.state.accessoryFiles);
     }
 
 
@@ -222,6 +244,10 @@ class Inventory extends React.Component {
                             <Tab>Accessory</Tab>
                         </TabList>
                         <TabPanel>
+                            <Dropzone onDrop={this.handleShopOnDrop.bind(this)}>
+                                <p>Select a file to upload.</p>
+                            </Dropzone>
+                            <button onClick={this.uploadShopCSV.bind(this)}>Upload CSV</button>
                             {this.renderShopLooks()}
                         </TabPanel>
                         <TabPanel>
@@ -232,6 +258,10 @@ class Inventory extends React.Component {
                             {this.renderRentLooks()}
                         </TabPanel>
                         <TabPanel>
+                            <Dropzone onDrop={this.handleAccessoryOnDrop.bind(this)}>
+                                <p>Select a file to upload.</p>
+                            </Dropzone>
+                            <button onClick={this.uploadAccessoryCSV.bind(this)}>Upload CSV</button>
                             {this.renderRentAccessories()}
                         </TabPanel>
                     </Tabs>
@@ -264,7 +294,9 @@ function matchDispatchToProps(dispatch) {
         fetchAccessory,
         updateAccessory,
         clearAccessory,
-        uploadCSV
+        uploadCSV,
+        uploadShopCSV,
+        uploadAccessoryCSV
     }, dispatch);
 }
 
