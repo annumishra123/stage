@@ -298,3 +298,19 @@ export function updateShopStock(id, sku, quantity) {
         });
     }
 }
+
+export function reconcileAll() {
+    return function (dispatch) {
+        let url = '/api/inventory-manager/reconcile';
+        return axios ({
+            url : url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then((response) => {
+            alert('All quantities reconciled');
+        }).catch((error) => {
+            alert('Not able to reconcile');
+        });
+    }
+}
