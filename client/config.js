@@ -469,6 +469,57 @@ const clientConfig = {
     id: 'isReusable',
     Header: 'Reusable',
     accessor: o => { return o.isReusable ? 'Yes' : 'No'; }
+  }],
+  taskColumns: [{
+    id: 'name',
+    Header: 'Name',
+    accessor: o => {
+      return o.profile.firstName + ' ' + o.profile.lastName;
+    }
+  }, {
+    Header: 'Phone',
+    accessor: 'phoneNumber',
+  }, {
+    Header: 'Context',
+    accessor: 'primaryCallbackContext'
+  }],
+  contextColumns: [{
+    Header: 'Label',
+    accessor: 'actionLabel'
+  }, {
+    Header: 'Score',
+    accessor: 'priorityScore'
+  }, {
+    Header: 'Level',
+    accessor: 'priorityLevel'
+  }, {
+    Header: 'Resolution Time (sec)',
+    accessor: 'slaSeconds'
+  }, {
+    Header: 'Description',
+    accessor: 'description'
+  }, {
+    id: 'deleted',
+    Header: 'Deleted',
+    accessor: o => {
+      return o.deleted ? 'Yes' : 'No'
+    }
+  }],
+  dispositionColumns: [{
+    Header: 'Label',
+    accessor: 'label'
+  }, {
+    Header: 'Score',
+    accessor: 'priorityScore'
+  }, {
+    id: 'rechurn',
+    Header: 'Rechurn',
+    accessor: o => {
+      return o.rechurn ? 'Yes' : 'No'
+    }
+  }, {
+    Header: 'Rechurn Interval (sec)',
+    accessor: 'rechurnDelaySeconds'
   }]
 }
 
