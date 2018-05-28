@@ -17,6 +17,7 @@ import { designerInventory, cancelledDesignerOrders, completedDesignerOrders, pe
 import { revshares } from './modules/Designer/DesignerReducer';
 import { revShareOrderLine } from './modules/ManualOrder/ManualOrderReducer';
 import { reducer as formReducer } from 'redux-form';
+import { tasks, contexts, dispositions, taskDetail } from './modules/CRM/CRMReducer';
 
 // Combine all reducers into one root reducer
 export default combineReducers({
@@ -59,5 +60,9 @@ export default combineReducers({
   updateAccessory,
   revShareOrderLine,
   shopStock,
-  allCoupons
+  allCoupons,
+  tasks,
+  contexts,
+  dispositions,
+  taskDetail
 });
