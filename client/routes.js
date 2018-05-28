@@ -39,6 +39,10 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/ManualOrder/components/ManualOrder');
   require('./modules/Inventory/components/ShopStockManager');
   require('./modules/Rent/components/Coupons');
+  require('./modules/CRM/components/Tasks');
+  require('./modules/CRM/components/Metadata');
+  require('./modules/CRM/components/Inbound');
+  require('./modules/CRM/components/TaskDetail');
 }
 
 // react-router setup with code-splitting
@@ -260,6 +264,26 @@ export default function getRoutes(store, req) {
       <Route path="/order/manual/:owner/:id" onEnter={checkAdmin} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/ManualOrder/components/ManualOrder').default);
+        });
+      }} />
+      <Route path="/crm/tasks" onEnter={checkAdmin} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/CRM/components/Tasks').default);
+        });
+      }} />
+      <Route path="/crm/tasks/:id" onEnter={checkAdmin} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/CRM/components/TaskDetail').default);
+        });
+      }} />
+      <Route path="/crm/inbound" onEnter={checkAdmin} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/CRM/components/Inbound').default);
+        });
+      }} />
+      <Route path="/crm/metadata" onEnter={checkSuperUser} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/CRM/components/Metadata').default);
         });
       }} />
     </Route>
