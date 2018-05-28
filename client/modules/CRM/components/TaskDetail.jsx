@@ -3,15 +3,17 @@ import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import clientConfig from '../../../config';
-import { getTaskById, updateCallbackRequest } from '../CRMActions';
+import { getTaskById, updateCallbackRequest, getAllDispositions } from '../CRMActions';
 import { getCustomerDetailByPhoneNumber } from '../../Customer/CustomerActions';
 import moment from 'moment';
+import ReactModal from 'react-modal';
 
 class TaskDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            viewCallbackModal: false,
+            callbackObject: {}
         }
     }
 
@@ -22,6 +24,50 @@ class TaskDetail extends React.Component {
     viewCustomerProfile(phoneNumber) {
         this.props.getCustomerDetailByPhoneNumber(phoneNumber);
         browserHistory.push('/customer');
+    }
+
+    changeComment(e) {
+        let callbackObject = this.state.callbackObject;
+        callbackObject.comment = e.target.value;
+        this.setState({
+            callbackObject: callbackObject
+        });
+    }
+
+    changeDisposition(e) {
+        let callbackObject = this.state.callbackObject;
+        callbackObject.reasonCode = e.target.value;
+        this.setState({
+            callbackObject: callbackObject
+        });
+    }
+
+    hideCallbackModal() {
+        this.setState({
+            callbackObject: {},
+            viewCallbackModal: false
+        })
+    }
+
+    showCallbackModal(id) {
+        this.props.getAllDispositions();
+        let callbackObject = this.state.callbackObject;
+        callbackObject.agentId = this.props.user;
+        callbackObject.callbackRequestId = id;
+        callbackObject.taskId = this.props.taskDetail.id;
+        this.setState({
+            callbackObject: callbackObject,
+            viewCallbackModal: true
+        });
+    }
+
+    updateCallbackRequest() {
+        if (this.state.callbackObject.agentId && this.state.callbackObject.callbackRequestId && this.state.callbackObject.taskId && this.state.callbackObject.reasonCode && this.state.callbackObject.comment) {
+            this.props.updateCallbackRequest(this.state.callbackObject);
+            this.hideCallbackModal();
+        } else {
+            alert('Please fill in all the details');
+        }
     }
 
     render() {
@@ -56,15 +102,37 @@ class TaskDetail extends React.Component {
                         <p>Promised Resolution Time: {callback.slaEndTime ? moment(callback.slaEndTime).format('lll') : null}</p>
                         <p>Updated On: {callback.updatedTimeStamp ? moment(callback.updatedTimeStamp).format('lll') : 'Not Updated'}</p>
                         <p>Closed On: {callback.closedDate ? moment(callback.closedDate).format('lll') : 'Open'}</p>
-                        <ul>Comments: {callback.comment.length > 0 ? callback.comment.map((comment, i) => {
-                            return <li key={i}>{comment}</li>
+                        <br />
+                        <p><b>Comments</b></p>
+                        <ul>{callback.comment.length > 0 ? callback.comment.map((comment, i) => {
+                            return <li key={i}>{comment.comment}</li>
                         }) : 'Not Provided'}</ul>
-                        <ul>Task Description: {callback.taskData ? Object.keys(callback.taskData).map((key, i) => {
-                            return <li key={i}>{key}: callback.taskData[key]</li>
-                        }) : null}
+                        <br />
+                        <p><b>Description</b></p>
+                        <ul>{callback.taskData ? Object.keys(callback.taskData.data).map((key, i) => {
+                            return <li key={i}>{key}: {callback.taskData[key]}</li>
+                        }) : 'Unavailable'}
                         </ul>
+                        <br />
+                        <button onClick={() => this.showCallbackModal(callback.id)}>Update</button>
                     </div>
                 })}
+                <ReactModal className="" isOpen={this.state.viewCallbackModal} onRequestClose={() => this.hideCallbackModal()} contentLabel="Change Delivery Status">
+                    <span onClick={() => this.hideCallbackModal()}>×</span>
+                    <br />
+                    <label>Add Comment </label>
+                    <input onChange={(e) => this.changeComment(e)} />
+                    <div>
+                        <label>Reason Code </label>
+                        {this.props.dispositions ? <select onChange={(e) => this.changeDisposition(e)}>
+                            <option value=""> -- Select Option -- </option>
+                            {this.props.dispositions.map((disposition, i) => {
+                                return <option key={i} value={disposition.label}>{disposition.label}</option>
+                            })}
+                        </select> : <span>Loading...</span>}
+                    </div>
+                    <button onClick={() => this.updateCallbackRequest()}>Update</button>
+                </ReactModal>
             </section>
         } else {
             return <section>
@@ -79,7 +147,8 @@ function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         getTaskById,
         updateCallbackRequest,
-        getCustomerDetailByPhoneNumber
+        getCustomerDetailByPhoneNumber,
+        getAllDispositions
     }, dispatch);
 }
 
