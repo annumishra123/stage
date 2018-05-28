@@ -74,16 +74,19 @@
 
 @media (max-width: 767px){
   .content {
-    padding: 10px 15px 25px;
+    padding: 10px 15px 10px;
+  }
+  .header h1 {
+    float: left;
   }
   .header img {
     width: 180px;
   }
   .logOut {
     font-size: 13px;
-    left: 0 !important;
-    right: 0 !important;
-    margin: 5px auto;
+    position: static !important;
+    float: right;
+    margin: 3px auto;
   }
   .logOut img {
     width: 14px !important;
