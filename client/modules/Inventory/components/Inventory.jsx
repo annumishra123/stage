@@ -10,6 +10,8 @@ import ReactModal from 'react-modal';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Dropzone from 'react-dropzone';
 
+// Import Style
+import styles from './inventory.css';
 
 class Inventory extends React.Component {
     constructor(props) {
@@ -244,24 +246,30 @@ class Inventory extends React.Component {
                             <Tab>Accessory</Tab>
                         </TabList>
                         <TabPanel>
+                            <div className={styles.fileUpload}>
                             <Dropzone onDrop={this.handleShopOnDrop.bind(this)}>
                                 <p>Select a file to upload.</p>
                             </Dropzone>
                             <button onClick={this.uploadShopCSV.bind(this)}>Upload CSV</button>
+                            </div>
                             {this.renderShopLooks()}
                         </TabPanel>
                         <TabPanel>
+                            <div className={styles.fileUpload}>
                             <Dropzone onDrop={this.handleOnDrop.bind(this)}>
                                 <p>Select a file to upload.</p>
                             </Dropzone>
                             <button onClick={this.uploadCSV.bind(this)}>Upload CSV</button>
+                            </div>
                             {this.renderRentLooks()}
                         </TabPanel>
                         <TabPanel>
+                            <div className={styles.fileUpload}>
                             <Dropzone onDrop={this.handleAccessoryOnDrop.bind(this)}>
                                 <p>Select a file to upload.</p>
                             </Dropzone>
                             <button onClick={this.uploadAccessoryCSV.bind(this)}>Upload CSV</button>
+                            </div>
                             {this.renderRentAccessories()}
                         </TabPanel>
                     </Tabs>

@@ -88,14 +88,56 @@ section h1 {
     border: 0;
 }
 
+/*====== Inventory =======*/
+.fileUpload {
+    margin: 10px 0 20px;
+}
+.fileUpload > div {
+    background: rgba(0,0,0,0.1) !important;
+    cursor: pointer;
+    width: 100% !important;
+    text-align: center;
+}
+.fileUpload p {
+    margin:85px 0;
+    font-size: 18px;
+}
+.fileUpload button {
+    background: #000;
+    color: #fff;
+    padding: 10px 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 0;
+    margin: 10px 0 0;
+    cursor: pointer;
+}
 
 
-@media (max-width: 767px){
+
+@media (max-width: 767px) {
+    section {
+        padding: 0 10px;
+    }
+    section h1 {
+        font-size: 20px;
+        margin: 15px 0 5px;
+    }
     .stockPopup {
         width: 290px;
     }
     .stockPopup input {
         width: 140px;
+    }
+
+    .fileUpload {
+        margin: 10px;
+    }
+    .fileUpload > div {
+        height: 100px !important;
+    }
+    .fileUpload p {
+        margin: 35px 0;
     }
 
 
