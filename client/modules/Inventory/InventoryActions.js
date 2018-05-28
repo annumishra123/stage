@@ -2,7 +2,7 @@ import clientConfig from '../../config';
 import axios from 'axios';
 
 export function fetchShopCatalog() {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts';
         return axios({
             url: url,
@@ -21,7 +21,7 @@ export function fetchShopCatalog() {
 }
 
 export function fetchShopProduct(id) {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/' + id;
         return axios({
             url: url,
@@ -40,7 +40,7 @@ export function fetchShopProduct(id) {
 }
 
 export function clearShopProduct() {
-    return function(dispatch) {
+    return function (dispatch) {
         dispatch({
             type: 'FETCH_SHOP_PRODUCT',
             payload: null
@@ -49,7 +49,7 @@ export function clearShopProduct() {
 }
 
 export function updateShopProduct(product) {
-    return function(dispatch) {
+    return function (dispatch) {
         debugger;
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/' + product.id + '/replace';
         return axios({
@@ -70,8 +70,59 @@ export function updateShopProduct(product) {
     }
 }
 
+export function uploadShopCSV(shopFiles) {
+    let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/importCSV';
+    var file = new FormData();
+    file.append('file', shopFiles[0]);
+    return function (dispatch) {
+        return axios({
+            method: 'POST',
+            url: url,
+            data: file,
+        }).then(function (response) {
+            alert('Document Uploaded');
+        }).catch(function (error) {
+            console.log(error);
+        });
+    };
+}
+
+export function uploadCSV(files) {
+    let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks/importCSV';
+    var file = new FormData();
+    file.append('file', files[0]);
+    return function (dispatch) {
+        return axios({
+            method: 'POST',
+            url: url,
+            data: file,
+        }).then(function (response) {
+            alert('Document Uploaded');
+        }).catch(function (error) {
+            console.log(error);
+        });
+    };
+}
+
+export function uploadAccessoryCSV(accessoryFiles) {
+    let url = clientConfig.targetURL + '/catalogv2/catalogv2/Accessories/importCSV';
+    var file = new FormData();
+    file.append('file', accessoryFiles[0]);
+    return function (dispatch) {
+        return axios({
+            method: 'POST',
+            url: url,
+            data: file,
+        }).then(function (response) {
+            alert('Document Uploaded');
+        }).catch(function (error) {
+            console.log(error);
+        });
+    };
+}
+
 export function fetchRentCatalog() {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks';
         return axios({
             url: url,
@@ -90,7 +141,7 @@ export function fetchRentCatalog() {
 }
 
 export function fetchRentProduct(id) {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks/' + id;
         return axios({
             url: url,
@@ -109,7 +160,7 @@ export function fetchRentProduct(id) {
 }
 
 export function updateRentProduct(product) {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks/' + product._id;
         delete product._id;
         return axios({
@@ -131,7 +182,7 @@ export function updateRentProduct(product) {
 }
 
 export function clearRentProduct() {
-    return function(dispatch) {
+    return function (dispatch) {
         dispatch({
             type: 'FETCH_RENT_PRODUCT',
             payload: null
@@ -141,7 +192,7 @@ export function clearRentProduct() {
 
 
 export function fetchAccessoryCatalog() {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/Accessories';
         return axios({
             url: url,
@@ -160,7 +211,7 @@ export function fetchAccessoryCatalog() {
 }
 
 export function fetchAccessory(id) {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/Accessories/' + id;
         return axios({
             url: url,
@@ -179,7 +230,7 @@ export function fetchAccessory(id) {
 }
 
 export function updateAccessory(product) {
-    return function(dispatch) {
+    return function (dispatch) {
         debugger;
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/Accessories/' + product.id + '/replace';
         return axios({
@@ -201,7 +252,7 @@ export function updateAccessory(product) {
 }
 
 export function clearAccessory() {
-    return function(dispatch) {
+    return function (dispatch) {
         dispatch({
             type: 'FETCH_ACCESSORY',
             payload: null
@@ -211,7 +262,7 @@ export function clearAccessory() {
 
 
 export function changeShopLookLocation(id, location) {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/changelocation?id=' + id + '&location=' + location;
         return axios({
             url: url,
@@ -227,7 +278,7 @@ export function changeShopLookLocation(id, location) {
 }
 
 export function changeRentLookLocation(id, location) {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks/changelocation?id=' + id + '&location=' + location;
         return axios({
             url: url,
@@ -243,7 +294,7 @@ export function changeRentLookLocation(id, location) {
 }
 
 export function changeRentAccessoryLocation(id, location) {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/Accessories/changelocation?id=' + id + '&location=' + location;
         return axios({
             url: url,
@@ -259,7 +310,7 @@ export function changeRentAccessoryLocation(id, location) {
 }
 
 export function fetchShopStock() {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = '/api/inventory-manager/getInventoryStatus';
         return axios({
             url: url,
@@ -278,7 +329,7 @@ export function fetchShopStock() {
 }
 
 export function updateShopStock(id, sku, quantity) {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = '/api/inventory-manager/updateInventory';
         return axios({
             url: url,

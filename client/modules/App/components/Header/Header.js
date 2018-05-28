@@ -8,11 +8,11 @@ import styles from './Header.css';
 
 export function Header(props, context) {
   const languageNodes = props.intl.enabledLanguages.map(
-    lang => <li key={ lang } onClick={ () => props.switchLanguage(lang) } className={ lang === props.intl.locale ? styles.selected : '' }>
-              { lang }
-            </li>
+    lang => <li key={lang} onClick={() => props.switchLanguage(lang)} className={lang === props.intl.locale ? styles.selected : ''}>
+      {lang}
+    </li>
   );
-  const logout = function() {
+  const logout = function () {
     props.logoutUser();
   }
   const style = {
@@ -22,13 +22,14 @@ export function Header(props, context) {
   }
 
   return (
-    <div className={ styles.header }>
-      <div className={ styles.content }>
-        <h1 className={ styles['site-title'] }><Link to="/menu" ><img src="https://res.cloudinary.com/stage3/image/upload/f_auto,q_auto:low/stage3-dashboard-white.png" alt="Stage3 Dashboard" /></Link></h1>
-        { props.isAuthenticated ? <button className={ styles.logOut } style={ style } onClick={ logout }><img src="https://res.cloudinary.com/stage3/image/upload/f_auto,q_auto:low/logout-icon.png" />Logout</button> : null }
+    <div className={styles.header}>
+      <div className={styles.content}>
+        <p style={{ color: 'white' }}>hi, {props.user}!</p>
+        <h1 className={styles['site-title']}><Link to="/menu" ><img src="https://res.cloudinary.com/stage3/image/upload/f_auto,q_auto:low/stage3-dashboard-white.png" alt="Stage3 Dashboard" /></Link></h1>
+        {props.isAuthenticated ? <button className={styles.logOut} style={style} onClick={logout}><img src="https://res.cloudinary.com/stage3/image/upload/f_auto,q_auto:low/logout-icon.png" />Logout</button> : null}
       </div>
     </div>
-    );
+  );
 }
 
 Header.contextTypes = {
@@ -43,7 +44,8 @@ Header.propTypes = {
 
 Header = connect(
   state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.name
   })
 )(Header);
 
