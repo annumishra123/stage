@@ -24,7 +24,8 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Customer/components/Customer');
   require('./modules/Rent/components/RentOrders');
   require('./modules/Rent/components/CreateRentOrder');
-  require('./modules/Delivery/components/DeliveryOrders');
+  require('./modules/Delivery/components/RentDeliveryOrders');
+  require('./modules/Delivery/components/ShopDeliveryOrders');
   require('./modules/Inventory/components/Inventory');
   require('./modules/Inventory/components/ShopProduct');
   require('./modules/Inventory/components/RentProduct');
@@ -196,9 +197,14 @@ export default function getRoutes(store, req) {
           cb(null, require('./modules/Rent/components/Coupons').default);
         });
       }} />
-      <Route path="/delivery" onEnter={checkEmployee} getComponent={(nextState, cb) => {
+      <Route path="/delivery/rent" onEnter={checkEmployee} getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          cb(null, require('./modules/Delivery/components/DeliveryOrders').default);
+          cb(null, require('./modules/Delivery/components/RentDeliveryOrders').default);
+        });
+      }} />
+      <Route path="/delivery/shop" onEnter={checkEmployee} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Delivery/components/ShopDeliveryOrders').default);
         });
       }} />
       <Route path="/inventory" onEnter={checkEmployee} getComponent={(nextState, cb) => {

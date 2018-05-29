@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export function getOrderListByDate(dateParam, startDate, endDate) {
-    return function(dispatch) {
+export function getRentOrderListByDate(dateParam, startDate, endDate) {
+    return function (dispatch) {
         if (startDate && endDate && dateParam) {
             let url = '/api/om/orders/backend/orderlines/';
             return axios({
@@ -14,12 +14,33 @@ export function getOrderListByDate(dateParam, startDate, endDate) {
                     "startDate": startDate
                 },
                 responseType: 'json'
-            }).then(function(response) {
+            }).then(function (response) {
                 dispatch({
-                    type: 'FETCH_DELIVERY_ORDERS',
+                    type: 'FETCH_RENT_DELIVERY_ORDERS',
                     payload: response.data
                 })
-            }).catch(function(error) {
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+}
+
+export function getShopOrderListByDate(startDate, endDate) {
+    return function (dispatch) {
+        if (startDate && endDate) {
+            let url = '/api/shop-service/backend/getOrderLinesbyDateRange/' + startDate + '/' + endDate;
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'get',
+                responseType: 'json'
+            }).then(function (response) {
+                dispatch({
+                    type: 'FETCH_SHOP_DELIVERY_ORDERS',
+                    payload: response.data
+                })
+            }).catch(function (error) {
                 console.log(error);
             });
         }
@@ -27,7 +48,7 @@ export function getOrderListByDate(dateParam, startDate, endDate) {
 }
 
 export function changeDeliveryStatus(deliveryObject) {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = '/api/om/orders/backend/logistics/';
         return axios({
             url: url,
@@ -35,9 +56,9 @@ export function changeDeliveryStatus(deliveryObject) {
             method: 'post',
             data: deliveryObject,
             responseType: 'json'
-        }).then(function(response) {
+        }).then(function (response) {
             alert('Delivery status has been changed');
-        }).catch(function(error) {
+        }).catch(function (error) {
             console.log(error);
         });
     }

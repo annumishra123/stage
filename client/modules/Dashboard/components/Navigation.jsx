@@ -27,7 +27,10 @@ class Navigation extends React.Component {
           <Link to="/rent">Rent Orders</Link>
         </li>
         <li>
-          <Link to="/delivery">Delivery</Link>
+          <Link to="/delivery/rent">Rent Delivery</Link>
+        </li>
+        <li>
+          <Link to="/delivery/shop">Shop Delivery</Link>
         </li>
         <li>
           <Link to="/inventory">Inventory</Link>
