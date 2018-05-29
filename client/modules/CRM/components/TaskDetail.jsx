@@ -86,12 +86,14 @@ class TaskDetail extends React.Component {
     }
 
     renderPreviousTasks() {
-        return <div>
-            <h1>Task History</h1>
-            <ul className={styles.previousUpdate}>{this.props.taskDetail.previousComments.map((comment, i) => {
-                return <li key={i}>Commenter: {comment.commenter}<br/>Created On: {comment.createdTime ? moment(comment.createdTime).format('lll') : null}<br/>Reason Code: {comment.reasonCode}<br/>Comment: {comment.comment}</li>
-            })}</ul>
-        </div>
+        if (this.props.taskDetail.previousComments.length > 0) {
+            return <div>
+                <h1>Task History</h1>
+                <ul>{this.props.taskDetail.previousComments.map((comment, i) => {
+                    return <li key={i}>Commenter: {comment.commenter}, Created On: {comment.createdTime ? moment(comment.createdTime).format('lll') : null}, Reason Code: {comment.reasonCode}, Comment: {comment.comment}</li>
+                })}</ul>
+            </div>
+        }
     }
 
     render() {
@@ -138,9 +140,9 @@ class TaskDetail extends React.Component {
                             return <li key={i}>Commenter: {comment.commenter}<br/>Created On: {comment.createdTime ? moment(comment.createdTime).format('lll') : null}<br/>Reason Code: {comment.reasonCode}<br/>Comment: {comment.comment}</li>
                         }) : 'Not Provided'}</ul>
                         <h2>Description</h2>
-                        <ul>{callback.taskData.data ? Object.keys(callback.taskData.data).map((key, i) => {
+                        <ul className={styles.previousUpdate}>{callback.taskData.data ? Object.keys(callback.taskData.data).map((key, i) => {
                             return <li key={i}>{key}: {callback.taskData[key]}</li>
-                        }) : 'Unavailable'}
+                        }) : 'Unavailable' : 'Unavailable'}
                         </ul>
                         <br />
                         <button onClick={() => this.showCallbackModal(callback.id)}>Update</button>
