@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import clientConfig from '../../../config';
 import { getTaskById, updateCallbackRequest, getAllDispositions } from '../CRMActions';
 import { getCustomerDetailByPhoneNumber } from '../../Customer/CustomerActions';
+import { getOrdersByPhoneNumber as getRentOrdersByPhoneNumber } from '../../Rent/RentActions';
+import { getOrdersByPhoneNumber as getShopOrdersByPhoneNumber } from '../../Shop/ShopActions';
 import moment from 'moment';
 import ReactModal from 'react-modal';
 
@@ -24,6 +26,16 @@ class TaskDetail extends React.Component {
     viewCustomerProfile(phoneNumber) {
         this.props.getCustomerDetailByPhoneNumber(phoneNumber);
         browserHistory.push('/customer');
+    }
+
+    viewPreviousRentOrders(phoneNumber) {
+        this.props.getRentOrdersByPhoneNumber(phoneNumber);
+        browserHistory.push('/rent');
+    }
+
+    viewPreviousShopOrders(phoneNumber) {
+        this.props.getShopOrdersByPhoneNumber(phoneNumber);
+        browserHistory.push('/shop');
     }
 
     changeComment(e) {
@@ -78,6 +90,10 @@ class TaskDetail extends React.Component {
                 <p>Name: {this.props.taskDetail.profile.firstName + ' ' + this.props.taskDetail.profile.lastName}</p>
                 <p>Phone: {this.props.taskDetail.phoneNumber}</p><br />
                 <button onClick={() => this.viewCustomerProfile(this.props.taskDetail.phoneNumber)}>View Profile/Create Order</button>
+                <br /><br />
+                <button onClick={() => this.viewPreviousRentOrders(this.props.taskDetail.phoneNumber)}>View Rent Order History</button>
+                <br /><br />
+                <button onClick={() => this.viewPreviousShopOrders(this.props.taskDetail.phoneNumber)}>View Shop Order History</button>
                 <br />
                 <h1>Task Detail</h1>
                 <p>Status: {this.props.taskDetail.status}</p>
@@ -148,7 +164,9 @@ function matchDispatchToProps(dispatch) {
         getTaskById,
         updateCallbackRequest,
         getCustomerDetailByPhoneNumber,
-        getAllDispositions
+        getAllDispositions,
+        getShopOrdersByPhoneNumber,
+        getRentOrdersByPhoneNumber
     }, dispatch);
 }
 
