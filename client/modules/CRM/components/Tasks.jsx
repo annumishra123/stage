@@ -7,6 +7,9 @@ import { getTasksByContext, getAllContexts } from '../CRMActions';
 import ReactTable from 'react-table';
 import moment from 'moment';
 
+// Import Style
+import styles from './crm.css';
+
 class Tasks extends React.Component {
     constructor(props) {
         super(props);
@@ -75,7 +78,7 @@ class Tasks extends React.Component {
                     });
                 }
                 return <div>
-                    <p>Last Updated: {this.state.lastUpdated.format('lll')}</p>
+                    <p className={styles.lastUpdate}>Last Updated: {this.state.lastUpdated.format('lll')}</p>
                     <br />
                     <ReactTable data={this.props.tasks} manual defaultPageSize={this.state.pageSize} columns={clientConfig.taskColumns} pages={this.props.pages} onFetchData={(state, instance) => { this.fetchData(state) }} className="-striped -highlight" />
                 </div>
@@ -84,11 +87,12 @@ class Tasks extends React.Component {
     }
 
     render() {
-        return <section>
+        return <section className={styles.tasks}>
             <h1>Tasks</h1>
-            <Link to="/crm/inbound">New Task</Link>
+            <Link className={styles.newTask} to="/crm/inbound">New Task</Link>
             <br /><br />
             <div>
+                <div className={styles.col4}>
                 <label>Label </label>
                 {this.props.contexts ? <select onChange={(e) => this.changeLabel(e)}>
                     <option value="">All</option>
@@ -96,12 +100,17 @@ class Tasks extends React.Component {
                         return <option key={i} value={context.actionLabel}>{context.actionLabel}</option>
                     })}
                 </select> : <span>Loading...</span>}
+                </div>
+                <div className={styles.col4}>
                 <label>Sort By </label>
                 <select onChange={(e) => this.changeSortBy(e)}>
                     <option value="priorityScore">Priority Score</option>
                     <option value="slaSeconds">Resolution Time</option>
                 </select>
+                </div>
+                <div className={styles.col4}>
                 <button onClick={() => this.getFilteredTasks()}>Apply</button>
+                </div>
             </div>
             <br />
             {this.renderTasks()}
