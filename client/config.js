@@ -94,7 +94,7 @@ const clientConfig = {
     'ezetap',
     'advance cash paid'
   ],
-  deliveryColumns: [{
+  rentDeliveryColumns: [{
     Header: 'Order Id',
     accessor: 'parentOrder.frontendOrderId',
   }, {
@@ -195,6 +195,77 @@ const clientConfig = {
     id: 'source',
     Header: 'Source',
     accessor: o => o.orderType.split('_')[1]
+  }],
+  rentalColumns: [{
+    Header: 'Order Id',
+    accessor: 'frontendOrderId',
+  }, {
+    Header: 'User Id',
+    accessor: 'userId',
+  }, {
+    id: 'dateOrder',
+    Header: 'Date Of Order',
+    accessor: o => moment(o.orderDate).format('lll'),
+  }, {
+    Header: 'Status',
+    accessor: 'status',
+  }],
+  shopDeliveryColumns: [{
+    Header: 'Order Id',
+    accessor: 'parentOrder.frontendOrderId',
+  }, {
+    Header: 'Email Id',
+    accessor: 'user.email',
+  }, {
+    id: 'name',
+    Header: 'Name',
+    accessor: o => o.user.firstName + ' ' + o.user.lastName,
+  }, {
+    Header: 'Phone',
+    accessor: 'user.phoneNumber',
+  }, {
+    Header: 'Address',
+    accessor: 'deliveryAddress.address',
+  }, {
+    Header: 'City',
+    accessor: 'deliveryAddress.city',
+  }, {
+    Header: 'State',
+    accessor: 'deliveryAddress.state',
+  }, {
+    Header: 'Pincode',
+    accessor: 'deliveryAddress.pincode',
+  }, {
+    Header: 'Product Name',
+    accessor: 'product.name',
+  }, {
+    Header: 'SKU',
+    accessor: 'product.sku',
+  }, {
+    Header: 'Designer',
+    accessor: 'product.designer',
+  }, {
+    id: 'orderDate',
+    Header: 'Order Date',
+    accessor: o => moment(o.parentOrder.orderDate).format('lll'),
+  }, {
+    Header: 'Discounted Price',
+    accessor: 'discountedPrice',
+  }, {
+    Header: 'Original Price',
+    accessor: 'originalPrice',
+  }, {
+    Header: 'Status',
+    accessor: 'status',
+  }, {
+    Header: 'Payment Type',
+    accessor: 'parentOrder.paymentType',
+  }, {
+    Header: 'Discount Coupon',
+    accessor: 'parentOrder.discountCoupon',
+  }, {
+    Header: 'Source',
+    accessor: 'source'
   }],
   rentalColumns: [{
     Header: 'Order Id',
