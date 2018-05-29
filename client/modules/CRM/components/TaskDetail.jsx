@@ -82,6 +82,15 @@ class TaskDetail extends React.Component {
         }
     }
 
+    renderPreviousTasks() {
+        return <div>
+            <h1>Task History</h1>
+            <ul>{this.props.taskDetail.previousComments.map((comment, i) => {
+                return <li key={i}>Commenter: {comment.commenter}, Created On: {comment.createdTime ? moment(comment.createdTime).format('lll') : null}, Reason Code: {comment.reasonCode}, Comment: {comment.comment}</li>
+            })}</ul>
+        </div>
+    }
+
     render() {
         if (this.props.taskDetail) {
             return <section>
@@ -131,6 +140,8 @@ class TaskDetail extends React.Component {
                         </ul>
                         <br />
                         <button onClick={() => this.showCallbackModal(callback.id)}>Update</button>
+                        <br />
+                        {this.renderPreviousTasks()}
                     </div>
                 })}
                 <ReactModal className="" isOpen={this.state.viewCallbackModal} onRequestClose={() => this.hideCallbackModal()} contentLabel="Change Delivery Status">
