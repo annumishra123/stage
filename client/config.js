@@ -474,7 +474,11 @@ const clientConfig = {
     id: 'name',
     Header: 'Name',
     accessor: o => {
-      return o.profile.firstName + ' ' + o.profile.lastName;
+      if (o.profile) {
+        return o.profile.firstName + ' ' + o.profile.lastName;
+      } else {
+        return 'Not Provided'
+      }
     }
   }, {
     Header: 'Phone',
