@@ -78,7 +78,7 @@ export function createInboundTask(taskObject) {
 
 export function getAllContexts() {
     return function (dispatch) {
-        let url = '/api/leads/contexts';
+        let url = '/api/leads/contexts?size=1000';
         return axios({
             url: url,
             timeout: 20000,
@@ -115,7 +115,7 @@ export function createContext(contextObject) {
 
 export function getAllDispositions() {
     return function (dispatch) {
-        let url = '/api/leads/dispositions';
+        let url = '/api/leads/dispositions?size=1000';
         return axios({
             url: url,
             timeout: 20000,
