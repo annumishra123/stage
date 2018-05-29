@@ -71,6 +71,15 @@
 .selected {
   border-bottom: 1px solid #fff;
 }
+.nameStrip {
+  background: #eeaba9;
+  color: #000;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 5px;
+  text-align: center;
+}
 
 @media (max-width: 767px){
   .content {
@@ -93,8 +102,9 @@
     height: 14px;
     margin:0 5px -2px 0;
   }
-
-
+  .nameStrip {
+    font-size: 12px;
+  }
   .add-post-button{
     float: left;
     margin-top: 16px;
