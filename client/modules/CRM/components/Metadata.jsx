@@ -8,6 +8,9 @@ import ReactTable from 'react-table';
 import Datetime from 'react-datetime';
 import moment from 'moment';
 
+// Import Style
+import styles from './crm.css';
+
 class Metadata extends React.Component {
     constructor(props) {
         super(props);
@@ -141,31 +144,49 @@ class Metadata extends React.Component {
     render() {
         return <section>
             <h1>Contexts</h1>
-            <div>
+            <div className={styles.metadataForm}>
+                <div className={styles.col6}>
                 <label>Label</label>
                 <input type="text" onChange={(e) => this.changeContextLabel(e)} />
+                </div>
+                <div className={styles.col6}>
                 <label>Description</label>
                 <input type="text" onChange={(e) => this.changeContextDescription(e)} />
+                </div>
+                <div className={styles.col6}>
                 <label>Score</label>
                 <input type="number" onChange={(e) => this.changeContextPriorityScore(e)} />
+                </div>
+                <div className={styles.col6}>
                 <label>Level</label>
                 <input type="number" onChange={(e) => this.changeContextPriorityLevel(e)} />
+                </div>
+                <div className={styles.col6}>
                 <label>Resolution Time (sec)</label>
                 <input type="number" onChange={(e) => this.changeContextSLA(e)} />
+                </div>
                 <button onClick={() => this.addContext()}>Add Context</button>
             </div>
             {this.renderContexts()}
             <br />
             <h1>Dispositions</h1>
-            <div>
+            <div className={styles.metadataForm}>
+                <div className={styles.col6}>
                 <label>Label</label>
                 <input type="text" onChange={(e) => this.changeDispositionLabel(e)} />
+                </div>
+                <div className={styles.col6}>
                 <label>Score</label>
                 <input type="number" onChange={(e) => this.changeDispositionScore(e)} />
+                </div>
+                <div className={styles.col6}>
                 <label>Rechurn</label>
                 <input type="checkbox" defaultChecked="true" onChange={(e) => this.changeDispositionRechurn(e)} />
+                </div>
+                <div className={styles.col6}>
                 <label>Rechurn Interval (sec)</label>
                 <input type="number" onChange={(e) => this.changeDispositionRechurnInterval(e)} />
+                </div>
                 <button onClick={() => this.addDisposition()}>Add Disposition</button>
             </div>
             {this.renderDispositions()}
