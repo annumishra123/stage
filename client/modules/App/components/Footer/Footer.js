@@ -10,7 +10,7 @@ import bg from '../../header-bk.png';
 export function Footer() {
   return (
     <div className={ styles.footer }>
-      <p>© 2017 · Stage3</p>
+      <p>© 2018 · Stage3</p>
     </div>
     );
 }
