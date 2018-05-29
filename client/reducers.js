@@ -10,7 +10,7 @@ import { orders, orderDetail, productDetail, shopPricing } from './modules/Shop/
 import { rentOrders, rentOrderDetail, rentProductDetail, rentalPricing, bookableStatus, deliveryDates, measurementStatus, allCoupons } from './modules/Rent/RentReducer';
 import auth from './modules/Auth/AuthReducer';
 import { customerDetail, selectedAddress, creditPoints, customerComments } from './modules/Customer/CustomerReducer';
-import { deliveryOrders } from './modules/Delivery/DeliveryReducer';
+import { rentDeliveryOrders, shopDeliveryOrders } from './modules/Delivery/DeliveryReducer';
 import { instagramFeeds } from './modules/CMS/CMSReducer';
 import { accessoryCatalog, rentCatalog, shopCatalog, rentProduct, shopProduct, updateProduct, updateRentProduct, accessory, updateAccessory, shopStock } from './modules/Inventory/InventoryReducer';
 import { designerInventory, cancelledDesignerOrders, completedDesignerOrders, pendingDesignerOrders, designerShare } from './modules/Designer/DesignerReducer';
@@ -26,7 +26,8 @@ export default combineReducers({
   intl,
   orders,
   rentOrders,
-  deliveryOrders,
+  rentDeliveryOrders,
+  shopDeliveryOrders,
   orderDetail,
   rentOrderDetail,
   form: formReducer,
