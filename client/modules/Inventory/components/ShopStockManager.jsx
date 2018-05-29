@@ -3,7 +3,7 @@ import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
-import { fetchShopStock, updateShopStock } from '../InventoryActions';
+import { fetchShopStock, updateShopStock, reconcileAll } from '../InventoryActions';
 import clientConfig from '../../../config';
 import ReactModal from 'react-modal';
 
@@ -46,6 +46,10 @@ class ShopStockManager extends React.Component {
         });
     }
 
+    reconcileQuantities() {
+        this.props.reconcileAll();
+    }
+
     updateQuantity(row) {
         if (this.state.quantity != 0) {
             let confirmUpdate = this.state.quantity < 0 ? confirm("Do you confirm to decrement the quantity by " + this.state.quantity) : confirm("Do you confirm to increment the quantity by " + this.state.quantity);
@@ -77,6 +81,7 @@ class ShopStockManager extends React.Component {
                     });
                 }
                 return <div>
+                    <button onClick={this.reconcileQuantities.bind(this)}>Reconcile All</button>
                          <ReactTable filterable data={ this.props.shopStock } columns={ clientConfig.shopStockColumns } defaultPageSize={ 10 } className="-striped -highlight" />
                        </div>;
             }
@@ -104,7 +109,8 @@ class ShopStockManager extends React.Component {
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         fetchShopStock,
-        updateShopStock
+        updateShopStock,
+        reconcileAll
     }, dispatch);
 }
 

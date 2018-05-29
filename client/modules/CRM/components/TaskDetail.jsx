@@ -76,7 +76,7 @@ class TaskDetail extends React.Component {
                 <h1>Customer Detail</h1>
                 <p>Email: {this.props.taskDetail.customerId}</p>
                 <p>Name: {this.props.taskDetail.profile.firstName + ' ' + this.props.taskDetail.profile.lastName}</p>
-                <p>Phone: {this.props.taskDetail.phoneNumber}</p>
+                <p>Phone: {this.props.taskDetail.phoneNumber}</p><br />
                 <button onClick={() => this.viewCustomerProfile(this.props.taskDetail.phoneNumber)}>View Profile/Create Order</button>
                 <br />
                 <h1>Task Detail</h1>
@@ -103,13 +103,13 @@ class TaskDetail extends React.Component {
                         <p>Updated On: {callback.updatedTimeStamp ? moment(callback.updatedTimeStamp).format('lll') : 'Not Updated'}</p>
                         <p>Closed On: {callback.closedDate ? moment(callback.closedDate).format('lll') : 'Open'}</p>
                         <br />
-                        <p><b>Comments</b></p>
+                        <p><b>Previous Updates</b></p>
                         <ul>{callback.comment.length > 0 ? callback.comment.map((comment, i) => {
-                            return <li key={i}>{comment.comment}</li>
+                            return <li key={i}>Commenter: {comment.commenter}, Created On: {comment.createdTime ? moment(comment.createdTime).format('lll') : null}, Reason Code: {comment.reasonCode}, Comment: {comment.comment}</li>
                         }) : 'Not Provided'}</ul>
                         <br />
                         <p><b>Description</b></p>
-                        <ul>{callback.taskData ? Object.keys(callback.taskData.data).map((key, i) => {
+                        <ul>{callback.taskData.data ? Object.keys(callback.taskData.data).map((key, i) => {
                             return <li key={i}>{key}: {callback.taskData[key]}</li>
                         }) : 'Unavailable'}
                         </ul>
