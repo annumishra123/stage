@@ -142,7 +142,7 @@ class TaskDetail extends React.Component {
                         <h2>Description</h2>
                         <ul className={styles.previousUpdate}>{callback.taskData.data ? Object.keys(callback.taskData.data).map((key, i) => {
                             return <li key={i}>{key}: {callback.taskData[key]}</li>
-                        }) : 'Unavailable' : 'Unavailable'}
+                        }) : 'Unavailable'}
                         </ul>
                         <br />
                         <button onClick={() => this.showCallbackModal(callback.id)}>Update</button>
