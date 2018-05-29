@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import clientConfig from '../../../config';
 import { getTasksByContext, getAllContexts, getAllDispositions, createInboundTask } from '../CRMActions';
 
+// Import Style
+import styles from './crm.css';
+
 class Inbound extends React.Component {
     constructor(props) {
         super(props);
@@ -76,8 +79,8 @@ class Inbound extends React.Component {
     }
 
     render() {
-        return <section>
-            <h1>New Task</h1>
+        return <section className={styles.inboundCall}>
+            <h1>Inbound Call</h1>
             <div>
                 <label>Label </label>
                 {this.props.contexts ? <select onChange={(e) => this.changeLabel(e)}>

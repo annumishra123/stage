@@ -10,6 +10,9 @@ import { getOrdersByPhoneNumber as getShopOrdersByPhoneNumber } from '../../Shop
 import moment from 'moment';
 import ReactModal from 'react-modal';
 
+// Import Style 
+import styles from './crm.css';
+
 class TaskDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -82,18 +85,31 @@ class TaskDetail extends React.Component {
         }
     }
 
+    renderPreviousTasks() {
+        if (this.props.taskDetail.previousComments.length > 0) {
+            return <div>
+                <h1>Task History</h1>
+                <ul>{this.props.taskDetail.previousComments.map((comment, i) => {
+                    return <li key={i}>Commenter: {comment.commenter}, Created On: {comment.createdTime ? moment(comment.createdTime).format('lll') : null}, Reason Code: {comment.reasonCode}, Comment: {comment.comment}</li>
+                })}</ul>
+            </div>
+        }
+    }
+
     render() {
         if (this.props.taskDetail) {
-            return <section>
+            return <section className={styles.taskDetail}>
                 <h1>Customer Detail</h1>
+                <div className={styles.customer}>
                 <p>Email: {this.props.taskDetail.customerId}</p>
                 <p>Name: {this.props.taskDetail.profile.firstName + ' ' + this.props.taskDetail.profile.lastName}</p>
-                <p>Phone: {this.props.taskDetail.phoneNumber}</p><br />
+                <p>Phone: {this.props.taskDetail.phoneNumber}</p>
+                </div>
+                <div className={styles.taskButtons}> 
                 <button onClick={() => this.viewCustomerProfile(this.props.taskDetail.phoneNumber)}>View Profile/Create Order</button>
-                <br /><br />
-                <button onClick={() => this.viewPreviousRentOrders(this.props.taskDetail.phoneNumber)}>View Rent Order History</button>
-                <br /><br />
-                <button onClick={() => this.viewPreviousShopOrders(this.props.taskDetail.phoneNumber)}>View Shop Order History</button>
+                <button onClick={() => this.viewPreviousRentOrders(this.props.taskDetail.phoneNumber)}>Rent History</button>
+                <button onClick={() => this.viewPreviousShopOrders(this.props.taskDetail.phoneNumber)}>Shop History</button>
+                </div>
                 <br />
                 <h1>Task Detail</h1>
                 <p>Status: {this.props.taskDetail.status}</p>
@@ -119,25 +135,24 @@ class TaskDetail extends React.Component {
                         <p>Updated On: {callback.updatedTimeStamp ? moment(callback.updatedTimeStamp).format('lll') : 'Not Updated'}</p>
                         <p>Closed On: {callback.closedDate ? moment(callback.closedDate).format('lll') : 'Open'}</p>
                         <br />
-                        <p><b>Previous Updates</b></p>
-                        <ul>{callback.comment.length > 0 ? callback.comment.map((comment, i) => {
-                            return <li key={i}>Commenter: {comment.commenter}, Created On: {comment.createdTime ? moment(comment.createdTime).format('lll') : null}, Reason Code: {comment.reasonCode}, Comment: {comment.comment}</li>
+                        <h2>Previous Updates</h2>
+                        <ul className={styles.previousUpdate}>{callback.comment.length > 0 ? callback.comment.map((comment, i) => {
+                            return <li key={i}>Commenter: {comment.commenter}<br/>Created On: {comment.createdTime ? moment(comment.createdTime).format('lll') : null}<br/>Reason Code: {comment.reasonCode}<br/>Comment: {comment.comment}</li>
                         }) : 'Not Provided'}</ul>
-                        <br />
-                        <p><b>Description</b></p>
-                        <ul>{callback.taskData.data ? Object.keys(callback.taskData.data).map((key, i) => {
+                        <h2>Description</h2>
+                        <ul className={styles.previousUpdate}>{callback.taskData.data ? Object.keys(callback.taskData.data).map((key, i) => {
                             return <li key={i}>{key}: {callback.taskData[key]}</li>
                         }) : 'Unavailable'}
                         </ul>
                         <br />
                         <button onClick={() => this.showCallbackModal(callback.id)}>Update</button>
+                        <br />
+                        {this.renderPreviousTasks()}
                     </div>
                 })}
-                <ReactModal className="" isOpen={this.state.viewCallbackModal} onRequestClose={() => this.hideCallbackModal()} contentLabel="Change Delivery Status">
+                <ReactModal className={styles.taskPopup} isOpen={this.state.viewCallbackModal} onRequestClose={() => this.hideCallbackModal()} contentLabel="Change Delivery Status">
                     <span onClick={() => this.hideCallbackModal()}>×</span>
                     <br />
-                    <label>Add Comment </label>
-                    <input onChange={(e) => this.changeComment(e)} />
                     <div>
                         <label>Reason Code </label>
                         {this.props.dispositions ? <select onChange={(e) => this.changeDisposition(e)}>
@@ -147,6 +162,8 @@ class TaskDetail extends React.Component {
                             })}
                         </select> : <span>Loading...</span>}
                     </div>
+                    <label>Add Comment </label>
+                    <input onChange={(e) => this.changeComment(e)} />
                     <button onClick={() => this.updateCallbackRequest()}>Update</button>
                 </ReactModal>
             </section>

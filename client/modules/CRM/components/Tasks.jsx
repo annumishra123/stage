@@ -89,7 +89,7 @@ class Tasks extends React.Component {
     render() {
         return <section className={styles.tasks}>
             <h1>Tasks</h1>
-            <Link className={styles.newTask} to="/crm/inbound">New Task</Link>
+            <Link className={styles.newTask} to="/crm/inbound">Inbound Call</Link>
             <br /><br />
             <div>
                 <div className={styles.col4}>
