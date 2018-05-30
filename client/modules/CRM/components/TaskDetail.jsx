@@ -95,7 +95,7 @@ class TaskDetail extends React.Component {
           return (<div>
                 <h1>Task History</h1>
                 <ul className={styles.previousUpdate}>{this.props.taskDetail.previousComments.length > 0 ? this.props.taskDetail.previousComments.map((comment, i) => {
-                  return <li key={i}>Label: {comment.actionLabel}<br />Commenter: {comment.commenter}<br />Created On: {comment.createdTime ? moment(comment.createdTime).format('lll') : null}<br />Reason Code: {comment.reasonCode}<br />Comment: {comment.comment}</li>;
+                  return <li key={i}>Label: {comment.actionLabel}<br />Commenter: {comment.commenter}<br />Created On: {comment.createdTime ? moment(comment.createdTime).fromNow() : null}<br />Reason Code: {comment.reasonCode}<br />Comment: {comment.comment}</li>;
                 }) : 'Not Provided'}</ul>
             </div>);
         }
@@ -120,9 +120,9 @@ class TaskDetail extends React.Component {
                 <p>Status: {this.props.taskDetail.status}</p>
                 <p>Primary Context: {this.props.taskDetail.primaryCallbackContext}</p>
                 <p>Assignee: {this.props.taskDetail.assignee ? this.props.taskDetail.assignee : 'Unassigned'}</p>
-                <p>Promised Resolution Time: {this.props.taskDetail.slaEndTime ? moment(this.props.taskDetail.slaEndTime).format('lll') : null}</p>
-                <p>Created On: {this.props.taskDetail.createdTime ? moment(this.props.taskDetail.createdTime).format('lll') : null}</p>
-                <p>Updated On: {this.props.taskDetail.updatedTime ? moment(this.props.taskDetail.updatedTime).format('lll') : 'Not Updated'}</p>
+                <p>Promised Resolution Time: {this.props.taskDetail.slaEndTime ? moment(this.props.taskDetail.slaEndTime).fromNow() : null}</p>
+                <p>Created On: {this.props.taskDetail.createdTime ? moment(this.props.taskDetail.createdTime).fromNow() : null}</p>
+                <p>Updated On: {this.props.taskDetail.updatedTime ? moment(this.props.taskDetail.updatedTime).fromNow() : 'Not Updated'}</p>
                 <p>Task Comment: {this.props.taskDetail.taskComment ? this.props.taskDetail.taskComment : 'Not Provided'}</p>
                 <br />
                 <h1>Call Backs</h1>
@@ -133,12 +133,12 @@ class TaskDetail extends React.Component {
                         <p>Label: {callback.context.actionLabel}</p>
                         <p>Status: {callback.status}</p>
                         <p>Assignee: {callback.assignee ? callback.assignee : 'Unassigned'}</p>
-                        <p>Created On: {callback.createdTimeStamp ? moment(callback.createdTimeStamp).format('lll') : null}</p>
+                        <p>Created On: {callback.createdTimeStamp ? moment(callback.createdTimeStamp).fromNow() : null}</p>
                         <p>Created By: {callback.creater}</p>
                         <p>Inbound: {callback.inbound ? 'Yes' : 'No'}</p>
-                        <p>Promised Resolution Time: {callback.slaEndTime ? moment(callback.slaEndTime).format('lll') : null}</p>
-                        <p>Updated On: {callback.updatedTimeStamp ? moment(callback.updatedTimeStamp).format('lll') : 'Not Updated'}</p>
-                        <p>Closed On: {callback.closedDate ? moment(callback.closedDate).format('lll') : 'Open'}</p>
+                        <p>Promised Resolution Time: {callback.slaEndTime ? moment(callback.slaEndTime).fromNow() : null}</p>
+                        <p>Updated On: {callback.updatedTimeStamp ? moment(callback.updatedTimeStamp).fromNow() : 'Not Updated'}</p>
+                        <p>Closed On: {callback.closedDate ? moment(callback.closedDate).fromNow() : 'Open'}</p>
                         <br />
                         <h2>Description</h2>
                         {
