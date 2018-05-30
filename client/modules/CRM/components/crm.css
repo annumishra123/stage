@@ -58,6 +58,33 @@ section h1 {
     padding: 20px 0 15px 10px;
     letter-spacing: 0.5px;
 }
+.tasks .viewtask {
+    background: #000;
+    color: #fff;
+    border: 0;
+    padding: 3px 10px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin: 3px 0 1px;
+    text-transform: uppercase;
+}
+.tasks .ReactTable p {
+    line-height: 24px;
+}
+.tasks .rt-resizable-header {
+    padding: 20px 5px;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+}
+.tasks .ReactTable .rt-thead .rt-th, 
+.tasks .ReactTable .rt-thead .rt-td {
+    border-right: 1px solid rgba(255,255,255,0.2);
+}
+
 
 /*====== Task Detail ========*/ 
 .taskDetail h1 {
@@ -94,17 +121,19 @@ section h1 {
 } 
 .taskDetail ul { 
     margin: 0; 
+    overflow: hidden;
 } 
 .taskDetail ul.previousUpdate li { 
     list-style: none; 
     border: 1px solid rgba(0,0,0,0.1); 
     padding: 10px; 
     background: rgba(0,0,0,0.04); 
+    float: left;
     font-size: 14px; 
     line-height: 22px; 
     letter-spacing: 0.5px; 
     margin: 10px 1%; 
-    width: 32%; 
+    width: 31%; 
     display: inline-block; 
 } 
 .taskDetail button { 
@@ -122,6 +151,32 @@ section h1 {
     margin: 5px 10px; 
     padding: 12px 15px; 
 } 
+.callbackThumbnail {
+    background: #fff;
+    width: 47%;
+    margin: 8px 2% 8px 0;
+    display: inline-block;
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 7px 1px rgba(0,0,0,0.1);
+}
+.callbackThumbnail hr {
+    display: none;
+}
+.callbackThumbnail button {
+    margin: 0 !important;
+}
+.callbackThumbnail.closed {
+    opacity: 0.5;
+}
+.callbackThumbnail.disposed {
+    background: #f3f3f3;
+}
+.callbackThumbnail.created {
+    background: #e5f3ff;
+}
+
 
 /* popup */
 .taskPopup {
@@ -294,6 +349,9 @@ section h1 {
     .taskDetail button {
         width: 100%;
         margin: 0 0 5px;
+    }
+    .callbackThumbnail {
+        width: 100%;
     }
 
     /* popup */
