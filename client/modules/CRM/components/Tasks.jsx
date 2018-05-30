@@ -15,7 +15,7 @@ class Tasks extends React.Component {
       super(props);
       this.state = {
           pageIndex: 0,
-          pageSize: 5,
+          pageSize: 20,
           context: '',
           sortBy: 'priorityScore',
           lastUpdated: moment(),
@@ -78,11 +78,17 @@ class Tasks extends React.Component {
                       Header: '',
                       id: 'view',
                       accessor: o => { return o; },
-                      Cell: ({ value }) => (<div>{this.getIcon(value)}<button className={styles.viewtask} onClick={this.viewTask.bind(this, value)}>View ></button></div>),
+                      Cell: ({ value }) => (<div><button className={styles.viewtask} onClick={this.viewTask.bind(this, value)}>View ></button></div>),
+                    });
+                  clientConfig.taskColumns.unshift({
+                      Header: 'Info',
+                      id: 'info',
+                      accessor: o => { return o; },
+                      Cell: ({ value }) => (<div>{this.getIcon(value)}</div>),
                     });
                 }
               return (<div>
-                    <p className={styles.lastUpdate}>Last Updated: {this.state.lastUpdated.format('lll')}</p>
+                    <p className={styles.lastUpdate}>Last Updated: {this.state.lastUpdated.fromNow()} </p>
                     <br />
                     <ReactTable data={this.props.tasks} manual defaultPageSize={this.state.pageSize} columns={clientConfig.taskColumns} pages={this.props.pages} onFetchData={(state, instance) => { this.fetchData(state); }} className="-striped -highlight" />
                 </div>);
@@ -92,7 +98,7 @@ class Tasks extends React.Component {
 
   render() {
       return (<section className={styles.tasks}>
-            <h1>Tasks</h1>
+            {this.props.tasks ? <h1>People to call : {this.props.tasks.length}</h1> : <h1>Tasks</h1>}
             <Link className={styles.newTask} to="/crm/inbound">Inbound Call</Link>
             <br /><br />
             <div>
