@@ -67,7 +67,7 @@ class Tasks extends React.Component {
     }
   getIcon(task) {
       let slaTime = moment(task.slaEndTime).fromNow();
-      return (<div><div>Time to Resolve: {slaTime}</div><div>Requests : <b>{task.callBacksRequested.length}</b></div></div>);
+      return (<div><p>Time to Resolve: {slaTime}</p><p>Requests : <b>{task.callBacksRequested.length}</b></p></div>);
     }
 
   renderTasks() {
@@ -78,7 +78,7 @@ class Tasks extends React.Component {
                       Header: '',
                       id: 'view',
                       accessor: o => { return o; },
-                      Cell: ({ value }) => (<div>{this.getIcon(value)}<button onClick={this.viewTask.bind(this, value)}>View</button></div>),
+                      Cell: ({ value }) => (<div>{this.getIcon(value)}<button className={styles.viewtask} onClick={this.viewTask.bind(this, value)}>View ></button></div>),
                     });
                 }
               return (<div>
