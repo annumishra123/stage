@@ -122,9 +122,8 @@ class TaskDetail extends React.Component {
                 <br />
                 <h1>Call Backs</h1>
                 {this.props.taskDetail.callbacks.map((callback, i) => {
-                    return <div key={i}>
+                    return <div key={i} className={styles.callbackThumbnail}>
                         <hr />
-                        <br />
                         <p>Label: {callback.context.actionLabel}</p>
                         <p>Status: {callback.status}</p>
                         <p>Assignee: {callback.assignee ? callback.assignee : 'Unassigned'}</p>
@@ -136,7 +135,7 @@ class TaskDetail extends React.Component {
                         <p>Closed On: {callback.closedDate ? moment(callback.closedDate).format('lll') : 'Open'}</p>
                         <br />
                         <h2>Description</h2>
-                        <ul className={styles.previousUpdate}>{callback.taskData ? Object.keys(callback.taskData.data).length > 0 ? Object.keys(callback.taskData.data).map((key, i) => {
+                        <ul>{callback.taskData ? Object.keys(callback.taskData.data).length > 0 ? Object.keys(callback.taskData.data).map((key, i) => {
                             return <li key={i}>{key}: {callback.taskData.data[key]}</li>
                         }) : <li>Unavailable</li> : <li>Unavailable</li>}
                         </ul>
