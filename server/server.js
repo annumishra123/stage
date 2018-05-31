@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
   app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
-    publicPath: config.output.publicPath
+    publicPath: config.output.publicPath,
   }));
   app.use(webpackHotMiddleware(compiler));
 }
@@ -65,8 +65,8 @@ var options = {
   logLevel: 'debug',
   headers: {
     'Authorization': serverConfig.access_token,
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 };
 var proxyServer = proxy(options);
 app.use('/api', proxyServer);
@@ -74,11 +74,11 @@ app.use('/api', proxyServer);
 // Apply body Parser and server public assets and routes
 app.use(compression());
 app.use(bodyParser.json({
-  limit: '20mb'
+  limit: '20mb',
 }));
 app.use(bodyParser.urlencoded({
   limit: '20mb',
-  extended: false
+  extended: false,
 }));
 app.use(Express.static(path.resolve(__dirname, '../dist')));
 app.use('/auth', auth);
@@ -104,13 +104,14 @@ const renderFullPage = (html, initialState) => {
         ${process.env.NODE_ENV === 'production' ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />` : ''}
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i,900,900i" rel="stylesheet">
         <link rel="shortcut icon" href="https://res.cloudinary.com/stage3/image/upload/v1513254878/favicon.jpg" type="image/png" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha256-NuCn4IvuZXdBaFKJOAcsU2Q3ZpwbdFisd5dux4jkQ5w=" crossorigin="anonymous" />
       </head>
       <body>
         <div id="root">${html}</div>
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
           ${process.env.NODE_ENV === 'production' ?
-          `//<![CDATA[
+      `//<![CDATA[
           window.webpackManifest = ${JSON.stringify(chunkManifest)};
           //]]>` : ''}
         </script>
@@ -133,15 +134,15 @@ app.use((req, res, next) => {
   const initialState = {
     auth: {
       isAuthenticated: false,
-      isFetching: false
-    }
+      isFetching: false,
+    },
   };
   const store = configureStore(initialState);
   const routes = getRoutes(store, req);
 
   match({
     routes,
-    location: req.url
+    location: req.url,
   }, (err, redirectLocation, renderProps) => {
     if (err) {
       return res.status(500).end(renderError(err));
@@ -159,7 +160,7 @@ app.use((req, res, next) => {
       .then(() => fetchComponentData(store.dispatch, renderProps.components, renderProps.params))
       .then(() => {
         const initialView = renderToString(
-          <Provider store={ store }>
+          <Provider store={store}>
             <IntlWrapper>
               <RouterContext {...renderProps} />
             </IntlWrapper>

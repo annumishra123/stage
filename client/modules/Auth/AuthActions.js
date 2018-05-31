@@ -100,7 +100,7 @@ export function checkToken(sToken) {
         return response.json();
       })
       .then((response) => {
-        const {user} = response;
+        const { user } = response;
 
         if (!user.ok) {
           dispatch(tokenInvalid());
@@ -128,7 +128,7 @@ export function loginUser(creds) {
     })
       .then((response) => response.json())
       .then((response) => {
-        const {user, message} = response;
+        const { user, message } = response;
         if (!user.ok) {
           dispatch(loginFailure(message));
           return Promise.reject(message);
@@ -144,7 +144,7 @@ export function loginUser(creds) {
 }
 
 export function logoutUser() {
-  return function(dispatch) {
+  return function (dispatch) {
     localStorage.removeItem('token');
     browserHistory.push('/');
     dispatch(requestLogout());
@@ -152,7 +152,7 @@ export function logoutUser() {
 }
 
 export function changePassword(password) {
-  return function(dispatch) {
+  return function (dispatch) {
     let url = '/auth/changepassword';
     let token = localStorage.getItem('token');
     if (token) {
@@ -167,13 +167,34 @@ export function changePassword(password) {
           Authorization: 'JWT ' + token
         },
         responseType: 'json'
-      }).then(function(response) {
+      }).then(function (response) {
         if (response.data.status == 'SUCCESS') {
           alert('Password has been changed');
           browserHistory.push('/menu');
         }
-      }).catch(function(error) {
+      }).catch(function (error) {
         console.log(error);
+      });
+    }
+  }
+}
+
+export function createUser(user) {
+  return function (dispatch) {
+    let url = '/auth/createuser';
+    let token = localStorage.getItem('token');
+    if (token) {
+      return axios({
+        url: url,
+        method: 'POST',
+        data: user,
+        headers:{
+          Authorization: 'JWT ' + token,
+        },
+      }).then(function (response) {
+        alert('User Created');
+      }).catch(function (error) {
+        alert('User Not Created');
       });
     }
   }

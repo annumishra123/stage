@@ -67,13 +67,23 @@ class Tasks extends React.Component {
     }
   getIcon(task) {
       let slaTime = moment(task.slaEndTime).fromNow();
-      return (<div><p>Time to Resolve: {slaTime}</p><p>Requests : <b>{task.callBacksRequested.length}</b></p></div>);
+      return (<div><p>Time to Resolve: {slaTime}</p> <p>Requests : <b>{task.callBacksRequested.length}</b></p></div >);
+    }
+
+  getStatus(task) {
+      return (<span>{task.status == 'RECHURNED' ? <i className={styles.rechurned+" fa fa-recycle fa-2x"} aria-hidden="true"></i> : task.status == 'PARTIALLY_COMPLETED' ? <i className={styles.starhalf+" fa fa-star-half-o fa-2x partiallyCcompleted"} aria-hidden="true"></i> : <i className={styles.taskdone+" fa fa-flag-checkered fa-2x"} aria-hidden="true"></i>}</span>);
     }
 
   renderTasks() {
       if (this.props.tasks) {
           if (this.props.tasks.length > 0) {
               if (!clientConfig.taskColumns.find(o => o.id == 'view')) {
+                  clientConfig.taskColumns.unshift({
+                      Header: 'Status',
+                      id: 'status',
+                      accessor: o => { return o; },
+                      Cell: ({ value }) => (<div>{this.getStatus(value)} {value.status}</div>),
+                    });
                   clientConfig.taskColumns.unshift({
                       Header: '',
                       id: 'view',
@@ -90,7 +100,7 @@ class Tasks extends React.Component {
               return (<div>
                     <p className={styles.lastUpdate}>Last Updated: {this.state.lastUpdated.fromNow()} </p>
                     <br />
-                    <ReactTable data={this.props.tasks} manual defaultPageSize={this.state.pageSize} columns={clientConfig.taskColumns} pages={this.props.pages} onFetchData={(state, instance) => { this.fetchData(state); }} className="-striped -highlight" />
+                    <ReactTable className={styles.tasktable} data={this.props.tasks} manual defaultPageSize={this.state.pageSize} columns={clientConfig.taskColumns} pages={this.props.pages} onFetchData={(state, instance) => { this.fetchData(state); }} className="-striped -highlight" />
                 </div>);
             }
         }

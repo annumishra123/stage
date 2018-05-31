@@ -44,6 +44,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/CRM/components/Metadata');
   require('./modules/CRM/components/Inbound');
   require('./modules/CRM/components/TaskDetail');
+  require('./modules/Auth/components/CreateUser');
 }
 
 // react-router setup with code-splitting
@@ -290,6 +291,11 @@ export default function getRoutes(store, req) {
       <Route path="/crm/metadata" onEnter={checkSuperUser} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/CRM/components/Metadata').default);
+        });
+      }} />
+      <Route path="/create" onEnter={checkSuperUser} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Auth/components/CreateUser').default);
         });
       }} />
     </Route>

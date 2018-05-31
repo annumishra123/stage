@@ -15,7 +15,7 @@ section h1 {
     font-size: 13px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    margin: 22px 0 0;
+    margin: -43px 10px 0 0;
     padding: 10px 20px;
     float: right;
     text-decoration: none;
@@ -46,7 +46,7 @@ section h1 {
     font-size: 13px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    margin: 10px 0;
+    margin: 0;
     padding: 10px 20px;
     text-decoration: none;
     border: 0;
@@ -71,7 +71,7 @@ section h1 {
 .tasks .ReactTable p {
     line-height: 24px;
 }
-.tasks .rt-resizable-header {
+.tasks .tasktable .rt-resizable-header {
     padding: 20px 5px;
     font-size: 18px;
     text-transform: uppercase;
@@ -80,9 +80,27 @@ section h1 {
     background: rgba(0,0,0,0.8);
     color: #fff;
 }
-.tasks .ReactTable .rt-thead .rt-th, 
-.tasks .ReactTable .rt-thead .rt-td {
-    border-right: 1px solid rgba(255,255,255,0.2);
+.tasks .tasktable .rt-thead .rt-th, 
+.tasks .tasktable .rt-thead .rt-td {
+    border-right: 1px solid rgba(97, 11, 11, 0.2);
+}
+.tasks .starhalf {
+    font-size: 20px;
+    color: #f48e0b;
+    margin: 0 5px 0 0;
+}
+.tasks .rechurned {
+    font-size: 20px;
+    color: #029688;
+    margin: 0 5px 0 0;
+}
+.tasks .taskdone {
+    font-size: 20px;
+    color: #7986cc;
+    margin: 0 5px 0 0;
+}
+.tasks .tasktable div {
+    text-transform: capitalize;
 }
 
 
@@ -319,7 +337,7 @@ section h1 {
         padding: 5px 0 15px 10px;
     }
     .newTask {
-        margin: 10px 0 0;
+        margin: -33px 0 0;
     }
 
     /* task detail */

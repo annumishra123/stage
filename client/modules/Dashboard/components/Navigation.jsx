@@ -54,7 +54,7 @@ class Navigation extends React.Component {
           <Link to="/crm/metadata">CRM Metadata</Link>
         </li> : null}
         {this.props.role == 'superuser' ? <li>
-          <Link>Create User<br />(coming soon)</Link>
+          <Link to="/create">Create User</Link>
         </li> : null}
       </ul> : <div>
           <h1>{this.props.owner.toUpperCase()}</h1>
