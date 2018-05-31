@@ -71,7 +71,7 @@ class Tasks extends React.Component {
     }
 
   getStatus(task) {
-      return (<div>{task.status == 'RECHURNED' ? <i className="fa fa-recycle fa-2x" aria-hidden="true"></i> : task.status == 'PARTIALLY_COMPLETED' ? <i className="fa  fa-star-half-o fa-2x" aria-hidden="true"></i> : <i className="fa fa-flag-checkered fa-2x" aria-hidden="true"></i>}</div>);
+      return (<span>{task.status == 'RECHURNED' ? <i className={styles.rechurned+" fa fa-recycle fa-2x"} aria-hidden="true"></i> : task.status == 'PARTIALLY_COMPLETED' ? <i className={styles.starhalf+" fa fa-star-half-o fa-2x partiallyCcompleted"} aria-hidden="true"></i> : <i className={styles.taskdone+" fa fa-flag-checkered fa-2x"} aria-hidden="true"></i>}</span>);
     }
 
   renderTasks() {
@@ -100,7 +100,7 @@ class Tasks extends React.Component {
               return (<div>
                     <p className={styles.lastUpdate}>Last Updated: {this.state.lastUpdated.fromNow()} </p>
                     <br />
-                    <ReactTable data={this.props.tasks} manual defaultPageSize={this.state.pageSize} columns={clientConfig.taskColumns} pages={this.props.pages} onFetchData={(state, instance) => { this.fetchData(state); }} className="-striped -highlight" />
+                    <ReactTable className={styles.tasktable} data={this.props.tasks} manual defaultPageSize={this.state.pageSize} columns={clientConfig.taskColumns} pages={this.props.pages} onFetchData={(state, instance) => { this.fetchData(state); }} className="-striped -highlight" />
                 </div>);
             }
         }
