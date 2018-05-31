@@ -98,7 +98,7 @@ class Tasks extends React.Component {
 
   render() {
       return (<section className={styles.tasks}>
-            {this.props.tasks ? <h1>People to call : {this.props.tasks.length}</h1> : <h1>Tasks</h1>}
+            {this.props.tasks ? <h1>People to call : {this.props.numberOfLeads}</h1> : <h1>Tasks</h1>}
             <Link className={styles.newTask} to="/crm/inbound">Inbound Call</Link>
             <br /><br />
             <div>
@@ -142,6 +142,7 @@ function mapStateToProps(state) {
       user: state.auth.email,
       tasks: state.tasks ? state.tasks.content : null,
       pages: state.tasks ? state.tasks.totalPages : -1,
+      numberOfLeads: state.tasks ? state.tasks.totalElements : 0,
       contexts: state.contexts,
     };
 }
