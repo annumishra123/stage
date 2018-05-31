@@ -17,7 +17,7 @@ class Tasks extends React.Component {
           pageIndex: 0,
           pageSize: 20,
           context: '',
-          sortBy: 'priorityScore',
+          sortBy: 'slaSeconds',
           lastUpdated: moment(),
         };
     }
@@ -71,7 +71,7 @@ class Tasks extends React.Component {
     }
 
   getStatus(task) {
-      return (<span>{task.status == 'RECHURNED' ? <i className={styles.rechurned+" fa fa-recycle fa-2x"} aria-hidden="true"></i> : task.status == 'PARTIALLY_COMPLETED' ? <i className={styles.starhalf+" fa fa-star-half-o fa-2x partiallyCcompleted"} aria-hidden="true"></i> : <i className={styles.taskdone+" fa fa-flag-checkered fa-2x"} aria-hidden="true"></i>}</span>);
+      return (<span>{task.status == 'RECHURNED' ? <i className={styles.rechurned + ' fa fa-recycle fa-2x'} aria-hidden="true"></i> : task.status == 'PARTIALLY_COMPLETED' ? <i className={styles.starhalf + ' fa fa-star-half-o fa-2x partiallyCcompleted'} aria-hidden="true"></i> : <i className={styles.taskdone + ' fa fa-flag-checkered fa-2x'} aria-hidden="true"></i>}</span>);
     }
 
   renderTasks() {
@@ -124,8 +124,8 @@ class Tasks extends React.Component {
                 <div className={styles.col4}>
                     <label>Sort By </label>
                     <select onChange={(e) => this.changeSortBy(e)}>
-                        <option value="priorityScore">Priority Score</option>
                         <option value="slaSeconds">Resolution Time</option>
+                        <option value="priorityScore">Priority Score</option>
                     </select>
                 </div>
                 <div className={styles.col4}>
