@@ -67,13 +67,23 @@ class Tasks extends React.Component {
     }
   getIcon(task) {
       let slaTime = moment(task.slaEndTime).fromNow();
-      return (<div><p>Time to Resolve: {slaTime}</p><p>Requests : <b>{task.callBacksRequested.length}</b></p></div>);
+      return (<div><p>Time to Resolve: {slaTime}</p> <p>Requests : <b>{task.callBacksRequested.length}</b></p></div >);
+    }
+
+  getStatus(task) {
+      return (<div>{task.status == 'RECHURNED' ? <i className="fa fa-recycle fa-2x" aria-hidden="true"></i> : task.status == 'PARTIALLY_COMPLETED' ? <i className="fa  fa-star-half-o fa-2x" aria-hidden="true"></i> : <i className="fa fa-flag-checkered fa-2x" aria-hidden="true"></i>}</div>);
     }
 
   renderTasks() {
       if (this.props.tasks) {
           if (this.props.tasks.length > 0) {
               if (!clientConfig.taskColumns.find(o => o.id == 'view')) {
+                  clientConfig.taskColumns.unshift({
+                      Header: 'Status',
+                      id: 'status',
+                      accessor: o => { return o; },
+                      Cell: ({ value }) => (<div>{this.getStatus(value)} {value.status}</div>),
+                    });
                   clientConfig.taskColumns.unshift({
                       Header: '',
                       id: 'view',
