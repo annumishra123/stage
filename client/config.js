@@ -92,7 +92,7 @@ const clientConfig = {
     'razorpay',
     'Mswipe',
     'ezetap',
-    'advance cash paid'
+    'advance cash paid',
   ],
   rentDeliveryColumns: [{
     Header: 'Order Id',
@@ -194,7 +194,7 @@ const clientConfig = {
   }, {
     id: 'source',
     Header: 'Source',
-    accessor: o => o.orderType.split('_')[1]
+    accessor: o => o.orderType.split('_')[1],
   }],
   rentalColumns: [{
     Header: 'Order Id',
@@ -265,7 +265,7 @@ const clientConfig = {
     accessor: 'parentOrder.discountCoupon',
   }, {
     Header: 'Source',
-    accessor: 'source'
+    accessor: 'source',
   }],
   rentalColumns: [{
     Header: 'Order Id',
@@ -385,33 +385,33 @@ const clientConfig = {
     Header: 'GST',
     accessor: o => {
       if (o.gst == false) {
-        return 'No'
+        return 'No';
       } else {
-        return 'Yes'
+        return 'Yes';
       }
-    }
+    },
   }],
   designerOrderColumns: [{
     Header: 'Order Id',
-    accessor: 'orderId'
+    accessor: 'orderId',
   }, {
     id: 'name',
     Header: 'Name',
     accessor: o => <a target="blank" href={o.image}>
       {o.outfitname}
-    </a>
+    </a>,
   }, {
     id: 'orderDate',
     Header: 'Order Date',
-    accessor: o => moment(o.orderDate).format("lll")
+    accessor: o => moment(o.orderDate).format('lll'),
   }, {
     id: 'pickupDate',
     Header: 'Service Date',
-    accessor: o => moment(o.pickupDateUTC).format("lll")
+    accessor: o => moment(o.pickupDateUTC).format('lll'),
   }, {
     id: 'rent',
     Header: 'Rent',
-    accessor: o => o.rentPaid
+    accessor: o => o.rentPaid,
   }, {
     id: 'share',
     Header: 'Share',
@@ -421,7 +421,7 @@ const clientConfig = {
       } else {
         return ((o.rentPaid * (o.share / 100)) / 1.05).toFixed(2);
       }
-    }
+    },
   }, {
     id: 'gst',
     Header: 'GST',
@@ -431,17 +431,17 @@ const clientConfig = {
       } else {
         return (((o.rentPaid * (o.share / 100)) / 1.05) > 999 ? ((o.rentPaid * (o.share / 100)) / 1.05) * 0.12 : ((o.rentPaid * (o.share / 100)) / 1.05) * 0.05).toFixed(2);
       }
-    }
+    },
   }],
   cloudinaryURL: 'https://api.cloudinary.com/v1_1/stage3/image/upload',
   cloudinarySecret: 'vTv6e1DZArggBN4v_uj7UdDBwaU',
   cloudinaryKey: '788223477814326',
   instagramFeedColumns: [{
     Header: 'Title',
-    accessor: 'title'
+    accessor: 'title',
   }, {
     Header: 'URL',
-    accessor: 'url'
+    accessor: 'url',
   }, {
     Header: 'Type',
     accessor: 'type',
@@ -450,13 +450,13 @@ const clientConfig = {
     Header: 'Image',
     accessor: o => {
       return <a target="blank" href={o.image}>Link</a>;
-    }
+    },
   }, {
     id: 'date',
     Header: 'Created',
     accessor: o => {
-      return moment(o.createdTimestamp * 1000).format("lll");
-    }
+      return moment(o.createdTimestamp * 1000).format('lll');
+    },
   }],
   measurements: [
     'chest',
@@ -472,7 +472,7 @@ const clientConfig = {
     'crotch',
     'neck',
     'inseem',
-    'sleeves'
+    'sleeves',
   ],
   shopStockColumns: [{
     Header: 'SKU',
@@ -500,7 +500,7 @@ const clientConfig = {
     Header: 'Sold',
     accessor: o => {
       return o.numberOfOrdersPlaced - o.numberOfOrdersCancelled;
-    }
+    },
   }],
   rentalCouponColumns: [{
     Header: 'Name',
@@ -515,31 +515,31 @@ const clientConfig = {
       return Object.keys(o.configs).map((config) => {
         return ' ' + config + ': ' + o.configs[config];
       }).join(',');
-    }
+    },
   }, {
     id: 'created',
     Header: 'Created',
     accessor: o => {
-      return moment(o.creationTime).format("lll");
-    }
+      return moment(o.creationTime).format('lll');
+    },
   }, {
     id: 'validity',
     Header: 'Validity',
     accessor: o => {
-      return moment(o.dateTillValidMillisUTC).format("lll");
-    }
+      return moment(o.dateTillValidMillisUTC).format('lll');
+    },
   }, {
     id: 'isAdvertized',
     Header: 'Advertized',
-    accessor: o => { return o.isAdvertized ? 'Yes' : 'No'; }
+    accessor: o => { return o.isAdvertized ? 'Yes' : 'No'; },
   }, {
     id: 'isDeleted',
     Header: 'Deleted',
-    accessor: o => { return o.isDeleted ? 'Yes' : 'No'; }
+    accessor: o => { return o.isDeleted ? 'Yes' : 'No'; },
   }, {
     id: 'isReusable',
     Header: 'Reusable',
-    accessor: o => { return o.isReusable ? 'Yes' : 'No'; }
+    accessor: o => { return o.isReusable ? 'Yes' : 'No'; },
   }],
   taskColumns: [{
     id: 'name',
@@ -548,55 +548,59 @@ const clientConfig = {
       if (o.profile) {
         return o.profile.firstName + ' ' + o.profile.lastName;
       } else {
-        return 'Not Provided'
+        if (o.name) {
+          return o.name;
+        } else {
+          return 'Not Provided';
+        }
       }
-    }
+    },
   }, {
     Header: 'Phone',
     accessor: 'phoneNumber',
   }, {
     Header: 'Context',
-    accessor: 'primaryCallbackContext'
+    accessor: 'primaryCallbackContext',
   }],
   contextColumns: [{
     Header: 'Label',
-    accessor: 'actionLabel'
+    accessor: 'actionLabel',
   }, {
     Header: 'Score',
-    accessor: 'priorityScore'
+    accessor: 'priorityScore',
   }, {
     Header: 'Level',
-    accessor: 'priorityLevel'
+    accessor: 'priorityLevel',
   }, {
     Header: 'Resolution Time (sec)',
-    accessor: 'slaSeconds'
+    accessor: 'slaSeconds',
   }, {
     Header: 'Description',
-    accessor: 'description'
+    accessor: 'description',
   }, {
     id: 'deleted',
     Header: 'Deleted',
     accessor: o => {
-      return o.deleted ? 'Yes' : 'No'
-    }
+      return o.deleted ? 'Yes' : 'No';
+    },
   }],
   dispositionColumns: [{
     Header: 'Label',
-    accessor: 'label'
+    accessor: 'label',
   }, {
     Header: 'Score',
-    accessor: 'priorityScore'
+    accessor: 'priorityScore',
   }, {
     id: 'rechurn',
     Header: 'Rechurn',
     accessor: o => {
-      return o.rechurn ? 'Yes' : 'No'
-    }
+      return o.rechurn ? 'Yes' : 'No';
+    },
   }, {
     Header: 'Rechurn Interval (sec)',
-    accessor: 'rechurnDelaySeconds'
-  }]
-}
+    accessor: 'rechurnDelaySeconds',
+  }],
+};
 
 
 export default clientConfig;

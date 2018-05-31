@@ -107,7 +107,7 @@ class TaskDetail extends React.Component {
                 <h1>Customer Detail</h1>
                 <div className={styles.customer}>
                     <p>Email: {this.props.taskDetail.customerId ? this.props.taskDetail.customerId : 'Not Provided'}</p>
-                    <p>Name: {this.props.taskDetail.profile ? this.props.taskDetail.profile.firstName + ' ' + this.props.taskDetail.profile.lastName : 'Not Provided'}</p>
+                    <p>Name: {this.props.taskDetail.profile ? this.props.taskDetail.profile.firstName + ' ' + this.props.taskDetail.profile.lastName : this.props.taskDetail.name ? this.props.taskDetail.name : 'Not Provided'}</p>
                     <p>Phone: {this.props.taskDetail.phoneNumber}</p>
                 </div>
                 <div className={styles.taskButtons}>
