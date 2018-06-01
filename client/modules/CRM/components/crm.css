@@ -17,9 +17,11 @@ section h1 {
     text-transform: uppercase;
     margin: -43px 10px 0 0;
     padding: 10px 20px;
+    position: relative;
     float: right;
     text-decoration: none;
     border: 0;
+    z-index: 2;
 }
 .tasks .col4 {
     width: 33.3%;
