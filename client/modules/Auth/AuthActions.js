@@ -182,14 +182,20 @@ export function changePassword(password) {
 export function createUser(user) {
   return function (dispatch) {
     let url = '/auth/createuser';
-    return axios({
-      url: url,
-      method: 'POST',
-      data: user
-    }).then(function (response) {
-      alert('User Created');
-    }).catch(function (error) {
-      alert('User Not Created');
-    });
+    let token = localStorage.getItem('token');
+    if (token) {
+      return axios({
+        url: url,
+        method: 'POST',
+        data: user,
+        headers:{
+          Authorization: 'JWT ' + token,
+        },
+      }).then(function (response) {
+        alert('User Created');
+      }).catch(function (error) {
+        alert('User Not Created');
+      });
+    }
   }
 }
