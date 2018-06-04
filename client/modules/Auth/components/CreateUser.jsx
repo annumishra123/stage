@@ -4,6 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createUser } from '../AuthActions';
 
+// Import Style
+import styles from './login.css';
+
 
 class CreateUser extends React.Component {
     constructor(props) {
@@ -53,33 +56,34 @@ class CreateUser extends React.Component {
     }
 
     render() {
-        return (<label>
-            <button onClick={this.handleNavigationPage.bind(this)}>Back</button>
+        return (<section className={styles.createUser}>
+            <button className={styles.back} onClick={this.handleNavigationPage.bind(this)}><i className={styles.backicon+" fa fa-chevron-left"} aria-hidden="true"></i>Back</button>
+            <h1>Create User</h1>
             <form>
-                <label>
+                <div>
                     <h4>Email: </h4>
                     <input type="text" onChange={this.handleCreateEmail.bind(this)} />
-                </label>
-                <label>
+                </div>
+                <div>
                     <h4>Name: </h4>
                     <input type="text" onChange={this.handleCreateName.bind(this)} />
-                </label>
-                <label>
+                </div>
+                <div>
                     <h4>Role: </h4>
                     <input type="text" onChange={this.handleCreateDesignation.bind(this)} />
-                </label>
-                <label>
+                </div>
+                <div>
                     <h4>Password: </h4>
                     <input type="text" onChange={this.handleCreatePassword.bind(this)} />
-                </label>
-                <label>
+                </div>
+                <div>
                     <h4>Owner: </h4>
                     <input type="text" onChange={this.handleCreateOwner.bind(this)} />
-                </label>
+                </div>
                 <br />
-                <button onClick={this.createUser.bind(this)}>Create User</button>
+                <button className={styles.submitBtn} onClick={this.createUser.bind(this)}>Create User</button>
             </form>
-        </label>)
+        </section>)
     }
 }
 
