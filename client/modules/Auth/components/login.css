@@ -101,6 +101,67 @@
     letter-spacing: 3px;
 }
 
+/*==== Create User ======*/
+.createUser {
+    margin: 15px 10px;
+}
+.createUser h1 {
+    color: #333;
+    font-family: 'Lato', sans-serif;
+    font-size: 26px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 20px 0 15px;
+}
+.createUser .back {
+    background: transparent;
+    color: #333;
+    cursor: pointer;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    padding: 0 0 3px;
+}
+.createUser .back .backicon {
+    margin: 0 5px 0 0;
+    font-size: 15px;
+}
+.createUser h4 {
+    display: inline-block;
+    font-size: 14px;
+    letter-spacing: 1px;
+    width: 120px;
+    margin: 5px 5px 5px 0;
+}
+.createUser input {
+    border: 1px solid rgba(0,0,0,0.5);
+    padding: 8px 12px;
+    color: #333;
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    margin: 0 0 15px;
+    width: 400px;
+    letter-spacing: 3px;
+    text-align: center;
+    transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+}
+.createUser input:focus {
+    border: 1px solid #000;
+}
+.createUser .submitBtn {
+    background: #000;
+    color: #fff;
+    border: 0;
+    padding: 8px 20px;
+    font-size: 15px;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
 
 
 @media (max-width: 767px) {
@@ -125,6 +186,23 @@
     }
     .forgotPassword label {
         margin: 20px 0 3px; 
+    }
+
+    /* Create User */
+    .createUser h1 {
+        font-size: 20px;
+        margin: 10px 0;
+        letter-spacing: 1px;
+    }
+    .createUser input {
+        font-size: 15px;
+        letter-spacing: 1px;
+        margin: 0 0 11px;
+        padding: 10px 12px;
+        width: 100%;
+    }
+    .createUser .submitBtn {
+        margin: 0 0 15px;
     }
 
 
