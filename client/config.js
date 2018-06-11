@@ -266,7 +266,11 @@ const clientConfig = {
   }, {
     Header: 'Source',
     accessor: 'source',
-  }],
+  }, {
+    id: 'cod charges',
+    Header: 'COD Charges',
+    accessor: 'additionalCharges',
+  } ],
   rentalColumns: [{
     Header: 'Order Id',
     accessor: 'frontendOrderId',
