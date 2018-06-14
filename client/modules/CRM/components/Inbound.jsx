@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import clientConfig from '../../../config';
 import { getTasksByContext, getAllContexts, getAllDispositions, createInboundTask } from '../CRMActions';
+import Select from 'react-select';
+
 
 // Import Style
 import styles from './crm.css';
@@ -62,7 +64,7 @@ class Inbound extends React.Component {
 
     changeDisposition(e) {
         let taskObject = this.state.taskObject;
-        taskObject.reasonCode = e.target.value;
+        taskObject.reasonCode = e.value;
         this.setState({
             taskObject: taskObject
         });
@@ -108,12 +110,15 @@ class Inbound extends React.Component {
             <br />
             <div>
                 <label>Reason Code </label>
-                {this.props.dispositions ? <select onChange={(e) => this.changeDisposition(e)}>
-                    <option value=""> -- Select Label -- </option>
-                    {this.props.dispositions.map((disposition, i) => {
-                        return <option key={i} value={disposition.label}>{disposition.label}</option>
-                    })}
-                </select> : <span>Loading...</span>}
+                <div className={styles.crmReason}>
+                {this.props.dispositions ?
+                    <Select name="form-field-name"
+                        value={this.state.taskObject.reasonCode}
+                        onChange={(e) => this.changeDisposition(e)}
+                        options={this.props.dispositions.map((disposition, i) => {
+                            return { value: disposition.label, label: disposition.label }
+                        })}></Select> : <span>Loading...</span>}
+                        </div>
             </div>
             <br />
             <button onClick={() => this.createInboundTask()}>Create</button>

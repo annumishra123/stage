@@ -11,6 +11,7 @@ import FormSubmitButton from '../../Customer/components/FormSubmitButton.js';
 import OwnerForm from './OwnerForm.jsx';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { CSVLink } from 'react-csv';
+import Select from 'react-select';
 
 // Import Style
 import styles from './designer.css';
@@ -50,7 +51,7 @@ class Owner extends React.Component {
 
     handleChangeDesigner(e) {
         this.setState({
-            designer: e.target.value
+            designer: e.value
         }, this.refreshDesignerOrders);
     }
 
@@ -225,14 +226,16 @@ class Owner extends React.Component {
             <br />
             <h1>Create Invoice</h1>
             <br />
-            <select onChange={this.handleChangeDesigner.bind(this)}>
-                <option value=""> -- Select Designer -- </option>
-                {this.props.revshares ? this.props.revshares.map((share, i) => {
-                    return <option key={i} value={share.ownername}>
-                        {share.ownername}
-                    </option>;
-                }) : null}
-            </select>
+            <label>Designer</label>
+            <div className={styles.crmReason}>
+                {this.props.revshares ? <Select name="form-field-name"
+                        value={this.state.designer}
+                        onChange={(e) => this.handleChangeDesigner(e)}
+                        options={this.props.revshares.map((share, i) => {
+                            return { value: share.ownername, label: share.ownername }
+                        })}></Select>
+                 : null}
+                 </div>
             <select defaultValue={this.state.month} onChange={this.handleChangeMonth.bind(this)}>
                 <option value="1">January</option>
                 <option value="2">February</option>

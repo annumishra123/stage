@@ -273,7 +273,7 @@ export default function getRoutes(store, req) {
           cb(null, require('./modules/ManualOrder/components/ManualOrder').default);
         });
       }} />
-      <Route path="/crm/tasks" onEnter={checkAdmin} getComponent={(nextState, cb) => {
+      <Route path="/crm/tasks/:context/:sort/:page/:size" onEnter={checkAdmin} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/CRM/components/Tasks').default);
         });
