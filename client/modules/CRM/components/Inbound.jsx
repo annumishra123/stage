@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import clientConfig from '../../../config';
 import { getTasksByContext, getAllContexts, getAllDispositions, createInboundTask } from '../CRMActions';
 import Select from 'react-select';
-import 'react-select/dist/react-select.css';
+
 
 // Import Style
 import styles from './crm.css';
