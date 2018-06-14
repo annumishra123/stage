@@ -270,7 +270,7 @@ const clientConfig = {
     id: 'cod charges',
     Header: 'COD Charges',
     accessor: 'additionalCharges',
-  } ],
+  }],
   rentalColumns: [{
     Header: 'Order Id',
     accessor: 'frontendOrderId',
@@ -420,7 +420,7 @@ const clientConfig = {
     id: 'share',
     Header: 'Share',
     accessor: o => {
-      if (o.rentPaid > 999) {
+      if (o.rentPaid > 1050) {
         return ((o.rentPaid * (o.share / 100)) / 1.12).toFixed(2);
       } else {
         return ((o.rentPaid * (o.share / 100)) / 1.05).toFixed(2);
@@ -430,10 +430,10 @@ const clientConfig = {
     id: 'gst',
     Header: 'GST',
     accessor: o => {
-      if (o.rentPaid > 999) {
-        return (((o.rentPaid * (o.share / 100)) / 1.12) > 999 ? ((o.rentPaid * (o.share / 100)) / 1.12) * 0.12 : ((o.rentPaid * (o.share / 100)) / 1.12) * 0.05).toFixed(2);
+      if (o.rentPaid > 1050) {
+        return (((o.rentPaid * (o.share / 100)) / 1.12) > 1050 ? ((o.rentPaid * (o.share / 100)) / 1.12) * 0.12 : ((o.rentPaid * (o.share / 100)) / 1.12) * 0.05).toFixed(2);
       } else {
-        return (((o.rentPaid * (o.share / 100)) / 1.05) > 999 ? ((o.rentPaid * (o.share / 100)) / 1.05) * 0.12 : ((o.rentPaid * (o.share / 100)) / 1.05) * 0.05).toFixed(2);
+        return (((o.rentPaid * (o.share / 100)) / 1.05) > 1050 ? ((o.rentPaid * (o.share / 100)) / 1.05) * 0.12 : ((o.rentPaid * (o.share / 100)) / 1.05) * 0.05).toFixed(2);
       }
     },
   }],

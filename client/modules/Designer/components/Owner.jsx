@@ -183,12 +183,12 @@ class Owner extends React.Component {
             let total = 0;
             let totalGST = 0;
             this.props.completedDesignerOrders.map((order) => {
-                if (order.rentPaid > 999) {
+                if (order.rentPaid > 1050) {
                     total += ((order.rentPaid * (this.props.designerShare / 100)) / 1.12);
-                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.12) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.05);
+                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.12) > 1050 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.05);
                 } else {
                     total += ((order.rentPaid * (this.props.designerShare / 100)) / 1.05);
-                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.05) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.05);
+                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.05) > 1050 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.05);
                 }
             });
             return <p>Completed - Share: <strong><span style={{ color: "green" }}>₹{total.toFixed(2)}</span></strong> | GST: <strong><span style={{ color: "green" }}>₹{totalGST.toFixed(2)}</span></strong></p>;
@@ -200,12 +200,12 @@ class Owner extends React.Component {
             let total = 0;
             let totalGST = 0;
             this.props.pendingDesignerOrders.map((order) => {
-                if (order.rentPaid > 999) {
+                if (order.rentPaid > 1050) {
                     total += ((order.rentPaid * (this.props.designerShare / 100)) / 1.12);
-                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.12) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.05);
+                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.12) > 1050 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.05);
                 } else {
                     total += ((order.rentPaid * (this.props.designerShare / 100)) / 1.05);
-                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.05) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.05);
+                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.05) > 1050 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.05);
                 }
             });
             return <p>Pending - Share: <strong><span style={{ color: "green" }}>₹{total.toFixed(2)}</span></strong> | GST: <strong><span style={{ color: "green" }}>₹{totalGST.toFixed(2)}</span></strong></p>;
