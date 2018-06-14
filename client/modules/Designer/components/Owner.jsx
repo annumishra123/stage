@@ -227,6 +227,7 @@ class Owner extends React.Component {
             <h1>Create Invoice</h1>
             <br />
             <label>Designer</label>
+            <div className={styles.crmReason}>
                 {this.props.revshares ? <Select name="form-field-name"
                         value={this.state.designer}
                         onChange={(e) => this.handleChangeDesigner(e)}
@@ -234,6 +235,7 @@ class Owner extends React.Component {
                             return { value: share.ownername, label: share.ownername }
                         })}></Select>
                  : null}
+                 </div>
             <select defaultValue={this.state.month} onChange={this.handleChangeMonth.bind(this)}>
                 <option value="1">January</option>
                 <option value="2">February</option>
