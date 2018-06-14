@@ -104,6 +104,10 @@ section h1 {
 .tasks .tasktable div {
     text-transform: capitalize;
 }
+.crmReason {
+    width: 400px;
+    display: inline-block;
+}
 
 
 /*====== Task Detail ========*/ 
@@ -212,7 +216,7 @@ section h1 {
     position: absolute;
     border: 4px solid #000;
 }
-.taskPopup span {
+.taskPopup .close {
     font-size: 25px;
     font-weight: 600;
     float: right;
@@ -255,6 +259,13 @@ section h1 {
     display: block;
     width: 90%;
 }
+.taskPopup .crmReason {
+    width: 90%;
+}
+.crmselect {
+    
+}
+
 
 /*===== Inbound Call ======*/
 .inboundCall label {
@@ -340,6 +351,9 @@ section h1 {
     }
     .newTask {
         margin: -33px 0 0;
+    }
+    .crmReason {
+        width: 100%;
     }
 
     /* task detail */

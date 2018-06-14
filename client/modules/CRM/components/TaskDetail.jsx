@@ -157,17 +157,19 @@ class TaskDetail extends React.Component {
                 })}
                 {this.renderPreviousTasks()}
                 <ReactModal className={styles.taskPopup} isOpen={this.state.viewCallbackModal} onRequestClose={() => this.hideCallbackModal()} contentLabel="Change Delivery Status">
-                    <span onClick={() => this.hideCallbackModal()}>×</span>
+                    <span className={styles.close} onClick={() => this.hideCallbackModal()}>×</span>
                     <br />
                     <div>
                         <label>Reason Code </label>
+                        <div className={styles.crmReason}>
                         {this.props.dispositions ?  
-                        <Select name="form-field-name"
+                        <Select classNAme={styles.crmselect} name="form-field-name"
                         value={this.state.callbackObject.reasonCode}
                         onChange={(e) => this.changeDisposition(e)}
                         options={this.props.dispositions.map((disposition, i) => {
                             return { value: disposition.label, label: disposition.label }
                         })}></Select> : <span>Loading...</span>}
+                        </div>
                     </div>
                     <label>Add Comment </label>
                     <input onChange={(e) => this.changeComment(e)} />

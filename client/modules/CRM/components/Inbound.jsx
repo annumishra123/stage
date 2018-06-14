@@ -110,6 +110,7 @@ class Inbound extends React.Component {
             <br />
             <div>
                 <label>Reason Code </label>
+                <div className={styles.crmReason}>
                 {this.props.dispositions ?
                     <Select name="form-field-name"
                         value={this.state.taskObject.reasonCode}
@@ -117,6 +118,7 @@ class Inbound extends React.Component {
                         options={this.props.dispositions.map((disposition, i) => {
                             return { value: disposition.label, label: disposition.label }
                         })}></Select> : <span>Loading...</span>}
+                        </div>
             </div>
             <br />
             <button onClick={() => this.createInboundTask()}>Create</button>

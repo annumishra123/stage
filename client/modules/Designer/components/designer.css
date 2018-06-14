@@ -174,9 +174,19 @@
     margin: 16px 0 0;
     padding: 12px 25px;
 }
+.crmReason {
+    width: 250px;
+    display: inline-block;
+    margin: 10px 10px -8px;
+}
 
 
 @media (max-width: 767px){
+    .crmReason {
+        width: 100%;
+        display: inline-block;
+        margin: 10px 0;
+    }
     .designerOrder h1 {
         text-align: center;
         margin: 10px 0 0;
