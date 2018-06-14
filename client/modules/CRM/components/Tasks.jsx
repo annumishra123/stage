@@ -33,6 +33,19 @@ class Tasks extends React.Component {
         }.bind(this), 120000);
     }
 
+    componentWillReceiveProps(props) {
+        if (this.props.location.pathname != props.location.pathname) {
+            this.setState({
+                pageIndex: parseInt(props.params.page),
+                pageSize: parseInt(props.params.size),
+                context: props.params.context,
+                sortBy: props.params.sort,
+                lastUpdated: moment(),
+            });
+            this.props.getTasksByContext(props.params.context == 'all' ? '' : props.params.context, props.params.sort, props.params.page, props.params.size);
+        }
+    }
+
     componentWillUnmount() {
         clearInterval(this.updateInterval);
         this.updateInterval = false;
@@ -55,18 +68,27 @@ class Tasks extends React.Component {
             pageIndex: state.page,
             pageSize: state.pageSize,
         });
-        browserHistory.push('/crm/tasks/' + this.state.context + '/' + this.state.sortBy + '/' + state.page + '/' + state.pageSize);
-        this.props.getTasksByContext(this.state.context == 'all' ? '' : this.state.context, this.state.sortBy, state.page, state.pageSize);
+        let location = '/crm/tasks/' + this.state.context + '/' + this.state.sortBy + '/' + state.page + '/' + state.pageSize;
+        if (location != this.props.location.pathname) {
+            browserHistory.push(location);
+        } else {
+            this.props.getTasksByContext(this.state.context == 'all' ? '' : this.state.context, this.state.sortBy, state.page, state.pageSize);
+        }
     }
 
     getFilteredTasks() {
-        browserHistory.push('/crm/tasks/' + this.state.context + '/' + this.state.sortBy + '/' + this.state.pageIndex + '/' + this.state.pageSize);
-        this.props.getTasksByContext(this.state.context == 'all' ? '' : this.state.context, this.state.sortBy, this.state.pageIndex, this.state.pageSize);
+        let location = '/crm/tasks/' + this.state.context + '/' + this.state.sortBy + '/' + this.state.pageIndex + '/' + this.state.pageSize;
+        if (location != this.props.location.pathname) {
+            browserHistory.push(location);
+        } else {
+            this.props.getTasksByContext(this.state.context == 'all' ? '' : this.state.context, this.state.sortBy, this.state.pageIndex, this.state.pageSize);
+        }
     }
 
     viewTask(task) {
         browserHistory.push('/crm/tasks/' + task.id);
     }
+
     getIcon(task) {
         let slaTime = moment(task.slaEndTime).fromNow();
         return (<div><p>Time to Resolve: {slaTime}</p> <p>Requests : <b>{task.callBacksRequested.length}</b></p></div >);
@@ -102,7 +124,7 @@ class Tasks extends React.Component {
                 return (<div>
                     <p className={styles.lastUpdate}>Last Updated: {this.state.lastUpdated.fromNow()} </p>
                     <br />
-                    <ReactTable className={styles.tasktable} data={this.props.tasks} manual defaultPageSize={this.state.pageSize} columns={clientConfig.taskColumns} pages={this.props.pages} onFetchData={(state, instance) => { this.fetchData(state); }} className="-striped -highlight" />
+                    <ReactTable className={styles.tasktable} data={this.props.tasks} manual pageSize={this.state.pageSize} columns={clientConfig.taskColumns} pages={this.props.pages} onFetchData={(state, instance) => { this.fetchData(state); }} className="-striped -highlight" />
                 </div>);
             }
         }
@@ -116,7 +138,7 @@ class Tasks extends React.Component {
             <div>
                 <div className={styles.col4}>
                     <label>Label </label>
-                    {this.props.contexts ? <select defaultValue={this.state.context} onChange={(e) => this.changeLabel(e)}>
+                    {this.props.contexts ? <select value={this.state.context} onChange={(e) => this.changeLabel(e)}>
                         <option value="all">All</option>
                         {this.props.contexts.map((context, i) => {
                             return <option key={i} value={context.actionLabel}>{context.actionLabel}</option>;
@@ -125,7 +147,7 @@ class Tasks extends React.Component {
                 </div>
                 <div className={styles.col4}>
                     <label>Sort By </label>
-                    <select defaultValue={this.state.sortBy} onChange={(e) => this.changeSortBy(e)}>
+                    <select value={this.state.sortBy} onChange={(e) => this.changeSortBy(e)}>
                         <option value="slaSeconds">Resolution Time</option>
                         <option value="priorityScore">Priority Score</option>
                     </select>
