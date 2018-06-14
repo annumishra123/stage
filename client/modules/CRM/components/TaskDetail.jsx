@@ -9,6 +9,8 @@ import { getOrdersByPhoneNumber as getRentOrdersByPhoneNumber } from '../../Rent
 import { getOrdersByPhoneNumber as getShopOrdersByPhoneNumber } from '../../Shop/ShopActions';
 import moment from 'moment';
 import ReactModal from 'react-modal';
+import Select from 'react-select';
+
 
 // Import Style
 import styles from './crm.css';
@@ -56,7 +58,7 @@ class TaskDetail extends React.Component {
 
   changeDisposition(e) {
       let callbackObject = this.state.callbackObject;
-      callbackObject.reasonCode = e.target.value;
+      callbackObject.reasonCode = e.value;
       this.setState({
           callbackObject,
         });
@@ -159,12 +161,13 @@ class TaskDetail extends React.Component {
                     <br />
                     <div>
                         <label>Reason Code </label>
-                        {this.props.dispositions ? <select onChange={(e) => this.changeDisposition(e)}>
-                            <option value=""> -- Select Option -- </option>
-                            {this.props.dispositions.map((disposition, i) => {
-                              return <option key={i} value={disposition.label}>{disposition.label}</option>;
-                            })}
-                        </select> : <span>Loading...</span>}
+                        {this.props.dispositions ?  
+                        <Select name="form-field-name"
+                        value={this.state.callbackObject.reasonCode}
+                        onChange={(e) => this.changeDisposition(e)}
+                        options={this.props.dispositions.map((disposition, i) => {
+                            return { value: disposition.label, label: disposition.label }
+                        })}></Select> : <span>Loading...</span>}
                     </div>
                     <label>Add Comment </label>
                     <input onChange={(e) => this.changeComment(e)} />
