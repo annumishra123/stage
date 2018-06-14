@@ -11,6 +11,7 @@ import FormSubmitButton from '../../Customer/components/FormSubmitButton.js';
 import OwnerForm from './OwnerForm.jsx';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { CSVLink } from 'react-csv';
+import Select from 'react-select';
 
 // Import Style
 import styles from './designer.css';
@@ -50,7 +51,7 @@ class Owner extends React.Component {
 
     handleChangeDesigner(e) {
         this.setState({
-            designer: e.target.value
+            designer: e.value
         }, this.refreshDesignerOrders);
     }
 
@@ -183,12 +184,12 @@ class Owner extends React.Component {
             let total = 0;
             let totalGST = 0;
             this.props.completedDesignerOrders.map((order) => {
-                if (order.rentPaid > 999) {
+                if (order.rentPaid > 1050) {
                     total += ((order.rentPaid * (this.props.designerShare / 100)) / 1.12);
-                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.12) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.05);
+                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.12) > 1050 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.05);
                 } else {
                     total += ((order.rentPaid * (this.props.designerShare / 100)) / 1.05);
-                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.05) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.05);
+                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.05) > 1050 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.05);
                 }
             });
             return <p>Completed - Share: <strong><span style={{ color: "green" }}>₹{total.toFixed(2)}</span></strong> | GST: <strong><span style={{ color: "green" }}>₹{totalGST.toFixed(2)}</span></strong></p>;
@@ -200,12 +201,12 @@ class Owner extends React.Component {
             let total = 0;
             let totalGST = 0;
             this.props.pendingDesignerOrders.map((order) => {
-                if (order.rentPaid > 999) {
+                if (order.rentPaid > 1050) {
                     total += ((order.rentPaid * (this.props.designerShare / 100)) / 1.12);
-                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.12) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.05);
+                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.12) > 1050 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.12) * 0.05);
                 } else {
                     total += ((order.rentPaid * (this.props.designerShare / 100)) / 1.05);
-                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.05) > 999 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.05);
+                    totalGST += (((order.rentPaid * (this.props.designerShare / 100)) / 1.05) > 1050 ? ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.12 : ((order.rentPaid * (this.props.designerShare / 100)) / 1.05) * 0.05);
                 }
             });
             return <p>Pending - Share: <strong><span style={{ color: "green" }}>₹{total.toFixed(2)}</span></strong> | GST: <strong><span style={{ color: "green" }}>₹{totalGST.toFixed(2)}</span></strong></p>;
@@ -225,14 +226,14 @@ class Owner extends React.Component {
             <br />
             <h1>Create Invoice</h1>
             <br />
-            <select onChange={this.handleChangeDesigner.bind(this)}>
-                <option value=""> -- Select Designer -- </option>
-                {this.props.revshares ? this.props.revshares.map((share, i) => {
-                    return <option key={i} value={share.ownername}>
-                        {share.ownername}
-                    </option>;
-                }) : null}
-            </select>
+            <label>Designer</label>
+                {this.props.revshares ? <Select name="form-field-name"
+                        value={this.state.designer}
+                        onChange={(e) => this.handleChangeDesigner(e)}
+                        options={this.props.revshares.map((share, i) => {
+                            return { value: share.ownername, label: share.ownername }
+                        })}></Select>
+                 : null}
             <select defaultValue={this.state.month} onChange={this.handleChangeMonth.bind(this)}>
                 <option value="1">January</option>
                 <option value="2">February</option>

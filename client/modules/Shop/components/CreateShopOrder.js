@@ -16,8 +16,8 @@ class CreateShopOrder extends React.Component {
       sku: '',
       paymentMethod: '',
       source: '',
-      discountCode: ''
-    }
+      discountCode: '',
+    };
   }
 
   componentDidMount() {
@@ -28,19 +28,19 @@ class CreateShopOrder extends React.Component {
 
   handleChangeSKU(e) {
     this.setState({
-      sku: e.target.value
-    })
+      sku: e.target.value,
+    });
   }
 
   changeOrderSource(e) {
     this.setState({
-      source: e.target.value
+      source: e.target.value,
     });
   }
 
   changePaymentMethod(e) {
     this.setState({
-      paymentMethod: e.target.value
+      paymentMethod: e.target.value,
     });
   }
 
@@ -58,7 +58,7 @@ class CreateShopOrder extends React.Component {
 
   handleDiscountCodeChange(e) {
     this.setState({
-      discountCode: e.target.value
+      discountCode: e.target.value,
     });
   }
 
@@ -74,11 +74,11 @@ class CreateShopOrder extends React.Component {
         cartLines: Object.keys(this.props.shopPricing.linePricing),
         discountCoupon: this.state.discountCode,
         isFrontend: false,
-        paymentMethod: this.state.paymentMethod,
+        paymentType: this.state.paymentMethod,
         shippingAddressId: this.props.selectedAddress,
         userId: this.props.customerDetail.email,
-        source: this.state.source
-      }
+        source: this.state.source,
+      };
       this.props.placeOrder(orderObject);
     } else {
       alert('Please Select Payment Method & Order Source');
@@ -87,7 +87,7 @@ class CreateShopOrder extends React.Component {
 
   renderProductPreview() {
     if (this.props.productDetail) {
-      return <div className={styles.orderShopView}>
+      return (<div className={styles.orderShopView}>
         <img src={this.props.productDetail.frontimage} style={{ width: '200px' }} />
         <div className={styles.width70}>
           <p>
@@ -113,13 +113,13 @@ class CreateShopOrder extends React.Component {
         {this.props.productDetail.status !== 'OUT_OF_STOCK' ? <button onClick={this.addProductToCart.bind(this)}>Add Product</button> : <button>Out Of Stock</button>}
         <br />
         <br />
-      </div>
+      </div>);
     }
   }
 
   renderCart() {
     if (this.props.shopPricing && Object.keys(this.props.shopPricing.linePricing).length > 0) {
-      return <div>
+      return (<div>
         <h3>Order Summary</h3>
         <hr />
         <div>
@@ -182,14 +182,14 @@ class CreateShopOrder extends React.Component {
           })}
         </select>
         <button onClick={this.placeOrder.bind(this)}>Place Order</button>
-      </div>
+      </div>);
     }
   }
 
   renderCustomerDetails() {
     if (this.props.customerDetail && this.props.selectedAddress) {
       let address = this.props.customerDetail.shippingInfo.find(x => x.shippingId == this.props.selectedAddress);
-      return <div>
+      return (<div>
         <h3>Customer Details</h3>
         <br />
         <p> Name:
@@ -210,12 +210,12 @@ class CreateShopOrder extends React.Component {
           {address.city + ', ' + address.state + ' - ' + address.pincode}
         </p>
         <br />
-      </div>
+      </div>);
     }
   }
 
   render() {
-    return <section className={styles.shopOrders}>
+    return (<section className={styles.shopOrders}>
       {this.renderCustomerDetails()}
       <h3>Create New Shop Order</h3>
       <br />
@@ -226,7 +226,7 @@ class CreateShopOrder extends React.Component {
       <br />
       {this.renderProductPreview()}
       {this.renderCart()}
-    </section>
+    </section>);
   }
 }
 
@@ -236,7 +236,7 @@ function matchDispatchToProps(dispatch) {
     addItemToCart,
     placeOrder,
     removeItemFromCart,
-    getPricingOfShoppingCart
+    getPricingOfShoppingCart,
   }, dispatch);
 }
 
@@ -245,7 +245,7 @@ function mapStateToProps(state) {
     productDetail: state.productDetail,
     customerDetail: state.customerDetail,
     shopPricing: state.shopPricing,
-    selectedAddress: state.selectedAddress
+    selectedAddress: state.selectedAddress,
   };
 }
 
