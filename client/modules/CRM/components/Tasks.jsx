@@ -19,16 +19,22 @@ class Tasks extends React.Component {
             context: this.props.params.context,
             sortBy: this.props.params.sort,
             lastUpdated: moment(),
+            phoneNumber: this.props.params.number
         };
     }
 
     componentDidMount() {
-        this.props.getTasksByContext(this.state.context == 'all' ? '' : this.state.context, this.state.sortBy, this.state.pageIndex, this.state.pageSize);
+        this.props.getTasksByContext(this.props.params.context == 'all' ? '' : this.props.params.context, this.props.params.sort, this.props.params.page, this.props.params.size, this.props.params.number != 0 ? this.props.params.number : '');
         this.props.getAllContexts();
         this.updateInterval = setInterval(function () {
-            this.props.getTasksByContext(this.state.context == 'all' ? '' : this.state.context, this.state.sortBy, this.state.pageIndex, this.state.pageSize);
+            this.props.getTasksByContext(this.props.params.context == 'all' ? '' : this.props.params.context, this.props.params.sort, this.props.params.page, this.props.params.size, this.props.params.number != 0 ? this.props.params.number : '');
             this.setState({
+                pageIndex: parseInt(this.props.params.page),
+                pageSize: parseInt(this.props.params.size),
+                context: this.props.params.context,
+                sortBy: this.props.params.sort,
                 lastUpdated: moment(),
+                phoneNumber: this.props.params.number
             });
         }.bind(this), 120000);
     }
@@ -41,14 +47,21 @@ class Tasks extends React.Component {
                 context: props.params.context,
                 sortBy: props.params.sort,
                 lastUpdated: moment(),
+                phoneNumber: props.params.number
             });
-            this.props.getTasksByContext(props.params.context == 'all' ? '' : props.params.context, props.params.sort, props.params.page, props.params.size);
+            this.props.getTasksByContext(props.params.context == 'all' ? '' : props.params.context, props.params.sort, props.params.page, props.params.size, props.params.number != 0 ? props.params.number : '');
         }
     }
 
     componentWillUnmount() {
         clearInterval(this.updateInterval);
         this.updateInterval = false;
+    }
+
+    changePhoneNumber(e) {
+        this.setState({
+            phoneNumber: e.target.value == '' ? 0 : e.target.value,
+        });
     }
 
     changeLabel(e) {
@@ -68,20 +81,20 @@ class Tasks extends React.Component {
             pageIndex: state.page,
             pageSize: state.pageSize,
         });
-        let location = '/crm/tasks/' + this.state.context + '/' + this.state.sortBy + '/' + state.page + '/' + state.pageSize;
+        let location = '/crm/tasks/' + this.state.context + '/' + this.state.sortBy + '/' + state.page + '/' + state.pageSize + '/' + this.state.phoneNumber;
         if (location != this.props.location.pathname) {
             browserHistory.push(location);
         } else {
-            this.props.getTasksByContext(this.state.context == 'all' ? '' : this.state.context, this.state.sortBy, state.page, state.pageSize);
+            this.props.getTasksByContext(this.props.params.context == 'all' ? '' : this.props.params.context, this.props.params.sort, state.page, state.pageSize, this.props.params.number != 0 ? this.props.params.number : '');
         }
     }
 
     getFilteredTasks() {
-        let location = '/crm/tasks/' + this.state.context + '/' + this.state.sortBy + '/' + this.state.pageIndex + '/' + this.state.pageSize;
+        let location = '/crm/tasks/' + this.state.context + '/' + this.state.sortBy + '/' + this.state.pageIndex + '/' + this.state.pageSize + '/' + this.state.phoneNumber;
         if (location != this.props.location.pathname) {
             browserHistory.push(location);
         } else {
-            this.props.getTasksByContext(this.state.context == 'all' ? '' : this.state.context, this.state.sortBy, this.state.pageIndex, this.state.pageSize);
+            this.props.getTasksByContext(this.props.params.context == 'all' ? '' : this.props.params.context, this.props.params.sort, this.props.params.page, this.props.params.size, this.props.params.number != 0 ? this.props.params.number : '');
         }
     }
 
@@ -136,6 +149,10 @@ class Tasks extends React.Component {
             <Link className={styles.newTask} to="/crm/inbound">Inbound Call</Link>
             <br /><br />
             <div>
+                <div className={styles.col4}>
+                    <label>Phone </label>
+                    <input type="number" value={this.state.phoneNumber == 0 ? '' : this.state.phoneNumber} placeholder="Phone Number" onChange={(e) => this.changePhoneNumber(e)} />
+                </div>
                 <div className={styles.col4}>
                     <label>Label </label>
                     {this.props.contexts ? <select value={this.state.context} onChange={(e) => this.changeLabel(e)}>
