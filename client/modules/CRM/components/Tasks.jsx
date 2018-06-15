@@ -90,7 +90,7 @@ class Tasks extends React.Component {
     }
 
     getFilteredTasks() {
-        let location = '/crm/tasks/' + this.state.context + '/' + this.state.sortBy + '/' + this.state.pageIndex + '/' + this.state.pageSize + '/' + this.state.phoneNumber;
+        let location = '/crm/tasks/' + this.state.context + '/' + this.state.sortBy + '/0/' + this.state.pageSize + '/' + this.state.phoneNumber;
         if (location != this.props.location.pathname) {
             browserHistory.push(location);
         } else {
