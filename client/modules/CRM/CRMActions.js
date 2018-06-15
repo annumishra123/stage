@@ -1,9 +1,9 @@
 import { browserHistory } from 'react-router';
 import axios from 'axios';
 
-export function getTasksByContext(context, sortBy, pageNumber, pageSize) {
+export function getTasksByContext(context, sortBy, pageNumber, pageSize, phoneNumber) {
     return function (dispatch) {
-        let url = '/api/leads/backend/get?context=' + context + '&sortBy=' + sortBy + '&pageNumber=' + pageNumber + '&pageSize=' + pageSize;
+        let url = '/api/leads/backend/get?context=' + context + '&sortBy=' + sortBy + '&pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&phoneNumber=' + phoneNumber;
         return axios({
             url: url,
             timeout: 20000,

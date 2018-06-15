@@ -3,7 +3,7 @@ import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import clientConfig from '../../../config';
-import { getTasksByContext, getAllContexts, getAllDispositions, createInboundTask } from '../CRMActions';
+import { getAllContexts, getAllDispositions, createInboundTask } from '../CRMActions';
 import Select from 'react-select';
 
 
@@ -111,14 +111,14 @@ class Inbound extends React.Component {
             <div>
                 <label>Reason Code </label>
                 <div className={styles.crmReason}>
-                {this.props.dispositions ?
-                    <Select name="form-field-name"
-                        value={this.state.taskObject.reasonCode}
-                        onChange={(e) => this.changeDisposition(e)}
-                        options={this.props.dispositions.map((disposition, i) => {
-                            return { value: disposition.label, label: disposition.label }
-                        })}></Select> : <span>Loading...</span>}
-                        </div>
+                    {this.props.dispositions ?
+                        <Select name="form-field-name"
+                            value={this.state.taskObject.reasonCode}
+                            onChange={(e) => this.changeDisposition(e)}
+                            options={this.props.dispositions.map((disposition, i) => {
+                                return { value: disposition.label, label: disposition.label }
+                            })}></Select> : <span>Loading...</span>}
+                </div>
             </div>
             <br />
             <button onClick={() => this.createInboundTask()}>Create</button>
@@ -129,7 +129,6 @@ class Inbound extends React.Component {
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        getTasksByContext,
         getAllContexts,
         getAllDispositions,
         createInboundTask
