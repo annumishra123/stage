@@ -169,9 +169,7 @@ class Tasks extends React.Component {
                         <option value="priorityScore">Priority Score</option>
                     </select>
                 </div>
-                <div className={styles.col4}>
-                    <button onClick={() => this.getFilteredTasks()}>Apply</button>
-                </div>
+                    <button className={styles.taskapply} onClick={() => this.getFilteredTasks()}>Apply</button>
             </div>
             <br />
             {this.renderTasks()}
