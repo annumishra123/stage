@@ -9,6 +9,7 @@ import { CSVLink } from 'react-csv';
 import ReactModal from 'react-modal';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Dropzone from 'react-dropzone';
+import moment from 'moment';
 
 // Import Style
 import styles from './inventory.css';
@@ -23,6 +24,9 @@ class Inventory extends React.Component {
             files: [],
             shopFiles: [],
             accessoryFiles: [],
+            rentCSVComment: '',
+            shopCSVComment: '',
+            accessoryCSVComment: ''
         }
     }
 
@@ -43,7 +47,15 @@ class Inventory extends React.Component {
     }
 
     uploadCSV() {
-        this.props.uploadCSV(this.state.files);
+        if (this.state.files.length > 0 && this.state.rentCSVComment && this.props.user) {
+            let fileName = this.state.rentCSVComment + ' ' + this.props.user + ' ' + moment().format('lll');
+            fileName = fileName.toUpperCase();
+            this.props.uploadCSV(this.state.files, fileName);
+        } else if (this.state.files.length == 0) {
+            alert('Add a file to upload');
+        } else if (!this.state.rentCSVComment) {
+            alert('Add a comment');
+        }
     }
 
     handleShopOnDrop(shopFiles) {
@@ -53,7 +65,15 @@ class Inventory extends React.Component {
     }
 
     uploadShopCSV() {
-        this.props.uploadShopCSV(this.state.shopFiles);
+        if (this.state.shopCSVComment && this.props.user) {
+            let fileName = this.state.shopCSVComment + ' ' + this.props.user + ' ' + moment().format('lll');
+            fileName = fileName.toUpperCase();
+            this.props.uploadShopCSV(this.state.shopFiles, fileName);
+        } else if (this.state.shopFiles.length == 0) {
+            alert('Add a file to upload');
+        } else if (!this.state.shopCSVComment) {
+            alert('Add a comment');
+        }
     }
 
     handleAccessoryOnDrop(accessoryFiles) {
@@ -63,7 +83,15 @@ class Inventory extends React.Component {
     }
 
     uploadAccessoryCSV() {
-        this.props.uploadAccessoryCSV(this.state.accessoryFiles);
+        if (this.state.accessoryCSVComment && this.props.user) {
+            let fileName = this.state.accessoryCSVComment + ' ' + this.props.user + ' ' + moment().format('lll');
+            fileName = fileName.toUpperCase();
+            this.props.uploadAccessoryCSV(this.state.accessoryFiles, fileName);
+        } else if (this.state.accessoryFiles.length == 0) {
+            alert('Add a file to upload');
+        } else if (!this.state.accessoryCSVComment) {
+            alert('Add a comment');
+        }
     }
 
 
@@ -233,6 +261,24 @@ class Inventory extends React.Component {
         });
     }
 
+    changeRentComment(e) {
+        this.setState({
+            rentCSVComment: e.target.value
+        })
+    }
+
+    changeShopComment(e) {
+        this.setState({
+            shopCSVComment: e.target.value
+        })
+    }
+
+    changeAccessoryComment(e) {
+        this.setState({
+            accessoryCSVComment: e.target.value
+        })
+    }
+
     render() {
         return <section>
             {!this.state.viewOrderDetails ?
@@ -247,28 +293,34 @@ class Inventory extends React.Component {
                         </TabList>
                         <TabPanel>
                             <div className={styles.fileUpload}>
-                            <Dropzone onDrop={this.handleShopOnDrop.bind(this)}>
-                                <p>Select a file to upload.</p>
-                            </Dropzone>
-                            <button onClick={this.uploadShopCSV.bind(this)}>Upload CSV</button>
+                                <Dropzone onDrop={this.handleShopOnDrop.bind(this)}>
+                                    <p>Select a file to upload.</p>
+                                </Dropzone>
+                                {this.state.shopFiles[0] ? <h5>{this.state.shopFiles[0].name}</h5> : null}
+                                <input placeholder="Add Comment" value={this.state.shopCSVComment} onChange={(e) => this.changeShopComment(e)} />
+                                <button onClick={this.uploadShopCSV.bind(this)}>Upload CSV</button>
                             </div>
                             {this.renderShopLooks()}
                         </TabPanel>
                         <TabPanel>
                             <div className={styles.fileUpload}>
-                            <Dropzone onDrop={this.handleOnDrop.bind(this)}>
-                                <p>Select a file to upload.</p>
-                            </Dropzone>
-                            <button onClick={this.uploadCSV.bind(this)}>Upload CSV</button>
+                                <Dropzone onDrop={this.handleOnDrop.bind(this)}>
+                                    <p>Select a file to upload.</p>
+                                </Dropzone>
+                                {this.state.files[0] ? <h5>{this.state.files[0].name}</h5> : null}
+                                <input placeholder="Add Comment" value={this.state.rentCSVComment} onChange={(e) => this.changeRentComment(e)} />
+                                <button onClick={this.uploadCSV.bind(this)}>Upload CSV</button>
                             </div>
                             {this.renderRentLooks()}
                         </TabPanel>
                         <TabPanel>
                             <div className={styles.fileUpload}>
-                            <Dropzone onDrop={this.handleAccessoryOnDrop.bind(this)}>
-                                <p>Select a file to upload.</p>
-                            </Dropzone>
-                            <button onClick={this.uploadAccessoryCSV.bind(this)}>Upload CSV</button>
+                                <Dropzone onDrop={this.handleAccessoryOnDrop.bind(this)}>
+                                    <p>Select a file to upload.</p>
+                                </Dropzone>
+                                {this.state.accessoryFiles[0] ? <h5>{this.state.accessoryFiles[0].name}</h5> : null}
+                                <input placeholder="Add Comment" value={this.state.accessoryCSVComment} onChange={(e) => this.changeAccessoryComment(e)} />
+                                <button onClick={this.uploadAccessoryCSV.bind(this)}>Upload CSV</button>
                             </div>
                             {this.renderRentAccessories()}
                         </TabPanel>

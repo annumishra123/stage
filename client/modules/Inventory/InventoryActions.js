@@ -50,7 +50,6 @@ export function clearShopProduct() {
 
 export function updateShopProduct(product) {
     return function (dispatch) {
-        debugger;
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/' + product.id + '/replace';
         return axios({
             url: url,
@@ -70,10 +69,10 @@ export function updateShopProduct(product) {
     }
 }
 
-export function uploadShopCSV(shopFiles) {
+export function uploadShopCSV(shopFiles, fileName) {
     let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/importCSV';
     var file = new FormData();
-    file.append('file', shopFiles[0]);
+    file.append('file', shopFiles[0], fileName);
     return function (dispatch) {
         return axios({
             method: 'POST',
@@ -87,10 +86,10 @@ export function uploadShopCSV(shopFiles) {
     };
 }
 
-export function uploadCSV(files) {
+export function uploadCSV(files, fileName) {
     let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks/importCSV';
     var file = new FormData();
-    file.append('file', files[0]);
+    file.append('file', files[0], fileName);
     return function (dispatch) {
         return axios({
             method: 'POST',
@@ -104,10 +103,10 @@ export function uploadCSV(files) {
     };
 }
 
-export function uploadAccessoryCSV(accessoryFiles) {
+export function uploadAccessoryCSV(accessoryFiles, fileName) {
     let url = clientConfig.targetURL + '/catalogv2/catalogv2/Accessories/importCSV';
     var file = new FormData();
-    file.append('file', accessoryFiles[0]);
+    file.append('file', accessoryFiles[0], fileName);
     return function (dispatch) {
         return axios({
             method: 'POST',
@@ -353,8 +352,8 @@ export function updateShopStock(id, sku, quantity) {
 export function reconcileAll() {
     return function (dispatch) {
         let url = '/api/inventory-manager/reconcile';
-        return axios ({
-            url : url,
+        return axios({
+            url: url,
             timeout: 20000,
             method: 'get',
             responseType: 'json'
