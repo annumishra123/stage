@@ -112,6 +112,15 @@ section h1 {
     margin: 10px 0 0;
     cursor: pointer;
 }
+.addComment {
+    width: 350px;
+    margin: 15px 15px 10px 0;
+    border: 1px solid #333;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    padding: 8px;
+}
 
 
 
@@ -138,6 +147,11 @@ section h1 {
     }
     .fileUpload p {
         margin: 35px 0;
+    }
+    .addComment {
+        width: 100%;
+        margin: 10px 0 0;
+        font-size: 15px;
     }
 
 

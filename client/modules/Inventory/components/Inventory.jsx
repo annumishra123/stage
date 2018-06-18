@@ -297,7 +297,7 @@ class Inventory extends React.Component {
                                     <p>Select a file to upload.</p>
                                 </Dropzone>
                                 {this.state.shopFiles[0] ? <h5>{this.state.shopFiles[0].name}</h5> : null}
-                                <input placeholder="Add Comment" value={this.state.shopCSVComment} onChange={(e) => this.changeShopComment(e)} />
+                                <input className={styles.addComment} placeholder="Add Comment" value={this.state.shopCSVComment} onChange={(e) => this.changeShopComment(e)} />
                                 <button onClick={this.uploadShopCSV.bind(this)}>Upload CSV</button>
                             </div>
                             {this.renderShopLooks()}
