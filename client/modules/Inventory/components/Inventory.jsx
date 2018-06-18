@@ -296,7 +296,7 @@ class Inventory extends React.Component {
                                 <Dropzone onDrop={this.handleShopOnDrop.bind(this)}>
                                     <p>Select a file to upload.</p>
                                 </Dropzone>
-                                {this.state.shopFiles[0] ? <h5>Uploaded: {this.state.shopFiles[0].name}</h5> : null}
+                                {this.state.shopFiles[0] ? <h5>Selected File: {this.state.shopFiles[0].name}</h5> : null}
                                 <input className={styles.addComment} placeholder="Add Comment" value={this.state.shopCSVComment} onChange={(e) => this.changeShopComment(e)} />
                                 <button onClick={this.uploadShopCSV.bind(this)}>Upload CSV</button>
                             </div>
@@ -307,7 +307,7 @@ class Inventory extends React.Component {
                                 <Dropzone onDrop={this.handleOnDrop.bind(this)}>
                                     <p>Select a file to upload.</p>
                                 </Dropzone>
-                                {this.state.files[0] ? <h5>Uploaded: {this.state.files[0].name}</h5> : null}
+                                {this.state.files[0] ? <h5>Selected File: {this.state.files[0].name}</h5> : null}
                                 <input className={styles.addComment} placeholder="Add Comment" value={this.state.rentCSVComment} onChange={(e) => this.changeRentComment(e)} />
                                 <button onClick={this.uploadCSV.bind(this)}>Upload CSV</button>
                             </div>
@@ -318,7 +318,7 @@ class Inventory extends React.Component {
                                 <Dropzone onDrop={this.handleAccessoryOnDrop.bind(this)}>
                                     <p>Select a file to upload.</p>
                                 </Dropzone>
-                                {this.state.accessoryFiles[0] ? <h5>Uploaded: {this.state.accessoryFiles[0].name}</h5> : null}
+                                {this.state.accessoryFiles[0] ? <h5>Selected File: {this.state.accessoryFiles[0].name}</h5> : null}
                                 <input className={styles.addComment} placeholder="Add Comment" value={this.state.accessoryCSVComment} onChange={(e) => this.changeAccessoryComment(e)} />
                                 <button onClick={this.uploadAccessoryCSV.bind(this)}>Upload CSV</button>
                             </div>
