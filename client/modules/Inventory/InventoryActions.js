@@ -79,6 +79,7 @@ export function uploadShopCSV(shopFiles, fileName) {
             url: url,
             data: file,
         }).then(function (response) {
+            dispatch(fetchUpdateLogs());
             alert('Document Uploaded');
         }).catch(function (error) {
             console.log(error);
@@ -96,6 +97,7 @@ export function uploadCSV(files, fileName) {
             url: url,
             data: file,
         }).then(function (response) {
+            dispatch(fetchUpdateLogs());
             alert('Document Uploaded');
         }).catch(function (error) {
             console.log(error);
@@ -113,6 +115,7 @@ export function uploadAccessoryCSV(accessoryFiles, fileName) {
             url: url,
             data: file,
         }).then(function (response) {
+            dispatch(fetchUpdateLogs());
             alert('Document Uploaded');
         }).catch(function (error) {
             console.log(error);
@@ -361,6 +364,50 @@ export function reconcileAll() {
             alert('All quantities reconciled');
         }).catch((error) => {
             alert('Not able to reconcile');
+        });
+    }
+}
+
+export function fetchUpdateLogs() {
+    return function (dispatch) {
+        let filter = {
+            order: 'date desc',
+            limit: 100
+        };
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/UploadLogs?filter=' + JSON.stringify(filter);
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then((response) => {
+            dispatch({
+                type: 'FETCH_UPLOAD_LOGS',
+                payload: response.data
+            });
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+}
+
+export function downloadCSV(fileName) {
+    return function (dispatch) {
+        let url = '/download/catalogsheet?filename=' + fileName;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'blob'
+        }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', fileName.split('/')[2]);
+            document.body.appendChild(link);
+            link.click();
+        }).catch((error) => {
+            console.log(error);
         });
     }
 }

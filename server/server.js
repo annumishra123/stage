@@ -40,6 +40,7 @@ import getRoutes from '../client/routes';
 import { fetchComponentData } from './util/fetchData';
 import { fetchIsAuthenticated } from './util/fetchAuth';
 import auth from './routes/auth.routes';
+import download from './routes/download.routes';
 import dummyData from './dummyData';
 import serverConfig from './config';
 import passport from './passport';
@@ -82,6 +83,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(Express.static(path.resolve(__dirname, '../dist')));
 app.use('/auth', auth);
+app.use('/download', download);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {

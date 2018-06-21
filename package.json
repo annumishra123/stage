@@ -31,6 +31,7 @@
   "author": "Prashant Abhishek <prashant.abhishek7g@gmail.com>, Mayank Chandola <imayankchd@gmail.com>, Sandeep Panda <sandeep@hashnode.com>, Syed Fazle Rahman <fazle@hashnode.com>, Alkshendra Maurya <alkshendra@hashnode.com>",
   "license": "MIT",
   "dependencies": {
+    "@google-cloud/storage": "^1.7.0",
     "axios": "^0.16.2",
     "babel-core": "^6.9.1",
     "bcrypt-nodejs": "0.0.3",
@@ -52,6 +53,7 @@
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.0",
     "passport-local": "^1.0.0",
+    "prop-types": "^15.6.2",
     "react": "^15.1.0",
     "react-csv": "^1.0.8",
     "react-datepicker": "^0.53.0",

@@ -604,6 +604,22 @@ const clientConfig = {
     Header: 'Rechurn Interval (sec)',
     accessor: 'rechurnDelaySeconds',
   }],
+  uploadSheetColumns: [{
+    id: 'date',
+    Header: 'Upload Date',
+    accessor: o => {
+      return moment(o.date).format('lll')
+    },
+  }, {
+    id: 'id',
+    Header: 'File Name',
+    accessor: o => {
+      return o.link.split('/')[2]
+    },
+  }, {
+    Header: 'Category',
+    accessor: 'type',
+  }]
 };
 
 
