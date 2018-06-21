@@ -3,7 +3,7 @@ import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
-import { fetchAccessoryCatalog, fetchRentCatalog, fetchShopCatalog, changeShopLookLocation, changeRentLookLocation, changeRentAccessoryLocation, fetchShopProduct, fetchRentProduct, fetchAccessory, updateShopProduct, updateRentProduct, updateAccessory, clearShopProduct, clearRentProduct, clearAccessory, uploadCSV, uploadShopCSV, uploadAccessoryCSV } from '../InventoryActions';
+import { fetchAccessoryCatalog, fetchRentCatalog, fetchShopCatalog, changeShopLookLocation, changeRentLookLocation, changeRentAccessoryLocation, fetchShopProduct, fetchRentProduct, fetchAccessory, updateShopProduct, updateRentProduct, updateAccessory, clearShopProduct, clearRentProduct, clearAccessory, uploadCSV, uploadShopCSV, uploadAccessoryCSV, fetchUpdateLogs, downloadCSV } from '../InventoryActions';
 import clientConfig from '../../../config';
 import { CSVLink } from 'react-csv';
 import ReactModal from 'react-modal';
@@ -34,6 +34,7 @@ class Inventory extends React.Component {
         this.props.fetchAccessoryCatalog();
         this.props.fetchRentCatalog();
         this.props.fetchShopCatalog();
+        this.props.fetchUpdateLogs();
     }
 
     handleChangeLocation(e) {
@@ -279,6 +280,29 @@ class Inventory extends React.Component {
         })
     }
 
+    downloadCSV(fileName) {
+        this.props.downloadCSV(fileName);
+    }
+
+    renderUploadLogs() {
+        if (this.props.uploadLogs && this.props.uploadLogs.length > 0) {
+            if (!clientConfig.uploadSheetColumns.find(o => o.id == 'download') && (this.props.role == 'admin' || this.props.role == 'superuser')) {
+                clientConfig.uploadSheetColumns.push({
+                    Header: '',
+                    id: 'download',
+                    accessor: 'link',
+                    Cell: ({ value }) => <button onClick={() => this.downloadCSV(value)}>Download</button>
+                });
+            }
+            return <div>
+                <br />
+                <hr />
+                <h1>Uploaded Sheets</h1>
+                <ReactTable filterable data={this.props.uploadLogs} columns={clientConfig.uploadSheetColumns} defaultPageSize={10} className="-striped -highlight" />
+            </div>;
+        }
+    }
+
     render() {
         return <section>
             {!this.state.viewOrderDetails ?
@@ -325,6 +349,7 @@ class Inventory extends React.Component {
                             {this.renderRentAccessories()}
                         </TabPanel>
                     </Tabs>
+                    {this.renderUploadLogs()}
                 </div> :
                 <div>
                     {this.renderProductDetail(this.state.tabIndex)}
@@ -356,7 +381,9 @@ function matchDispatchToProps(dispatch) {
         clearAccessory,
         uploadCSV,
         uploadShopCSV,
-        uploadAccessoryCSV
+        uploadAccessoryCSV,
+        fetchUpdateLogs,
+        downloadCSV
     }, dispatch);
 }
 
@@ -370,6 +397,7 @@ function mapStateToProps(state) {
         shopProduct: state.shopProduct,
         rentProduct: state.rentProduct,
         accessory: state.accessory,
+        uploadLogs: state.uploadLogs
     };
 }
 

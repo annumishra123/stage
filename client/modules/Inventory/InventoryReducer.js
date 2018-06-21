@@ -78,3 +78,11 @@ export function shopStock(state = null, action) {
     }
     return state;
 }
+
+export function uploadLogs(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_UPLOAD_LOGS':
+            return action.payload;
+    }
+    return state;
+}
