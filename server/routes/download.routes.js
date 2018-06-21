@@ -1,6 +1,4 @@
 import { Router } from 'express';
-import pkgcloud from 'pkgcloud';
-import fs from 'fs';
 import Storage from '@google-cloud/storage';
 import path from 'path';
 
