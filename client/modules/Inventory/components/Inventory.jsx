@@ -49,7 +49,7 @@ class Inventory extends React.Component {
     uploadCSV() {
         if (this.state.files.length > 0 && this.state.rentCSVComment && this.props.user) {
             let fileName = this.state.rentCSVComment + ' ' + this.props.user + ' ' + moment().format('lll');
-            fileName = fileName.toUpperCase();
+            fileName = fileName.toUpperCase() + '.csv';
             this.props.uploadCSV(this.state.files, fileName);
         } else if (this.state.files.length == 0) {
             alert('Add a file to upload');
@@ -67,7 +67,7 @@ class Inventory extends React.Component {
     uploadShopCSV() {
         if (this.state.shopCSVComment && this.props.user) {
             let fileName = this.state.shopCSVComment + ' ' + this.props.user + ' ' + moment().format('lll');
-            fileName = fileName.toUpperCase();
+            fileName = fileName.toUpperCase() + '.csv';
             this.props.uploadShopCSV(this.state.shopFiles, fileName);
         } else if (this.state.shopFiles.length == 0) {
             alert('Add a file to upload');
@@ -85,7 +85,7 @@ class Inventory extends React.Component {
     uploadAccessoryCSV() {
         if (this.state.accessoryCSVComment && this.props.user) {
             let fileName = this.state.accessoryCSVComment + ' ' + this.props.user + ' ' + moment().format('lll');
-            fileName = fileName.toUpperCase();
+            fileName = fileName.toUpperCase() + '.csv';
             this.props.uploadAccessoryCSV(this.state.accessoryFiles, fileName);
         } else if (this.state.accessoryFiles.length == 0) {
             alert('Add a file to upload');
