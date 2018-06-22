@@ -619,6 +619,37 @@ const clientConfig = {
   }, {
     Header: 'Category',
     accessor: 'type',
+  }],
+  wayBillColumns: [{
+    Header: 'AWB No.',
+    accessor: 'awbNumber',
+  }, {
+    Header: 'CCRCRDREF',
+    accessor: 'ccrcrdref',
+  }, {
+    id: 'date',
+    Header: 'Created On',
+    accessor: o => {
+      return moment(o.createdDate).format('lll');
+    },
+  }, {
+    Header: 'Created By',
+    accessor: 'creationUser',
+  }, {
+    Header: 'Area Code',
+    accessor: 'destinationArea',
+  }, {
+    Header: 'Location Code',
+    accessor: 'destinationLocation',
+  }, {
+    id: 'link',
+    Header: 'Link',
+    accessor: o => {
+      return <a href={o.mediaLink} target="blank">Download</a>;
+    },
+  }, {
+    Header: 'Status',
+    accessor: 'status',
   }]
 };
 
