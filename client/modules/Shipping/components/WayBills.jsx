@@ -7,6 +7,8 @@ import { uploadWaybillCSV, getWaybills } from '../ShippingActions';
 import ReactTable from 'react-table';
 import clientConfig from '../../../config';
 
+// Import Style
+import styles from './logistics.css';
 
 class WayBills extends React.Component {
     constructor(props) {
@@ -54,16 +56,15 @@ class WayBills extends React.Component {
     render() {
         return <section>
             <h1>Way Bills</h1>
-            <div>
+            <div className={styles.fileUpload}>
                 <Dropzone onDrop={this.onDrop.bind(this)} multiple={false}>
-                    <div className="dropzone">Drop or click to select a file.</div>
+                    <p className="dropzone">Drop or click to select a file.</p>
                 </Dropzone>
                 <div>
                     {this.state.files[0] ? this.state.files[0].name : null}
                 </div>
             </div>
-            <br />
-            <button onClick={this.onSubmit.bind(this)}>Generate</button>
+            <button className={styles.generateBtn} onClick={this.onSubmit.bind(this)}>Generate</button>
             <br />
             {this.renderWayBills()}
         </section>;
