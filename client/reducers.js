@@ -18,6 +18,7 @@ import { revshares } from './modules/Designer/DesignerReducer';
 import { revShareOrderLine } from './modules/ManualOrder/ManualOrderReducer';
 import { reducer as formReducer } from 'redux-form';
 import { tasks, contexts, dispositions, taskDetail } from './modules/CRM/CRMReducer';
+import { waybills } from './modules/Shipping/ShippingReducer';
 
 // Combine all reducers into one root reducer
 export default combineReducers({
@@ -66,5 +67,6 @@ export default combineReducers({
   contexts,
   dispositions,
   taskDetail,
-  uploadLogs
+  uploadLogs,
+  waybills
 });
