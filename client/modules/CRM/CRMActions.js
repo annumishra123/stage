@@ -69,7 +69,7 @@ export function createInboundTask(taskObject) {
             responseType: 'json',
             data: taskObject
         }).then(function (response) {
-            browserHistory.push('/crm/tasks');
+            browserHistory.goBack();
         }).catch(function (error) {
             console.log(error);
         });
