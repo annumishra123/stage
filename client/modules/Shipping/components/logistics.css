@@ -34,6 +34,8 @@
 .fileUpload h5 {
     margin: 15px 0;
     font-size: 16px;
+    background: #fff;
+    text-align: left;
 }
 .generateBtn {
     background: #333;
