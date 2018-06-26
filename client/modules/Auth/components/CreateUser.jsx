@@ -45,24 +45,29 @@ class CreateUser extends React.Component {
     }
 
     createUser() {
-        let user = {
-            email: this.state.email,
-            name: this.state.name,
-            role: this.state.designation,
-            password: this.state.password,
-            owner: this.state.owner
+        if (this.state.email != '' && this.state.name != '' && this.state.role != '' && this.state.password != '' && this.state.owner != '') {
+            let user = {
+                email: this.state.email,
+                name: this.state.name,
+                role: this.state.designation,
+                password: this.state.password,
+                owner: this.state.owner
+            }
+            this.props.createUser(user);
         }
-        this.props.createUser(user);
+        else {
+            alert('Fill in all the details')
+        }
     }
 
     render() {
         return (<section className={styles.createUser}>
-            <button className={styles.back} onClick={this.handleNavigationPage.bind(this)}><i className={styles.backicon+" fa fa-chevron-left"} aria-hidden="true"></i>Back</button>
+            <button className={styles.back} onClick={this.handleNavigationPage.bind(this)}><i className={styles.backicon + " fa fa-chevron-left"} aria-hidden="true"></i>Back</button>
             <h1>Create User</h1>
             <form>
                 <div>
                     <h4>Email: </h4>
-                    <input type="text" onChange={this.handleCreateEmail.bind(this)} />
+                    <input type="email" onChange={this.handleCreateEmail.bind(this)} />
                 </div>
                 <div>
                     <h4>Name: </h4>
@@ -71,15 +76,16 @@ class CreateUser extends React.Component {
                 <div>
                     <h4> Role </h4>
                     <select defaultValue={this.state.designation} onChange={this.handleCreateDesignation.bind(this)}>
-                <option value="1">Super User</option>
-                <option value="2">Admin</option>
-                <option value="3">Designer</option>
-                <option value="4">Marketing</option>
-                </select>
+                        <option value="superuser">SuperUser</option>
+                        <option value="admin">Admin</option>
+                        <option value="designer">Designer</option>
+                        <option value="viewer">Marketing</option>
+                        <option value="delivery">Delivery</option>
+                    </select>
                 </div>
                 <div>
                     <h4>Password: </h4>
-                    <input type="text" onChange={this.handleCreatePassword.bind(this)} />
+                    <input type="password" onChange={this.handleCreatePassword.bind(this)} />
                 </div>
                 <div>
                     <h4>Owner: </h4>
