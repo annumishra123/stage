@@ -50,9 +50,9 @@ class Navigation extends React.Component {
         {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
           <Link to="/crm/tasks/all/slaSeconds/0/20/0">CRM</Link>
         </li> : null}
-        {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
+        {/* {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
           <Link to="/shipping">Logistics</Link>
-        </li> : null}
+        </li> : null} */}
         {this.props.role == 'superuser' ? <li>
           <Link to="/crm/metadata">CRM Metadata</Link>
         </li> : null}
