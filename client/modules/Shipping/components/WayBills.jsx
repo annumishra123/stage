@@ -61,9 +61,10 @@ class WayBills extends React.Component {
                     <p className="dropzone">Drop or click to select a file.</p>
                 </Dropzone>
                 <div>
-                    {this.state.files[0] ? this.state.files[0].name : null}
-                </div>
+                {this.state.files[0] ? <h5>Selected File: {this.state.files[0].name}</h5> : null}
             </div>
+            </div>
+            
             <button className={styles.generateBtn} onClick={this.onSubmit.bind(this)}>Generate</button>
             <br />
             {this.renderWayBills()}

@@ -69,8 +69,13 @@ class CreateUser extends React.Component {
                     <input type="text" onChange={this.handleCreateName.bind(this)} />
                 </div>
                 <div>
-                    <h4>Role: </h4>
-                    <input type="text" onChange={this.handleCreateDesignation.bind(this)} />
+                    <h4> Role </h4>
+                    <select defaultValue={this.state.designation} onChange={this.handleCreateDesignation.bind(this)}>
+                <option value="1">Super User</option>
+                <option value="2">Admin</option>
+                <option value="3">Designer</option>
+                <option value="4">Marketing</option>
+                </select>
                 </div>
                 <div>
                     <h4>Password: </h4>
