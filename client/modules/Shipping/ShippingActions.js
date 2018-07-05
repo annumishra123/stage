@@ -22,8 +22,8 @@ export function uploadWaybillCSV(file, user) {
     };
 }
 
-export function getWaybills(phoneNumber, pageNumber, pageSize) {
-    let url = '/api/leads/backend/get/waybills?phoneNumber=' + phoneNumber + '&pageNumber=' + pageNumber + '&pageSize=' + pageSize;
+export function getWaybills(phoneNumber, pageNumber, pageSize, waybillNumber) {
+    let url = '/api/leads/backend/get/waybills?phoneNumber=' + phoneNumber + '&pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&waybillNumber=' + waybillNumber;
     return function (dispatch) {
         return axios({
             method: 'GET',
