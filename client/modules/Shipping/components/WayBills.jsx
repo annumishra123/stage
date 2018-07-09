@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import { uploadWaybillCSV, getWaybills } from '../ShippingActions';
 import ReactTable from 'react-table';
+import { CSVLink } from 'react-csv';
 import clientConfig from '../../../config';
 
 // Import Style
@@ -17,6 +18,7 @@ class WayBills extends React.Component {
             files: [],
             pageIndex: 0,
             pageSize: 10,
+            csvData: null,
             waybillNumber: ''
         }
     }
@@ -41,6 +43,7 @@ class WayBills extends React.Component {
         this.setState({
             pageIndex: state.page,
             pageSize: state.pageSize,
+            csvData: null
         });
         this.props.getWaybills('', state.page, state.pageSize, this.state.waybillNumber);
     }
@@ -49,16 +52,26 @@ class WayBills extends React.Component {
         if (this.props.waybills && this.props.waybills.length > 0) {
             return <div>
                 <br />
-                <ReactTable data={this.props.waybills} manual defaultPageSize={this.state.pageSize} columns={clientConfig.wayBillColumns} pages={this.props.pages} onFetchData={(state, instance) => { this.fetchData(state); }} className="-striped -highlight" />
+                <ReactTable data={this.props.waybills} ref={(r) => this.awbTable = r} manual defaultPageSize={this.state.pageSize} columns={clientConfig.wayBillColumns} pages={this.props.pages} onFetchData={(state, instance) => { this.fetchData(state); }} className="-striped -highlight" />
+                <br />
+                {!this.state.csvData ? <button className={styles.generateBtn} onClick={this.generateExportLink.bind(this)}>Generate Export Link</button> : null}
+                {this.state.csvData ? <CSVLink className={styles.generateBtn} data={this.state.csvData} filename={"AirWayBills.csv"}>Download CSV</CSVLink> : null}
             </div>;
         }
     }
 
     changeWaybillNumber(e) {
         this.setState({
-            waybillNumber: e.target.value
+            waybillNumber: e.target.value,
+            csvData: null
         });
         this.props.getWaybills('', this.state.pageIndex, this.state.pageSize, e.target.value);
+    }
+
+    generateExportLink() {
+        this.setState({
+            csvData: this.awbTable.getResolvedState().sortedData
+        });
     }
 
     render() {
@@ -74,7 +87,7 @@ class WayBills extends React.Component {
                 </div>
             </div>
 
-            <button className={styles.generateBtn} onClick={this.onSubmit.bind(this)}>Generate</button>
+            <button className={styles.generateBtn} onClick={this.onSubmit.bind(this)}>Generate Bills</button>
             <br />
             <br />
             <hr />
