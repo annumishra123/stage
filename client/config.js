@@ -93,6 +93,10 @@ const clientConfig = {
     'Mswipe',
     'ezetap',
     'advance cash paid',
+    'rent paid online',
+    'rent paid COD',
+    '10 percent rent paid online',
+    '10 percent rent paid COD'
   ],
   rentDeliveryColumns: [{
     Header: 'Order Id',
