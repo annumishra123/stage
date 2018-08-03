@@ -91,10 +91,13 @@ class Coupons extends React.Component {
             case 'PercentDiscount':
                 return <div>
                     <label>Percentage (%) </label>
-                    <input type="number" placeholder="Percentage (%)" onChange={(e) => { this.setState({ configs: { percentOfDiscount: e.target.value, minimumCartValue: this.state.configs.minimumCartValue } }) }} />
+                    <input type="number" placeholder="Percentage (%)" onChange={(e) => { this.setState({ configs: { percentOfDiscount: e.target.value, minimumCartValue: this.state.configs.minimumCartValue, storeName: this.state.configs.storeName } }) }} />
                     <br />
                     <label>Minimum Cart Value </label>
-                    <input type="number" placeholder="Minimum Cart Value" onChange={(e) => { this.setState({ configs: { minimumCartValue: e.target.value, percentOfDiscount: this.state.configs.percentOfDiscount } }) }} />
+                    <input type="number" placeholder="Minimum Cart Value" onChange={(e) => { this.setState({ configs: { minimumCartValue: e.target.value, percentOfDiscount: this.state.configs.percentOfDiscount, storeName: this.state.configs.storeName } }) }} />
+                    <br/>
+                    <label>Store Name</label>
+                     <input type="name" placeholder="Store" onChange={(e) => { this.setState({ configs: { storeName: e.target.value, minimumCartValue: this.state.configs.minimumCartValue, percentOfDiscount: this.state.configs.percentOfDiscount } }) }} />
                 </div>;
             case 'VacationRentalPackageCoupon':
                 return <div>
