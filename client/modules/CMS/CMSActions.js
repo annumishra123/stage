@@ -96,3 +96,19 @@ export function deleteInstagramFeed(id) {
         });
     }
 }
+
+export function createStore(store) {
+    debugger
+    return function (dispatch) {
+      let url = clientConfig.targetURL + '/catalogv2/catalogv2/DynamicCollections/';
+        return axios({
+          url: url,
+          method: 'POST',
+          data: store,
+        }).then(function (response){
+          alert('Store Created');
+        }).catch(function(error){
+          alert('Store Not Created');
+        });
+      }
+    }
