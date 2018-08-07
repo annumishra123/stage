@@ -131,6 +131,7 @@ export function loginUser(creds) {
         const { user, message } = response;
         if (!user.ok) {
           dispatch(loginFailure(message));
+          alert('Please enter correct credentials.');
           return Promise.reject(message);
         }
         localStorage.setItem('token', user.token);

@@ -4,7 +4,7 @@ import moment from 'moment';
 import CryptoJS from 'crypto-js';
 
 export function fetchInstagramFeeds() {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/Instagrams';
         return axios({
             url: url,
@@ -23,7 +23,7 @@ export function fetchInstagramFeeds() {
 }
 
 export function createInstagramFeed(file, instagram) {
-    return function(dispatch) {
+    return function (dispatch) {
         if (file && instagram.title && instagram.url && instagram.type) {
             let timestamp = moment().unix();
             let public_id = 'instashop/instagram-' + timestamp;
@@ -81,7 +81,7 @@ export function createInstagramFeed(file, instagram) {
 }
 
 export function deleteInstagramFeed(id) {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/Instagrams/' + id;
         return axios({
             url: url,
@@ -93,6 +93,23 @@ export function deleteInstagramFeed(id) {
             dispatch(fetchInstagramFeeds());
         }).catch((error) => {
             console.log(error);
+        });
+    }
+}
+
+export function createStore(store) {
+    return function (dispatch) {
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/DynamicCollections/';
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            data: store,
+            responseType: 'json'
+        }).then(function (response) {
+            alert('Store Created');
+        }).catch(function (error) {
+            alert('Store Not Created');
         });
     }
 }
