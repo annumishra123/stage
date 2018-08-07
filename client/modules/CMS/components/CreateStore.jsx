@@ -34,7 +34,8 @@ class CreateStore extends React.Component {
         this.setState({ title: e.target.value });
     }
 
-    createStore() {
+    createStore(e) {
+        e.preventDefault();
         if (this.state.looks != '' && this.state.url != '' && this.state.title != '') {
             let store = {
                 looks: this.state.looks.split(","),
