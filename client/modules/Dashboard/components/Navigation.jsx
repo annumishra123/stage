@@ -59,6 +59,9 @@ class Navigation extends React.Component {
         {this.props.role == 'superuser' ? <li>
           <Link to="/create">Create User</Link>
         </li> : null}
+        {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
+          <Link to="/createstore">Create Store</Link>
+        </li> : null}
       </ul> : <div>
           <h1>{this.props.owner.toUpperCase()}</h1>
           <ul>
