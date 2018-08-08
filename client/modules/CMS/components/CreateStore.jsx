@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createStore } from '../CMSActions';
 
 // Import Style
-//import styles from './login.css';
+import styles from './instagram.css';
 
 
 class CreateStore extends React.Component {
@@ -50,8 +50,8 @@ class CreateStore extends React.Component {
     }
 
     render() {
-        return (<section>
-            <button onClick={this.handleNavigationPage.bind(this)}>Back</button>
+        return (<section className={styles.createStore}>
+            <button className={styles.backBtn} onClick={this.handleNavigationPage.bind(this)}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true"></i> Back</button>
             <h1>Create Store</h1>
             <form>
                 <div>
@@ -67,7 +67,7 @@ class CreateStore extends React.Component {
                     <input type="text" onChange={this.handleCreateTitle.bind(this)} />
                 </div>
                 <br />
-                <button onClick={this.createStore.bind(this)}>Create Store</button>
+                <button className={styles.submitBtn} onClick={this.createStore.bind(this)}>Create Store</button>
             </form>
         </section>)
     }
