@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import ReactTable from 'react-table';
 import moment from 'moment';
-import { getRentOrderListByDate, changeDeliveryStatus } from '../DeliveryActions';
+import { getRentOrderListByDate, changeDeliveryStatus, setQCStatus } from '../DeliveryActions';
 import clientConfig from '../../../config';
 import { CSVLink } from 'react-csv';
 import ReactModal from 'react-modal';
@@ -24,8 +24,13 @@ class RentDeliveryOrders extends React.Component {
             csvData: null,
             deliveryDate: moment().startOf('day'),
             viewDeliveryModal: false,
+            viewQCModal: false,
             awbNumber: '',
-            orderlineId: ''
+            orderlineId: '',
+            looknumber: '',
+            frontendOrderId: '',
+            status: '',
+            sku: ''
         };
     }
 
@@ -96,6 +101,45 @@ class RentDeliveryOrders extends React.Component {
         });
     }
 
+    showQCModal(value) {
+        this.setState({
+            viewQCModal: true,
+            looknumber: value.product.lookNumber,
+            frontendOrderId: value.parentOrder.frontendOrderId,
+            status: '',
+            sku: value.product.sku
+        });
+    }
+
+    hideQCModal() {
+        this.setState({
+            viewQCModal: false,
+            looknumber: '',
+            frontendOrderId: '',
+            status: '',
+            sku: ''
+        });
+    }
+
+    changeQCStatus() {
+        if (this.props.user && this.state.looknumber && this.state.sku && this.state.status && this.state.frontendOrderId) {
+            let qcObject = {
+                user: this.props.user,
+                looknumber: this.state.looknumber,
+                sku: this.state.sku,
+                status: this.state.status,
+                frontendOrderId: this.state.frontendOrderId
+            }
+            this.props.setQCStatus(qcObject);
+        }
+    }
+
+    handleChangeQCStatus(e) {
+        this.setState({
+            status: e.target.value
+        });
+    }
+
     markReceived() {
         let deliveryObject = {
             "action": "RECEIVED",
@@ -123,6 +167,15 @@ class RentDeliveryOrders extends React.Component {
                         accessor: 'id',
                         Cell: ({ value }) => (<div>
                             <button className={styles.tableBtn} onClick={this.showDeliveryModal.bind(this, value)}>Dispatched/Received</button>
+                        </div>)
+                    });
+                }
+                if (!clientConfig.rentDeliveryColumns.find(o => o.id == 'changeQCStatus') && (this.props.role == 'delivery' || this.props.role == 'admin')) {
+                    clientConfig.rentDeliveryColumns.unshift({
+                        Header: '',
+                        id: 'changeQCStatus',
+                        accessor: (value) => (<div>
+                            <button className={styles.tableBtn} onClick={this.showQCModal.bind(this, value)}>Mark Quality</button>
                         </div>)
                     });
                 }
@@ -184,6 +237,18 @@ class RentDeliveryOrders extends React.Component {
                 <button onClick={this.markDispatched.bind(this)}>Mark Dispatched</button>
                 <button onClick={this.markReceived.bind(this)}>Mark Received</button>
             </ReactModal>
+            <ReactModal className={styles.statusPop} isOpen={this.state.viewQCModal} onRequestClose={this.hideQCModal.bind(this)} contentLabel="Change QC Status">
+                <span onClick={this.hideQCModal.bind(this)}>×</span>
+                <br />
+                <h3>Quality Check: Look# {this.state.looknumber}</h3>
+                <select onChange={(e) => this.handleChangeQCStatus(e)}>
+                    <option value=""> -- Select Status -- </option>
+                    <option value="Request Temporary Disable">Temporary Disable</option>
+                    <option value="Request Permanant Disable">Permanant Disable</option>
+                    <option value="Request QC Passed">QC Passed</option>
+                </select><br />
+                <button onClick={this.changeQCStatus.bind(this)}>Update</button>
+            </ReactModal>
         </section>
     }
 }
@@ -191,7 +256,8 @@ class RentDeliveryOrders extends React.Component {
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         getRentOrderListByDate,
-        changeDeliveryStatus
+        changeDeliveryStatus,
+        setQCStatus
     }, dispatch);
 }
 
