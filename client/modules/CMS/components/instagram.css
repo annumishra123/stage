@@ -39,6 +39,64 @@
 }
 
 
+/* Create Store */
+.createStore {
+    margin: 0 0 25px;
+}
+.createStore .backBtn {
+    background: none;
+    border: 0;
+    color: #333;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+.createStore h4 {
+    display: block;
+    font-size: 14px;
+    letter-spacing: 1px;
+    width: 260px;
+    margin: 15px 5px 5px 0;
+}
+.createStore textarea {
+    border: 1px solid rgba(0, 0, 0, .5);
+    padding: 8px 12px;
+    color: #333;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    margin: 0 0 15px;
+    width: 400px;
+    letter-spacing: 2px;
+    line-height: 28px;
+    text-align: left;
+    transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+}
+.createStore input {
+    border: 1px solid rgba(0, 0, 0, .5);
+    padding: 6px 10px;
+    color: #333;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    margin: 0 0 15px;
+    width: 400px;
+    letter-spacing: 2px;
+    line-height: 28px;
+    text-align: left;
+    transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+}
+.createStore .submitBtn {
+    background: #000;
+    color: #fff;
+    border: 0;
+    padding: 8px 20px;
+    font-size: 15px;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+
+
 @media (max-width: 767px){
     .instagramFeed {
         padding: 10px;
@@ -50,6 +108,16 @@
     }
     .instagramFeed button {
         margin: 0 0 15px;
+    }
+    .createStore {
+        margin: 10px 0 10px;
+    }
+    .createStore textarea,
+    .createStore input {
+        width: 100%;
+    }
+    .createStore h4 {
+        margin: 5px 5px 5px 0;
     }
 
 
