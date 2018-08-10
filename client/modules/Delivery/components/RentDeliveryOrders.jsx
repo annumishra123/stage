@@ -240,14 +240,14 @@ class RentDeliveryOrders extends React.Component {
             <ReactModal className={styles.statusPop} isOpen={this.state.viewQCModal} onRequestClose={this.hideQCModal.bind(this)} contentLabel="Change QC Status">
                 <span onClick={this.hideQCModal.bind(this)}>×</span>
                 <br />
-                <h3>Quality Check: Look# {this.state.looknumber}</h3>
+                <h3>Quality Check: Look #{this.state.looknumber}</h3>
                 <select onChange={(e) => this.handleChangeQCStatus(e)}>
                     <option value=""> -- Select Status -- </option>
                     <option value="Request Temporary Disable">Temporary Disable</option>
                     <option value="Request Permanant Disable">Permanant Disable</option>
                     <option value="Request QC Passed">QC Passed</option>
                 </select><br />
-                <button onClick={this.changeQCStatus.bind(this)}>Update</button>
+                <button className={styles.submit} onClick={this.changeQCStatus.bind(this)}>Update</button>
             </ReactModal>
         </section>
     }
