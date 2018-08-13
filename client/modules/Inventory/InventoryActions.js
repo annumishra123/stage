@@ -411,3 +411,42 @@ export function downloadCSV(fileName) {
         });
     }
 }
+
+export function setQCStatus(qcObject) {
+    return function (dispatch) {
+        let url = '/api/om/orders/backend/update/qualityCheckStatus?user=' + qcObject.user + '&status=' + qcObject.status + '&looknumber=' + qcObject.looknumber;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            responseType: 'json'
+        }).then(function (response) {
+            alert('Changed QC Status');
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+}
+
+export function getLastQCStatus(looknumber) {
+    return function (dispatch) {
+        dispatch({
+            type: 'FETCH_QC_STATUS',
+            payload: null
+        })
+        let url = '/api/om/orders/backend/get/qualityCheckStatusByLookNumber?lookNumber=' + looknumber;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then(function (response) {
+            dispatch({
+                type: 'FETCH_QC_STATUS',
+                payload: response.data
+            })
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+}

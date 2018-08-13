@@ -59,6 +59,7 @@ export function changeDeliveryStatus(deliveryObject) {
         }).then(function (response) {
             alert('Delivery status has been changed');
         }).catch(function (error) {
+            alert('There was an error, please try again');
             console.log(error);
         });
     }
@@ -75,6 +76,7 @@ export function setQCStatus(qcObject) {
         }).then(function (response) {
             alert('Changed QC Status');
         }).catch(function (error) {
+            alert('There was an error, please try again');
             console.log(error);
         });
     }

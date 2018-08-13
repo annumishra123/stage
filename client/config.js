@@ -199,6 +199,10 @@ const clientConfig = {
     id: 'source',
     Header: 'Source',
     accessor: o => o.orderType.split('_')[1],
+  }, {
+    id: 'quality',
+    Header: 'Quality',
+    accessor: 'qcStatus'
   }],
   rentalColumns: [{
     Header: 'Order Id',
