@@ -395,10 +395,9 @@ class Inventory extends React.Component {
                         </TabPanel>
                     </Tabs>
                     {this.renderUploadLogs()}
-                    <ReactModal isOpen={this.state.viewQCModal} onRequestClose={this.hideQCModal.bind(this)} contentLabel="Change QC Status">
+                    <ReactModal className={styles.InventoryStatusPop} isOpen={this.state.viewQCModal} onRequestClose={this.hideQCModal.bind(this)} contentLabel="Change QC Status">
                         <span onClick={this.hideQCModal.bind(this)}>×</span>
                         {this.props.lastQCStatus ? <div>
-                            <br />
                             <h3>Last QC Status</h3>
                             <p>Frontend Order Id: {this.props.lastQCStatus.frontendOrderId}</p>
                             <p>Looknumber: {this.props.lastQCStatus.looknumber}</p>
@@ -407,7 +406,6 @@ class Inventory extends React.Component {
                             <p>User: {this.props.lastQCStatus.user}</p>
                             <p>Updated On: {moment(this.props.lastQCStatus.timeStamp).format('lll')}</p>
                         </div> : null}
-                        <br />
                         <h3>Quality Check: Look# {this.state.looknumber}</h3>
                         <select onChange={(e) => this.handleChangeQCStatus(e)}>
                             <option value=""> -- Select Status -- </option>
