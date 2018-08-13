@@ -86,3 +86,11 @@ export function uploadLogs(state = null, action) {
     }
     return state;
 }
+
+export function lastQCStatus(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_QC_STATUS':
+            return action.payload;
+    }
+    return state;
+}
