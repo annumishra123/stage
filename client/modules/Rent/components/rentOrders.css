@@ -100,16 +100,16 @@ th, td {
 }
 .orderRentView figure {
     float: left;
-    width: 25%;
+    width: 40%;
 }
 .orderRentView figure img {
     width: 90% !important;
     border: 1px solid rgba(0,0,0,0.2);
 }
 .orderRentView .width70 {
-    width: 75%;
+    width: 60%;
     float:left;
-    margin: 20px 0;
+    margin: 0px 0;
 }
 .orderRentView a.link {
     background: #000;

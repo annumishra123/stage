@@ -59,6 +59,24 @@ export function changeDeliveryStatus(deliveryObject) {
         }).then(function (response) {
             alert('Delivery status has been changed');
         }).catch(function (error) {
+            alert('There was an error, please try again');
+            console.log(error);
+        });
+    }
+}
+
+export function setQCStatus(qcObject) {
+    return function (dispatch) {
+        let url = '/api/om/orders/backend/update/qualityCheckStatus?user=' + qcObject.user + '&frontendOrderId=' + qcObject.frontendOrderId + '&status=' + qcObject.status + '&looknumber=' + qcObject.looknumber + '&sku=' + qcObject.sku;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            responseType: 'json'
+        }).then(function (response) {
+            alert('Changed QC Status');
+        }).catch(function (error) {
+            alert('There was an error, please try again');
             console.log(error);
         });
     }

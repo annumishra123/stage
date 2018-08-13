@@ -3,7 +3,7 @@ import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
-import { fetchAccessoryCatalog, fetchRentCatalog, fetchShopCatalog, changeShopLookLocation, changeRentLookLocation, changeRentAccessoryLocation, fetchShopProduct, fetchRentProduct, fetchAccessory, updateShopProduct, updateRentProduct, updateAccessory, clearShopProduct, clearRentProduct, clearAccessory, uploadCSV, uploadShopCSV, uploadAccessoryCSV, fetchUpdateLogs, downloadCSV } from '../InventoryActions';
+import { getLastQCStatus, setQCStatus, fetchAccessoryCatalog, fetchRentCatalog, fetchShopCatalog, changeShopLookLocation, changeRentLookLocation, changeRentAccessoryLocation, fetchShopProduct, fetchRentProduct, fetchAccessory, updateShopProduct, updateRentProduct, updateAccessory, clearShopProduct, clearRentProduct, clearAccessory, uploadCSV, uploadShopCSV, uploadAccessoryCSV, fetchUpdateLogs, downloadCSV } from '../InventoryActions';
 import clientConfig from '../../../config';
 import { CSVLink } from 'react-csv';
 import ReactModal from 'react-modal';
@@ -26,7 +26,10 @@ class Inventory extends React.Component {
             accessoryFiles: [],
             rentCSVComment: '',
             shopCSVComment: '',
-            accessoryCSVComment: ''
+            accessoryCSVComment: '',
+            viewQCModal: false,
+            looknumber: '',
+            status: ''
         }
     }
 
@@ -144,6 +147,39 @@ class Inventory extends React.Component {
 
     }
 
+    showQCModal(value) {
+        this.setState({
+            viewQCModal: true,
+            looknumber: value.looknumber,
+            status: ''
+        });
+        this.props.getLastQCStatus(value.looknumber);
+    }
+
+    hideQCModal() {
+        this.setState({
+            viewQCModal: false,
+            looknumber: '',
+            status: ''
+        });
+    }
+
+    changeQCStatus() {
+        if (this.props.user && this.state.looknumber && this.state.status) {
+            let qcObject = {
+                user: this.props.user,
+                looknumber: this.state.looknumber,
+                status: this.state.status
+            }
+            this.props.setQCStatus(qcObject);
+        }
+    }
+
+    handleChangeQCStatus(e) {
+        this.setState({
+            status: e.target.value
+        });
+    }
 
     renderRentLooks() {
         if (this.props.rentCatalog) {
@@ -172,6 +208,15 @@ class Inventory extends React.Component {
                                 <option value="customer">Customer</option>
                             </select>
                             <button onClick={this.changeRentLooksLocation.bind(this, value)}>Change</button>
+                        </div>
+                    });
+                }
+                if (!clientConfig.rentLooksColumns.find(o => o.id == 'qcStatus') && (this.props.role == 'admin')) {
+                    clientConfig.rentLooksColumns.unshift({
+                        Header: '',
+                        id: 'qcStatus',
+                        accessor: (value) => <div>
+                            <button onClick={() => this.showQCModal(value)}>Approve Quality</button>
                         </div>
                     });
                 }
@@ -350,6 +395,25 @@ class Inventory extends React.Component {
                         </TabPanel>
                     </Tabs>
                     {this.renderUploadLogs()}
+                    <ReactModal className={styles.InventoryStatusPop} isOpen={this.state.viewQCModal} onRequestClose={this.hideQCModal.bind(this)} contentLabel="Change QC Status">
+                        <span onClick={this.hideQCModal.bind(this)}>×</span>
+                        {this.props.lastQCStatus ? <div>
+                            <h3>Last QC Status</h3>
+                            <p>Frontend Order Id: {this.props.lastQCStatus.frontendOrderId}</p>
+                            <p>Looknumber: {this.props.lastQCStatus.looknumber}</p>
+                            <p>SKU: {this.props.lastQCStatus.sku}</p>
+                            <p>Status: {this.props.lastQCStatus.status}</p>
+                            <p>User: {this.props.lastQCStatus.user}</p>
+                            <p>Updated On: {moment(this.props.lastQCStatus.timeStamp).format('lll')}</p>
+                        </div> : null}
+                        <h3>Quality Check: Look# {this.state.looknumber}</h3>
+                        <select onChange={(e) => this.handleChangeQCStatus(e)}>
+                            <option value=""> -- Select Status -- </option>
+                            <option value="Approve Temporary Disable">Temporary Disable</option>
+                            <option value="Approve Permanant Disable">Permanant Disable</option>
+                        </select><br />
+                        <button onClick={this.changeQCStatus.bind(this)}>Update</button>
+                    </ReactModal>
                 </div> :
                 <div>
                     {this.renderProductDetail(this.state.tabIndex)}
@@ -383,7 +447,9 @@ function matchDispatchToProps(dispatch) {
         uploadShopCSV,
         uploadAccessoryCSV,
         fetchUpdateLogs,
-        downloadCSV
+        downloadCSV,
+        setQCStatus,
+        getLastQCStatus
     }, dispatch);
 }
 
@@ -397,7 +463,8 @@ function mapStateToProps(state) {
         shopProduct: state.shopProduct,
         rentProduct: state.rentProduct,
         accessory: state.accessory,
-        uploadLogs: state.uploadLogs
+        uploadLogs: state.uploadLogs,
+        lastQCStatus: state.lastQCStatus
     };
 }
 
