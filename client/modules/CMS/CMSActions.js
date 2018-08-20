@@ -113,3 +113,39 @@ export function createStore(store) {
         });
     }
 }
+
+export function getAllStores(store) {
+    return function (dispatch) {
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/DynamicCollections';
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then(function (response) {
+            dispatch({
+                type: 'FETCH_ALL_STORES',
+                payload: response.data
+            })
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+}
+
+export function deleteStore(title) {
+    return function (dispatch) {
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/DynamicCollections/' + title;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'delete',
+            responseType: 'json'
+        }).then(function (response) {
+            dispatch(getAllStores());
+            alert('Store has been deleted');
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+}
