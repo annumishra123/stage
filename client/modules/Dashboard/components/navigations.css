@@ -16,33 +16,42 @@
     padding: 0;
 }
 .navigations ul li {
-    width:33.3%;
-    height: 200px;
+    width:20%;
     min-height: 50%;
     float:left;
-    border: 1xp solid #000;
-    padding: 20px;
+    padding: 5px;
 }
 .navigations ul li a {
-    background: #ecede7;
-    border: 2px solid #000;
     display: block;
-    height: 100%;
     text-align: center;
     color: #000;
     font-family: 'Lato', sans-serif;
-    font-size: 17px;
+    font-size: 15px;
     letter-spacing: 0.5px;
     text-decoration: none;
-    padding: 65px 0;
+    padding: 10px 0;
     transition: all 0.5s ease;
     -webkit-transition: all 0.5s ease;
     text-transform: uppercase;
 }
 
-.navigations ul li:hover a {
-    background: #000;
+.navigations ul li:hover figure {
+    background: #f7f5f5;
     color: #fff;
+}
+.navigations ul li a figure {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: #ececec;
+    padding: 25px;
+    display: inline-block;
+    margin: 5px auto 12px;
+    transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+}
+.navigations ul li a figure img {
+    width: 100%;
 }
 
 
@@ -54,21 +63,30 @@
         margin: 10px 0 10px;
     }
     .navigations ul li {
-        width: 100%;
-        height: 80px;
+        width: 50%;
         border: 0;
         padding: 5px;
     }
     .navigations ul li a {
-        padding: 24px 0;
+        padding: 5px 0;
         font-size: 15px;
     }
-    .navigations ul li a {
-        background: #ecede7;
+    .navigations ul li a figure {
+        width: 80px;
+        height: 80px;
+        padding: 15px;
+        display: inline-block;
+        margin: 5px auto 5px;
     }
-    .navigations ul li:hover a {
-        color: #fff !important;
+    .navigations ul li a p {
+        font-size: 14px;
+        letter-spacing: 0;
+        margin: 3px 0 0;
+        text-transform: capitalize;
     }
-
 
 }
+
+
+
+

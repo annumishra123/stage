@@ -658,7 +658,24 @@ const clientConfig = {
   }, {
     Header: 'Status',
     accessor: 'status',
-  }]
+  }],
+  rentalStoreColumns: [{
+    Header: 'Title',
+    accessor: 'title',
+  }, {
+    id: 'looks',
+    Header: 'Looks',
+    accessor: o => o.looks.join(',') 
+  }, {
+    id: 'created',
+    Header: 'Created',
+    accessor: o => {
+      return moment(o.creationTime).format('lll');
+    },
+  }, {
+    Header: 'URL',
+    accessor: 'url',
+  }],
 };
 
 

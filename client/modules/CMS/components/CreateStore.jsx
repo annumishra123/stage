@@ -2,7 +2,11 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { createStore } from '../CMSActions';
+import { createStore, getAllStores, deleteStore } from '../CMSActions';
+import ReactTable from 'react-table';
+import Datetime from 'react-datetime';
+import moment from 'moment';
+import clientConfig from '../../../config';
 
 // Import Style
 import styles from './instagram.css';
@@ -16,9 +20,17 @@ class CreateStore extends React.Component {
             url: '',
             title: '',
             header_image_desktop: '',
-            header_image_mobile: ''
+            header_image_mobile: '',
         };
     }
+
+    componentDidMount() {
+        this.props.getAllStores();
+    }
+
+    deleteStore(title){
+        this.props.deleteStore(title)  
+    } 
 
     handleNavigationPage() {
         browserHistory.push('/menu');
@@ -46,7 +58,6 @@ class CreateStore extends React.Component {
         this.setState({ header_image_mobile: mobileImageUrl });
     }
 
-
     createStore(e) {
         e.preventDefault();
         if (this.state.looks != '' && this.state.url != '' && this.state.title != '') {
@@ -65,11 +76,29 @@ class CreateStore extends React.Component {
         }
     }
 
+    renderStores() {
+        if (this.props.allStores) {
+            if (this.props.allStores.length > 0) {
+                if (!clientConfig.rentalStoreColumns.find(o => o.id == 'delete')) {
+                    clientConfig.rentalStoreColumns.unshift({
+                        Header: '',
+                        id: 'delete',
+                        accessor: 'title',
+                        Cell: ({ value }) => (<button onClick={this.deleteStore.bind(this, value)}>Delete</button>)
+                    });
+                }
+                return <div>
+                    <h1>Stores</h1>
+                    <ReactTable data={this.props.allStores} columns={clientConfig.rentalStoreColumns} className="-striped -highlight" />
+                </div>
+            }
+        }
+    }
+
     render() {
         return (<section className={styles.createStore}>
             <button className={styles.backBtn} onClick={this.handleNavigationPage.bind(this)}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true"></i> Back</button>
             <h1>Create Store</h1>
-            <form>
                 <div>
                     <h4>Looks: </h4>
                     <textarea type="text" onChange={this.handleCreateLooks.bind(this)} />
@@ -92,19 +121,26 @@ class CreateStore extends React.Component {
                 </div>
                 <br />
                 <button className={styles.submitBtn} onClick={this.createStore.bind(this)}>Create Store</button>
-            </form>
+                <br />
+            {this.renderStores()}
         </section>)
     }
 }
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        createStore
+        getAllStores,
+        createStore,
+        deleteStore
     }, dispatch);
 }
 
 function mapStateToProps(state) {
-    return {};
+    return {
+        role: state.auth.role,
+        user: state.auth.email,
+        allStores: state.allStores ? state.allStores : null
+    };
 }
 
 

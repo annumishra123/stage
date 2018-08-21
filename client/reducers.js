@@ -11,7 +11,7 @@ import { rentOrders, rentOrderDetail, rentProductDetail, rentalPricing, bookable
 import auth from './modules/Auth/AuthReducer';
 import { customerDetail, selectedAddress, creditPoints, customerComments } from './modules/Customer/CustomerReducer';
 import { rentDeliveryOrders, shopDeliveryOrders } from './modules/Delivery/DeliveryReducer';
-import { instagramFeeds } from './modules/CMS/CMSReducer';
+import { instagramFeeds, allStores } from './modules/CMS/CMSReducer';
 import { accessoryCatalog, rentCatalog, shopCatalog, rentProduct, shopProduct, updateProduct, updateRentProduct, accessory, updateAccessory, shopStock, uploadLogs, lastQCStatus } from './modules/Inventory/InventoryReducer';
 import { designerInventory, cancelledDesignerOrders, completedDesignerOrders, pendingDesignerOrders, designerShare } from './modules/Designer/DesignerReducer';
 import { revshares } from './modules/Designer/DesignerReducer';
@@ -69,5 +69,6 @@ export default combineReducers({
   taskDetail,
   uploadLogs,
   waybills,
-  lastQCStatus
+  lastQCStatus,
+  allStores
 });

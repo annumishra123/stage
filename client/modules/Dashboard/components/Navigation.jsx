@@ -18,64 +18,158 @@ class Navigation extends React.Component {
     return (<section className={styles.navigations}>
       {this.props.role !== 'designer' ? <ul>
         <li>
-          <Link to="/customer">Create/Find Customer</Link>
+          <Link to="/customer">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-newuser2.png" />
+            </figure>
+            <p>Create/Find Customer</p>
+          </Link>
         </li>
         <li>
-          <Link to="/shop">Shop Orders</Link>
+          <Link to="/shop">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-shop-orders2.png" />
+            </figure>
+            <p>Shop Orders</p>
+          </Link>
         </li>
         <li>
-          <Link to="/rent">Rent Orders</Link>
+          <Link to="/rent">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-rent-orders2.png" />
+            </figure>
+            <p>Rent Orders</p>
+          </Link>
         </li>
         <li>
-          <Link to="/delivery/rent">Rent Delivery</Link>
+          <Link to="/delivery/rent">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-rent-delivery.png" />
+            </figure>
+            <p>Rent Delivery</p>
+          </Link>
         </li>
         <li>
-          <Link to="/delivery/shop">Shop Delivery</Link>
+          <Link to="/delivery/shop">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-shop-delivery.png" />
+            </figure>
+            <p>Shop Delivery</p>
+          </Link>
         </li>
         <li>
-          <Link to="/inventory">Inventory</Link>
+          <Link to="/inventory">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-inventory.png" />
+            </figure>
+            <p>Inventory</p>
+          </Link>
         </li>
         {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
-          <Link to="/owners">Rev-share</Link>
+          <Link to="/owners">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-rev-share.png" />
+            </figure>
+            <p>Rev-share</p>
+          </Link>
         </li> : null}
         {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
-          <Link to="/cms/instagram">Instagram</Link>
+          <Link to="/cms/instagram">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-instagram.png" />
+            </figure>
+            <p>Instagram</p>
+          </Link>
         </li> : null}
         {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
-          <Link to="/inventory/shop/stock">Shop Stock</Link>
+          <Link to="/inventory/shop/stock">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-shop-stock.png" />
+            </figure>
+            <p>Shop Stock</p>
+          </Link>
         </li> : null}
         {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
-          <Link to="/rent/coupons">Coupons</Link>
+          <Link to="/rent/coupons">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-coupon.png" />
+            </figure>
+            <p>Coupons</p>
+          </Link>
         </li> : null}
         {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
-          <Link to="/crm/tasks/all/slaSeconds/0/20/0">CRM</Link>
+          <Link to="/crm/tasks/all/slaSeconds/0/20/0">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-crm.png" />
+            </figure>
+            <p>CRM</p>
+          </Link>
         </li> : null}
         {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
-          <Link to="/shipping">Logistics</Link>
+          <Link to="/shipping">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-logistics.png" />
+            </figure>
+            <p>Logistics</p>
+          </Link>
         </li> : null}
         {this.props.role == 'superuser' ? <li>
-          <Link to="/crm/metadata">CRM Metadata</Link>
+          <Link to="/crm/metadata">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-metadata.png" />
+            </figure>
+            <p>CRM Metadata</p>
+          </Link>
         </li> : null}
         {this.props.role == 'superuser' ? <li>
-          <Link to="/create">Create User</Link>
+          <Link to="/create">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-newuser2.png" />
+            </figure>
+            <p>Create User</p>
+          </Link>
         </li> : null}
         {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
-          <Link to="/createstore">Create Store</Link>
+          <Link to="/createstore">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-create-store.png" />
+            </figure>
+            <p>Create Store</p>
+          </Link>
         </li> : null}
       </ul> : <div>
           <h1>{this.props.owner.toUpperCase()}</h1>
           <ul>
             <li>
-              <Link to="/designer/inventory">Inventory</Link>
+              <Link to="/designer/inventory">
+                <figure>
+                  <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-inventory.png" />
+                </figure>
+                <p>Inventory</p></Link>
             </li>
             <li>
-              <Link to="/designer/orders">Orders</Link>
+              <Link to="/designer/orders">
+                <figure>
+                  <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-order3.png" />
+                </figure>
+                <p>Orders</p>
+              </Link>
             </li>
             <li>
-              <Link to="/designer/invoice">Invoice</Link>
+              <Link to="/designer/invoice">
+                <figure>
+                  <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-invoice.png" />
+                </figure>
+                <p>Invoice</p>
+              </Link>
             </li>
             <li>
-              <Link to="/login/update">Change Password</Link>
+              <Link to="/login/update">
+                <figure>
+                  <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-change-password.png" />
+                </figure>
+                <p>Change Password</p>
+              </Link>
             </li>
           </ul>
         </div>}
