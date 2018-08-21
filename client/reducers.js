@@ -69,5 +69,6 @@ export default combineReducers({
   taskDetail,
   uploadLogs,
   waybills,
+  lastQCStatus,
   allStores
 });
