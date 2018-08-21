@@ -4,8 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStore, getAllStores, deleteStore } from '../CMSActions';
 import ReactTable from 'react-table';
-import Datetime from 'react-datetime';
-import moment from 'moment';
 import clientConfig from '../../../config';
 
 // Import Style
@@ -28,9 +26,9 @@ class CreateStore extends React.Component {
         this.props.getAllStores();
     }
 
-    deleteStore(title){
-        this.props.deleteStore(title)  
-    } 
+    deleteStore(title) {
+        this.props.deleteStore(title)
+    }
 
     handleNavigationPage() {
         browserHistory.push('/menu');
@@ -99,29 +97,29 @@ class CreateStore extends React.Component {
         return (<section className={styles.createStore}>
             <button className={styles.backBtn} onClick={this.handleNavigationPage.bind(this)}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true"></i> Back</button>
             <h1>Create Store</h1>
-                <div>
-                    <h4>Looks: </h4>
-                    <textarea type="text" onChange={this.handleCreateLooks.bind(this)} />
-                </div>
-                <div>
-                    <h4>Desktop Header Image: </h4>
-                    <textarea type="text" onChange={this.handleCreateDesktopImage.bind(this)} />
-                </div>
-                <div>
-                    <h4>Mobile Header Image: </h4>
-                    <textarea type="text" onChange={this.handleCreateMobileImage.bind(this)} />
-                </div>
-                <div>
-                    <h4>URL: </h4>
-                    <input type="text" onChange={this.handleCreateUrl.bind(this)} />
-                </div>
-                <div>
-                    <h4>Title: </h4>
-                    <input type="text" onChange={this.handleCreateTitle.bind(this)} />
-                </div>
-                <br />
-                <button className={styles.submitBtn} onClick={this.createStore.bind(this)}>Create Store</button>
-                <br />
+            <div>
+                <h4>Looks: </h4>
+                <textarea type="text" onChange={this.handleCreateLooks.bind(this)} />
+            </div>
+            <div>
+                <h4>Desktop Header Image: </h4>
+                <textarea type="text" onChange={this.handleCreateDesktopImage.bind(this)} />
+            </div>
+            <div>
+                <h4>Mobile Header Image: </h4>
+                <textarea type="text" onChange={this.handleCreateMobileImage.bind(this)} />
+            </div>
+            <div>
+                <h4>URL: </h4>
+                <input type="text" onChange={this.handleCreateUrl.bind(this)} />
+            </div>
+            <div>
+                <h4>Title: </h4>
+                <input type="text" onChange={this.handleCreateTitle.bind(this)} />
+            </div>
+            <br />
+            <button className={styles.submitBtn} onClick={this.createStore.bind(this)}>Create Store</button>
+            <br />
             {this.renderStores()}
         </section>)
     }
