@@ -180,7 +180,7 @@ export function changePassword(password) {
   }
 }
 
-export function createUser(users) {
+export function createUser(user) {
   return function (dispatch) {
     let url = '/auth/createuser';
     let token = localStorage.getItem('token');
