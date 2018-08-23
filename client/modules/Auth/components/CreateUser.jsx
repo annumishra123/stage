@@ -124,6 +124,7 @@ class CreateUser extends React.Component {
                 <br />
                 <button className={styles.submitBtn} onClick={this.createUser.bind(this)}>Create User</button>
             </form>
+            <br/>
             {this.renderUsers()}
         </section>)
     }
