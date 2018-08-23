@@ -2,7 +2,9 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { createUser } from '../AuthActions';
+import { getAllUsers, createUser, deleteUser } from '../AuthActions';
+import ReactTable from 'react-table';
+import clientConfig from '../../../config';
 
 // Import Style
 import styles from './login.css';
@@ -18,6 +20,14 @@ class CreateUser extends React.Component {
             password: '',
             onwer: ''
         };
+    }
+
+    componentDidMount() {
+        this.props.getAllUsers();
+    }
+
+    deleteUser(email) {
+        this.props.deleteUser(email)
     }
 
     handleNavigationPage() {
@@ -44,7 +54,27 @@ class CreateUser extends React.Component {
         this.setState({ owner: e.target.value });
     }
 
+    renderUsers() {
+        if (this.props.allUsers) {
+            if (this.props.allUsers.length > 0) {
+                if (!clientConfig.userColumns.find(o => o.id == 'delete')) {
+                    clientConfig.userColumns.unshift({
+                        Header: '',
+                        id: 'delete',
+                        accessor: 'email',
+                        Cell: ({ value }) => (<button onClick={this.deleteUser.bind(this, value)}>Delete</button>)
+                    });
+                }
+                return <div>
+                    <h1>Users</h1>
+                    <ReactTable data={this.props.allUsers} columns={clientConfig.userColumns} className="-striped -highlight" />
+                </div>
+            }
+        }
+    }
+
     createUser() {
+        e.preventDefault();
         if (this.state.email != '' && this.state.name != '' && this.state.role != '' && this.state.password != '' && this.state.owner != '') {
             let user = {
                 email: this.state.email,
@@ -94,18 +124,25 @@ class CreateUser extends React.Component {
                 <br />
                 <button className={styles.submitBtn} onClick={this.createUser.bind(this)}>Create User</button>
             </form>
+            {this.renderUsers()}
         </section>)
     }
 }
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        createUser
+        getAllUsers,
+        createUser,
+        deleteUser
     }, dispatch);
 }
 
 function mapStateToProps(state) {
-    return {};
+    return {
+        role: state.auth.role,
+        user: state.auth.email,
+        allUsers: state.allUsers ? state.allUsers : null
+    };
 }
 
 

@@ -665,7 +665,7 @@ const clientConfig = {
   }, {
     id: 'looks',
     Header: 'Looks',
-    accessor: o => o.looks.join(',') 
+    accessor: o => o.looks.join(',')
   }, {
     id: 'created',
     Header: 'Created',
@@ -675,6 +675,25 @@ const clientConfig = {
   }, {
     Header: 'URL',
     accessor: 'url',
+  }],
+  userColumns: [{
+    Header: 'Email',
+    accessor: 'email',
+  }, {
+    Header: 'Name',
+    accessor: 'name',
+  }, {
+    Header: 'Role',
+    accessor: 'role',
+  }, {
+    Header: 'Owner',
+    accessor: 'owner',
+  }, {
+    id: 'created',
+    Header: 'Created',
+    accessor: o => {
+      return moment(o.dateAdded).format('lll');
+    },
   }],
 };
 

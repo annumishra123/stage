@@ -189,7 +189,7 @@ export function createUser(user) {
         url: url,
         method: 'POST',
         data: user,
-        headers:{
+        headers: {
           Authorization: 'JWT ' + token,
         },
       }).then(function (response) {
@@ -198,5 +198,51 @@ export function createUser(user) {
         alert('User Not Created');
       });
     }
+  }
+}
+
+export function getAllUsers(user) {
+  return function (dispatch) {
+    let url = '/auth/getusers';
+    let token = localStorage.getItem('token');
+    if (token) {
+      return axios({
+        url: url,
+        timeout: 20000,
+        method: 'get',
+        responseType: 'json',
+        headers: {
+          Authorization: 'JWT ' + token,
+        },
+      }).then(function (response) {
+        dispatch({
+          type: 'FETCH_ALL_USERS',
+          payload: response.data
+        })
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }
+}
+
+export function deleteUser(email) {
+  return function (dispatch) {
+      let url = '/auth/deleteuser?email=' + email;
+      let token = localStorage.getItem('token');
+      return axios({
+          url: url,
+          timeout: 20000,
+          method: 'get',
+          responseType: 'json',
+          headers: {
+            Authorization: 'JWT ' + token,
+          }
+      }).then(function (response) {
+          dispatch(getAllUsers());
+          alert('User has been deleted');
+      }).catch(function (error) {
+          console.log(error);
+      });
   }
 }

@@ -16,7 +16,7 @@ router.post('/login', (req, res, next) => {
                 user: {
                     ok: false,
                 },
-                message: 'Faliure to login',
+                message: 'Login failed',
             });
         } else {
             console.log(user);
@@ -155,7 +155,7 @@ router.post("/changepassword", passport.authenticate('jwt', {
                 }
             });
         } else {
-            res.status(400).send('Bad Request');0
+            res.status(400).send('Bad Request');
         }
     } else {
         res.status(401).send('Unauthorized');
