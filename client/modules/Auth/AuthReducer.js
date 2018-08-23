@@ -11,7 +11,7 @@ const initialState = {
   name: ''
 };
 
-const authReducer = (state = initialState, action) => {
+export function authReducer(state = initialState, action) {
   switch (action.type) {
     case ActionTypes.REQUEST_CHECK_TOKEN:
       return {
@@ -80,4 +80,13 @@ const authReducer = (state = initialState, action) => {
   }
 };
 
-export default authReducer;
+export function allUsers(state = null, action) {
+  switch (action.type) {
+      case 'FETCH_ALL_USERS':
+          return action.payload;
+          break;
+  }
+  return state;
+}
+
+
