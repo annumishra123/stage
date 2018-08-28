@@ -73,7 +73,7 @@ class CreateUser extends React.Component {
         }
     }
 
-    createUser() {
+    createUser(e) {
         e.preventDefault();
         if (this.state.email != '' && this.state.name != '' && this.state.role != '' && this.state.password != '' && this.state.owner != '') {
             let user = {
