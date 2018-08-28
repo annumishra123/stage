@@ -29,7 +29,10 @@ class Inventory extends React.Component {
             accessoryCSVComment: '',
             viewQCModal: false,
             looknumber: '',
-            status: ''
+            status: '',
+            rentCatalogCSV: null,
+            shopCatalogCSV: null,
+            accessoryCSV: null
         }
     }
 
@@ -38,6 +41,46 @@ class Inventory extends React.Component {
         this.props.fetchRentCatalog();
         this.props.fetchShopCatalog();
         this.props.fetchUpdateLogs();
+    }
+
+    componentWillReceiveProps(props) {
+        if (props.rentCatalog) {
+            let rentCatalogCSV = props.rentCatalog.map((item) => {
+                return {
+                    'looknumber': item.looknumber,
+                    'sku': item.sku,
+                    'name': item.name,
+                    'location': item.location
+                }
+            });
+            this.setState({
+                rentCatalogCSV: rentCatalogCSV
+            });
+        }
+        if (props.shopCatalog) {
+            let shopCatalogCSV = props.shopCatalog.map((item) => {
+                return {
+                    'sku': item.sku,
+                    'name': item.name,
+                    'location': item.location
+                }
+            });
+            this.setState({
+                shopCatalogCSV: shopCatalogCSV
+            });
+        }
+        if (props.accessoryCatalog) {
+            let accessoryCSV = props.accessoryCatalog.map((item) => {
+                return {
+                    'sku': item.sku,
+                    'name': item.name,
+                    'location': item.location
+                }
+            });
+            this.setState({
+                accessoryCSV: accessoryCSV
+            });
+        }
     }
 
     handleChangeLocation(e) {
@@ -222,6 +265,7 @@ class Inventory extends React.Component {
                 }
                 return <div>
                     <ReactTable filterable data={this.props.rentCatalog} columns={clientConfig.rentLooksColumns} defaultPageSize={10} className="-striped -highlight" />
+                    {this.state.rentCatalogCSV ? <CSVLink data={this.state.rentCatalogCSV} filename={"Rent Inventory.csv"}>Export CSV</CSVLink> : null}
                 </div>;
             }
         }
@@ -259,6 +303,7 @@ class Inventory extends React.Component {
                 }
                 return <div>
                     <ReactTable filterable data={this.props.accessoryCatalog} columns={clientConfig.rentAccessoriesColumns} defaultPageSize={10} className="-striped -highlight" />
+                    {this.state.accessoryCSV ? <CSVLink data={this.state.accessoryCSV} filename={"Accessory Inventory.csv"}>Export CSV</CSVLink> : null}
                 </div>;
             }
         }
@@ -296,6 +341,7 @@ class Inventory extends React.Component {
                 }
                 return <div>
                     <ReactTable filterable data={this.props.shopCatalog} columns={clientConfig.shopLooksColumns} defaultPageSize={10} className="-striped -highlight" />
+                    {this.state.shopCatalogCSV ? <CSVLink data={this.state.shopCatalogCSV} filename={"Shop Inventory.csv"}>Export CSV</CSVLink> : null}
                 </div>;
             }
         }
