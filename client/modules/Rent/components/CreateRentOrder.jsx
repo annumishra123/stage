@@ -192,6 +192,7 @@ class CreateRentOrder extends React.Component {
                         Deposit Price:
                          {' ' + this.state.days == 3 ? Math.round(this.props.productDetail.depositprice * 3) : Math.round(this.props.productDetail.depositprice * 4.2)}
                     </p>
+                    {!this.props.productDetail.status ? <p>Status: <span style={{ color: 'red' }}>Disabled</span></p> : null}
                     {this.props.lastQCStatus ? <div>
                         <br />
                         <h3>Last QC Status</h3>
