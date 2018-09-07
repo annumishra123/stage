@@ -14,7 +14,8 @@
     "build:server": "cross-env NODE_ENV=production webpack --config webpack.config.server.js",
     "clean": "rimraf dist",
     "slate": "rimraf node_modules && npm install",
-    "lint": "eslint client server"
+    "lint": "eslint client server",
+    "debug": "cross-env BABEL_DISABLE_CACHE=1 NODE_ENV=development nodemon --inspect index.js"
   },
   "pre-commit": [
     "lint",
