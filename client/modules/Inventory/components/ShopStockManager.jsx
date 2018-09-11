@@ -72,37 +72,41 @@ class ShopStockManager extends React.Component {
     renderShopStock() {
         if (this.props.shopStock) {
             if (this.props.shopStock.length > 0) {
-                if (!clientConfig.shopStockColumns.find(o => o.id == 'edit') && (this.props.role == 'admin')) {
+                let index = clientConfig.shopStockColumns.findIndex(o => o.id == 'edit');
+                clientConfig.shopStockColumns.splice(index, 1);
+
+                if (this.props.role == 'admin') {
                     clientConfig.shopStockColumns.unshift({
                         Header: 'Quantity',
                         id: 'edit',
                         accessor: (row) => row,
-                        Cell: ({row}) => <button onClick={ this.showModal.bind(this, row) }>Update</button>
+                        Cell: ({ row }) => <button onClick={this.showModal.bind(this, row)}>Update</button>
                     });
                 }
+
                 return <div>
                     <button onClick={this.reconcileQuantities.bind(this)}>Reconcile All</button>
-                         <ReactTable filterable data={ this.props.shopStock } columns={ clientConfig.shopStockColumns } defaultPageSize={ 10 } className="-striped -highlight" />
-                       </div>;
+                    <ReactTable filterable data={this.props.shopStock} columns={clientConfig.shopStockColumns} defaultPageSize={10} className="-striped -highlight" />
+                </div>;
             }
         }
     }
 
     render() {
         return <section>
-                 <h1>Shop Stock Manager</h1>
-                 <br/>
-                 { this.renderShopStock() }
-                 <ReactModal className={ styles.stockPopup } isOpen={ this.state.viewModal } onRequestClose={ this.hideModal.bind(this) } contentLabel="Update Quantity">
-                   <span onClick={ this.hideModal.bind(this) }>×</span>
-                   <br/>
-                   <h3>Stock Manager</h3>
-                   <input onChange={ this.handleChangeQuantity.bind(this) } value={ this.state.quantity } type="number" />
-                   <button onClick={ this.updateQuantity.bind(this, this.state.row) }>
-                     { this.state.quantity == 0 ? 'Reconcile' : 'Update' }
-                   </button>
-                 </ReactModal>
-               </section>
+            <h1>Shop Stock Manager</h1>
+            <br />
+            {this.renderShopStock()}
+            <ReactModal className={styles.stockPopup} isOpen={this.state.viewModal} onRequestClose={this.hideModal.bind(this)} contentLabel="Update Quantity">
+                <span onClick={this.hideModal.bind(this)}>×</span>
+                <br />
+                <h3>Stock Manager</h3>
+                <input onChange={this.handleChangeQuantity.bind(this)} value={this.state.quantity} type="number" />
+                <button onClick={this.updateQuantity.bind(this, this.state.row)}>
+                    {this.state.quantity == 0 ? 'Reconcile' : 'Update'}
+                </button>
+            </ReactModal>
+        </section>
     }
 }
 

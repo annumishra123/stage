@@ -179,13 +179,10 @@ class Inventory extends React.Component {
                 return <div>
                     {this.renderShopProductDetail()}
                 </div>;
-                break;
             case 1:
                 return <div>Rent Product Detail</div>;
-                break;
             case 2:
                 return <div>Accessory Detail</div>;
-                break;
         }
 
     }
@@ -227,6 +224,9 @@ class Inventory extends React.Component {
     renderRentLooks() {
         if (this.props.rentCatalog) {
             if (this.props.rentCatalog.length > 0) {
+                let qcIndex = clientConfig.rentLooksColumns.findIndex(o => o.id == 'qcStatus');
+                clientConfig.rentLooksColumns.splice(qcIndex, 1);
+
                 if (!clientConfig.rentLooksColumns.find(o => o.id == 'edit') && (this.props.role == 'admin')) {
                     clientConfig.rentLooksColumns.unshift({
                         Header: '',
@@ -254,7 +254,7 @@ class Inventory extends React.Component {
                         </div>
                     });
                 }
-                if (!clientConfig.rentLooksColumns.find(o => o.id == 'qcStatus') && (this.props.role == 'admin')) {
+                if (this.props.role == 'admin') {
                     clientConfig.rentLooksColumns.unshift({
                         Header: '',
                         id: 'qcStatus',
