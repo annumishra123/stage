@@ -160,7 +160,13 @@ class RentDeliveryOrders extends React.Component {
     renderOrders() {
         if (this.props.orders) {
             if (this.props.orders.length > 0) {
-                if (!clientConfig.rentDeliveryColumns.find(o => o.id == 'changeDeliveryStatus') && (this.props.role == 'delivery' || this.props.role == 'admin')) {
+                let qcIndex = clientConfig.rentDeliveryColumns.findIndex(o => o.id == 'changeQCStatus');
+                clientConfig.rentDeliveryColumns.splice(qcIndex, 1);
+
+                let deliveryIndex = clientConfig.rentDeliveryColumns.findIndex(o => o.id == 'changeDeliveryStatus');
+                clientConfig.rentDeliveryColumns.splice(deliveryIndex, 1);
+
+                if (this.props.role == 'delivery' || this.props.role == 'admin') {
                     clientConfig.rentDeliveryColumns.unshift({
                         Header: '',
                         id: 'changeDeliveryStatus',
@@ -170,15 +176,17 @@ class RentDeliveryOrders extends React.Component {
                         </div>)
                     });
                 }
-                if (!clientConfig.rentDeliveryColumns.find(o => o.id == 'changeQCStatus') && (this.props.role == 'delivery' || this.props.role == 'admin')) {
+
+                if (this.props.role == 'delivery' || this.props.role == 'admin') {
                     clientConfig.rentDeliveryColumns.unshift({
                         Header: '',
                         id: 'changeQCStatus',
                         accessor: (value) => (<div>
-                            <button className={styles.tableBtn} onClick={this.showQCModal.bind(this, value)}>Mark Quality</button>
+                            <button className={styles.tableBtn} onClick={() => this.showQCModal(value)}>Mark Quality</button>
                         </div>)
                     });
                 }
+
                 return <div>
                     <ReactTable filterable onSortedChange={this.generateExportLink.bind(this)} onFilteredChange={this.generateExportLink.bind(this)} data={this.props.orders} ref={(r) => this.deliveryTable = r} columns={clientConfig.rentDeliveryColumns}
                         defaultPageSize={10} className="data-table -striped -highlight" />
