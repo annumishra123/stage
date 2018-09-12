@@ -225,7 +225,7 @@ class Inventory extends React.Component {
         if (this.props.rentCatalog) {
             if (this.props.rentCatalog.length > 0) {
                 let qcIndex = clientConfig.rentLooksColumns.findIndex(o => o.id == 'qcStatus');
-                clientConfig.rentLooksColumns.splice(qcIndex, 1);
+                if (qcIndex != -1) { clientConfig.rentLooksColumns.splice(qcIndex, 1); }
 
                 if (!clientConfig.rentLooksColumns.find(o => o.id == 'edit') && (this.props.role == 'admin')) {
                     clientConfig.rentLooksColumns.unshift({
