@@ -160,11 +160,12 @@ class RentDeliveryOrders extends React.Component {
     renderOrders() {
         if (this.props.orders) {
             if (this.props.orders.length > 0) {
+
                 let qcIndex = clientConfig.rentDeliveryColumns.findIndex(o => o.id == 'changeQCStatus');
-                clientConfig.rentDeliveryColumns.splice(qcIndex, 1);
+                if (qcIndex != -1) { clientConfig.rentDeliveryColumns.splice(qcIndex, 1); }
 
                 let deliveryIndex = clientConfig.rentDeliveryColumns.findIndex(o => o.id == 'changeDeliveryStatus');
-                clientConfig.rentDeliveryColumns.splice(deliveryIndex, 1);
+                if (deliveryIndex != -1) { clientConfig.rentDeliveryColumns.splice(deliveryIndex, 1); }
 
                 if (this.props.role == 'delivery' || this.props.role == 'admin') {
                     clientConfig.rentDeliveryColumns.unshift({
