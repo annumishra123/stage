@@ -8,7 +8,7 @@ import app from './modules/App/AppReducer';
 import intl from './modules/Intl/IntlReducer';
 import { orders, orderDetail, productDetail, shopPricing } from './modules/Shop/ShopReducer';
 import { rentOrders, rentOrderDetail, rentProductDetail, rentalPricing, bookableStatus, deliveryDates, measurementStatus, allCoupons } from './modules/Rent/RentReducer';
-import {authReducer as auth, allUsers} from './modules/Auth/AuthReducer';
+import { authReducer as auth, allUsers } from './modules/Auth/AuthReducer';
 import { customerDetail, selectedAddress, creditPoints, customerComments } from './modules/Customer/CustomerReducer';
 import { rentDeliveryOrders, shopDeliveryOrders } from './modules/Delivery/DeliveryReducer';
 import { instagramFeeds, allStores } from './modules/CMS/CMSReducer';
@@ -19,6 +19,7 @@ import { revShareOrderLine } from './modules/ManualOrder/ManualOrderReducer';
 import { reducer as formReducer } from 'redux-form';
 import { tasks, contexts, dispositions, taskDetail } from './modules/CRM/CRMReducer';
 import { waybills } from './modules/Shipping/ShippingReducer';
+import { allRawMaterials, allOutfits } from './modules/AlayaInventoryManager/AlayaInventoryReducer';
 
 // Combine all reducers into one root reducer
 export default combineReducers({
@@ -71,5 +72,7 @@ export default combineReducers({
   waybills,
   lastQCStatus,
   allStores,
-  allUsers
+  allUsers,
+  allRawMaterials,
+  allOutfits,
 });

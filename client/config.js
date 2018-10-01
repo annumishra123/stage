@@ -717,6 +717,31 @@ const clientConfig = {
       return moment(o.creationTime).format('lll');
     },
   }],
+  outfitColumns: [{
+    Header: 'Title',
+    accessor: 'title',
+  }, {
+    Header: 'Constituents',
+    accessor: 'constituents',
+  }, {
+    Header: 'Available Quantity',
+    accessor: 'availableQuantity',
+  }, {
+    Header: 'Sold Quantity',
+    accessor: 'soldQuantity',
+  }, {
+    Header: 'Pipeline',
+    accessor: 'pipeline',
+  }, {
+    Header: 'Pipeline Offset',
+    accessor: 'pipelineOffset',
+  }, {
+    id: 'created',
+    Header: 'Created',
+    accessor: o => {
+      return moment(o.creationTime).format('lll');
+    },
+  }],
 };
 
 export default clientConfig;

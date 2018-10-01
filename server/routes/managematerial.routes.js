@@ -133,7 +133,7 @@ router.post("/createoutfit", passport.authenticate('jwt', {
                 if (outfit) {
                     outfit.set({
                         title: req.body.title.trim(),
-                        constituents: req.body.constituents.trim(),
+                        constituents: req.body.constituents,
                         availableQuantity: req.body.availableQuantity,
                         soldQuantity: req.body.soldQuantity,
                         pipelineQuantity: req.body.pipelineQuantity,
