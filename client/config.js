@@ -695,7 +695,28 @@ const clientConfig = {
       return moment(o.dateAdded).format('lll');
     },
   }],
+  rawMaterialColumns: [{
+    Header: 'Title',
+    accessor: 'title',
+  }, {
+    Header: 'Measurement Type',
+    accessor: 'measurementType',
+  }, {
+    Header: 'Available Quantity',
+    accessor: 'availableQuantity',
+  }, {
+    Header: 'Price',
+    accessor: 'price',
+  }, {
+    Header: 'Alert Offset',
+    accessor: 'alertOffset',
+  }, {
+    id: 'created',
+    Header: 'Created',
+    accessor: o => {
+      return moment(o.creationTime).format('lll');
+    },
+  }],
 };
-
 
 export default clientConfig;

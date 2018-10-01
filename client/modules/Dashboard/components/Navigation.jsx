@@ -171,6 +171,14 @@ class Navigation extends React.Component {
                 <p>Change Password</p>
               </Link>
             </li>
+            {this.props.role == 'admin' ? <li>
+              <Link to="/alaya">
+                <figure>
+                  <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-invoice.png" />
+                </figure>
+                <p>Alaya Inventory Manager</p>
+              </Link>
+            </li> : null}
           </ul>
         </div>}
     </section>);
