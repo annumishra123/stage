@@ -83,7 +83,7 @@ router.post("/createuser", passport.authenticate('jwt', {
         if (req.body.email && req.body.role && req.body.password && req.body.name) {
             User.findOne({
                 'email': req.body.email
-            }, function(err, user) {
+            }, function (err, user) {
                 if (!user) {
                     var newUser = new User({
                         email: req.body.email.trim().toLowerCase(),
@@ -91,7 +91,7 @@ router.post("/createuser", passport.authenticate('jwt', {
                         cuid: cuid(),
                         role: req.body.role.trim(),
                         name: req.body.name.trim(),
-                        owner: req.body.owner.trim(),
+                        owner: req.body.owner ? req.body.owner.trim() : '',
                         dateAdded: Date.now()
                     });
                     newUser.password = newUser.generateHash(req.body.password);
@@ -138,7 +138,7 @@ router.post("/changepassword", passport.authenticate('jwt', {
         if (req.body.password) {
             User.findOne({
                 'email': req.user.email
-            }, function(err, user) {
+            }, function (err, user) {
                 if (user) {
                     user.set({
                         password: user.generateHash(req.body.password)
@@ -169,7 +169,7 @@ router.get("/deleteuser", passport.authenticate('jwt', {
         if (req.user.role === 'superuser' && req.query.email) {
             User.findOne({
                 'email': req.query.email
-            }, function(err, user) {
+            }, function (err, user) {
                 if (user) {
                     user.remove().then(item => {
                         res.json({

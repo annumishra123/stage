@@ -73,7 +73,7 @@ class ShopStockManager extends React.Component {
         if (this.props.shopStock) {
             if (this.props.shopStock.length > 0) {
                 let index = clientConfig.shopStockColumns.findIndex(o => o.id == 'edit');
-                clientConfig.shopStockColumns.splice(index, 1);
+                if (index != -1) { clientConfig.shopStockColumns.splice(index, 1); }
 
                 if (this.props.role == 'admin') {
                     clientConfig.shopStockColumns.unshift({
