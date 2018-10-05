@@ -134,7 +134,6 @@ class AlayaInventory extends React.Component {
     }
 
     showSoldModal(value) {
-        debugger;
         this.setState({
             viewSoldModal: true,
             selectedOutfit: value
@@ -217,7 +216,11 @@ class AlayaInventory extends React.Component {
                         Cell: ({ value }) => (<button onClick={this.deleteOutfit.bind(this, value)} className={styles.deletetext}>Delete</button>)
                     });
                 }
-                if (this.props.role == 'admin' && !clientConfig.outfitColumns.find(o => o.id == 'markSold')) {
+
+                let soldIndex = clientConfig.outfitColumns.findIndex(o => o.id == 'markSold');
+                if (soldIndex != -1) { clientConfig.outfitColumns.splice(soldIndex, 1); }
+
+                if (this.props.role == 'admin') {
                     clientConfig.outfitColumns.unshift({
                         Header: '',
                         id: 'markSold',
@@ -245,39 +248,6 @@ class AlayaInventory extends React.Component {
                         <Tab>Outfits</Tab>
                         <Tab>Raw Materials</Tab>
                     </TabList>
-                    <TabPanel>
-                        <h2>Add Raw Material</h2>
-                        <form>
-                            <div>
-                                <h4>Title: </h4>
-                                <input type="text" onChange={this.handleCreateTitle.bind(this)} />
-                            </div>
-                            <div>
-                                <h4>Measurement Type: </h4>
-                                <select defaultValue={this.state.measurementType} onChange={this.handleCreateMeasurementType.bind(this)}>
-                                    <option value=""> -- Select Type -- </option>
-                                    <option value="thaan">Thaan</option>
-                                    <option value="packet">Packet</option>
-                                </select>
-                            </div>
-                            <div>
-                                <h4>Available Quantity: </h4>
-                                <input type="number" onChange={this.handleCreateAvailableQuantity.bind(this)} />
-                            </div>
-                            <div>
-                                <h4>Price: </h4>
-                                <input type="number" onChange={this.handleCreatePrice.bind(this)} />
-                            </div>
-                            <div>
-                                <h4>Alert Offset: </h4>
-                                <input type="number" onChange={this.handleCreateAlertOffset.bind(this)} />
-                            </div>
-                            <br />
-                            <button onClick={this.createRawMaterial.bind(this)}>Add Raw Material</button>
-                        </form>
-                        <br />
-                        {this.renderRawMaterials()}
-                    </TabPanel>
                     <TabPanel>
                         <h2>Add Outfit</h2>
                         <div className={styles.composition}>
@@ -342,8 +312,8 @@ class AlayaInventory extends React.Component {
                                 <h4>Measurement Type: </h4>
                                 <select defaultValue={this.state.measurementType} onChange={this.handleCreateMeasurementType.bind(this)}>
                                     <option value=""> -- Select Type -- </option>
-                                    <option value="thaan">Thaan</option>
-                                    <option value="packet">Packet</option>
+                                    <option value="meters">Meters</option>
+                                    <option value="pieces">Pieces</option>
                                 </select>
                             </div>
                             <div>

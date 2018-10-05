@@ -210,20 +210,19 @@ router.post("/marksold", passport.authenticate('jwt', {
             if (req.body._id && req.body.soldQuantity) {
                 Outfit.findOne({ '_id': req.body._id }, function (err, outfit) {
                     if (outfit) {
-                        outfit.soldQuantity += req.body.soldQuantity;
-                        outfit.availableQuantity -= req.body.soldQuantity;
+                        outfit.soldQuantity += parseInt(req.body.soldQuantity);
+                        outfit.availableQuantity -= parseInt(req.body.soldQuantity);
                         if (outfit.availableQuantity < outfit.pipelineOffset) {
                             var toBeAddedToPipeline = outfit.pipelineOffset - outfit.availableQuantity;
                             outfit.pipelineQuantity += toBeAddedToPipeline;
                             Object.keys(outfit.composition).map((key, i) => {
                                 Material.findOne({ 'title': key }, function (err, material) {
-                                    material.availableQuantity -= outfit.composition[key] * toBeAddedToPipeline;
+                                    material.availableQuantity -= parseInt(outfit.composition[key]) * toBeAddedToPipeline;
                                     if (material.availableQuantity <= material.alertOffset) {
                                         material.alert = true;
                                     }
-                                    material.save();
-                                })
-
+                                    material.save(); 
+                                });
                             });
                             outfit.save().then(item => {
                                 res.json({
