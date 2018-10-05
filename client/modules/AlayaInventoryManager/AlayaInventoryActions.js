@@ -6,7 +6,6 @@ import CryptoJS from 'crypto-js';
 
 export function createRawMaterial(rawMaterial) {
     return function (dispatch) {
-        debugger;
         let url = 'http://localhost:8000/managematerial/creatematerial';
         let token = localStorage.getItem('token');
         return axios({
@@ -17,9 +16,10 @@ export function createRawMaterial(rawMaterial) {
             responseType: 'json',
             headers: {
                 Authorization: 'JWT ' + token,
-              },
+            },
         }).then(function (response) {
             alert('Raw Material Created');
+            dispatch(getAllRawMaterial());
         }).catch(function (error) {
             alert('Raw Material Not Created');
         });
@@ -28,7 +28,7 @@ export function createRawMaterial(rawMaterial) {
 
 export function getAllRawMaterial(rawMaterial) {
     return function (dispatch) {
-        let url = 'localhost:8000/managematerial/getrawmaterials';
+        let url = 'http://localhost:8000/managematerial/getrawmaterials';
         let token = localStorage.getItem('token');
         return axios({
             url: url,
@@ -37,7 +37,7 @@ export function getAllRawMaterial(rawMaterial) {
             responseType: 'json',
             headers: {
                 Authorization: 'JWT ' + token,
-              },
+            },
         }).then(function (response) {
             dispatch({
                 type: 'FETCH_ALL_MATERIALS',
@@ -49,14 +49,18 @@ export function getAllRawMaterial(rawMaterial) {
     }
 }
 
-export function deleteRawMaterial(title) {
+export function deleteRawMaterial(_id) {
     return function (dispatch) {
-        let url = clientConfig.targetURL + '/managematerial/deletematerial' + title;
+        let url = 'http://localhost:8000/managematerial/deletematerial?_id=' + _id;
+        let token = localStorage.getItem('token');
         return axios({
             url: url,
             timeout: 20000,
-            method: 'delete',
-            responseType: 'json'
+            method: 'get',
+            responseType: 'json',
+            headers: {
+                Authorization: 'JWT ' + token,
+            },
         }).then(function (response) {
             dispatch(getAllRawMaterial());
             alert('Raw Material has been deleted');
@@ -68,15 +72,21 @@ export function deleteRawMaterial(title) {
 
 export function createOutfit(outfit) {
     return function (dispatch) {
-        let url = clientConfig.targetURL + '/managematerial/createoutfit';
+        debugger;
+        let url = 'http://localhost:8000/managematerial/createoutfit';
+        let token = localStorage.getItem('token');
         return axios({
             url: url,
             timeout: 20000,
             method: 'post',
             data: outfit,
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                Authorization: 'JWT ' + token,
+            },
         }).then(function (response) {
             alert('Outfit Created');
+            dispatch(getAllOutfits());
         }).catch(function (error) {
             alert('Outfit Not Created');
         });
@@ -85,12 +95,16 @@ export function createOutfit(outfit) {
 
 export function getAllOutfits(outfit) {
     return function (dispatch) {
-        let url = clientConfig.targetURL + '/managematerial/getoutfits';
+        let url = 'http://localhost:8000/managematerial/getoutfits';
+        let token = localStorage.getItem('token');
         return axios({
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                Authorization: 'JWT ' + token,
+            },
         }).then(function (response) {
             dispatch({
                 type: 'FETCH_ALL_OUTFITS',
@@ -102,14 +116,18 @@ export function getAllOutfits(outfit) {
     }
 }
 
-export function deleteOutfit(title) {
+export function deleteOutfit(_id) {
     return function (dispatch) {
-        let url = clientConfig.targetURL + '/managematerial/deleteoutfit' + title;
+        let url = 'http://localhost:8000/managematerial/deleteoutfit?_id=' + _id;
+        let token = localStorage.getItem('token');
         return axios({
             url: url,
             timeout: 20000,
-            method: 'delete',
-            responseType: 'json'
+            method: 'get',
+            responseType: 'json',
+            headers: {
+                Authorization: 'JWT ' + token,
+            },
         }).then(function (response) {
             dispatch(getAllOutfits());
             alert('Outfit has been deleted');

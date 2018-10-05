@@ -7,7 +7,7 @@ const outfitSchema = new Schema({
         type: 'String',
         required: true
     },
-    constituents: {
+    composition: {
         type: 'Object',
         required: true
     },

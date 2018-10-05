@@ -696,6 +696,9 @@ const clientConfig = {
     },
   }],
   rawMaterialColumns: [{
+    Header: 'Raw Material Id',
+    accessor: '_id',
+  }, {
     Header: 'Title',
     accessor: 'title',
   }, {
@@ -718,6 +721,9 @@ const clientConfig = {
     },
   }],
   outfitColumns: [{
+    Header: 'Outfit Id',
+    accessor: '_id',
+  }, {
     Header: 'Title',
     accessor: 'title',
   }, {

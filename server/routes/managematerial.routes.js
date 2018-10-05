@@ -15,16 +15,17 @@ router.post("/creatematerial", passport.authenticate('jwt', {
     if (req.user.role === 'admin') {
         if (!req.body._id) {
             var newRawMaterial = new Material({
-                title: req.body.title.trim(),
-                measurementType: req.body.measurementType.trim(),
+                title: req.body.title,
+                measurementType: req.body.measurementType,
                 availableQuantity: req.body.availableQuantity,
                 price: req.body.price,
                 alertOffset: req.body.alertOffset,
                 alert: false
             });
             newRawMaterial.save().then(item => {
-                res.json({
-                    status: 'SUCCESS'
+                res.status(200).json({
+                    status: 'SUCCESS',
+                    rawMaterial: item
                 });
             }).catch(err => {
                 res.status(400).json({
@@ -35,8 +36,8 @@ router.post("/creatematerial", passport.authenticate('jwt', {
             Material.findOne({ '_id': req.body._id }, function (err, rawMaterial) {
                 if (rawMaterial) {
                     rawMaterial.set({
-                        title: req.body.title.trim(),
-                        measurementType: req.body.measurementType.trim(),
+                        title: req.body.title,
+                        measurementType: req.body.measurementType,
                         availableQuantity: req.body.availableQuantity,
                         price: req.body.price,
                         alertOffset: req.body.alertOffset,
@@ -112,15 +113,15 @@ router.post("/createoutfit", passport.authenticate('jwt', {
     if (req.user.role === 'admin') {
         if (!req.body._id) {
             var newOutfit = new Outfit({
-                title: req.body.title.trim(),
-                constituents: req.body.constituents,
+                title: req.body.title,
+                composition: req.body.composition,
                 availableQuantity: req.body.availableQuantity,
                 soldQuantity: req.body.soldQuantity,
                 pipelineQuantity: req.body.pipelineQuantity,
                 pipelineOffset: req.body.pipelineOffset
             });
             newOutfit.save().then(item => {
-                res.json({
+                res.status(200).json({
                     status: 'SUCCESS'
                 });
             }).catch(err => {
@@ -132,8 +133,8 @@ router.post("/createoutfit", passport.authenticate('jwt', {
             Outfit.findOne({ '_id': req.body._id }, function (err, outfit) {
                 if (outfit) {
                     outfit.set({
-                        title: req.body.title.trim(),
-                        constituents: req.body.constituents,
+                        title: req.body.title,
+                        composition: req.body.composition,
                         availableQuantity: req.body.availableQuantity,
                         soldQuantity: req.body.soldQuantity,
                         pipelineQuantity: req.body.pipelineQuantity,

@@ -6,7 +6,7 @@ import { createRawMaterial, getAllRawMaterial, deleteRawMaterial, createOutfit, 
 import ReactTable from 'react-table';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import clientConfig from '../../../config';
-
+import Select from 'react-select';
 
 class AlayaInventory extends React.Component {
     constructor(props) {
@@ -20,20 +20,26 @@ class AlayaInventory extends React.Component {
             alertOffset: '',
             alert: false,
             outfitTitle: '',
-            constituents: '',
             outfitAvailableQuantity: '',
             soldQuantity: '',
             pipeline: '',
-            pipelineOffset: ''
+            pipelineOffset: '',
+            compositionQuantity: '',
+            composition: {}
         };
     }
 
     componentDidMount() {
         this.props.getAllRawMaterial();
+        this.props.getAllOutfits();
     }
 
-    deleteRawMaterial(materialTitle) {
-        this.props.deleteRawMaterial(materialTitle)
+    deleteRawMaterial(_id) {
+        this.props.deleteRawMaterial(_id)
+    }
+
+    deleteOutfit(_id) {
+        this.props.deleteOutfit(_id)
     }
 
     handleNavigationPage() {
@@ -44,7 +50,7 @@ class AlayaInventory extends React.Component {
         this.setState({ tabIndex: tabIndex });
     }
 
-    handleCreateMaterialTitle(e) {
+    handleCreateTitle(e) {
         this.setState({ materialTitle: e.target.value });
     }
 
@@ -65,7 +71,7 @@ class AlayaInventory extends React.Component {
     }
 
     handleCreateOufitTitle(e) {
-        this.setState({ handleCreateOufitTitle: e.target.value });
+        this.setState({ outfitTitle: e.target.value });
     }
 
     handleCreateOutfitAvailableQuantity(e) {
@@ -84,11 +90,39 @@ class AlayaInventory extends React.Component {
         this.setState({ pipelineOffset: e.target.value });
     }
 
+    handleChangeTitle(e) {
+        this.setState({
+            materialTitle: e.value
+        });
+    }
+
+    handleChangeCompositionQuantity(e) {
+        this.setState({
+            compositionQuantity: e.target.value
+        });
+    }
+
+    handleChangeComposition() {
+        let changedComposition = this.state.composition;
+        changedComposition[this.state.materialTitle] = this.state.compositionQuantity;
+        this.setState({
+            composition: changedComposition
+        });
+    }
+
+    handleDeleteComposition(key) {
+        let changedComposition = this.state.composition;
+        delete changedComposition[key];
+        this.setState({
+            composition: changedComposition
+        });       
+    }
+
     createRawMaterial(e) {
         e.preventDefault();
-        if (this.state.materialTitle != '' && this.state.measurementType != '' && this.state.availableQuantity != '' && this.state.price != '' && this.state.alertOffset != '') {
+        if (this.state.materialTitle && this.state.measurementType && this.state.availableQuantity && this.state.price && this.state.alertOffset) {
             let rawMaterial = {
-                materialTitle: this.state.materialTitle.split(","),
+                title: this.state.materialTitle,
                 measurementType: this.state.measurementType,
                 availableQuantity: this.state.availableQuantity,
                 price: this.state.price,
@@ -103,13 +137,13 @@ class AlayaInventory extends React.Component {
 
     createOutfit(e) {
         e.preventDefault();
-        if (this.state.outfitTitle != '' && thist.state.constituents != '' && this.state.outfitAvailableQuantity != '' && this.state.pipelineOffset != '') {
+        if (this.state.outfitTitle && this.state.outfitAvailableQuantity && this.state.pipelineOffset && Object.keys(this.state.composition).length > 0) {
             let outfit = {
-                oufitTitle: this.state.oufitTitle.split(","),
-                constituents: this.state.constituents,
-                outfitAvailableQuantity: this.state.outfitAvailableQuantity,
+                title: this.state.outfitTitle,
+                composition: this.state.composition,
+                availableQuantity: this.state.outfitAvailableQuantity,
                 soldQuantity: this.state.soldQuantity,
-                pipeline: this.state.pipeline,
+                pipelineQuantity: this.state.pipeline,
                 pipelineOffset: this.state.pipelineOffset
             }
             this.props.createOutfit(outfit);
@@ -126,7 +160,7 @@ class AlayaInventory extends React.Component {
                     clientConfig.rawMaterialColumns.unshift({
                         Header: '',
                         id: 'delete',
-                        accessor: 'title',
+                        accessor: '_id',
                         Cell: ({ value }) => (<button onClick={this.deleteRawMaterial.bind(this, value)}>Delete</button>)
                     });
                 }
@@ -146,13 +180,13 @@ class AlayaInventory extends React.Component {
                     clientConfig.outfitColumns.unshift({
                         Header: '',
                         id: 'delete',
-                        accessor: 'title',
+                        accessor: '_id',
                         Cell: ({ value }) => (<button onClick={this.deleteOutfit.bind(this, value)}>Delete</button>)
                     });
                 }
                 return <div>
                     <h1>Alaya Outfits</h1>
-                    <ReactTable data={this.props.all} columns={clientConfig.outfitColumns} className="-striped -highlight" />
+                    <ReactTable data={this.props.allOutfits} columns={clientConfig.outfitColumns} className="-striped -highlight" />
                 </div>
             }
         }
@@ -172,32 +206,32 @@ class AlayaInventory extends React.Component {
                     <TabPanel>
                         <h1>Create Raw Material</h1>
                         <form>
-                        <div>
-                            <h4>Title: </h4>
-                            <input type="text" onChange={this.handleCreateMaterialTitle.bind(this)} />
-                        </div>
-                        <div>
-                            <h4>Measurement Type: </h4>
-                            <select defaultValue={this.state.measurementType} onChange={this.handleCreateMeasurementType.bind(this)}>
-                                <option value=""> -- Select Type -- </option>
-                                <option value="thaan">Thaan</option>
-                                <option value="packet">Packet</option>
-                            </select>
-                        </div>
-                        <div>
-                            <h4>Available Quantity: </h4>
-                            <input type="number" onChange={this.handleCreateAvailableQuantity.bind(this)} />
-                        </div>
-                        <div>
-                            <h4>Price: </h4>
-                            <input type="number" onChange={this.handleCreatePrice.bind(this)} />
-                        </div>
-                        <div>
-                            <h4>Alert Offset: </h4>
-                            <input type="number" onChange={this.handleCreateAlertOffset.bind(this)} />
-                        </div>
-                        <br />
-                        <button onClick={this.createRawMaterial.bind(this)}>Create Raw Material</button>
+                            <div>
+                                <h4>Title: </h4>
+                                <input type="text" onChange={this.handleCreateTitle.bind(this)} />
+                            </div>
+                            <div>
+                                <h4>Measurement Type: </h4>
+                                <select defaultValue={this.state.measurementType} onChange={this.handleCreateMeasurementType.bind(this)}>
+                                    <option value=""> -- Select Type -- </option>
+                                    <option value="thaan">Thaan</option>
+                                    <option value="packet">Packet</option>
+                                </select>
+                            </div>
+                            <div>
+                                <h4>Available Quantity: </h4>
+                                <input type="number" onChange={this.handleCreateAvailableQuantity.bind(this)} />
+                            </div>
+                            <div>
+                                <h4>Price: </h4>
+                                <input type="number" onChange={this.handleCreatePrice.bind(this)} />
+                            </div>
+                            <div>
+                                <h4>Alert Offset: </h4>
+                                <input type="number" onChange={this.handleCreateAlertOffset.bind(this)} />
+                            </div>
+                            <br />
+                            <button onClick={this.createRawMaterial.bind(this)}>Create Raw Material</button>
                         </form>
                         <br />
                         {this.renderRawMaterials()}
@@ -208,9 +242,24 @@ class AlayaInventory extends React.Component {
                             <h4>Title: </h4>
                             <input type="text" onChange={this.handleCreateOufitTitle.bind(this)} />
                         </div>
+                        <h4>Composition:</h4>
                         <div>
-                            <h4>Constituents: </h4>
-
+                            {this.props.allRawMaterials ? <Select
+                                value={this.state.materialTitle}
+                                onChange={(e) => this.handleChangeTitle(e)}
+                                options={this.props.allRawMaterials.map((item, i) => {
+                                    return { value: item.title, label: item.title }
+                                })}></Select>
+                                : null}
+                            <h4>Quantity: </h4>
+                            <input type="number" onChange={this.handleChangeCompositionQuantity.bind(this)} />
+                            <button onClick={this.handleChangeComposition.bind(this)}>Enter Composition</button>
+                            <br/>
+                            <ul>
+                            {Object.keys(this.state.composition).map((key, i) => {
+                                return <li key={i}>{key} : {this.state.composition[key]} <button onClick={this.handleDeleteComposition.bind(this, key)}>Delete</button></li>;
+                            })}
+                            </ul>
                         </div>
                         <div>
                             <h4>Available Quantity: </h4>
@@ -255,7 +304,7 @@ function mapStateToProps(state) {
         role: state.auth.role,
         user: state.auth.email,
         allRawMaterials: state.allRawMaterials ? state.allRawMaterials : null,
-        allOutfits: state.allOutfits ? state.allOutfits: null
+        allOutfits: state.allOutfits ? state.allOutfits : null
     };
 }
 
