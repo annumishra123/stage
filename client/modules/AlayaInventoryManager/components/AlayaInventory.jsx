@@ -49,7 +49,7 @@ class AlayaInventory extends React.Component {
     markSold(e) {
         let markSoldObject = {
             _id: this.state.selectedOutfit._id,
-            soldQuantity: this.state.changedSoldQuantity
+            soldQuantity: parseInt(this.state.changedSoldQuantity)
         }
         this.props.markSold(markSoldObject);
     }
@@ -214,7 +214,7 @@ class AlayaInventory extends React.Component {
                         Cell: ({ value }) => (<button onClick={this.deleteOutfit.bind(this, value)}>Delete</button>)
                     });
                 }
-                if (this.props.role == 'admin') {
+                if (this.props.role == 'admin' && !clientConfig.outfitColumns.find(o => o.id == 'markSold')) {
                     clientConfig.outfitColumns.unshift({
                         Header: '',
                         id: 'markSold',
