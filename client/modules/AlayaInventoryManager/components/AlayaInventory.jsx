@@ -8,6 +8,9 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import clientConfig from '../../../config';
 import Select from 'react-select';
 
+// Import Style
+import styles from './alayaInventory.css';
+
 class AlayaInventory extends React.Component {
     constructor(props) {
         super(props);
@@ -115,7 +118,7 @@ class AlayaInventory extends React.Component {
         delete changedComposition[key];
         this.setState({
             composition: changedComposition
-        });       
+        });
     }
 
     createRawMaterial(e) {
@@ -161,7 +164,7 @@ class AlayaInventory extends React.Component {
                         Header: '',
                         id: 'delete',
                         accessor: '_id',
-                        Cell: ({ value }) => (<button onClick={this.deleteRawMaterial.bind(this, value)}>Delete</button>)
+                        Cell: ({ value }) => (<button onClick={this.deleteRawMaterial.bind(this, value)} className={styles.deletetext}>Delete</button>)
                     });
                 }
                 return <div>
@@ -181,7 +184,7 @@ class AlayaInventory extends React.Component {
                         Header: '',
                         id: 'delete',
                         accessor: '_id',
-                        Cell: ({ value }) => (<button onClick={this.deleteOutfit.bind(this, value)}>Delete</button>)
+                        Cell: ({ value }) => (<button onClick={this.deleteOutfit.bind(this, value)} className={styles.deletetext}>Delete</button>)
                     });
                 }
                 return <div>
@@ -193,9 +196,9 @@ class AlayaInventory extends React.Component {
     }
 
     render() {
-        return (<section>
+        return (<section className={styles.alayaInventory}>
             <div>
-                <button onClick={this.handleNavigationPage.bind(this)}>Back</button>
+                <button onClick={this.handleNavigationPage.bind(this)} className={styles.backBtn}>Back</button>
                 <h1>Alaya Inventory</h1>
                 <br />
                 <Tabs selectedIndex={this.state.tabIndex} onSelect={this.handleTabChange.bind(this)}>
@@ -204,7 +207,7 @@ class AlayaInventory extends React.Component {
                         <Tab>Outfits</Tab>
                     </TabList>
                     <TabPanel>
-                        <h1>Create Raw Material</h1>
+                        <h2>Add Raw Material</h2>
                         <form>
                             <div>
                                 <h4>Title: </h4>
@@ -231,36 +234,43 @@ class AlayaInventory extends React.Component {
                                 <input type="number" onChange={this.handleCreateAlertOffset.bind(this)} />
                             </div>
                             <br />
-                            <button onClick={this.createRawMaterial.bind(this)}>Create Raw Material</button>
+                            <button onClick={this.createRawMaterial.bind(this)}>Add Raw Material</button>
                         </form>
                         <br />
                         {this.renderRawMaterials()}
                     </TabPanel>
                     <TabPanel>
-                        <h1>Create Outfit</h1>
-                        <div>
-                            <h4>Title: </h4>
-                            <input type="text" onChange={this.handleCreateOufitTitle.bind(this)} />
+                        <h2>Add Outfit</h2>
+                        <div className={styles.composition}>
+                            <div className={styles.width50}>
+                                <div>
+                                    <h4>Title: </h4>
+                                    <input type="text" onChange={this.handleCreateOufitTitle.bind(this)} />
+                                </div>
+                            </div>
+                            <div className={styles.width50}>
+                                <h4>Composition:</h4>
+                                {this.props.allRawMaterials ? <Select className={styles.select}
+                                    value={this.state.materialTitle}
+                                    onChange={(e) => this.handleChangeTitle(e)}
+                                    options={this.props.allRawMaterials.map((item, i) => {
+                                        return { value: item.title, label: item.title }
+                                    })}></Select>
+                                    : null}
+                            </div>
+                            <div className={styles.width50}>
+                                <h4>Quantity: </h4>
+                                <input type="number" onChange={this.handleChangeCompositionQuantity.bind(this)} />
+                                <button onClick={this.handleChangeComposition.bind(this)}>Submit</button>
+                                <br />
+                                <ul className={styles.compositionList}>
+                                    {Object.keys(this.state.composition).map((key, i) => {
+                                        return <li key={i}>{key} : {this.state.composition[key]} <button onClick={this.handleDeleteComposition.bind(this, key)}>&times;</button></li>;
+                                    })}
+                                </ul>
+                            </div>
                         </div>
-                        <h4>Composition:</h4>
-                        <div>
-                            {this.props.allRawMaterials ? <Select
-                                value={this.state.materialTitle}
-                                onChange={(e) => this.handleChangeTitle(e)}
-                                options={this.props.allRawMaterials.map((item, i) => {
-                                    return { value: item.title, label: item.title }
-                                })}></Select>
-                                : null}
-                            <h4>Quantity: </h4>
-                            <input type="number" onChange={this.handleChangeCompositionQuantity.bind(this)} />
-                            <button onClick={this.handleChangeComposition.bind(this)}>Enter Composition</button>
-                            <br/>
-                            <ul>
-                            {Object.keys(this.state.composition).map((key, i) => {
-                                return <li key={i}>{key} : {this.state.composition[key]} <button onClick={this.handleDeleteComposition.bind(this, key)}>Delete</button></li>;
-                            })}
-                            </ul>
-                        </div>
+
                         <div>
                             <h4>Available Quantity: </h4>
                             <input type="number" onChange={this.handleCreateOutfitAvailableQuantity.bind(this)} />
@@ -284,7 +294,7 @@ class AlayaInventory extends React.Component {
                     </TabPanel>
                 </Tabs>
             </div>
-        </section>)
+        </section >)
     }
 }
 

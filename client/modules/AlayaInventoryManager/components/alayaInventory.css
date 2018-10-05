@@ -1,0 +1,140 @@
+.backBtn {
+    background: transparent !important;
+    width: auto !important;
+    color: #333 !important;
+    text-decoration: underline;
+    padding: 0 !important;
+    border: 0 !important;
+    cursor: pointer;
+}
+.alayaInventory h2 {
+    color: #000;
+    display: inline-block;
+    font-family: 'Lato', sans-serif;
+    font-size: 19px;
+    letter-spacing: 0.5px;
+    text-align: left;
+    margin: 18px 0 5px;
+    width: 200px;
+}
+.alayaInventory h4 {
+    color: #000;
+    display: inline-block;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    text-align: left;
+    margin: 18px 0 5px;
+    width: 200px;
+}
+.alayaInventory input {
+    border: 1px solid rgab(0,0,0,0.5);
+    padding: 8px;
+    margin: 0 0 10px;
+    color: #333;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    width: 350px;
+}
+.alayaInventory select {
+    border: 1px solid rgab(0,0,0,0.5);
+    color: #000;
+    padding: 8px 8px;
+    margin: 0 10px 10px 0;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    width: 350px;
+}
+.alayaInventory button {
+    background: #333;
+    border:0;
+    color: #fff;
+    display: inline-block !important;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    padding: 12px 20px;
+    margin: 10px 15px 10px 0;
+    letter-spacing: 1px;
+    width: auto;
+    cursor: pointer;
+}
+.composition {
+    background: #dfdfdf;
+    padding: 15px;
+    overflow: hidden;
+}
+.composition .width50 {
+    width: 50%;
+    float:left;
+}
+.composition .width50 h4 {
+    width: 30%;
+}
+.composition .width50 input {
+    width:60%;
+}
+.composition .width50 .select {
+    width:65%;
+    display: inline-flex;
+    margin: 0 0 15px;
+}
+.compositionList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.compositionList li {
+    display: block;
+    margin: 0 0 5px 0;
+}
+.compositionList li button {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    line-height: 13px;
+    margin: 5px 0 0 7px;
+}
+.deletetext {
+    margin: 0 !important;
+    padding: 3px !important;
+    font-size: 13px !important;
+    background: transparent !important;
+    color: #000 !important;
+    text-decoration: underline !important;
+}
+
+@media (max-width: 767px){
+
+    .composition .width50  {
+        width: 100%;
+    }
+    .composition .width50 h4 {
+        font-size: 14px;
+        width: 35%;
+    }
+    .composition .width50 input {
+        margin: 0 0 5px;
+    }
+    .composition .width50 .select {
+        margin: 0 0 5px;
+        width: 60%;
+    }
+    .alayaInventory h4 {
+        font-size: 14px;
+        margin: 10px 0 5px;
+    }
+    .alayaInventory input {
+        margin: 0 0 5px;
+    }
+
+}
+
+
+
+
