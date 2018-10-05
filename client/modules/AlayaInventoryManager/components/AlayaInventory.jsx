@@ -222,7 +222,7 @@ class AlayaInventory extends React.Component {
                         Header: '',
                         id: 'markSold',
                         accessor: (value) => (<div>
-                            <button onClick={() => this.showSoldModal(value)}>Mark Sold</button>
+                            <button onClick={() => this.showSoldModal(value)} className={styles.deletetext}>Mark Sold</button>
                         </div>)
                     });
                 }
@@ -365,12 +365,12 @@ class AlayaInventory extends React.Component {
                         {this.renderRawMaterials()}
                     </TabPanel>
                 </Tabs>
-                <ReactModal isOpen={this.state.viewSoldModal} onRequestClose={this.hideSoldModal.bind(this)} contentLabel="Change Sold Quantity">
+                <ReactModal className={styles.statusPop} isOpen={this.state.viewSoldModal} onRequestClose={this.hideSoldModal.bind(this)} contentLabel="Change Sold Quantity">
                     <span onClick={this.hideSoldModal.bind(this)}>×</span>
                     <br />
                     <h3>Outfit Title: {this.state.selectedOutfit ? this.state.selectedOutfit.title : null}</h3>
-                    <br />
                     <h4>Sold Outfits: </h4>
+                    <br />
                     <input type="number" onChange={this.changeSoldQuantity.bind(this)} />
                     <button onClick={this.markSold.bind(this)}>Update</button>
                 </ReactModal>
