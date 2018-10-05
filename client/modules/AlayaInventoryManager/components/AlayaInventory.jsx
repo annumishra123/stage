@@ -2,11 +2,12 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { createRawMaterial, getAllRawMaterial, deleteRawMaterial, createOutfit, getAllOutfits, deleteOutfit } from '../AlayaInventoryActions';
+import { createRawMaterial, getAllRawMaterial, deleteRawMaterial, createOutfit, getAllOutfits, deleteOutfit, markSold } from '../AlayaInventoryActions';
 import ReactTable from 'react-table';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import clientConfig from '../../../config';
 import Select from 'react-select';
+import ReactModal from 'react-modal';
 
 // Import Style
 import styles from './alayaInventory.css';
@@ -28,7 +29,10 @@ class AlayaInventory extends React.Component {
             pipeline: '',
             pipelineOffset: '',
             compositionQuantity: '',
-            composition: {}
+            composition: {},
+            viewSoldModal: false,
+            changedSoldQuantity: '',
+            selectedOutfit: null
         };
     }
 
@@ -43,6 +47,14 @@ class AlayaInventory extends React.Component {
 
     deleteOutfit(_id) {
         this.props.deleteOutfit(_id)
+    }
+
+    markSold(e) {
+        let markSoldObject = {
+            _id: this.state.selectedOutfit._id,
+            soldQuantity: parseInt(this.state.changedSoldQuantity)
+        }
+        this.props.markSold(markSoldObject);
     }
 
     handleNavigationPage() {
@@ -121,6 +133,24 @@ class AlayaInventory extends React.Component {
         });
     }
 
+    showSoldModal(value) {
+        debugger;
+        this.setState({
+            viewSoldModal: true,
+            selectedOutfit: value
+        });
+    }
+
+    hideSoldModal() {
+        this.setState({
+            viewSoldModal: false,
+        })
+    }
+
+    changeSoldQuantity(e) {
+        this.setState({ changedSoldQuantity: e.target.value });
+    }
+
     createRawMaterial(e) {
         e.preventDefault();
         if (this.state.materialTitle && this.state.measurementType && this.state.availableQuantity && this.state.price && this.state.alertOffset) {
@@ -187,6 +217,15 @@ class AlayaInventory extends React.Component {
                         Cell: ({ value }) => (<button onClick={this.deleteOutfit.bind(this, value)} className={styles.deletetext}>Delete</button>)
                     });
                 }
+                if (this.props.role == 'admin' && !clientConfig.outfitColumns.find(o => o.id == 'markSold')) {
+                    clientConfig.outfitColumns.unshift({
+                        Header: '',
+                        id: 'markSold',
+                        accessor: (value) => (<div>
+                            <button onClick={() => this.showSoldModal(value)}>Mark Sold</button>
+                        </div>)
+                    });
+                }
                 return <div>
                     <h1>Alaya Outfits</h1>
                     <ReactTable data={this.props.allOutfits} columns={clientConfig.outfitColumns} className="-striped -highlight" />
@@ -203,8 +242,8 @@ class AlayaInventory extends React.Component {
                 <br />
                 <Tabs selectedIndex={this.state.tabIndex} onSelect={this.handleTabChange.bind(this)}>
                     <TabList>
-                        <Tab>Raw Materials</Tab>
                         <Tab>Outfits</Tab>
+                        <Tab>Raw Materials</Tab>
                     </TabList>
                     <TabPanel>
                         <h2>Add Raw Material</h2>
@@ -292,7 +331,49 @@ class AlayaInventory extends React.Component {
                         <br />
                         {this.renderOutfits()}
                     </TabPanel>
+                    <TabPanel>
+                        <h1>Create Raw Material</h1>
+                        <form>
+                            <div>
+                                <h4>Title: </h4>
+                                <input type="text" onChange={this.handleCreateTitle.bind(this)} />
+                            </div>
+                            <div>
+                                <h4>Measurement Type: </h4>
+                                <select defaultValue={this.state.measurementType} onChange={this.handleCreateMeasurementType.bind(this)}>
+                                    <option value=""> -- Select Type -- </option>
+                                    <option value="thaan">Thaan</option>
+                                    <option value="packet">Packet</option>
+                                </select>
+                            </div>
+                            <div>
+                                <h4>Available Quantity: </h4>
+                                <input type="number" onChange={this.handleCreateAvailableQuantity.bind(this)} />
+                            </div>
+                            <div>
+                                <h4>Price: </h4>
+                                <input type="number" onChange={this.handleCreatePrice.bind(this)} />
+                            </div>
+                            <div>
+                                <h4>Alert Offset: </h4>
+                                <input type="number" onChange={this.handleCreateAlertOffset.bind(this)} />
+                            </div>
+                            <br />
+                            <button onClick={this.createRawMaterial.bind(this)}>Create Raw Material</button>
+                        </form>
+                        <br />
+                        {this.renderRawMaterials()}
+                    </TabPanel>
                 </Tabs>
+                <ReactModal isOpen={this.state.viewSoldModal} onRequestClose={this.hideSoldModal.bind(this)} contentLabel="Change Sold Quantity">
+                    <span onClick={this.hideSoldModal.bind(this)}>×</span>
+                    <br />
+                    <h3>Outfit Title: {this.state.selectedOutfit ? this.state.selectedOutfit.title : null}</h3>
+                    <br />
+                    <h4>Sold Outfits: </h4>
+                    <input type="number" onChange={this.changeSoldQuantity.bind(this)} />
+                    <button onClick={this.markSold.bind(this)}>Update</button>
+                </ReactModal>
             </div>
         </section >)
     }
@@ -305,7 +386,8 @@ function matchDispatchToProps(dispatch) {
         deleteRawMaterial,
         getAllOutfits,
         createOutfit,
-        deleteOutfit
+        deleteOutfit,
+        markSold
     }, dispatch);
 }
 
