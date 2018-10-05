@@ -216,9 +216,9 @@ router.post("/marksold", passport.authenticate('jwt', {
                     if (outfit.availableQuantity < outfit.pipelineOffset) {
                         var toBeAddedToPipeline = outfit.pipelineOffset - outfit.availableQuantity;
                         outfit.pipelineQuantity += toBeAddedToPipeline;
-                        Object.keys(outfit.constituents).map((key, i) => {
+                        Object.keys(outfit.composition).map((key, i) => {
                             Material.findOne({ 'title': key }, function (err, material) {
-                                material.availableQuantity -= outfit.constituents[key] * toBeAddedToPipeline;
+                                material.availableQuantity -= outfit.composition[key] * toBeAddedToPipeline;
                                 if (material.availableQuantity <= material.alertOffset) {
                                     material.alert = true;
                                 }

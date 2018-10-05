@@ -727,8 +727,11 @@ const clientConfig = {
     Header: 'Title',
     accessor: 'title',
   }, {
-    Header: 'Constituents',
-    accessor: 'constituents',
+    id: 'composition',
+    Header: 'Composition',
+    accessor: o => {
+      return JSON.stringify(o.composition);
+    }
   }, {
     Header: 'Available Quantity',
     accessor: 'availableQuantity',
@@ -737,7 +740,7 @@ const clientConfig = {
     accessor: 'soldQuantity',
   }, {
     Header: 'Pipeline',
-    accessor: 'pipeline',
+    accessor: 'pipelineQuantity',
   }, {
     Header: 'Pipeline Offset',
     accessor: 'pipelineOffset',
