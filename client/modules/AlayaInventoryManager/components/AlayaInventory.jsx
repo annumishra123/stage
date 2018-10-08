@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { createRawMaterial, getAllRawMaterial, deleteRawMaterial, createOutfit, getAllOutfits, deleteOutfit, markSold } from '../AlayaInventoryActions';
+import { createRawMaterial, getAllRawMaterial, deleteRawMaterial, createOutfit, getAllOutfits, deleteOutfit, markSold, scoreMaterial } from '../AlayaInventoryActions';
 import ReactTable from 'react-table';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import clientConfig from '../../../config';
@@ -32,7 +32,10 @@ class AlayaInventory extends React.Component {
             composition: {},
             viewSoldModal: false,
             changedSoldQuantity: '',
-            selectedOutfit: null
+            selectedOutfit: null,
+            viewMaterialModal: false,
+            selectedMaterial: null,
+            changedMaterialQuantity: '',
         };
     }
 
@@ -49,12 +52,20 @@ class AlayaInventory extends React.Component {
         this.props.deleteOutfit(_id)
     }
 
-    markSold(e) {
+    markSold() {
         let markSoldObject = {
             _id: this.state.selectedOutfit._id,
             soldQuantity: parseInt(this.state.changedSoldQuantity)
         }
         this.props.markSold(markSoldObject);
+    }
+
+    scoreMaterial() {
+        let scoreMaterialObject= {
+            _id: this.state.selectedMaterial._id,
+            quantity: parseInt(this.state.changedMaterialQuantity)
+        }
+        this.props.scoreMaterial(scoreMaterialObject);
     }
 
     handleNavigationPage() {
@@ -152,6 +163,23 @@ class AlayaInventory extends React.Component {
         this.setState({ changedSoldQuantity: e.target.value });
     }
 
+    showMaterialModal(value) {
+        this.setState({
+            viewMaterialModal: true,
+            selectedMaterial: value
+        });
+    }
+
+    hideMaterialModal() {
+        this.setState({
+            viewMaterialModal: false,
+        })
+    }
+
+    changeMaterialQuantity(e) {
+        this.setState({ changedMaterialQuantity: e.target.value });
+    }
+
     createRawMaterial(e) {
         e.preventDefault();
         if (this.state.materialTitle && this.state.measurementType && this.state.availableQuantity && this.state.price && this.state.alertOffset) {
@@ -211,6 +239,19 @@ class AlayaInventory extends React.Component {
                         id: 'delete',
                         accessor: '_id',
                         Cell: ({ value }) => (<button onClick={this.deleteRawMaterial.bind(this, value)} className={styles.deletetext}>Delete</button>)
+                    });
+                }
+
+                let index = clientConfig.rawMaterialColumns.findIndex(o => o.id == 'score');
+                if (index != -1) { clientConfig.rawMaterialColumns.splice(index, 1); }
+
+                if (this.props.role == 'admin') {
+                    clientConfig.rawMaterialColumns.unshift({
+                        Header: '',
+                        id: 'score',
+                        accessor: (value) => (<div>
+                            <button onClick={() => this.showMaterialModal(value)} className={styles.deletetext}>Update</button>
+                        </div>)
                     });
                 }
                 return <div>
@@ -361,6 +402,15 @@ class AlayaInventory extends React.Component {
                     <input type="number" onChange={this.changeSoldQuantity.bind(this)} />
                     <button onClick={this.markSold.bind(this)}>Update</button>
                 </ReactModal>
+                <ReactModal className={styles.statusPop} isOpen={this.state.viewMaterialModal} onRequestClose={this.hideMaterialModal.bind(this)} contentLabel="Change Material Quantity">
+                    <span onClick={this.hideMaterialModal.bind(this)}>×</span>
+                    <br />
+                    <h3>Material Title: {this.state.selectedMaterial ? this.state.selectedMaterial.title : null}</h3>
+                    <h4>Sourced Quantity: </h4>
+                    <br />
+                    <input type="number" onChange={this.changeMaterialQuantity.bind(this)} />
+                    <button onClick={this.scoreMaterial.bind(this)}>Update</button>
+                </ReactModal>
             </div>
         </section >)
     }
@@ -374,7 +424,8 @@ function matchDispatchToProps(dispatch) {
         getAllOutfits,
         createOutfit,
         deleteOutfit,
-        markSold
+        markSold,
+        scoreMaterial
     }, dispatch);
 }
 

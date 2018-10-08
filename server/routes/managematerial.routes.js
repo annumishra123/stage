@@ -206,45 +206,80 @@ router.get("/deleteoutfit", passport.authenticate('jwt', {
 router.post("/marksold", passport.authenticate('jwt', {
     session: false,
 }), (req, res) => {
-        if (req.user.role === 'admin') {
-            if (req.body._id && req.body.soldQuantity) {
-                Outfit.findOne({ '_id': req.body._id }, function (err, outfit) {
-                    if (outfit) {
-                        outfit.soldQuantity += parseInt(req.body.soldQuantity);
-                        outfit.availableQuantity -= parseInt(req.body.soldQuantity);
-                        if (outfit.availableQuantity < outfit.pipelineOffset) {
-                            var toBeAddedToPipeline = outfit.pipelineOffset - outfit.availableQuantity;
-                            outfit.pipelineQuantity += toBeAddedToPipeline;
-                            Object.keys(outfit.composition).map((key, i) => {
-                                Material.findOne({ 'title': key }, function (err, material) {
-                                    material.availableQuantity -= parseInt(outfit.composition[key]) * toBeAddedToPipeline;
-                                    if (material.availableQuantity <= material.alertOffset) {
-                                        material.alert = true;
-                                    }
-                                    material.save(); 
-                                });
+    if (req.user.role === 'admin') {
+        if (req.body._id && req.body.soldQuantity) {
+            Outfit.findOne({ '_id': req.body._id }, function (err, outfit) {
+                if (outfit) {
+                    outfit.soldQuantity += parseInt(req.body.soldQuantity);
+                    outfit.availableQuantity -= parseInt(req.body.soldQuantity);
+                    if (outfit.availableQuantity < outfit.pipelineOffset) {
+                        var toBeAddedToPipeline = outfit.pipelineOffset - outfit.availableQuantity;
+                        outfit.pipelineQuantity += toBeAddedToPipeline;
+                        Object.keys(outfit.composition).map((key, i) => {
+                            Material.findOne({ 'title': key }, function (err, material) {
+                                material.availableQuantity -= parseInt(outfit.composition[key]) * toBeAddedToPipeline;
+                                if (material.availableQuantity <= material.alertOffset) {
+                                    material.alert = true;
+                                }
+                                material.save();
                             });
-                            outfit.save().then(item => {
-                                res.json({
-                                    status: 'SUCCESS'
-                                });
-                            }).catch(err => {
-                                res.status(400).json({
-                                    status: 'FAILED'
-                                });
+                        });
+                        outfit.save().then(item => {
+                            res.json({
+                                status: 'SUCCESS'
                             });
-                        }
-                    } else {
-                        res.send('Outfit Not Found')
+                        }).catch(err => {
+                            res.status(400).json({
+                                status: 'FAILED'
+                            });
+                        });
                     }
-                })
-            } else {
-                res.status(400).send('Bad Request');
-            }
+                } else {
+                    res.send('Outfit Not Found')
+                }
+            })
         } else {
-            res.status(401).send('Unauthorized');
+            res.status(400).send('Bad Request');
         }
+    } else {
+        res.status(401).send('Unauthorized');
+    }
 });
+
+router.post("/scorematerial", passport.authenticate('jwt', {
+    session: false,
+}), (req, res) => {
+    if (req.user.role === 'admin') {
+        if (req.body._id && req.body.quantity) {
+            Material.findOne({ '_id': req.body._id }, function(err, material){
+                if (material) {
+                    material.availableQuantity += parseInt(req.body.quantity);
+                    if (material.availableQuantity <= material.alertOffset) {
+                        material.alert = true;
+                    } else {
+                        material.alert = false;
+                    }
+                    material.save().then(item => {
+                        res.json({
+                            status: 'SUCCESS'
+                        });
+                    }).catch(err => {
+                        res.status(400).json({
+                            status: 'FAILED'
+                        });
+                    });
+                } else {
+                    res.status(200).send('Material Not Found');
+                }
+            });
+        } else {
+            res.status(400).send('Bad Request')
+        }
+    } else {
+        res.status(401).send('Unauthorized');
+    }
+});
+
 
 
 

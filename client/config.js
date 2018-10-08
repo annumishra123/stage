@@ -728,9 +728,6 @@ const clientConfig = {
     },
   }],
   outfitColumns: [{
-    Header: 'Outfit Id',
-    accessor: '_id',
-  }, {
     Header: 'Title',
     accessor: 'title',
   }, {

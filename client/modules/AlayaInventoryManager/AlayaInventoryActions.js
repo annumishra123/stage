@@ -136,7 +136,7 @@ export function deleteOutfit(_id) {
     }
 }
 
-export function markSold(markSold) {
+export function markSold(markSoldObject) {
     return function (dispatch) {
         let url = '/managematerial/marksold';
         let token = localStorage.getItem('token');
@@ -144,13 +144,35 @@ export function markSold(markSold) {
             url: url,
             timeout: 20000,
             method: 'post',
-            data: markSold,
+            data: markSoldObject,
             responseType: 'json',
             headers: {
                 Authorization: 'JWT ' + token,
             },
         }).then(function (response) {
             dispatch(getAllOutfits());
+            dispatch(getAllRawMaterial());
+            alert('Quantity Updated');
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+}
+
+export function scoreMaterial(scoreMaterialObject) {
+    return function (dispatch) {
+        let url = '/managematerial/scorematerial';
+        let token = localStorage.getItem('token');
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            data: scoreMaterialObject,
+            responseType: 'json',
+            headers: {
+                Authorization: 'JWT ' + token,
+            },
+        }).then(function (response) {
             dispatch(getAllRawMaterial());
             alert('Quantity Updated');
         }).catch(function (error) {
