@@ -118,11 +118,13 @@ class AlayaInventory extends React.Component {
     }
 
     handleChangeComposition() {
-        let changedComposition = this.state.composition;
-        changedComposition[this.state.materialTitle] = this.state.compositionQuantity;
-        this.setState({
-            composition: changedComposition
-        });
+        if (this.state.materialTitle && this.state.compositionQuantity) {
+            let changedComposition = this.state.composition;
+            changedComposition[this.state.materialTitle] = this.state.compositionQuantity;
+            this.setState({
+                composition: changedComposition
+            });
+        }
     }
 
     handleDeleteComposition(key) {
@@ -161,6 +163,13 @@ class AlayaInventory extends React.Component {
                 alertOffset: this.state.alertOffset
             }
             this.props.createRawMaterial(rawMaterial);
+            this.setState({
+                materialTitle: '',
+                measurementType: '',
+                availableQuantity: '',
+                price: '',
+                alertOffset: ''
+            })
         }
         else {
             alert('Fill in all the details');
@@ -179,6 +188,14 @@ class AlayaInventory extends React.Component {
                 pipelineOffset: this.state.pipelineOffset
             }
             this.props.createOutfit(outfit);
+            this.setState({
+                outfitTitle: '',
+                composition: {},
+                outfitAvailableQuantity: '',
+                soldQuantity: '',
+                pipelineQuantity: '',
+                pipelineOffset: ''
+            })
         }
         else {
             alert('Fill in all the details');
