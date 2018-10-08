@@ -695,7 +695,66 @@ const clientConfig = {
       return moment(o.dateAdded).format('lll');
     },
   }],
+  rawMaterialColumns: [{
+    Header: 'Title',
+    accessor: 'title',
+  }, {
+    id: 'alert',
+    Header: 'Status',
+    accessor: o => {
+      if (o.alert) {
+        return <p><img src="https://ik.imagekit.io/stage3/tr:n-web/icon-alert1.png" /></p>
+      } else {
+        return <p><img src="https://ik.imagekit.io/stage3/tr:n-web/icon-ok2.png" /></p>
+      }
+    },
+  }, {
+    Header: 'Measurement Type',
+    accessor: 'measurementType',
+  }, {
+    Header: 'Available Quantity',
+    accessor: 'availableQuantity',
+  }, {
+    Header: 'Price',
+    accessor: 'price',
+  }, {
+    Header: 'Alert Offset',
+    accessor: 'alertOffset',
+  }, {
+    id: 'created',
+    Header: 'Created',
+    accessor: o => {
+      return moment(o.creationTime).format('lll');
+    },
+  }],
+  outfitColumns: [{
+    Header: 'Title',
+    accessor: 'title',
+  }, {
+    id: 'composition',
+    Header: 'Composition',
+    accessor: o => {
+      return JSON.stringify(o.composition);
+    }
+  }, {
+    Header: 'Available Quantity',
+    accessor: 'availableQuantity',
+  }, {
+    Header: 'Sold Quantity',
+    accessor: 'soldQuantity',
+  }, {
+    Header: 'Pipeline',
+    accessor: 'pipelineQuantity',
+  }, {
+    Header: 'Pipeline Offset',
+    accessor: 'pipelineOffset',
+  }, {
+    id: 'created',
+    Header: 'Created',
+    accessor: o => {
+      return moment(o.creationTime).format('lll');
+    },
+  }],
 };
-
 
 export default clientConfig;

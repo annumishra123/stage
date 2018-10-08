@@ -47,6 +47,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Auth/components/CreateUser');
   require('./modules/Shipping/components/WayBills');
   require('./modules/CMS/components/CreateStore');
+  require('./modules/AlayaInventoryManager/components/AlayaInventory');
 }
 
 // react-router setup with code-splitting
@@ -308,6 +309,11 @@ export default function getRoutes(store, req) {
       <Route path="/createstore" onEnter={checkAdmin} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/CMS/components/CreateStore').default);
+        });
+      }} />
+      <Route path="/alaya" onEnter={checkAdmin} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/AlayaInventoryManager/components/AlayaInventory').default);
         });
       }} />
     </Route>

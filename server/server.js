@@ -5,6 +5,8 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import IntlWrapper from '../client/modules/Intl/IntlWrapper';
 import User from './models/user';
+import Material from './models/rawMaterial';
+import Outfit from './models/outfit';
 import cuid from 'cuid';
 
 // Webpack Requirements
@@ -41,6 +43,7 @@ import { fetchComponentData } from './util/fetchData';
 import { fetchIsAuthenticated } from './util/fetchAuth';
 import auth from './routes/auth.routes';
 import download from './routes/download.routes';
+import managematerial from './routes/managematerial.routes';
 import dummyData from './dummyData';
 import serverConfig from './config';
 import passport from './passport';
@@ -84,6 +87,7 @@ app.use(bodyParser.urlencoded({
 app.use(Express.static(path.resolve(__dirname, '../dist')));
 app.use('/auth', auth);
 app.use('/download', download);
+app.use('/managematerial', managematerial);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
