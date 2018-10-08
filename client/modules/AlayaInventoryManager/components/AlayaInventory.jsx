@@ -9,6 +9,9 @@ import clientConfig from '../../../config';
 import Select from 'react-select';
 import ReactModal from 'react-modal';
 
+// Import Style
+import styles from './alayaInventory.css';
+
 class AlayaInventory extends React.Component {
     constructor(props) {
         super(props);
@@ -131,7 +134,6 @@ class AlayaInventory extends React.Component {
     }
 
     showSoldModal(value) {
-        debugger;
         this.setState({
             viewSoldModal: true,
             selectedOutfit: value
@@ -191,7 +193,7 @@ class AlayaInventory extends React.Component {
                         Header: '',
                         id: 'delete',
                         accessor: '_id',
-                        Cell: ({ value }) => (<button onClick={this.deleteRawMaterial.bind(this, value)}>Delete</button>)
+                        Cell: ({ value }) => (<button onClick={this.deleteRawMaterial.bind(this, value)} className={styles.deletetext}>Delete</button>)
                     });
                 }
                 return <div>
@@ -211,15 +213,19 @@ class AlayaInventory extends React.Component {
                         Header: '',
                         id: 'delete',
                         accessor: '_id',
-                        Cell: ({ value }) => (<button onClick={this.deleteOutfit.bind(this, value)}>Delete</button>)
+                        Cell: ({ value }) => (<button onClick={this.deleteOutfit.bind(this, value)} className={styles.deletetext}>Delete</button>)
                     });
                 }
-                if (this.props.role == 'admin' && !clientConfig.outfitColumns.find(o => o.id == 'markSold')) {
+
+                let soldIndex = clientConfig.outfitColumns.findIndex(o => o.id == 'markSold');
+                if (soldIndex != -1) { clientConfig.outfitColumns.splice(soldIndex, 1); }
+
+                if (this.props.role == 'admin') {
                     clientConfig.outfitColumns.unshift({
                         Header: '',
                         id: 'markSold',
                         accessor: (value) => (<div>
-                            <button onClick={() => this.showSoldModal(value)}>Mark Sold</button>
+                            <button onClick={() => this.showSoldModal(value)} className={styles.deletetext}>Mark Sold</button>
                         </div>)
                     });
                 }
@@ -232,9 +238,9 @@ class AlayaInventory extends React.Component {
     }
 
     render() {
-        return (<section>
+        return (<section className={styles.alayaInventory}>
             <div>
-                <button onClick={this.handleNavigationPage.bind(this)}>Back</button>
+                <button onClick={this.handleNavigationPage.bind(this)} className={styles.backBtn}>Back</button>
                 <h1>Alaya Inventory</h1>
                 <br />
                 <Tabs selectedIndex={this.state.tabIndex} onSelect={this.handleTabChange.bind(this)}>
@@ -243,30 +249,37 @@ class AlayaInventory extends React.Component {
                         <Tab>Raw Materials</Tab>
                     </TabList>
                     <TabPanel>
-                        <h1>Create Outfit</h1>
-                        <div>
-                            <h4>Title: </h4>
-                            <input type="text" onChange={this.handleCreateOufitTitle.bind(this)} />
+                        <h2>Add Outfit</h2>
+                        <div className={styles.composition}>
+                            <div className={styles.width50}>
+                                <div>
+                                    <h4>Title: </h4>
+                                    <input type="text" onChange={this.handleCreateOufitTitle.bind(this)} />
+                                </div>
+                            </div>
+                            <div className={styles.width50}>
+                                <h4>Composition:</h4>
+                                {this.props.allRawMaterials ? <Select className={styles.select}
+                                    value={this.state.materialTitle}
+                                    onChange={(e) => this.handleChangeTitle(e)}
+                                    options={this.props.allRawMaterials.map((item, i) => {
+                                        return { value: item.title, label: item.title }
+                                    })}></Select>
+                                    : null}
+                            </div>
+                            <div className={styles.width50}>
+                                <h4>Quantity: </h4>
+                                <input type="number" onChange={this.handleChangeCompositionQuantity.bind(this)} />
+                                <button onClick={this.handleChangeComposition.bind(this)}>Submit</button>
+                                <br />
+                                <ul className={styles.compositionList}>
+                                    {Object.keys(this.state.composition).map((key, i) => {
+                                        return <li key={i}>{key} : {this.state.composition[key]} <button onClick={this.handleDeleteComposition.bind(this, key)}>&times;</button></li>;
+                                    })}
+                                </ul>
+                            </div>
                         </div>
-                        <h4>Composition:</h4>
-                        <div>
-                            {this.props.allRawMaterials ? <Select
-                                value={this.state.materialTitle}
-                                onChange={(e) => this.handleChangeTitle(e)}
-                                options={this.props.allRawMaterials.map((item, i) => {
-                                    return { value: item.title, label: item.title }
-                                })}></Select>
-                                : null}
-                            <h4>Quantity: </h4>
-                            <input type="number" onChange={this.handleChangeCompositionQuantity.bind(this)} />
-                            <button onClick={this.handleChangeComposition.bind(this)}>Enter Composition</button>
-                            <br />
-                            <ul>
-                                {Object.keys(this.state.composition).map((key, i) => {
-                                    return <li key={i}>{key} : {this.state.composition[key]} <button onClick={this.handleDeleteComposition.bind(this, key)}>Delete</button></li>;
-                                })}
-                            </ul>
-                        </div>
+
                         <div>
                             <h4>Available Quantity: </h4>
                             <input type="number" onChange={this.handleCreateOutfitAvailableQuantity.bind(this)} />
@@ -299,8 +312,8 @@ class AlayaInventory extends React.Component {
                                 <h4>Measurement Type: </h4>
                                 <select defaultValue={this.state.measurementType} onChange={this.handleCreateMeasurementType.bind(this)}>
                                     <option value=""> -- Select Type -- </option>
-                                    <option value="thaan">Thaan</option>
-                                    <option value="packet">Packet</option>
+                                    <option value="meters">Meters</option>
+                                    <option value="pieces">Pieces</option>
                                 </select>
                             </div>
                             <div>
@@ -322,17 +335,17 @@ class AlayaInventory extends React.Component {
                         {this.renderRawMaterials()}
                     </TabPanel>
                 </Tabs>
-                <ReactModal isOpen={this.state.viewSoldModal} onRequestClose={this.hideSoldModal.bind(this)} contentLabel="Change Sold Quantity">
+                <ReactModal className={styles.statusPop} isOpen={this.state.viewSoldModal} onRequestClose={this.hideSoldModal.bind(this)} contentLabel="Change Sold Quantity">
                     <span onClick={this.hideSoldModal.bind(this)}>×</span>
                     <br />
                     <h3>Outfit Title: {this.state.selectedOutfit ? this.state.selectedOutfit.title : null}</h3>
-                    <br />
                     <h4>Sold Outfits: </h4>
+                    <br />
                     <input type="number" onChange={this.changeSoldQuantity.bind(this)} />
                     <button onClick={this.markSold.bind(this)}>Update</button>
                 </ReactModal>
             </div>
-        </section>)
+        </section >)
     }
 }
 

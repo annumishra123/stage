@@ -5,11 +5,12 @@ const Schema = mongoose.Schema;
 const materialSchema = new Schema({
     title: {
         type: 'String',
-        required: true
+        required: true,
+        unique: true
     },
     measurementType: {
         type: 'String',
-        enum: ['thaan', 'packet'],
+        enum: ['meters', 'pieces'],
         required: true
     },
     availableQuantity: {

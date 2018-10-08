@@ -192,7 +192,7 @@ class ShopProduct extends React.Component {
                 <button onClick={this.updateShopProductDetails.bind(this)}>Update Product</button>
             </div>)
         }
-        else{
+        else {
             return null;
         }
 
