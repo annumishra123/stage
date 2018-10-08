@@ -705,7 +705,7 @@ const clientConfig = {
       if (o.alert) {
         return <p><img src="https://ik.imagekit.io/stage3/tr:n-web/icon-alert1.png" /></p>
       } else {
-        return <p><img src="https://ik.imagekit.io/stage3/tr:n-web/icon-ok.png" /></p>
+        return <p><img src="https://ik.imagekit.io/stage3/tr:n-web/icon-ok2.png" /></p>
       }
     },
   }, {
