@@ -267,13 +267,11 @@ class AlayaInventory extends React.Component {
                     </TabList>
                     <TabPanel>
                         <h2>Add Outfit</h2>
+                        <div>
+                            <h4>Title: </h4>
+                            <input type="text" onChange={this.handleCreateOufitTitle.bind(this)} />
+                        </div>
                         <div className={styles.composition}>
-                            <div className={styles.width50}>
-                                <div>
-                                    <h4>Title: </h4>
-                                    <input type="text" onChange={this.handleCreateOufitTitle.bind(this)} />
-                                </div>
-                            </div>
                             <div className={styles.width50}>
                                 <h4>Composition:</h4>
                                 {this.props.allRawMaterials ? <Select className={styles.select}
@@ -287,14 +285,14 @@ class AlayaInventory extends React.Component {
                             <div className={styles.width50}>
                                 <h4>Quantity: </h4>
                                 <input type="number" onChange={this.handleChangeCompositionQuantity.bind(this)} />
-                                <button onClick={this.handleChangeComposition.bind(this)}>Submit</button>
-                                <br />
-                                <ul className={styles.compositionList}>
-                                    {Object.keys(this.state.composition).map((key, i) => {
-                                        return <li key={i}>{key} : {this.state.composition[key]} <button onClick={this.handleDeleteComposition.bind(this, key)}>&times;</button></li>;
-                                    })}
-                                </ul>
                             </div>
+                            <button onClick={this.handleChangeComposition.bind(this)}>Submit</button>
+                            <br />
+                            <ul className={styles.compositionList}>
+                                {Object.keys(this.state.composition).map((key, i) => {
+                                    return <li key={i}>{key} : {this.state.composition[key]} <button onClick={this.handleDeleteComposition.bind(this, key)}>&times;</button></li>;
+                                })}
+                            </ul>
                         </div>
 
                         <div>
