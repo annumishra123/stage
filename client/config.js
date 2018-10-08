@@ -700,15 +700,15 @@ const clientConfig = {
     accessor: 'title',
   }, {
     id: 'alert',
-    Header: 'Alert',
+    Header: 'Status',
     accessor: o => {
       if (o.alert) {
-        return <p>Alert</p>
+        return <p><img src="https://ik.imagekit.io/stage3/tr:n-web/icon-alert1.png" /></p>
       } else {
-        return <p>Okay</p>
+        return <p><img src="https://ik.imagekit.io/stage3/tr:n-web/icon-ok.png" /></p>
       }
     },
-  },{
+  }, {
     Header: 'Measurement Type',
     accessor: 'measurementType',
   }, {

@@ -67,7 +67,7 @@
 }
 .composition .width50 {
     width: 50%;
-    float:left;
+    display: inline-block;
 }
 .composition .width50 h4 {
     width: 30%;
@@ -76,7 +76,7 @@
     width:60%;
 }
 .composition .width50 .select {
-    width:65%;
+    width:60%;
     display: inline-flex;
     margin: 0 0 15px;
 }
