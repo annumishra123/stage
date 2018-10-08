@@ -696,12 +696,19 @@ const clientConfig = {
     },
   }],
   rawMaterialColumns: [{
-    Header: 'Raw Material Id',
-    accessor: '_id',
-  }, {
     Header: 'Title',
     accessor: 'title',
   }, {
+    id: 'alert',
+    Header: 'Alert',
+    accessor: o => {
+      if (o.alert) {
+        return <p>Alert</p>
+      } else {
+        return <p>Okay</p>
+      }
+    },
+  },{
     Header: 'Measurement Type',
     accessor: 'measurementType',
   }, {

@@ -26,7 +26,7 @@ const outfitSchema = new Schema({
     pipelineOffset: {
         type: 'Number',
         required: true
-    }
+    },
 });
 
 export default mongoose.model('Outfit', outfitSchema);
