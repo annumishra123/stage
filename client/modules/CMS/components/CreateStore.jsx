@@ -68,6 +68,13 @@ class CreateStore extends React.Component {
 
             }
             this.props.createStore(store);
+            this.setState({
+                looks: '',
+                url: '',
+                title: '',
+                header_image_desktop: '',
+                header_image_mobile: '',
+            })
         }
         else {
             alert('Fill in all the details');
@@ -87,7 +94,7 @@ class CreateStore extends React.Component {
                 }
                 return <div>
                     <h1>Stores</h1>
-                    <ReactTable data={this.props.allStores} columns={clientConfig.rentalStoreColumns} className="-striped -highlight" />
+                    <ReactTable filterable data={this.props.allStores} columns={clientConfig.rentalStoreColumns} className="-striped -highlight" />
                 </div>
             }
         }
@@ -99,23 +106,23 @@ class CreateStore extends React.Component {
             <h1>Create Store</h1>
             <div>
                 <h4>Looks: </h4>
-                <textarea type="text" onChange={this.handleCreateLooks.bind(this)} />
+                <textarea type="text" value= {this.state.looks} onChange={this.handleCreateLooks.bind(this)} />
             </div>
             <div>
                 <h4>Desktop Header Image: </h4>
-                <textarea type="text" onChange={this.handleCreateDesktopImage.bind(this)} />
+                <textarea type="text" value= {this.state.desktopImageUrl} onChange={this.handleCreateDesktopImage.bind(this)} />
             </div>
             <div>
                 <h4>Mobile Header Image: </h4>
-                <textarea type="text" onChange={this.handleCreateMobileImage.bind(this)} />
+                <textarea type="text" value= {this.state.mobileImageUrl} onChange={this.handleCreateMobileImage.bind(this)} />
             </div>
             <div>
                 <h4>URL: </h4>
-                <input type="text" onChange={this.handleCreateUrl.bind(this)} />
+                <input type="text" value= {this.state.url} onChange={this.handleCreateUrl.bind(this)} />
             </div>
             <div>
                 <h4>Title: </h4>
-                <input type="text" onChange={this.handleCreateTitle.bind(this)} />
+                <input type="text" value= {this.state.title} onChange={this.handleCreateTitle.bind(this)} />
             </div>
             <br />
             <button className={styles.submitBtn} onClick={this.createStore.bind(this)}>Create Store</button>

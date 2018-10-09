@@ -193,6 +193,7 @@ export function createUser(user) {
           Authorization: 'JWT ' + token,
         },
       }).then(function (response) {
+        dispatch(getAllUsers());
         alert('User Created');
       }).catch(function (error) {
         alert('User Not Created');

@@ -18,7 +18,7 @@ class CreateUser extends React.Component {
             name: '',
             designation: '',
             password: '',
-            onwer: ''
+            owner: ''
         };
     }
 
@@ -67,7 +67,7 @@ class CreateUser extends React.Component {
                 }
                 return <div>
                     <h1>Users</h1>
-                    <ReactTable data={this.props.allUsers} columns={clientConfig.userColumns} className="-striped -highlight" />
+                    <ReactTable filterable data={this.props.allUsers} columns={clientConfig.userColumns} className="-striped -highlight" />
                 </div>
             }
         }
@@ -84,6 +84,13 @@ class CreateUser extends React.Component {
                 owner: this.state.owner
             }
             this.props.createUser(user);
+            this.setState({
+                email: '',
+                name: '',
+                designation: '',
+                password: '',
+                owner: ''
+            })
         }
         else {
             alert('Fill in all the details')
@@ -97,15 +104,15 @@ class CreateUser extends React.Component {
             <form>
                 <div>
                     <h4>Email: </h4>
-                    <input type="email" onChange={this.handleCreateEmail.bind(this)} />
+                    <input type="email" value= {this.state.email} onChange={this.handleCreateEmail.bind(this)} />
                 </div>
                 <div>
                     <h4>Name: </h4>
-                    <input type="text" onChange={this.handleCreateName.bind(this)} />
+                    <input type="text" value= {this.state.name} onChange={this.handleCreateName.bind(this)} />
                 </div>
                 <div>
                     <h4> Role </h4>
-                    <select defaultValue={this.state.designation} onChange={this.handleCreateDesignation.bind(this)}>
+                    <select value={this.state.designation} onChange={this.handleCreateDesignation.bind(this)}>
                         <option value="superuser">SuperUser</option>
                         <option value="admin">Admin</option>
                         <option value="designer">Designer</option>
@@ -115,16 +122,16 @@ class CreateUser extends React.Component {
                 </div>
                 <div>
                     <h4>Password: </h4>
-                    <input type="password" onChange={this.handleCreatePassword.bind(this)} />
+                    <input type="password" value= {this.state.password} onChange={this.handleCreatePassword.bind(this)} />
                 </div>
                 <div>
                     <h4>Owner: </h4>
-                    <input type="text" onChange={this.handleCreateOwner.bind(this)} />
+                    <input type="text" value= {this.state.owner} onChange={this.handleCreateOwner.bind(this)} />
                 </div>
                 <br />
                 <button className={styles.submitBtn} onClick={this.createUser.bind(this)}>Create User</button>
             </form>
-            <br/>
+            <br />
             {this.renderUsers()}
         </section>)
     }
