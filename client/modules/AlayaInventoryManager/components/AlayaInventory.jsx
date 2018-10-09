@@ -256,7 +256,7 @@ class AlayaInventory extends React.Component {
                 }
                 return <div>
                     <h1>Raw Materials</h1>
-                    <ReactTable data={this.props.allRawMaterials} columns={clientConfig.rawMaterialColumns} className="-striped -highlight" />
+                    <ReactTable filterable data={this.props.allRawMaterials} columns={clientConfig.rawMaterialColumns} className="-striped -highlight" />
                 </div>
             }
         }
@@ -289,7 +289,7 @@ class AlayaInventory extends React.Component {
                 }
                 return <div>
                     <h1>Alaya Outfits</h1>
-                    <ReactTable data={this.props.allOutfits} columns={clientConfig.outfitColumns} className="-striped -highlight" />
+                    <ReactTable filterable data={this.props.allOutfits} columns={clientConfig.outfitColumns} className="-striped -highlight" />
                 </div>
             }
         }
@@ -310,7 +310,7 @@ class AlayaInventory extends React.Component {
                         <h2>Add Outfit</h2>
                         <div>
                             <h4>Title: </h4>
-                            <input type="text" onChange={this.handleCreateOufitTitle.bind(this)} />
+                            <input type="text" value= {this.state.materialTitle} onChange={this.handleCreateOufitTitle.bind(this)} />
                         </div>
                         <div className={styles.composition}>
                             <div className={styles.width50}>
@@ -325,7 +325,7 @@ class AlayaInventory extends React.Component {
                             </div>
                             <div className={styles.width50}>
                                 <h4>Quantity: </h4>
-                                <input type="number" onChange={this.handleChangeCompositionQuantity.bind(this)} />
+                                <input type="number" value= {this.state.compositionQuantity} onChange={this.handleChangeCompositionQuantity.bind(this)} />
                             </div>
                             <button onClick={this.handleChangeComposition.bind(this)}>Submit</button>
                             <br />
@@ -338,19 +338,19 @@ class AlayaInventory extends React.Component {
 
                         <div>
                             <h4>Available Quantity: </h4>
-                            <input type="number" onChange={this.handleCreateOutfitAvailableQuantity.bind(this)} />
+                            <input type="number" value= {this.state.outfitAvailableQuantity} onChange={this.handleCreateOutfitAvailableQuantity.bind(this)} />
                         </div>
                         <div>
                             <h4>Sold Quantity: </h4>
-                            <input type="number" onChange={this.handleCreateSoldQuantity.bind(this)} />
+                            <input type="number" value= {this.state.soldQuantity} onChange={this.handleCreateSoldQuantity.bind(this)} />
                         </div>
                         <div>
                             <h4>Pipeline: </h4>
-                            <input type="number" onChange={this.handleCreatePipeline.bind(this)} />
+                            <input type="number" value= {this.state.pipeline} onChange={this.handleCreatePipeline.bind(this)} />
                         </div>
                         <div>
                             <h4>Pipeline Offset: </h4>
-                            <input type="number" onChange={this.handleCreatePipelineOffset.bind(this)} />
+                            <input type="number" value= {this.state.pipelineOffset} onChange={this.handleCreatePipelineOffset.bind(this)} />
                         </div>
                         <br />
                         <button onClick={this.createOutfit.bind(this)}>Create Outfit</button>
@@ -358,15 +358,15 @@ class AlayaInventory extends React.Component {
                         {this.renderOutfits()}
                     </TabPanel>
                     <TabPanel>
-                        <h1>Create Raw Material</h1>
+                    <h2>Add Material</h2>
                         <form>
                             <div>
                                 <h4>Title: </h4>
-                                <input type="text" onChange={this.handleCreateTitle.bind(this)} />
+                                <input type="text" value= {this.state.materialTitle} onChange={this.handleCreateTitle.bind(this)} />
                             </div>
                             <div>
                                 <h4>Measurement Type: </h4>
-                                <select defaultValue={this.state.measurementType} onChange={this.handleCreateMeasurementType.bind(this)}>
+                                <select value={this.state.measurementType} onChange={this.handleCreateMeasurementType.bind(this)}>
                                     <option value=""> -- Select Type -- </option>
                                     <option value="meters">Meters</option>
                                     <option value="pieces">Pieces</option>
@@ -374,18 +374,18 @@ class AlayaInventory extends React.Component {
                             </div>
                             <div>
                                 <h4>Available Quantity: </h4>
-                                <input type="number" onChange={this.handleCreateAvailableQuantity.bind(this)} />
+                                <input type="number" value= {this.state.availableQuantity} onChange={this.handleCreateAvailableQuantity.bind(this)} />
                             </div>
                             <div>
                                 <h4>Price: </h4>
-                                <input type="number" onChange={this.handleCreatePrice.bind(this)} />
+                                <input type="number" value= {this.state.price} onChange={this.handleCreatePrice.bind(this)} />
                             </div>
                             <div>
                                 <h4>Alert Offset: </h4>
-                                <input type="number" onChange={this.handleCreateAlertOffset.bind(this)} />
+                                <input type="number" value= {this.state.alertOffset} onChange={this.handleCreateAlertOffset.bind(this)} />
                             </div>
                             <br />
-                            <button onClick={this.createRawMaterial.bind(this)}>Create Raw Material</button>
+                            <button onClick={this.createRawMaterial.bind(this)}>Add Material</button>
                         </form>
                         <br />
                         {this.renderRawMaterials()}

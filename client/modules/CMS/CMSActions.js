@@ -107,6 +107,7 @@ export function createStore(store) {
             data: store,
             responseType: 'json'
         }).then(function (response) {
+            dispatch(getAllStores());
             alert('Store Created');
         }).catch(function (error) {
             alert('Store Not Created');
