@@ -93,10 +93,18 @@ const clientConfig = {
     'Mswipe',
     'ezetap',
     'advance cash paid',
-    'rent paid online',
     'rent paid COD',
     '10 percent rent paid online',
-    '10 percent rent paid COD'
+    '10 percent rent paid COD',
+    'Paytm',
+    'Rent Paid Paytm',
+    'Rent Paid Razorpay',
+    'Rent Paid Mswipe',
+    'Rent paid Ezetap',
+    'Security Paid Razorpay',
+    'Security Paid Mswipe',
+    'Security Paid Ezetap',
+    'Security Paid Paytm'
   ],
   rentDeliveryColumns: [{
     Header: 'Order Id',
