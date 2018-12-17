@@ -18,6 +18,7 @@ export function uploadWaybillCSV(file, user) {
             alert('Document Uploaded');
         }).catch(function (error) {
             console.log(error);
+            alert(error.message);
         });
     };
 }
