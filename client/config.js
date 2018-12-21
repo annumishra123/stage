@@ -62,6 +62,9 @@ const clientConfig = {
   }, {
     city: 'Chennai',
     state: 'TamilNadu',
+  }, {
+    city: 'Other',
+    state: 'Other',
   }],
   cancelReasons: [
     'customer not interested',
