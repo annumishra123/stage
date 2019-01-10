@@ -84,6 +84,14 @@ class Coupons extends React.Component {
             type: this.state.type
         };
         this.props.createCoupon(couponObject, this.state.pageIndex, this.state.pageSize);
+        this.setState({
+            configs: {},
+            couponText: '',
+            dateTillValidMillisUTC: moment(),
+            isAdvertized: false,
+            isReusable: false,
+            type: ''
+        })
     }
 
     renderConfig() {
@@ -95,9 +103,9 @@ class Coupons extends React.Component {
                     <br />
                     <label>Minimum Cart Value </label>
                     <input type="number" placeholder="Minimum Cart Value" onChange={(e) => { this.setState({ configs: { minimumCartValue: e.target.value, percentOfDiscount: this.state.configs.percentOfDiscount, storeName: this.state.configs.storeName } }) }} />
-                    <br/>
+                    <br />
                     <label>Store Name</label>
-                     <input type="name" placeholder="Store" onChange={(e) => { this.setState({ configs: { storeName: e.target.value, minimumCartValue: this.state.configs.minimumCartValue, percentOfDiscount: this.state.configs.percentOfDiscount } }) }} />
+                    <input type="name" placeholder="Store" onChange={(e) => { this.setState({ configs: { storeName: e.target.value, minimumCartValue: this.state.configs.minimumCartValue, percentOfDiscount: this.state.configs.percentOfDiscount } }) }} />
                 </div>;
             case 'VacationRentalPackageCoupon':
                 return <div>
@@ -117,6 +125,14 @@ class Coupons extends React.Component {
                         <Datetime defaultValue={this.state.configs.endDate} onChange={(date) => { this.setState({ configs: { store: this.state.configs.store, bundlePrice: this.state.configs.bundlePrice, startDate: this.state.configs.startDate, endDate: date } }) }} />
                     </div>
                 </div>;
+            case 'FixedValue':
+                return <div>
+                    <label>Value Of Discount</label>
+                    <input type="number" placeholder="Discount" onChange={(e) => { this.setState({ configs: { valueOfDiscount: e.target.value, minimumCartValue: this.state.configs.minimumCartValue } }) }} />
+                    <br />
+                    <label>Minimum Cart Value </label>
+                    <input type="number" placeholder="Minimum Cart Value" onChange={(e) => { this.setState({ configs: { minimumCartValue: e.target.value, valueOfDiscount: this.state.configs.valueOfDiscount } }) }} />
+                </div>;
             default:
                 return null;
         }
@@ -126,24 +142,25 @@ class Coupons extends React.Component {
         return <section className={styles.coupon}>
             <h1>New Coupon</h1>
             <label>Coupon Type </label>
-            <select onChange={(e) => { this.setState({ type: e.target.value, configs: {} }) }}>
+            <select value={this.state.type} onChange={(e) => { this.setState({ type: e.target.value, configs: {} }) }}>
                 <option value=""> -- Select Type -- </option>
                 <option value="PercentDiscount">Percentage Discount</option>
                 <option value="VacationRentalPackageCoupon">Vacation Rental</option>
+                <option value="FixedValue">Fixed Value</option>
             </select>
             <br />
             {this.renderConfig()}
             <label>Coupon Name </label>
-            <input type="text" placeholder="Coupon Name" onChange={(e) => { this.setState({ couponText: e.target.value }) }} />
+            <input type="text" value={this.state.couponText} placeholder="Coupon Name" onChange={(e) => { this.setState({ couponText: e.target.value }) }} />
             <br />
             <br />
-            <div><input type="checkbox" onChange={(e) => { this.setState({ isAdvertized: e.target.checked }) }} /><label> Advertize</label></div>
-            <div><input type="checkbox" onChange={(e) => { this.setState({ isReusable: e.target.checked }) }} /><label> Reusable</label></div>
+            <div><input type="checkbox" defaultChecked={false} onChange={(e) => { this.setState({ isAdvertized: e.target.checked }) }} /><label> Advertize</label></div>
+            <div><input type="checkbox" defaultChecked={false} onChange={(e) => { this.setState({ isReusable: e.target.checked }) }} /><label> Reusable</label></div>
             <br />
             <br />
             <label>Valid Till </label>
             <div className={styles.couponCalendar}>
-                <Datetime defaultValue={this.state.dateTillValidMillisUTC} onChange={(date) => this.handleChangeDate(date)} />
+                <Datetime value={this.state.dateTillValidMillisUTC} onChange={(date) => this.handleChangeDate(date)} />
             </div>
             <br />
             <button className={styles.createCoupon} onClick={() => { this.createCoupon() }}>Create Coupon</button>
