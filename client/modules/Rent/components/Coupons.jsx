@@ -84,6 +84,7 @@ class Coupons extends React.Component {
             type: this.state.type
         };
         this.props.createCoupon(couponObject, this.state.pageIndex, this.state.pageSize);
+        debugger;
         this.setState({
             configs: {},
             couponText: '',
@@ -154,8 +155,8 @@ class Coupons extends React.Component {
             <input type="text" value={this.state.couponText} placeholder="Coupon Name" onChange={(e) => { this.setState({ couponText: e.target.value }) }} />
             <br />
             <br />
-            <div><input type="checkbox" defaultChecked={false} onChange={(e) => { this.setState({ isAdvertized: e.target.checked }) }} /><label> Advertize</label></div>
-            <div><input type="checkbox" defaultChecked={false} onChange={(e) => { this.setState({ isReusable: e.target.checked }) }} /><label> Reusable</label></div>
+            <div><input type="checkbox" checked={this.state.isAdvertized} onChange={(e) => { this.setState({ isAdvertized: e.target.checked }) }} /><label> Advertize</label></div>
+            <div><input type="checkbox" checked={this.state.isReusable} onChange={(e) => { this.setState({ isReusable: e.target.checked }) }} /><label> Reusable</label></div>
             <br />
             <br />
             <label>Valid Till </label>
