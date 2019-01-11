@@ -84,7 +84,6 @@ class Coupons extends React.Component {
             type: this.state.type
         };
         this.props.createCoupon(couponObject, this.state.pageIndex, this.state.pageSize);
-        debugger;
         this.setState({
             configs: {},
             couponText: '',
