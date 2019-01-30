@@ -483,3 +483,50 @@ export function deleteCoupon(couponName, page, size) {
         });
     }
 }
+
+export function approveRefund(data) {
+    return function (dispatch) {
+        let url = '/refund/sendRefundEmail';
+        let token = localStorage.getItem('token');
+        if (token) {
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'post',
+                data: data,
+                responseType: 'json',
+                headers: {
+                    Authorization: 'JWT ' + token
+                },
+            }).then(function (response) {
+                dispatch({
+                    type: 'FETCH_REFUND_LOGS',
+                    payload: response.data
+                })
+            }).catch(function (error) {
+                alert('Something went wrong');
+            });
+        }
+    }
+}
+
+export function getRefundLogsByOrderId(orderId) {
+    return function (dispatch) {
+        if (orderId) {
+            let url = '/refund/getByOrderId?orderId=' + orderId;
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'get',
+                responseType: 'json'
+            }).then(function (response) {
+                dispatch({
+                    type: 'FETCH_REFUND_LOGS',
+                    payload: response.data
+                })
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, confirmPayment, cancelOrder, getOrdersByPhoneNumber, getOrdersByLookNumber } from '../RentActions';
+import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, confirmPayment, cancelOrder, getOrdersByPhoneNumber, getOrdersByLookNumber, approveRefund, getRefundLogsByOrderId } from '../RentActions';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import clientConfig from '../../../config';
@@ -26,7 +26,8 @@ class RentOrders extends React.Component {
       paymentMethod: '',
       paymentStatus: '',
       phoneNumber: '',
-      sku: ''
+      sku: '',
+      refundAmount: ''
     };
   }
 
@@ -103,6 +104,27 @@ class RentOrders extends React.Component {
     this.setState({
       sku: e.target.value
     });
+  }
+
+  handleChangeRefundAmount(e) {
+    this.setState({
+      refundAmount: e.target.value
+    });
+  }
+
+  approveRefund(id) {
+    if (this.state.refundAmount) {
+      let data = {
+        orderId: this.props.orderDetail.frontendOrderId,
+        orderLineId: id,
+        createdBy: this.props.user,
+        amount: this.state.refundAmount
+      }
+      this.props.approveRefund(data);
+      this.setState({
+        refundAmount: '',
+      })
+    }
   }
 
   getOrders() {
@@ -538,6 +560,11 @@ class RentOrders extends React.Component {
                 </select>
                 <button onClick={this.removeItem.bind(this, line.id)}>Remove Item</button>
                 <br />
+                {this.props.refundLogs ? JSON.stringify(this.props.refundLogs) : 'No refund logs found'}
+                <h4>Refund Amount: </h4>
+                <input type="number" value={this.state.refundAmount} onChange={(e) => this.handleChangeRefundAmount(e)} />
+                <button onClick={this.approveRefund.bind(this, line.id)}>Approve Refund</button>
+                <br />
               </div> : null}
               <br />
             </div>)
@@ -616,7 +643,9 @@ function matchDispatchToProps(dispatch) {
     confirmPayment,
     cancelOrder,
     clearCustomerDetail,
-    getOrdersByLookNumber
+    getOrdersByLookNumber,
+    approveRefund,
+    getRefundLogsByOrderId
   }, dispatch);
 }
 
@@ -627,7 +656,8 @@ function mapStateToProps(state) {
     role: state.auth.role,
     user: state.auth.email,
     measurementStatus: state.measurementStatus,
-    details: state.customerDetail
+    details: state.customerDetail,
+    refundLogs: state.refundLogs
   };
 }
 
