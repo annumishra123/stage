@@ -33,6 +33,7 @@ class RentOrders extends React.Component {
 
   componentDidMount() {
     if (this.props.location.query.orderId) {
+      this.props.getRefundLogsByOrderId(this.props.location.query.orderId);
       this.props.getOrderDetail(this.props.location.query.orderId);
       this.setState({
         viewOrderDetail: true,
@@ -49,6 +50,7 @@ class RentOrders extends React.Component {
   componentWillReceiveProps(next) {
     if (this.props.location.query.orderId !== next.location.query.orderId) {
       if (next.location.query.orderId) {
+        this.props.getRefundLogsByOrderId(next.location.query.orderId);
         this.props.getOrderDetail(next.location.query.orderId);
         this.setState({
           viewOrderDetail: true,
@@ -273,6 +275,32 @@ class RentOrders extends React.Component {
     if (modifier) {
       let modifiers = modifier.split(',');
       return modifiers[modifiers.length - 1];
+    }
+  }
+
+  getRefundLogs(id) {
+    if (this.props.refundLogs) {
+      let refundLogs = this.props.refundLogs.filter((x =>x.orderLineId == id));
+      return refundLogs.map((refundLog, i) => {
+        return (
+          <div key={i}>
+            <br />
+            <table>
+              <tr>
+                <td>
+                  {refundLog.amount}
+                </td>
+                <td>
+                  {moment(refundLog.createdDate).format("lll")}
+                </td>
+                <td>
+                  {refundLog.createdBy}
+                </td>
+              </tr>
+            </table>
+          </div>
+        )
+      });
     }
   }
 
@@ -560,8 +588,8 @@ class RentOrders extends React.Component {
                 </select>
                 <button onClick={this.removeItem.bind(this, line.id)}>Remove Item</button>
                 <br />
-                {this.props.refundLogs ? JSON.stringify(this.props.refundLogs) : 'No refund logs found'}
                 <h4>Refund Amount: </h4>
+                {this.getRefundLogs(line.id)}
                 <input type="number" value={this.state.refundAmount} onChange={(e) => this.handleChangeRefundAmount(e)} />
                 <button onClick={this.approveRefund.bind(this, line.id)}>Approve Refund</button>
                 <br />
