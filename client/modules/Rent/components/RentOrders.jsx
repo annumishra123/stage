@@ -288,7 +288,7 @@ class RentOrders extends React.Component {
             <table>
               <tr>
                 <td>
-                  {refundLog.amount}
+                  ₹{refundLog.amount}
                 </td>
                 <td>
                   {moment(refundLog.createdDate).format("lll")}
