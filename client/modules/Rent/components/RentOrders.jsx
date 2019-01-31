@@ -280,7 +280,7 @@ class RentOrders extends React.Component {
 
   getRefundLogs(id) {
     if (this.props.refundLogs) {
-      let refundLogs = this.props.refundLogs.filter((x =>x.orderLineId == id));
+      let refundLogs = this.props.refundLogs.filter((x => x.orderLineId == id));
       return refundLogs.map((refundLog, i) => {
         return (
           <div key={i}>
