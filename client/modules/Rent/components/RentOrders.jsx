@@ -136,26 +136,37 @@ class RentOrders extends React.Component {
   }
 
   removeItem(lineId) {
-    let cancelRequest = {
-      lineId: lineId,
-      cancelReason: this.state.cancelReason,
-      frontendOrderId: this.props.orderDetail.frontendOrderId
-    }
-    let confirmCancel = confirm("Do you confirm to remove this item!");
-    if (confirmCancel) {
-      this.props.removeItem(cancelRequest);
+    if (this.state.cancelReason != '') {
+      let cancelRequest = {
+        lineId: lineId,
+        cancelReason: this.state.cancelReason,
+        frontendOrderId: this.props.orderDetail.frontendOrderId
+      }
+      let confirmCancel = confirm("Do you confirm to remove this item!");
+      if (confirmCancel) {
+        this.props.removeItem(cancelRequest);
+      }
+    } else {
+      alert('Select a reason for cancellation')
     }
   }
 
   cancelOrder(orderId) {
-    let cancelRequest = {
-      orderId: orderId,
-      cancelReason: this.state.cancelReason,
-      frontendOrderId: this.props.orderDetail.frontendOrderId
-    }
-    let confirmCancel = confirm("Do you confirm to cancel this order!");
-    if (confirmCancel) {
-      this.props.cancelOrder(cancelRequest);
+    if (this.state.cancelReason != '') {
+      let cancelRequest = {
+        orderId: orderId,
+        cancelReason: this.state.cancelReason,
+        frontendOrderId: this.props.orderDetail.frontendOrderId
+      }
+      let confirmCancel = confirm("Do you confirm to cancel this order!");
+      if (confirmCancel) {
+        this.props.cancelOrder(cancelRequest);
+        this.setState({
+          cancelReason: ''
+        })
+      }
+    } else {
+      alert('Select a reason for cancellation')
     }
   }
 
@@ -166,18 +177,27 @@ class RentOrders extends React.Component {
   }
 
   confirmPayment() {
-    let confirmPaymentObject = {
-      orderId: this.props.orderDetail.id,
-      paymentInformation: {
+    if (this.state.paymentMethod != '' && this.state.paymentStatus != '') {
+      let confirmPaymentObject = {
         orderId: this.props.orderDetail.id,
-        paymentAmount: this.props.orderDetail.totalDiscountedRentalPrice + this.props.orderDetail.totalDiscountedDepositPrice,
-        paymentStatus: this.state.paymentStatus,
-        paymentType: this.state.paymentMethod,
-        paymentHash: 'stage3-admin-hash',
-        userId: this.props.orderDetail.userId
-      }
-    };
-    this.props.confirmPayment(confirmPaymentObject);
+        paymentInformation: {
+          orderId: this.props.orderDetail.id,
+          paymentAmount: this.props.orderDetail.totalDiscountedRentalPrice + this.props.orderDetail.totalDiscountedDepositPrice,
+          paymentStatus: this.state.paymentStatus,
+          paymentType: this.state.paymentMethod,
+          paymentHash: 'stage3-admin-hash',
+          userId: this.props.orderDetail.userId
+        }
+      };
+      this.props.confirmPayment(confirmPaymentObject);
+      this.setState({
+        paymentMethod: '',
+        paymentStatus: '',
+      })
+    }
+    else {
+      alert('Select a payment method and payment status')
+    }
   }
 
 
