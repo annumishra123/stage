@@ -147,7 +147,7 @@ class RentOrders extends React.Component {
         this.props.removeItem(cancelRequest);
       }
     } else {
-      alert('Select a reason for cancellation')
+      alert('Select a reason for removing the item')
     }
   }
 
