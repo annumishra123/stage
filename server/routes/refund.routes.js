@@ -81,7 +81,7 @@ router.get("/markRefunded", passport.authenticate('jwt', {
     session: false,
 }), (req, res) => {
     if (req.user.role === 'admin') {
-        RefundLog.find({ _id: req.query.refundLogId }).then(refundLog => {
+        RefundLog.findById(req.query.refundLogId).then(refundLog => {
             refundLog.refunded = true;
             refundLog.save().then(refund => {
 

@@ -37,11 +37,10 @@ class Refunds extends React.Component {
                         Header: '',
                         id: 'markRefunded',
                         accessor: '_id',
-                        Cell: ({ value }) => (<button onClick={this.markRefunded.bind(this, value)}>Mark Refunded</button>)
+                        Cell: ({ value }) => (<button onClick={this.markRefunded.bind(this, value)}>Refund</button>)
                     });
                 }
                 return <div>
-                    <h1>Refunds</h1>
                     <ReactTable filterable data={this.props.refundLogs} columns={clientConfig.refundLogsColumns} className="-striped -highlight" />
                 </div>
             }
