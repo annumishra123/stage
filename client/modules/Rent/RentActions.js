@@ -563,6 +563,8 @@ export function getAllUnprocessedRefunds(refunded) {
 }
 
 export function markRefunded(_id) {
+    debugger;
+export function markRefunded(_id) {
     return function (dispatch) {
         let url = '/refund/markRefunded?refundLogId=' + _id;
         let token = localStorage.getItem('token');
