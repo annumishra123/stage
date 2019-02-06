@@ -414,7 +414,7 @@ export function downloadCSV(fileName) {
 
 export function setQCStatus(qcObject) {
     return function (dispatch) {
-        let url = '/api/om/orders/backend/update/qualityCheckStatus?user=' + qcObject.user + '&status=' + qcObject.status + '&looknumber=' + qcObject.looknumber;
+        let url = '/api/om/orders/backend/update/qualityCheckStatus?user=' + qcObject.user + '&status=' + qcObject.status + '&looknumber=' + qcObject.looknumber + '&sku=' + qcObject.sku + '&frontendOrderId=' + qcObject.frontendOrderId;
         return axios({
             url: url,
             timeout: 20000,
