@@ -214,6 +214,11 @@ class Inventory extends React.Component {
                 frontendOrderId: this.props.lastQCStatus.frontendOrderId
             }
             this.props.setQCStatus(qcObject);
+            this.setState({
+                viewQCModal: false,
+                looknumber: '',
+                status: ''
+            })
         }
     }
 
