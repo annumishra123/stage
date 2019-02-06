@@ -287,14 +287,21 @@ class RentOrders extends React.Component {
         return (
           <div key={i}>
             <br />
-            <table>
+            <table className={styles.greenbg}>
               <tr>
+                <th>Approved Amount</th>
                 <td>
                   ₹{refundLog.amount}
                 </td>
+              </tr>
+              <tr>
+                <th>Approved On</th>
                 <td>
                   {moment(refundLog.createdDate).format("lll")}
                 </td>
+              </tr>
+              <tr>
+                <th>Approved By</th>
                 <td>
                   {refundLog.createdBy}
                 </td>
@@ -591,10 +598,10 @@ class RentOrders extends React.Component {
                 <button onClick={this.removeItem.bind(this, line.id)}>Remove Item</button>
                 <br />
                 <h4>Refund Amount: </h4>
-                {this.getRefundLogs(line.id)}
                 <input type="number" value={this.state.refundAmount} onChange={(e) => this.handleChangeRefundAmount(e)} />
                 <button onClick={this.approveRefund.bind(this, line.id, line.product.lookNumber)}>Approve Refund</button>
                 <br />
+                {this.getRefundLogs(line.id)}
               </div> : null}
               <br />
             </div>)
