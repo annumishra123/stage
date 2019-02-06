@@ -132,7 +132,7 @@ class Navigation extends React.Component {
         {this.props.role == 'admin' ? <li>
           <Link to="/refunds">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-fabric.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-refund.png" />
             </figure>
             <p>Refunds</p>
           </Link>
