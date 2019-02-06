@@ -114,13 +114,15 @@ class RentOrders extends React.Component {
     });
   }
 
-  approveRefund(id) {
+  approveRefund(id, lookNumber) {
     if (this.state.refundAmount) {
       let data = {
         orderId: this.props.orderDetail.frontendOrderId,
         orderLineId: id,
         createdBy: this.props.user,
-        amount: this.state.refundAmount
+        customerId: this.props.orderDetail.userId,
+        amount: this.state.refundAmount,
+        looknumber: lookNumber
       }
       this.props.approveRefund(data);
       this.setState({
@@ -591,7 +593,7 @@ class RentOrders extends React.Component {
                 <h4>Refund Amount: </h4>
                 {this.getRefundLogs(line.id)}
                 <input type="number" value={this.state.refundAmount} onChange={(e) => this.handleChangeRefundAmount(e)} />
-                <button onClick={this.approveRefund.bind(this, line.id)}>Approve Refund</button>
+                <button onClick={this.approveRefund.bind(this, line.id, line.product.lookNumber)}>Approve Refund</button>
                 <br />
               </div> : null}
               <br />

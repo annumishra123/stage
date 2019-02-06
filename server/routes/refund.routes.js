@@ -18,9 +18,11 @@ router.post("/sendRefundEmail", passport.authenticate('jwt', {
             createdDate: req.body.createdDate,
             createdBy: req.body.createdBy,
             amount: req.body.amount,
+            looknumber: req.body.looknumber,
+            customerId: req.body.customerId
         });
 
-        // Send refund email to customer
+        // Send refund approval email & message to customer
 
         newLogForRefund.save().then(item => {
             RefundLog.find({ orderId: req.body.orderId }).sort({ "createdBy": -1 }).then(refundLogs => {
@@ -45,8 +47,55 @@ router.get("/getByOrderId", passport.authenticate('jwt', {
     session: false,
 }), (req, res) => {
     if (req.user.role === 'admin') {
-        RefundLog.find({ orderId: req.query.orderId }).sort({ "createdBy": -1 }).then(refundLogs => {
+        RefundLog.find({ orderId: req.query.orderId }).sort({ "createdDate": -1 }).then(refundLogs => {
             res.json(refundLogs);
+        }).catch(err => {
+            console.log(err);
+            res.status(400).json({
+                status: 'FAILED'
+            });
+        });
+    } else {
+        res.status(401).send('Unauthorized');
+    }
+});
+
+router.get("/getAllUnprocessedRefunds", passport.authenticate('jwt', {
+    session: false,
+}), (req, res) => {
+    if (req.user.role === 'admin') {
+        RefundLog.find({ refunded: false }).sort({ "createdDate": 1 }).then(refundLogs => {
+            res.json(refundLogs);
+        }).catch(err => {
+            console.log(err);
+            res.status(400).json({
+                status: 'FAILED'
+            });
+        });
+    } else {
+        res.status(401).send('Unauthorized');
+    }
+});
+
+router.get("/markRefunded", passport.authenticate('jwt', {
+    session: false,
+}), (req, res) => {
+    if (req.user.role === 'admin') {
+        RefundLog.find({ _id: req.query.refundLogId }).then(refundLog => {
+            refundLog.refunded = true;
+            refundLog.save().then(refund => {
+
+                // Send refund processed email & message to customer
+
+                RefundLog.find({ refunded: false }).sort({ "createdDate": 1 }).then(refundLogs => {
+                    res.json(refundLogs);
+                }).catch(err => {
+                    console.log(err);
+                    res.status(400).json({
+                        status: 'FAILED'
+                    });
+                });
+            });
         }).catch(err => {
             console.log(err);
             res.status(400).json({

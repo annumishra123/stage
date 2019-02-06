@@ -23,6 +23,19 @@ const refundLogSchema = new Schema({
     amount: {
         type: 'Number',
         required: true
+    },
+    looknumber: {
+        type: 'String',
+        required: true
+    },
+    customerId: {
+        type: 'String',
+        required: true
+    },
+    refunded: {
+        type: 'Boolean',
+        required: true,
+        default: false
     }
 });
 
