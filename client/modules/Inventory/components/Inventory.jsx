@@ -205,11 +205,13 @@ class Inventory extends React.Component {
     }
 
     changeQCStatus() {
-        if (this.props.user && this.state.looknumber && this.state.status) {
+        if (this.props.user && this.props.lastQCStatus && this.state.status) {
             let qcObject = {
                 user: this.props.user,
-                looknumber: this.state.looknumber,
-                status: this.state.status
+                looknumber: this.props.lastQCStatus.looknumber,
+                status: this.state.status,
+                sku: this.props.lastQCStatus.sku,
+                frontendOrderId: this.props.lastQCStatus.frontendOrderId
             }
             this.props.setQCStatus(qcObject);
         }
