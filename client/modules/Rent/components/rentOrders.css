@@ -203,6 +203,11 @@ th, td {
     width: 350px;
     cursor: pointer;
 }
+.greenbg tr:first-child {
+    background: #04c286;
+    color: #fff;
+    font-size: 18px;
+}
 
 
 @media (max-width: 767px){

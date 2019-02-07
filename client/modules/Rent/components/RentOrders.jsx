@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, confirmPayment, cancelOrder, getOrdersByPhoneNumber, getOrdersByLookNumber } from '../RentActions';
+import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, confirmPayment, cancelOrder, getOrdersByPhoneNumber, getOrdersByLookNumber, approveRefund, getRefundLogsByOrderId } from '../RentActions';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import clientConfig from '../../../config';
@@ -26,12 +26,14 @@ class RentOrders extends React.Component {
       paymentMethod: '',
       paymentStatus: '',
       phoneNumber: '',
-      sku: ''
+      sku: '',
+      refundAmount: ''
     };
   }
 
   componentDidMount() {
     if (this.props.location.query.orderId) {
+      this.props.getRefundLogsByOrderId(this.props.location.query.orderId);
       this.props.getOrderDetail(this.props.location.query.orderId);
       this.setState({
         viewOrderDetail: true,
@@ -48,6 +50,7 @@ class RentOrders extends React.Component {
   componentWillReceiveProps(next) {
     if (this.props.location.query.orderId !== next.location.query.orderId) {
       if (next.location.query.orderId) {
+        this.props.getRefundLogsByOrderId(next.location.query.orderId);
         this.props.getOrderDetail(next.location.query.orderId);
         this.setState({
           viewOrderDetail: true,
@@ -103,6 +106,29 @@ class RentOrders extends React.Component {
     this.setState({
       sku: e.target.value
     });
+  }
+
+  handleChangeRefundAmount(e) {
+    this.setState({
+      refundAmount: e.target.value
+    });
+  }
+
+  approveRefund(id, lookNumber) {
+    if (this.state.refundAmount) {
+      let data = {
+        orderId: this.props.orderDetail.frontendOrderId,
+        orderLineId: id,
+        createdBy: this.props.user,
+        customerId: this.props.orderDetail.userId,
+        amount: this.state.refundAmount,
+        looknumber: lookNumber
+      }
+      this.props.approveRefund(data);
+      this.setState({
+        refundAmount: '',
+      })
+    }
   }
 
   getOrders() {
@@ -221,7 +247,7 @@ class RentOrders extends React.Component {
 
   renderMeasurementStatus(id) {
     if (this.props.measurementStatus) {
-      let measurementObj = this.props.measurementStatus.measurementOption[Object.keys(this.props.measurementStatus.measurementOption).find(x => x == id)];
+      let measurementObj = this.props.measurementStatus.measurementOption ? this.props.measurementStatus.measurementOption[Object.keys(this.props.measurementStatus.measurementOption).find(x => x == id)] : null;
       if (measurementObj) {
         return <div>
           <h4>Measurement Status</h4>
@@ -271,6 +297,39 @@ class RentOrders extends React.Component {
     if (modifier) {
       let modifiers = modifier.split(',');
       return modifiers[modifiers.length - 1];
+    }
+  }
+
+  getRefundLogs(id) {
+    if (this.props.refundLogs) {
+      let refundLogs = this.props.refundLogs.filter((x => x.orderLineId == id));
+      return refundLogs.map((refundLog, i) => {
+        return (
+          <div key={i}>
+            <br />
+            <table className={styles.greenbg}>
+              <tr>
+                <th>Approved Amount</th>
+                <td>
+                  ₹{refundLog.amount}
+                </td>
+              </tr>
+              <tr>
+                <th>Approved On</th>
+                <td>
+                  {moment(refundLog.createdDate).format("lll")}
+                </td>
+              </tr>
+              <tr>
+                <th>Approved By</th>
+                <td>
+                  {refundLog.createdBy}
+                </td>
+              </tr>
+            </table>
+          </div>
+        )
+      });
     }
   }
 
@@ -558,6 +617,13 @@ class RentOrders extends React.Component {
                 </select>
                 <button onClick={this.removeItem.bind(this, line.id)}>Remove Item</button>
                 <br />
+                {line.product.type === "product" && this.props.role === 'admin' ? <div>
+                  <h4>Refund Amount: </h4>
+                <input type="number" value={this.state.refundAmount} onChange={(e) => this.handleChangeRefundAmount(e)} />
+                <button onClick={this.approveRefund.bind(this, line.id, line.product.lookNumber)}>Approve Refund</button>
+                <br />
+                {this.getRefundLogs(line.id)}
+                </div> : null}
               </div> : null}
               <br />
             </div>)
@@ -636,7 +702,9 @@ function matchDispatchToProps(dispatch) {
     confirmPayment,
     cancelOrder,
     clearCustomerDetail,
-    getOrdersByLookNumber
+    getOrdersByLookNumber,
+    approveRefund,
+    getRefundLogsByOrderId
   }, dispatch);
 }
 
@@ -647,7 +715,8 @@ function mapStateToProps(state) {
     role: state.auth.role,
     user: state.auth.email,
     measurementStatus: state.measurementStatus,
-    details: state.customerDetail
+    details: state.customerDetail,
+    refundLogs: state.refundLogs
   };
 }
 

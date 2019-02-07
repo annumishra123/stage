@@ -44,6 +44,7 @@ import { fetchIsAuthenticated } from './util/fetchAuth';
 import auth from './routes/auth.routes';
 import download from './routes/download.routes';
 import managematerial from './routes/managematerial.routes';
+import refundLog from './routes/refund.routes';
 import dummyData from './dummyData';
 import serverConfig from './config';
 import passport from './passport';
@@ -88,6 +89,7 @@ app.use(Express.static(path.resolve(__dirname, '../dist')));
 app.use('/auth', auth);
 app.use('/download', download);
 app.use('/managematerial', managematerial);
+app.use('/refund', refundLog);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
