@@ -70,3 +70,11 @@ export function allCoupons(state = null, action) {
     return state;
 }
 
+export function refundLogs(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_REFUND_LOGS':
+            return action.payload;
+            break;
+    }
+    return state;
+}

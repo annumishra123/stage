@@ -766,6 +766,28 @@ const clientConfig = {
       return moment(o.creationTime).format('lll');
     },
   }],
+  refundLogsColumns: [{
+    Header: 'Customer',
+    accessor: 'customerId',
+  }, {
+    Header: 'Order Id',
+    accessor: 'orderId',
+  }, {
+    Header: 'Look Number',
+    accessor: 'looknumber',
+  }, {
+    Header: 'Refund Amount',
+    accessor: 'amount',
+  }, {
+    Header: 'Created By',
+    accessor: 'createdBy',
+  }, {
+    id: 'createdDate',
+    Header: 'Created Date',
+    accessor: o => {
+      return moment(o.createdDate).format('lll');
+    },
+  }],
 };
 
 export default clientConfig;
