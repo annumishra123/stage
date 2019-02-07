@@ -597,11 +597,13 @@ class RentOrders extends React.Component {
                 </select>
                 <button onClick={this.removeItem.bind(this, line.id)}>Remove Item</button>
                 <br />
-                <h4>Refund Amount: </h4>
+                {line.product.type == "product" ? <div>
+                  <h4>Refund Amount: </h4>
                 <input type="number" value={this.state.refundAmount} onChange={(e) => this.handleChangeRefundAmount(e)} />
                 <button onClick={this.approveRefund.bind(this, line.id, line.product.lookNumber)}>Approve Refund</button>
                 <br />
                 {this.getRefundLogs(line.id)}
+                </div> : null}
               </div> : null}
               <br />
             </div>)
