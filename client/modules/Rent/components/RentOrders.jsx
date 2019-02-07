@@ -227,7 +227,7 @@ class RentOrders extends React.Component {
 
   renderMeasurementStatus(id) {
     if (this.props.measurementStatus) {
-      let measurementObj = this.props.measurementStatus.measurementOption[Object.keys(this.props.measurementStatus.measurementOption).find(x => x == id)];
+      let measurementObj = this.props.measurementStatus.measurementOption ? this.props.measurementStatus.measurementOption[Object.keys(this.props.measurementStatus.measurementOption).find(x => x == id)] : null;
       if (measurementObj) {
         return <div>
           <h4>Measurement Status</h4>
@@ -597,7 +597,7 @@ class RentOrders extends React.Component {
                 </select>
                 <button onClick={this.removeItem.bind(this, line.id)}>Remove Item</button>
                 <br />
-                {line.product.type == "product" ? <div>
+                {line.product.type === "product" && this.props.role === 'admin' ? <div>
                   <h4>Refund Amount: </h4>
                 <input type="number" value={this.state.refundAmount} onChange={(e) => this.handleChangeRefundAmount(e)} />
                 <button onClick={this.approveRefund.bind(this, line.id, line.product.lookNumber)}>Approve Refund</button>

@@ -767,6 +767,9 @@ const clientConfig = {
     },
   }],
   refundLogsColumns: [{
+    Header: 'Customer',
+    accessor: 'customerId',
+  }, {
     Header: 'Order Id',
     accessor: 'orderId',
   }, {

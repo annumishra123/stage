@@ -43,15 +43,20 @@ class Refunds extends React.Component {
                 return <div>
                     <ReactTable filterable data={this.props.refundLogs} columns={clientConfig.refundLogsColumns} className="-striped -highlight" />
                 </div>
+            } else {
+                return <div><br /><p>No Pending Refunds</p></div>;
             }
+        } else {
+            return <p>No Pending Refunds</p>;
         }
     }
 
     render() {
         return (<section>
+            <div><h2>Rent Orders</h2></div>
+            <br />
             <button onClick={this.handleNavigationPage.bind(this)}><i aria-hidden="true"></i>Back</button>
-            <br/>
-            <br/>
+            <br />
             {this.renderRefunds()}
         </section>)
     }
