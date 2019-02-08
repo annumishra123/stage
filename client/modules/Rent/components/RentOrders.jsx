@@ -600,7 +600,7 @@ class RentOrders extends React.Component {
                 <br />
                 {line.product.type === "product" && this.props.role === 'admin' ? <div>
                   <h4>Refund Amount: </h4>
-                  <input type="number" value={this.state.refundAmount} onChange={(e) => this.handleChangeRefundAmount(e)} />
+                  <input type="number" onChange={(e) => this.handleChangeRefundAmount(e)} />
                   <button onClick={this.approveRefund.bind(this, line.id, line.product.lookNumber)}>Approve Refund</button>
                   <br />
                   {this.getRefundLogs(line.id)}
