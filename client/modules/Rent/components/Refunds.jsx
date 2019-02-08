@@ -61,10 +61,10 @@ class Refunds extends React.Component {
                     <ReactTable filterable data={this.props.refundLogs} columns={clientConfig.refundLogsColumns} className="-striped -highlight" />
                 </div>
             } else {
-                return <div><br /><p>No Pending Refunds</p></div>;
+                return <div><br /><p className={styles.noRefund}>No Pending Refunds</p></div>;
             }
         } else {
-            return <p>No Pending Refunds</p>;
+            return <p className={styles.noRefund}>No Pending Refunds</p>;
         }
     }
 
@@ -89,10 +89,12 @@ class Refunds extends React.Component {
             <br />
             {this.renderRefunds()}
             <br />
-            <div><h1>Customer Refunds</h1></div>
+            <div><h1>Search Refunds By Email</h1></div>
             <br />
-            <input type="text" placeholder="Email" value={this.state.customerId} onChange={(e) => this.handleCustomerId(e)} />
-            <button onClick={this.getRefundsByUserId.bind(this)}>Search</button>
+            <div className={styles.emailform}>
+                <input type="text" placeholder="Email" value={this.state.customerId} onChange={(e) => this.handleCustomerId(e)} />
+                <button onClick={this.getRefundsByUserId.bind(this)}>Search</button>
+            </div>
             <br />
             <br />
             {this.renderRefundsByUserId()}
