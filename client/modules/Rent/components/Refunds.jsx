@@ -53,9 +53,9 @@ class Refunds extends React.Component {
 
     render() {
         return (<section>
-            <div><h2>Rent Orders</h2></div>
+            <div><h1>Refunds</h1></div>
             <br />
-            <button onClick={this.handleNavigationPage.bind(this)}><i aria-hidden="true"></i>Back</button>
+            <button onClick={this.handleNavigationPage.bind(this)} className={styles.backBtn}><i aria-hidden="true"></i>Back</button>
             <br />
             {this.renderRefunds()}
         </section>)
