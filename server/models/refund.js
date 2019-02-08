@@ -36,6 +36,9 @@ const refundLogSchema = new Schema({
         type: 'Boolean',
         required: true,
         default: false
+    },
+    refundedDate: {
+        type: 'Date'
     }
 });
 

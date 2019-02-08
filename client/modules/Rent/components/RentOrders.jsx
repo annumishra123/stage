@@ -489,7 +489,7 @@ class RentOrders extends React.Component {
         <h3>ITEM DETAILS</h3>
         {this.props.orderDetail.orderLinesView.map((line, i) => {
           return (
-            <div key={i}>
+            <div key={i} className={styles.itemBox}>
               <br />
               <table>
                 <tr>
@@ -567,6 +567,7 @@ class RentOrders extends React.Component {
               </table>
               {this.renderMeasurementStatus(line.productId)}
               <h4>Delivery Dates</h4>
+
               <table>
                 <tr>
                   <th>Dispatch Date</th>
@@ -619,10 +620,10 @@ class RentOrders extends React.Component {
                 <br />
                 {line.product.type === "product" && this.props.role === 'admin' ? <div>
                   <h4>Refund Amount: </h4>
-                <input type="number" value={this.state.refundAmount} onChange={(e) => this.handleChangeRefundAmount(e)} />
-                <button onClick={this.approveRefund.bind(this, line.id, line.product.lookNumber)}>Approve Refund</button>
-                <br />
-                {this.getRefundLogs(line.id)}
+                  <input type="number" onChange={(e) => this.handleChangeRefundAmount(e)} />
+                  <button onClick={this.approveRefund.bind(this, line.id, line.product.lookNumber)}>Approve Refund</button>
+                  <br />
+                  {this.getRefundLogs(line.id)}
                 </div> : null}
               </div> : null}
               <br />

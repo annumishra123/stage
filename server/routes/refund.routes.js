@@ -30,7 +30,7 @@ router.post("/sendRefundEmail", passport.authenticate('jwt', {
             timeout: 20000,
             method: 'post',
             data: {
-                "ccEmailId": "orders@stage3.co",
+                "ccEmailId": "tech@stage3.co",
                 "configs": {
                     "customerId": req.body.customerId,
                     "looknumber": req.body.looknumber,
@@ -38,7 +38,7 @@ router.post("/sendRefundEmail", passport.authenticate('jwt', {
                 },
                 "emailId": req.body.customerId,
                 "messageType": "REFUND_APPROVED",
-                "subjectLine": "Provide bank details for the refund"
+                "subjectLine": "Bank details required for security deposit refund"
             },
             responseType: 'json'
         });
@@ -107,14 +107,14 @@ router.get("/markRefunded", passport.authenticate('jwt', {
     if (req.user.role === 'admin') {
         RefundLog.findById(req.query.refundLogId).then(refundLog => {
             refundLog.refunded = true;
-
+            refundLog.refundedDate = Date.now();
             let emailUrl = config.notificationUrl + '/notify';
             let emailPromise = axios({
                 url: emailUrl,
                 timeout: 20000,
                 method: 'post',
                 data: {
-                    "ccEmailId": "orders@stage3.co",
+                    "ccEmailId": "tech@stage3.co",
                     "configs": {
                         "customerId": refundLog.customerId,
                         "looknumber": refundLog.looknumber,
@@ -122,7 +122,7 @@ router.get("/markRefunded", passport.authenticate('jwt', {
                     },
                     "emailId": refundLog.customerId,
                     "messageType": "REFUND_INITIATED",
-                    "subjectLine": "Your refund has been initiated"
+                    "subjectLine": "Your security deposit refund has been initiated"
                 },
                 responseType: 'json'
             });
@@ -142,6 +142,23 @@ router.get("/markRefunded", passport.authenticate('jwt', {
                 console.log(error);
                 res.status(500).send('Email Not Queued');
             });
+        }).catch(err => {
+            console.log(err);
+            res.status(400).json({
+                status: 'FAILED'
+            });
+        });
+    } else {
+        res.status(401).send('Unauthorized');
+    }
+});
+
+router.get("/getRefundsByUserId", passport.authenticate('jwt', {
+    session: false,
+}), (req, res) => {
+    if (req.user.role === 'admin') {
+        RefundLog.find({ customerId: req.query.customerId }).sort({ "createdDate": 1 }).then(refundLogs => {
+            res.json(refundLogs);
         }).catch(err => {
             console.log(err);
             res.status(400).json({
