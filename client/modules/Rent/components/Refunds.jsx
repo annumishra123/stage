@@ -2,27 +2,44 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getAllUnprocessedRefunds, markRefunded } from '../RentActions';
+import { getAllUnprocessedRefunds, markRefunded, getRefundsByUserId } from '../RentActions';
 import ReactTable from 'react-table';
 import clientConfig from '../../../config';
 
 // Import Style
-
+import styles from './rentOrders.css';
 
 class Refunds extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             refunded: false,
+            customerId: ''
         };
     }
 
     componentDidMount() {
         this.props.getAllUnprocessedRefunds();
+        this.props.getRefundsByUserId();
     }
 
     markRefunded(_id) {
         this.props.markRefunded(_id)
+    }
+
+    handleCustomerId(e) {
+        this.setState({
+            customerId: e.target.value
+        });
+    }
+
+    getRefundsByUserId() {
+        if (this.state.customerId) {
+            this.props.getRefundsByUserId(this.state.customerId);
+            this.setState({
+                customerId: '',
+            })
+        }
     }
 
     handleNavigationPage() {
@@ -51,21 +68,43 @@ class Refunds extends React.Component {
         }
     }
 
+    renderRefundsByUserId() {
+        if (this.props.customerRefundLogs) {
+            if (this.props.customerRefundLogs.length > 0) {
+                if (this.props.customerRefundLogs.length > 0) {
+                    return <div>
+                        <ReactTable filterable data={this.props.customerRefundLogs} columns={clientConfig.customerIdRefundsColumns} className="-striped -highlight" />
+                    </div>
+                }
+            }
+        }
+    }
+
     render() {
-        return (<section>
+        return <section>
             <div><h1>Refunds</h1></div>
             <br />
             <button onClick={this.handleNavigationPage.bind(this)} className={styles.backBtn}><i aria-hidden="true"></i>Back</button>
             <br />
+            <br />
             {this.renderRefunds()}
-        </section>)
+            <br />
+            <div><h1>Customer Refunds</h1></div>
+            <br />
+            <input type="text" placeholder="Email" value={this.state.customerId} onChange={(e) => this.handleCustomerId(e)} />
+            <button onClick={this.getRefundsByUserId.bind(this)}>Search</button>
+            <br />
+            <br />
+            {this.renderRefundsByUserId()}
+        </section>
     }
 }
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         getAllUnprocessedRefunds,
-        markRefunded
+        markRefunded,
+        getRefundsByUserId
     }, dispatch);
 }
 
@@ -73,7 +112,8 @@ function mapStateToProps(state) {
     return {
         role: state.auth.role,
         user: state.auth.email,
-        refundLogs: state.refundLogs ? state.refundLogs : null
+        refundLogs: state.refundLogs ? state.refundLogs : null,
+        customerRefundLogs: state.customerRefundLogs ? state.customerRefundLogs : null
     };
 }
 
