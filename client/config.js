@@ -788,6 +788,34 @@ const clientConfig = {
       return moment(o.createdDate).format('lll');
     },
   }],
+  customerIdRefundsColumns: [{
+    id: 'refundStatus',
+    Header: 'Refund Status',
+    accessor: o => {
+      return o.refunded ? 'Yes' : 'No';
+    },
+  }, {
+    id: 'refundedDate',
+    Header: 'Refunded Date',
+    accessor: o => {
+      return o.refundedDate ?  moment(o.refundedDate).format('lll') : '-';
+    },
+  }, {
+    Header: 'Look Number',
+    accessor: 'looknumber',
+  }, {
+    Header: 'Refund Amount',
+    accessor: 'amount',
+  }, {
+    Header: 'Created By',
+    accessor: 'createdBy',
+  }, {
+    id: 'createdDate',
+    Header: 'Created Date',
+    accessor: o => {
+      return moment(o.createdDate).format('lll');
+    },
+  }],
 };
 
 export default clientConfig;

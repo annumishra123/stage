@@ -7,7 +7,7 @@ import { combineReducers } from 'redux';
 import app from './modules/App/AppReducer';
 import intl from './modules/Intl/IntlReducer';
 import { orders, orderDetail, productDetail, shopPricing } from './modules/Shop/ShopReducer';
-import { rentOrders, rentOrderDetail, rentProductDetail, rentalPricing, bookableStatus, deliveryDates, measurementStatus, allCoupons, refundLogs } from './modules/Rent/RentReducer';
+import { rentOrders, rentOrderDetail, rentProductDetail, rentalPricing, bookableStatus, deliveryDates, measurementStatus, allCoupons, refundLogs, customerRefundLogs } from './modules/Rent/RentReducer';
 import { authReducer as auth, allUsers } from './modules/Auth/AuthReducer';
 import { customerDetail, selectedAddress, creditPoints, customerComments } from './modules/Customer/CustomerReducer';
 import { rentDeliveryOrders, shopDeliveryOrders } from './modules/Delivery/DeliveryReducer';
@@ -75,5 +75,6 @@ export default combineReducers({
   allUsers,
   allRawMaterials,
   allOutfits,
-  refundLogs
+  refundLogs,
+  customerRefundLogs
 });

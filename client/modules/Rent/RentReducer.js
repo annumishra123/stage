@@ -78,3 +78,12 @@ export function refundLogs(state = null, action) {
     }
     return state;
 }
+
+export function customerRefundLogs(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_CUSTOMER_REFUND_LOGS':
+            return action.payload;
+            break;
+    }
+    return state;
+}

@@ -586,3 +586,28 @@ export function markRefunded(_id) {
         }
     }
 }
+
+export function getRefundsByUserId(customerId) {
+    return function (dispatch) {
+        let url = '/refund/getRefundsByUserId?customerId=' + customerId;
+        let token = localStorage.getItem('token');
+        if (token) {
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'get',
+                responseType: 'json',
+                headers: {
+                    Authorization: 'JWT ' + token,
+                },
+            }).then(function (response) {
+                dispatch({
+                    type: 'FETCH_CUSTOMER_REFUND_LOGS',
+                    payload: response.data
+                })
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+}
