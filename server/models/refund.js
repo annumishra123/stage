@@ -42,7 +42,6 @@ const refundLogSchema = new Schema({
     },
     phoneNumber: {
         type: 'Number',
-        required: true
     }
 });
 
