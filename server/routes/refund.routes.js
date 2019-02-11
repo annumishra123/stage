@@ -126,6 +126,8 @@ router.get("/markRefunded", passport.authenticate('jwt', {
         RefundLog.findById(req.query.refundLogId).then(refundLog => {
             refundLog.refunded = true;
             refundLog.refundedDate = Date.now();
+            let promiseArray = [];
+
             let emailUrl = config.notificationUrl + '/notify';
             let emailPromise = axios({
                 url: emailUrl,
@@ -144,25 +146,29 @@ router.get("/markRefunded", passport.authenticate('jwt', {
                 },
                 responseType: 'json'
             });
+            promiseArray.push(emailPromise);
 
-            let smsUrl = config.notificationUrl + '/sms/notify';
-            let smsPromise = axios({
-                url: smsUrl,
-                timeout: 20000,
-                method: 'post',
-                data: {
-                    "configs": {
-                        "customerId": refundLog.customerId,
-                        "looknumber": refundLog.looknumber,
-                        "amount": refundLog.amount
+            if (refundLog.phoneNumber) {
+                let smsUrl = config.notificationUrl + '/sms/notify';
+                let smsPromise = axios({
+                    url: smsUrl,
+                    timeout: 20000,
+                    method: 'post',
+                    data: {
+                        "configs": {
+                            "customerId": refundLog.customerId,
+                            "looknumber": refundLog.looknumber,
+                            "amount": refundLog.amount
+                        },
+                        "messageType": "REFUND_INITIATED",
+                        "number": refundLog.phoneNumber
                     },
-                    "messageType": "REFUND_INITIATED",
-                    "number": refundLog.phoneNumber
-                },
-                responseType: 'json'
-            });
+                    responseType: 'json'
+                });
+                promiseArray.push(smsPromise);
+            }
 
-            Promise.all([emailPromise, smsPromise]).then((response) => {
+            Promise.all(promiseArray).then((response) => {
                 refundLog.save().then(refund => {
                     RefundLog.find({ refunded: false }).sort({ "createdDate": 'asc' }).then(refundLogs => {
                         res.json(refundLogs);
