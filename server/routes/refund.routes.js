@@ -21,7 +21,8 @@ router.post("/sendRefundEmail", passport.authenticate('jwt', {
             createdBy: req.body.createdBy,
             amount: req.body.amount,
             looknumber: req.body.looknumber,
-            customerId: req.body.customerId
+            customerId: req.body.customerId,
+            phoneNumber: req.body.phoneNumber
         });
 
         let emailUrl = config.notificationUrl + '/notify';
@@ -43,9 +44,26 @@ router.post("/sendRefundEmail", passport.authenticate('jwt', {
             responseType: 'json'
         });
 
-        Promise.all([emailPromise]).then((response) => {
+        let smsUrl = config.notificationUrl + '/sms/notify';
+        let smsPromise = axios({
+            url: smsUrl,
+            timeout: 20000,
+            method: 'post',
+            data: {
+                "configs": {
+                    "customerId": req.body.customerId,
+                    "looknumber": req.body.looknumber,
+                    "amount": req.body.amount
+                },
+                "messageType": "REFUND_APPROVED",
+                "number": req.body.phoneNumber
+            },
+            responseType: 'json'
+        });
+
+        Promise.all([emailPromise, smsPromise]).then((response) => {
             newLogForRefund.save().then(item => {
-                RefundLog.find({ orderId: req.body.orderId }).sort({ "createdBy": -1 }).then(refundLogs => {
+                RefundLog.find({ orderId: req.body.orderId }).sort({ "createdBy": 'desc' }).then(refundLogs => {
                     res.json(refundLogs);
                 }).catch(err => {
                     console.log(err);
@@ -54,7 +72,7 @@ router.post("/sendRefundEmail", passport.authenticate('jwt', {
                     });
                 });
             }).catch(err => {
-                res.status(400).json({
+                res.status(500).json({
                     status: 'FAILED'
                 });
             });
@@ -71,7 +89,7 @@ router.get("/getByOrderId", passport.authenticate('jwt', {
     session: false,
 }), (req, res) => {
     if (req.user.role === 'admin') {
-        RefundLog.find({ orderId: req.query.orderId }).sort({ "createdDate": -1 }).then(refundLogs => {
+        RefundLog.find({ orderId: req.query.orderId }).sort({ "createdDate": 'desc' }).then(refundLogs => {
             res.json(refundLogs);
         }).catch(err => {
             console.log(err);
@@ -88,7 +106,7 @@ router.get("/getAllUnprocessedRefunds", passport.authenticate('jwt', {
     session: false,
 }), (req, res) => {
     if (req.user.role === 'admin') {
-        RefundLog.find({ refunded: false }).sort({ "createdDate": 1 }).then(refundLogs => {
+        RefundLog.find({ refunded: false }).sort({ "createdDate": 'asc' }).then(refundLogs => {
             res.json(refundLogs);
         }).catch(err => {
             console.log(err);
@@ -127,9 +145,26 @@ router.get("/markRefunded", passport.authenticate('jwt', {
                 responseType: 'json'
             });
 
-            Promise.all([emailPromise]).then((response) => {
+            let smsUrl = config.notificationUrl + '/sms/notify';
+            let smsPromise = axios({
+                url: smsUrl,
+                timeout: 20000,
+                method: 'post',
+                data: {
+                    "configs": {
+                        "customerId": refundLog.customerId,
+                        "looknumber": refundLog.looknumber,
+                        "amount": refundLog.amount
+                    },
+                    "messageType": "REFUND_INITIATED",
+                    "number": refundLog.phoneNumber
+                },
+                responseType: 'json'
+            });
+
+            Promise.all([emailPromise, smsPromise]).then((response) => {
                 refundLog.save().then(refund => {
-                    RefundLog.find({ refunded: false }).sort({ "createdDate": 1 }).then(refundLogs => {
+                    RefundLog.find({ refunded: false }).sort({ "createdDate": 'asc' }).then(refundLogs => {
                         res.json(refundLogs);
                     }).catch(err => {
                         console.log(err);
@@ -157,7 +192,7 @@ router.get("/getRefundsByUserId", passport.authenticate('jwt', {
     session: false,
 }), (req, res) => {
     if (req.user.role === 'admin') {
-        RefundLog.find({ customerId: req.query.customerId }).sort({ "createdDate": 1 }).then(refundLogs => {
+        RefundLog.find({ customerId: req.query.customerId }).sort({ "createdDate": 'asc' }).then(refundLogs => {
             res.json(refundLogs);
         }).catch(err => {
             console.log(err);

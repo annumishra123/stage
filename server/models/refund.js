@@ -39,6 +39,10 @@ const refundLogSchema = new Schema({
     },
     refundedDate: {
         type: 'Date'
+    },
+    phoneNumber: {
+        type: 'Number',
+        required: true
     }
 });
 
