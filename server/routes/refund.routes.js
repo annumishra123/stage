@@ -21,7 +21,8 @@ router.post("/sendRefundEmail", passport.authenticate('jwt', {
             createdBy: req.body.createdBy,
             amount: req.body.amount,
             looknumber: req.body.looknumber,
-            customerId: req.body.customerId
+            customerId: req.body.customerId,
+            phoneNumber: req.body.phoneNumber
         });
 
         let emailUrl = config.notificationUrl + '/notify';
@@ -43,7 +44,24 @@ router.post("/sendRefundEmail", passport.authenticate('jwt', {
             responseType: 'json'
         });
 
-        Promise.all([emailPromise]).then((response) => {
+        let smsUrl = config.notificationUrl + '/sms/notify';
+        let smsPromise = axios({
+            url: smsUrl,
+            timeout: 20000,
+            method: 'post',
+            data: {
+                "configs": {
+                    "customerId": req.body.customerId,
+                    "looknumber": req.body.looknumber,
+                    "amount": req.body.amount,
+                    "phoneNumber": req.body.phoneNumber
+                },
+                "messageType": "REFUND_APPROVED"
+            },
+            responseType: 'json'
+        });
+
+        Promise.all([emailPromise, smsPromise]).then((response) => {
             newLogForRefund.save().then(item => {
                 RefundLog.find({ orderId: req.body.orderId }).sort({ "createdBy": -1 }).then(refundLogs => {
                     res.json(refundLogs);
@@ -54,7 +72,7 @@ router.post("/sendRefundEmail", passport.authenticate('jwt', {
                     });
                 });
             }).catch(err => {
-                res.status(400).json({
+                res.status(500).json({
                     status: 'FAILED'
                 });
             });
@@ -127,7 +145,24 @@ router.get("/markRefunded", passport.authenticate('jwt', {
                 responseType: 'json'
             });
 
-            Promise.all([emailPromise]).then((response) => {
+            let smsUrl = config.notificationUrl + '/sms/notify';
+            let smsPromise = axios({
+                url: smsUrl,
+                timeout: 20000,
+                method: 'post',
+                data: {
+                    "configs": {
+                        "customerId": refundLog.customerId,
+                        "looknumber": refundLog.looknumber,
+                        "amount": refundLog.amount,
+                        "phoneNumber": refundLog.phoneNumber
+                    },
+                    "messageType": "REFUND_INITIATED"
+                },
+                responseType: 'json'
+            });
+
+            Promise.all([emailPromise, smsPromise]).then((response) => {
                 refundLog.save().then(refund => {
                     RefundLog.find({ refunded: false }).sort({ "createdDate": 1 }).then(refundLogs => {
                         res.json(refundLogs);
