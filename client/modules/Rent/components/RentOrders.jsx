@@ -122,7 +122,8 @@ class RentOrders extends React.Component {
         createdBy: this.props.user,
         customerId: this.props.orderDetail.userId,
         amount: this.state.refundAmount,
-        looknumber: lookNumber
+        looknumber: lookNumber,
+        phoneNumber: this.props.details ? this.props.details.phoneNumber : null
       }
       this.props.approveRefund(data);
       this.setState({

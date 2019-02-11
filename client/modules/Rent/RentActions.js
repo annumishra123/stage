@@ -488,7 +488,7 @@ export function approveRefund(data) {
     return function (dispatch) {
         let url = '/refund/sendRefundEmail';
         let token = localStorage.getItem('token');
-        if (token) {
+        if (token && data.phoneNumber) {
             return axios({
                 url: url,
                 timeout: 20000,
