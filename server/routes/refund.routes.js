@@ -53,10 +53,10 @@ router.post("/sendRefundEmail", passport.authenticate('jwt', {
                 "configs": {
                     "customerId": req.body.customerId,
                     "looknumber": req.body.looknumber,
-                    "amount": req.body.amount,
-                    "phoneNumber": req.body.phoneNumber
+                    "amount": req.body.amount
                 },
-                "messageType": "REFUND_APPROVED"
+                "messageType": "REFUND_APPROVED",
+                "number": req.body.phoneNumber
             },
             responseType: 'json'
         });
@@ -154,10 +154,10 @@ router.get("/markRefunded", passport.authenticate('jwt', {
                     "configs": {
                         "customerId": refundLog.customerId,
                         "looknumber": refundLog.looknumber,
-                        "amount": refundLog.amount,
-                        "phoneNumber": refundLog.phoneNumber
+                        "amount": refundLog.amount
                     },
-                    "messageType": "REFUND_INITIATED"
+                    "messageType": "REFUND_INITIATED",
+                    "number": refundLog.phoneNumber
                 },
                 responseType: 'json'
             });
