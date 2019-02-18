@@ -70,8 +70,45 @@ class RentDeliveryOrders extends React.Component {
     }
 
     generateExportLink() {
+        let csvData = [];
+        let csvDataArray = this.deliveryTable.getResolvedState().sortedData;
+        csvDataArray.map(row=>{
+            let data = {
+                frontendOrderId: row['parentOrder.frontendOrderId'],
+                email: row['profile.email'],
+                name: row.name,
+                phoneNumber: row['profile.phoneNumber'],
+                address: row['deliveryAddress.address'],
+                city: row['deliveryAddress.city'],
+                state: row['deliveryAddress.state'],
+                pincode: row['deliveryAddress.pincode'],
+                productName: row['product.name'],
+                lookNumber: row['product.lookNumber'],
+                gender: row.gender,
+                sku: row['product.sku'],
+                designer: row['product.designer'],
+                owner: row['product.owner'],
+                measurementStatus: row.measurementStatus,
+                orderDate: row.orderDate,
+                deliveryDate: row.deliveryDate,
+                occasionDate: row.occasionDate,
+                pickupDate: row.pickupDate,
+                grossAmount: row.grossAmount,
+                discount: row.discount,
+                netAmount: row.netAmount,
+                price: row.price,
+                deposit: row.deposit,
+                loss: row.loss,
+                currentStatus: row.currentStatus,
+                paymentType: row['parentOrder.paymentType'],
+                discountCoupon: row['parentOrder.discountCoupon'],
+                source: row.source,
+                quality: row.quality
+            };
+            csvData.push(data);
+        });
         this.setState({
-            csvData: this.deliveryTable.getResolvedState().sortedData
+            csvData: csvData
         });
     }
 
