@@ -84,14 +84,14 @@ class Coupons extends React.Component {
             type: this.state.type
         };
         this.props.createCoupon(couponObject, this.state.pageIndex, this.state.pageSize);
-        this.setState({
-            configs: {},
-            couponText: '',
-            dateTillValidMillisUTC: moment(),
-            isAdvertized: false,
-            isReusable: false,
-            type: ''
-        })
+        // this.setState({
+        //     configs: {},
+        //     couponText: '',
+        //     dateTillValidMillisUTC: moment(),
+        //     isAdvertized: false,
+        //     isReusable: false,
+        //     type: ''
+        // })
     }
 
     renderConfig() {
