@@ -121,15 +121,7 @@ class Navigation extends React.Component {
             <p>CRM Metadata</p>
           </Link>
         </li> : null}
-        {this.props.role == 'admin' ? <li>
-          <Link to="/alaya">
-            <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-fabric.png" />
-            </figure>
-            <p>Alaya Inventory Manager</p>
-          </Link>
-        </li> : null}
-        {this.props.role == 'admin' ? <li>
+        {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
           <Link to="/refunds">
             <figure>
               <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-refund.png" />
@@ -143,6 +135,14 @@ class Navigation extends React.Component {
               <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-newuser2.png" />
             </figure>
             <p>Create User</p>
+          </Link>
+        </li> : null}
+        {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
+          <Link to="/alaya">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-fabric.png" />
+            </figure>
+            <p>Alaya Inventory Manager</p>
           </Link>
         </li> : null}
         {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
