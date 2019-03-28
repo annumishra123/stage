@@ -8,18 +8,16 @@ class Scan extends Component {
     result: 'No result'
   }
 
-  handleScan(data) {
+  handleScan = data => {
     if (data) {
       this.setState({
         result: data
       })
     }
   }
-
-  handleError (err) {
+  handleError = err => {
     console.error(err)
   }
-  
   render() {
     return (
       <div>
