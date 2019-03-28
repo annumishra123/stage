@@ -681,7 +681,7 @@ const clientConfig = {
     id: 'created',
     Header: 'Created',
     accessor: o => {
-      return moment(o.creationTime).format('lll');
+      return moment(o.createdOn).format('lll');
     },
   }, {
     Header: 'URL',
