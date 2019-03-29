@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-if (typeof window !== 'undefined') { var QrReader = require('react-qr-reader'); }
+if (typeof window !== 'undefined') { var QrReader = require('react-qr-scanner'); }
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
