@@ -26,7 +26,7 @@ class Scan extends Component {
         {QrReader ? <QrReader
           delay={300}
           onError={this.handleError.bind(this)}
-          onScan={this.handleScan.bind(this, data)}
+          onScan={this.handleScan.bind(this)}
           style={{ width: '100%' }}
         /> : null}
         <p>{this.state.result}</p>
