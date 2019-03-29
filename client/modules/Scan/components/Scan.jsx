@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-if (typeof window !== 'undefined') { var QrReader = require('react-qr-reader'); }
+import QrReader from 'react-qr-reader';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -16,17 +16,17 @@ class Scan extends Component {
     }
   }
 
-  handleError(err) {
+  handleError (err) {
     console.error(err)
   }
-
+  
   render() {
     return (
       <div>
         <QrReader
           delay={300}
-          onError={this.handleError.bind(this)}
-          onScan={this.handleScan.bind(this, data)}
+          onError={this.handleError}
+          onScan={this.handleScan}
           style={{ width: '100%' }}
         />
         <p>{this.state.result}</p>
@@ -36,14 +36,14 @@ class Scan extends Component {
 }
 
 function matchDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch);
+    return bindActionCreators({}, dispatch);
 }
 
 function mapStateToProps(state) {
-  return {
-    role: state.auth.role,
-    user: state.auth.email
-  };
+    return {
+        role: state.auth.role,
+        user: state.auth.email
+    };
 }
 
 export default connect(mapStateToProps, matchDispatchToProps)(Scan);
