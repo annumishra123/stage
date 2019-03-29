@@ -24,6 +24,7 @@ class Scan extends Component {
     return (
       <div>
         {QrReader ? <QrReader
+          facingMode={rear}
           delay={300}
           onError={this.handleError.bind(this)}
           onScan={this.handleScan.bind(this)}
