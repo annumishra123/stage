@@ -322,11 +322,6 @@ export default function getRoutes(store, req) {
           cb(null, require('./modules/Rent/components/Refunds').default);
         });
       }} />
-      <Route path="/scan" onEnter={checkAdmin} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Scan/components/Scan').default);
-        });
-      }} />
     </Route>
   );
 }

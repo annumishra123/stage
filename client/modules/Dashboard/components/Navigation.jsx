@@ -129,14 +129,6 @@ class Navigation extends React.Component {
             <p>Refunds</p>
           </Link>
         </li> : null}
-        {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
-          <Link to="/scan">
-            <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-refund.png" />
-            </figure>
-            <p>Scan</p>
-          </Link>
-        </li> : null}
         {this.props.role == 'superuser' ? <li>
           <Link to="/create">
             <figure>
