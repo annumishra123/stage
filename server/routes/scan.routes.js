@@ -23,22 +23,21 @@ router.post("/saveScan", passport.authenticate('jwt', {
         });
         scan.save().then(item => {
             let url = config.targetURL + '/catalogv2/catalogv2/Looks/scan';
-            let scanObject = {};
-            req.body.pieces.map(piece => {
-                scanObject[piece] = {
-                    _id: item._id,
-                    location: req.body.location,
-                    timestamp: currentDateTime,
-                    reason: req.body.reason
-                };
-            });
+            let scanObject = {
+                _id: item._id,
+                location: req.body.location,
+                timestamp: currentDateTime,
+                reason: req.body.reason,
+                scannedBy: req.user.email
+            };
             axios({
                 url: url,
                 timeout: 20000,
                 method: 'post',
                 data: {
+                    sku: req.body.sku,
                     location: req.body.location,
-                    scanLocation: scanObject
+                    latestScan: scanObject
                 },
                 responseType: 'json'
             }).then(response => {
