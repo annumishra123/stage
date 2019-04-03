@@ -1,0 +1,30 @@
+.scan {
+  display: block;
+}
+
+.scan h1 {
+  text-align: center;
+  margin: 10px 0 -40px;
+  display: block;
+  position: relative;
+  color: #fff;
+}
+
+.scan video {
+  display: block;
+  width: 85% !important;
+  margin: 0 auto;
+}
+
+@media (max-width: 767px) {
+  .scan h1 {
+    color: #000;
+  }
+  .scan video {
+    position: absolute;
+    width: 100% !important;
+    left: 0;
+    right: 0;
+    margin: 50px 0 20px;
+  }
+}

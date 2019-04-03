@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getScannedLook, clearScannedLook } from '../ScanActions';
 
+// Import CSS
+import styles from './scan.css';
+
 class Scan extends Component {
   constructor() {
     super();
@@ -60,7 +63,7 @@ class Scan extends Component {
   }
 
   updateScannedLocation() {
-    
+
   }
 
   renderSaveButton() {
@@ -79,14 +82,15 @@ class Scan extends Component {
 
   render() {
     return (
-      <section>
+      <section className={styles.scan}>
+        <h1>Scan QR</h1>
         {this.props.scannedLook ? this.renderLook() : <div>
           {QrReader ? <QrReader
             facingMode={'rear'}
             delay={300}
             onError={this.handleError.bind(this)}
             onScan={this.handleFirstScan.bind(this)}
-            style={{ width: '50%' }}
+            style={{ width: '100%' }}
           /> : null}
           <p>{this.state.result}</p>
         </div>}
