@@ -23,6 +23,73 @@
   position: relative;
   margin: -53.5% auto 12%;
 }
+.scanResult {
+  background: #f1f1f1;
+  padding: 15px;
+  margin: 30px auto 0;
+  overflow: hidden;
+  width: 85%;
+}
+.scanResult .col30 {
+  width: 30%;
+  float:left;
+}
+.scanResult .col70 {
+  width: 70%;
+  padding: 0 0 0 50px;
+  float:left;
+}
+.scanResult .col30 img {
+  width: 90%;
+}
+.scanResult p {
+  font-size: 18px;
+  font-family: 'Lato';
+  line-height: 26px;
+}
+.scanResult .clear {
+  background: transparent;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  padding: 0;
+  font-size: 16px;
+  font-family: 'Lato';
+  border-bottom: 1px solid #000;
+  margin: 0 0 15px;
+  float: right;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+.scanResult ul {
+  list-style: disk;
+  margin: 0;
+  padding: 0 0 0 15px;
+}
+.scanResult ul li {
+  color: #000;
+  font-size: 16px;
+  font-family: 'Lato';
+  line-height: 28px;
+}
+.scanResult select {
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  font-size: 16px;
+  font-family: 'Lato';
+  letter-spacing: 1px;
+  padding: 10px 15px;
+  margin: 15px 15px 0 0;
+}
+
+
+@media (min-width: 1600px) {
+  .scan .brder {
+    margin: -40% auto 15%;
+  }
+}
 
 @media (max-width: 767px) {
   .scan h1 {

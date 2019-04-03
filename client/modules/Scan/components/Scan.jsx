@@ -68,28 +68,34 @@ class Scan extends Component {
           onScan={this.handleOtherScan.bind(this)}
           style={{ width: '600px', height: '600px' }}
         /> : null}
-        <button onClick={this.clearProduct.bind(this)}>Clear Product</button>
-        <img src={this.props.scannedLook.listingimage[0]} />
-        <p>{this.props.scannedLook.name}</p>
-        <p>{this.props.scannedLook.sku}</p>
-        {this.renderScannedComposition()}
-        <select onChange={this.changeReason.bind(this)}>
-          <option value="">-- Select Reason --</option>
-          {clientConfig.scanReasons.map((reason, i) => {
-            return <option key={i} value={reason}>
-              {reason}
-            </option>;
-          })}
-        </select>
-        <select onChange={this.changeLocation.bind(this)}>
-          <option value="">-- Select Location --</option>
-          {clientConfig.scanLocations.map((reason, i) => {
-            return <option key={i} value={reason}>
-              {reason}
-            </option>;
-          })}
-        </select>
-        {this.renderSaveButton()}
+        <div className={styles.scanResult}>
+          <button className={styles.clear} onClick={this.clearProduct.bind(this)}>Clear</button>
+          <div className={styles.col30}>
+            <img src={this.props.scannedLook.listingimage[0]} />
+          </div>
+          <div className={styles.col70}>
+            <p>{this.props.scannedLook.name}</p>
+            <p>{this.props.scannedLook.sku}</p>
+            {this.renderScannedComposition()}
+            <select onChange={this.changeReason.bind(this)}>
+              <option value="">-- Select Reason --</option>
+              {clientConfig.scanReasons.map((reason, i) => {
+                return <option key={i} value={reason}>
+                  {reason}
+                </option>;
+              })}
+            </select>
+            <select onChange={this.changeLocation.bind(this)}>
+              <option value="">-- Select Location --</option>
+              {clientConfig.scanLocations.map((reason, i) => {
+                return <option key={i} value={reason}>
+                  {reason}
+                </option>;
+              })}
+            </select>
+            {this.renderSaveButton()}
+          </div>
+        </div>
       </div>
     }
   }
@@ -134,6 +140,7 @@ class Scan extends Component {
     return (
       <section className={styles.scan}>
         <h1>QR Scan</h1>
+        <div className={styles.brder}></div>
         {this.props.scannedLook ? this.renderLook() : <div>
           {QrReader ? <QrReader
             facingMode={'rear'}
@@ -144,7 +151,6 @@ class Scan extends Component {
           /> : null}
           <p>{this.state.result}</p>
         </div>}
-        <div className={styles.brder}></div>
       </section>
     )
   }
