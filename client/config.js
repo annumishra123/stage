@@ -82,12 +82,8 @@ const clientConfig = {
     'measurements didn’t fit',
     'outfit now looking old',
   ],
-  scanLocations: [
-
-  ],
-  scanReasons: [
-    
-  ],
+  scanLocations: ['hkv', 'rajouri', 'office', 'customer', 'dc', 'popup'],
+  scanReasons: ['item received', 'send to hkv', 'send to rajouri', 'send to office', 'send to customer', 'send to dc', 'send to popup', 'reconcile'],
   targetURL: 'https://staging.stage3.co',
   paymentMethods: [
     'bank deposit',
@@ -804,7 +800,7 @@ const clientConfig = {
     id: 'refundedDate',
     Header: 'Refunded Date',
     accessor: o => {
-      return o.refundedDate ?  moment(o.refundedDate).format('lll') : '-';
+      return o.refundedDate ? moment(o.refundedDate).format('lll') : '-';
     },
   }, {
     Header: 'Look Number',
