@@ -54,7 +54,7 @@ class Scan extends Component {
           delay={300}
           onError={this.handleError.bind(this)}
           onScan={this.handleOtherScan.bind(this)}
-          style={{ width: '50%' }}
+          style={{ width: '600px', height: '600px' }}
         /> : null}
         {JSON.stringify(this.props.scannedLook)}
         {this.renderSaveButton()}
@@ -83,7 +83,7 @@ class Scan extends Component {
   render() {
     return (
       <section className={styles.scan}>
-        <h1>Scan QR</h1>
+        <h1>QR Scan</h1>
         {this.props.scannedLook ? this.renderLook() : <div>
           {QrReader ? <QrReader
             facingMode={'rear'}
@@ -94,6 +94,7 @@ class Scan extends Component {
           /> : null}
           <p>{this.state.result}</p>
         </div>}
+        <div className={styles.brder}></div>
       </section>
     )
   }
