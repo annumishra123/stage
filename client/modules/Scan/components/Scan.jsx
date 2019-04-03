@@ -121,6 +121,7 @@ class Scan extends Component {
   }
 
   updateScannedLocation() {
+    this.props.saveScannedLocation(this.state.scannedSKU, this.state.location, this.state.reason)
     this.clearProduct();
   }
 
