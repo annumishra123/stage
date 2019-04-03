@@ -18,7 +18,7 @@ export function getScannedLook(sku) {
         }).then(function (response) {
             dispatch({
                 type: 'FETCH_SCANNED_SKU',
-                payload: response.data
+                payload: response.data[0]
             })
         }).catch(function (error) {
             console.log(error);

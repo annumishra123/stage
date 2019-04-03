@@ -82,6 +82,12 @@ const clientConfig = {
     'measurements didn’t fit',
     'outfit now looking old',
   ],
+  scanLocations: [
+
+  ],
+  scanReasons: [
+    
+  ],
   targetURL: 'https://staging.stage3.co',
   paymentMethods: [
     'bank deposit',

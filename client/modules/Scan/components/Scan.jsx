@@ -3,6 +3,7 @@ if (typeof window !== 'undefined') { var QrReader = require('react-qr-scanner');
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getScannedLook, clearScannedLook } from '../ScanActions';
+import clientConfig from '../../../config';
 
 // Import CSS
 import styles from './scan.css';
@@ -12,7 +13,9 @@ class Scan extends Component {
     super();
     this.state = {
       scannedSKU: '',
-      scannedTypes: []
+      scannedTypes: [],
+      location: '',
+      reason: ''
     }
   }
 
@@ -30,20 +33,29 @@ class Scan extends Component {
   }
 
   handleOtherScan(data) {
-    let scanArray = data.split('-');
-    if (scanArray[0] == this.props.scannedLook.sku) {
-      let scannedTypes = this.state.scannedTypes;
-      scannedTypes.push(scanArray[1]);
-      this.setState({
-        scannedTypes: scannedTypes
-      });
-    } else {
-      alert('Please scan a peice of the same sku!');
+    if (data) {
+      let scanArray = data.split('-');
+      if (scanArray[0] == this.props.scannedLook.sku) {
+        let scannedTypes = this.state.scannedTypes;
+        scannedTypes.push(scanArray[1]);
+        this.setState({
+          scannedTypes: scannedTypes
+        });
+      } else {
+        alert('Please scan a peice of the same sku!');
+      }
     }
   }
 
   handleError(err) {
     console.error(err)
+  }
+
+  clearProduct() {
+    this.setState({
+      scannedSKU: '',
+      scannedTypes: []
+    }, this.props.clearScannedLook());
   }
 
   renderLook() {
@@ -56,22 +68,60 @@ class Scan extends Component {
           onScan={this.handleOtherScan.bind(this)}
           style={{ width: '600px', height: '600px' }}
         /> : null}
-        {JSON.stringify(this.props.scannedLook)}
+        <button onClick={this.clearProduct.bind(this)}>Clear Product</button>
+        <img src={this.props.scannedLook.listingimage[0]} />
+        <p>{this.props.scannedLook.name}</p>
+        <p>{this.props.scannedLook.sku}</p>
+        {this.renderScannedComposition()}
+        <select onChange={this.changeReason.bind(this)}>
+          <option value="">-- Select Reason --</option>
+          {clientConfig.scanReasons.map((reason, i) => {
+            return <option key={i} value={reason}>
+              {reason}
+            </option>;
+          })}
+        </select>
+        <select onChange={this.changeLocation.bind(this)}>
+          <option value="">-- Select Location --</option>
+          {clientConfig.scanLocations.map((reason, i) => {
+            return <option key={i} value={reason}>
+              {reason}
+            </option>;
+          })}
+        </select>
         {this.renderSaveButton()}
       </div>
     }
   }
 
-  updateScannedLocation() {
+  changeReason(e) {
+    this.setState({
+      reason: e.target.value
+    });
+  }
 
+  changeLocation(e) {
+    this.setState({
+      location: e.target.value
+    });
+  }
+
+  renderScannedComposition() {
+    return <ul>
+      {Object.keys(this.props.scannedLook.scanComposition).map((type, i) => {
+        return <li key={i}>{type} {this.state.scannedTypes.includes(type) ? 'Scanned' : null}</li>
+      })}
+    </ul>;
+  }
+
+  updateScannedLocation() {
+    this.clearProduct();
   }
 
   renderSaveButton() {
-    let flag = false;
-    Object.keys(this.props.scannedLook.latestScannedLocation).map((type) => {
-      if (this.state.scannedTypes.includes(type)) {
-        flag = true;
-      } else {
+    let flag = true;
+    Object.keys(this.props.scannedLook.scanComposition).map((type) => {
+      if (!this.state.scannedTypes.includes(type)) {
         flag = false;
       }
     });
@@ -102,7 +152,8 @@ class Scan extends Component {
 
 function matchDispatchToProps(dispatch) {
   return bindActionCreators({
-    getScannedLook
+    getScannedLook,
+    clearScannedLook
   }, dispatch);
 }
 
