@@ -17,12 +17,24 @@
 }
 
 .scan .brder {
+  position: relative;
+}
+
+.scan .brder:before {
+  content: "";
   border: 2px solid #eeaba9;
   width: 400px;
   height: 400px;
-  position: relative;
-  margin: -53.5% auto 12%;
+  position: absolute;
+  margin: auto;
+  display: block;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: auto;
+  bottom: 0;
 }
+
 .scanResult {
   background: #f1f1f1;
   padding: 15px;
@@ -30,23 +42,28 @@
   overflow: hidden;
   width: 85%;
 }
+
 .scanResult .col30 {
   width: 30%;
-  float:left;
+  float: left;
 }
+
 .scanResult .col70 {
   width: 70%;
   padding: 0 0 0 50px;
-  float:left;
+  float: left;
 }
+
 .scanResult .col30 img {
   width: 90%;
 }
+
 .scanResult p {
   font-size: 18px;
   font-family: 'Lato';
   line-height: 26px;
 }
+
 .scanResult .clear {
   background: transparent;
   border-top: 0;
@@ -62,17 +79,20 @@
   letter-spacing: 1px;
   cursor: pointer;
 }
+
 .scanResult ul {
   list-style: disk;
   margin: 0;
   padding: 0 0 0 15px;
 }
+
 .scanResult ul li {
   color: #000;
   font-size: 16px;
   font-family: 'Lato';
   line-height: 28px;
 }
+
 .scanResult select {
   border: 1px solid #000;
   background: #fff;
@@ -83,7 +103,6 @@
   padding: 10px 15px;
   margin: 15px 15px 0 0;
 }
-
 
 @media (min-width: 1600px) {
   .scan .brder {
