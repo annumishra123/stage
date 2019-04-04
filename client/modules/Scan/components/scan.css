@@ -8,6 +8,7 @@
   display: block;
   position: relative;
   color: #fff;
+  z-index: 5;
 }
 
 .scan video {
@@ -104,11 +105,7 @@
   margin: 15px 15px 0 0;
 }
 
-@media (min-width: 1600px) {
-  .scan .brder {
-    margin: -40% auto 15%;
-  }
-}
+@media (min-width: 1600px) {}
 
 @media (max-width: 767px) {
   .scan h1 {
@@ -121,9 +118,8 @@
     right: 0;
     margin: 50px 0 20px -10%;
   }
-  .scan .brder {
+  .scan .brder:before {
     width: 220px;
     height: 220px;
-    margin: -96% auto 0%;
   }
 }
