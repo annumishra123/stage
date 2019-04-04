@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 if (typeof window !== 'undefined') { var QrReader = require('react-qr-scanner'); }
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getScannedLook, clearScannedLook } from '../ScanActions';
+import { getScannedLook, clearScannedLook, saveScannedLocation } from '../ScanActions';
 import clientConfig from '../../../config';
 
 // Import CSS
@@ -121,7 +121,7 @@ class Scan extends Component {
   }
 
   updateScannedLocation() {
-    this.props.saveScannedLocation(this.state.scannedSKU, this.state.location, this.state.reason)
+    this.props.saveScannedLocation(this.state.scannedSKU, this.state.location, this.state.reason);
     this.clearProduct();
   }
 
@@ -160,7 +160,8 @@ class Scan extends Component {
 function matchDispatchToProps(dispatch) {
   return bindActionCreators({
     getScannedLook,
-    clearScannedLook
+    clearScannedLook,
+    saveScannedLocation
   }, dispatch);
 }
 
