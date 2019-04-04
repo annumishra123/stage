@@ -66,7 +66,7 @@ class Scan extends Component {
           delay={300}
           onError={this.handleError.bind(this)}
           onScan={this.handleOtherScan.bind(this)}
-          style={{ width: '600px', height: '600px' }}
+          style={{ width: '600px' }}
         /> : null}
         <div className={styles.scanResult}>
           <button className={styles.clear} onClick={this.clearProduct.bind(this)}>Clear</button>
@@ -115,7 +115,7 @@ class Scan extends Component {
   renderScannedComposition() {
     return <ul>
       {Object.keys(this.props.scannedLook.scanComposition).map((type, i) => {
-        return <li key={i}>{type} {this.state.scannedTypes.includes(type) ? 'Scanned' : null}</li>
+        return <li key={i}>{type} {this.state.scannedTypes.includes(type) ? <img src="https://res.cloudinary.com/stage3/image/upload/v1554376454/icon-checked.png" /> : null}</li>
       })}
     </ul>;
   }
@@ -133,7 +133,7 @@ class Scan extends Component {
       }
     });
     if (flag) {
-      return <button onClick={this.updateScannedLocation.bind(this)}>Save</button>;
+      return <button className={styles.savebtn} onClick={this.updateScannedLocation.bind(this)}>Save</button>;
     }
   }
 
