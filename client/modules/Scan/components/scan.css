@@ -8,6 +8,7 @@
   display: block;
   position: relative;
   color: #fff;
+  z-index: 5;
 }
 
 .scan video {
@@ -30,9 +31,7 @@
   display: block;
   left: 0;
   right: 0;
-  top: 0;
-  margin: auto;
-  bottom: 0;
+  top: 10%;
 }
 
 .scanResult {
@@ -59,9 +58,9 @@
 }
 
 .scanResult p {
-  font-size: 18px;
+  font-size: 16px;
   font-family: 'Lato';
-  line-height: 26px;
+  line-height: 22px;
 }
 
 .scanResult .clear {
@@ -83,14 +82,21 @@
 .scanResult ul {
   list-style: disk;
   margin: 0;
-  padding: 0 0 0 15px;
+  padding: 10px 0 0 15px;
 }
 
 .scanResult ul li {
   color: #000;
-  font-size: 16px;
+  font-size: 14px;
   font-family: 'Lato';
   line-height: 28px;
+  text-align: capitalize;
+}
+
+.scanResult ul li img {
+  width: 17px;
+  height: auto;
+  margin: 4px 0 -1px 8px;
 }
 
 .scanResult select {
@@ -104,15 +110,32 @@
   margin: 15px 15px 0 0;
 }
 
+.scanResult .savebtn {
+  display: block;
+  background: #000;
+  color: #fff;
+  font-size: 15px;
+  letter-spacing: 1px;
+  padding: 10px 20px;
+  border: 0;
+  margin: 10px 0 0;
+}
+
 @media (min-width: 1600px) {
-  .scan .brder {
-    margin: -40% auto 15%;
+  .scanResult ul li {
+    font-size: 16px;
+  }
+  .scanResult p {
+    font-size: 18px;
   }
 }
 
 @media (max-width: 767px) {
   .scan h1 {
     color: #000;
+  }
+  .scan section {
+    max-height: none;
   }
   .scan video {
     position: absolute;
@@ -121,9 +144,37 @@
     right: 0;
     margin: 50px 0 20px -10%;
   }
-  .scan .brder {
+  .scan .brder:before {
     width: 220px;
     height: 220px;
-    margin: -96% auto 0%;
+    z-index: 2;
+    top: 21%;
+    display: none;
+  }
+  .scanResult {
+    width: 100%;
+    margin: 0 auto 0;
+  }
+  .scanResult .clear {
+    margin: 0 0 5px;
+    font-size: 14px;
+  }
+  .scanResult .col30 {
+    width: 40%;
+  }
+  .scanResult .col30 img {
+    width: 90%;
+  }
+  .scanResult .col70 {
+    width: 60%;
+    padding: 0 0 0 10px;
+  }
+  .scanResult select {
+    width: 100%;
+    margin: 0 0 10px;
+  }
+  .scanResult .savebtn {
+    width: 100%;
+    margin: 0;
   }
 }
