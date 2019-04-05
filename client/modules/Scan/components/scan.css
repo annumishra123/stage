@@ -138,10 +138,11 @@
     margin-bottom: 10px;
   }
   .scan {
-    min-height: 85vh;
+    min-height: 85vh !important;
+    height: auto;
   }
   .scan section {
-    min-height: auto;
+    min-height: auto !important;
   }
   /* .scan video {
     position: absolute;
@@ -177,11 +178,22 @@
   }
   .scanResult .col70 {
     width: 60%;
-    padding: 0 0 0 10px;
+    padding: 0;
+  }
+  .scanResult p {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .scanResult ul {
+    padding: 0 0 0 15px;
+  }
+  .scanResult ul li {
+    line-height: 20px;
   }
   .scanResult select {
     width: 100%;
     margin: 0 0 10px;
+    padding: 5px 10px;
   }
   .scanResult .savebtn {
     width: 100%;
