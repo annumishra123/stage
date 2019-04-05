@@ -38,6 +38,7 @@ export function clearScannedLook() {
 export function saveScannedLocation(sku, location, reason) {
     if (sku && location && reason) {
         let url = '/scan/saveScan';
+        let token = localStorage.getItem('token');
         return function (dispatch) {
             return axios({
                 url: url,
@@ -47,6 +48,9 @@ export function saveScannedLocation(sku, location, reason) {
                     sku: sku,
                     location: location,
                     reason: reason
+                },
+                headers: {
+                    Authorization: 'JWT ' + token,
                 },
                 responseType: 'json'
             }).then(function (response) {
