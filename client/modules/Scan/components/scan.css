@@ -149,6 +149,10 @@
   } */
   .scan .brder {
     width: 100%;
+    height: 40vh;
+  }
+  .scan .brder video {
+    height: 100%;
   }
   .scan .brder:before {
     width: 220px;
