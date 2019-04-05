@@ -11,14 +11,16 @@
   z-index: 5;
 }
 
-.scan video {
+/* .scan video {
   display: block;
   width: 85% !important;
   margin: 0 auto;
-}
+} */
 
 .scan .brder {
   position: relative;
+  width: 85%;
+  margin: 0 auto;
 }
 
 .scan .brder:before {
@@ -37,9 +39,9 @@
 .scanResult {
   background: #f1f1f1;
   padding: 15px;
-  margin: 30px auto 0;
+  margin: 15px auto 0;
   overflow: hidden;
-  width: 85%;
+  width: 100%;
 }
 
 .scanResult .col30 {
@@ -133,16 +135,20 @@
 @media (max-width: 767px) {
   .scan h1 {
     color: #000;
+    margin-bottom: 10px;
   }
   .scan section {
     max-height: none;
   }
-  .scan video {
+  /* .scan video {
     position: absolute;
     width: 120% !important;
     left: 0;
     right: 0;
     margin: 50px 0 20px -10%;
+  } */
+  .scan .brder {
+    width: 100%;
   }
   .scan .brder:before {
     width: 220px;
