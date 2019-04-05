@@ -137,8 +137,11 @@
     color: #000;
     margin-bottom: 10px;
   }
+  .scan {
+    min-height: 85vh;
+  }
   .scan section {
-    max-height: none;
+    min-height: auto;
   }
   /* .scan video {
     position: absolute;
@@ -148,11 +151,8 @@
     margin: 50px 0 20px -10%;
   } */
   .scan .brder {
-    width: 100%;
-    height: 40vh;
-  }
-  .scan .brder video {
-    height: 100%;
+    width: 310px;
+    height: 310px;
   }
   .scan .brder:before {
     width: 220px;
@@ -163,7 +163,7 @@
   }
   .scanResult {
     width: 100%;
-    margin: 0 auto 0;
+    margin: 10px auto 0;
   }
   .scanResult .clear {
     margin: 0 0 5px;
