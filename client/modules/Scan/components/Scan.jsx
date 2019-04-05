@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 if (typeof window !== 'undefined') { var QrReader = require('react-qr-scanner'); }
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getScannedLook, clearScannedLook } from '../ScanActions';
+import { getScannedLook, clearScannedLook, saveScannedLocation } from '../ScanActions';
 import clientConfig from '../../../config';
 
 // Import CSS
@@ -114,27 +114,25 @@ class Scan extends Component {
 
   renderScannedComposition() {
     return <ul>
-      {Object.keys(this.props.scannedLook.scanComposition).map((type, i) => {
+      {this.props.scannedLook.scanComposition.map((type, i) => {
         return <li key={i}>{type} {this.state.scannedTypes.includes(type) ? <img src="https://res.cloudinary.com/stage3/image/upload/v1554376454/icon-checked.png" /> : null}</li>
       })}
     </ul>;
   }
 
   updateScannedLocation() {
-    this.props.saveScannedLocation(this.state.scannedSKU, this.state.location, this.state.reason)
+    this.props.saveScannedLocation(this.state.scannedSKU, this.state.location, this.state.reason);
     this.clearProduct();
   }
 
   renderSaveButton() {
     let flag = true;
-    Object.keys(this.props.scannedLook.scanComposition).map((type) => {
+    this.props.scannedLook.scanComposition.map((type) => {
       if (!this.state.scannedTypes.includes(type)) {
         flag = false;
       }
     });
-    if (flag) {
-      return <button className={styles.savebtn} onClick={this.updateScannedLocation.bind(this)}>Save</button>;
-    }
+    return <button className={styles.savebtn} disabled={!flag} onClick={this.updateScannedLocation.bind(this)}>Save</button>;
   }
 
   render() {
@@ -160,7 +158,8 @@ class Scan extends Component {
 function matchDispatchToProps(dispatch) {
   return bindActionCreators({
     getScannedLook,
-    clearScannedLook
+    clearScannedLook,
+    saveScannedLocation
   }, dispatch);
 }
 
