@@ -114,7 +114,7 @@ class Scan extends Component {
 
   renderScannedComposition() {
     return <ul>
-      {Object.keys(this.props.scannedLook.scanComposition).map((type, i) => {
+      {this.props.scannedLook.scanComposition.map((type, i) => {
         return <li key={i}>{type} {this.state.scannedTypes.includes(type) ? <img src="https://res.cloudinary.com/stage3/image/upload/v1554376454/icon-checked.png" /> : null}</li>
       })}
     </ul>;
@@ -127,14 +127,12 @@ class Scan extends Component {
 
   renderSaveButton() {
     let flag = true;
-    Object.keys(this.props.scannedLook.scanComposition).map((type) => {
+    this.props.scannedLook.scanComposition.map((type) => {
       if (!this.state.scannedTypes.includes(type)) {
         flag = false;
       }
     });
-    if (flag) {
-      return <button className={styles.savebtn} onClick={this.updateScannedLocation.bind(this)}>Save</button>;
-    }
+    return <button className={styles.savebtn} disabled={!flag} onClick={this.updateScannedLocation.bind(this)}>Save</button>;
   }
 
   render() {
