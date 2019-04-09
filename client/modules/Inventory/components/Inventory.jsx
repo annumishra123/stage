@@ -256,6 +256,7 @@ class Inventory extends React.Component {
                                 <option value="store-rjg">Store (RJG)</option>
                                 <option value="office">Office</option>
                                 <option value="customer">Customer</option>
+                                <option value="cafe-we">Cafe We</option>
                             </select>
                             <button onClick={this.changeRentLooksLocation.bind(this, value)}>Change</button>
                         </div>
