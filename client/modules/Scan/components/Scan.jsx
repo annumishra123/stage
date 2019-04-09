@@ -63,7 +63,7 @@ class Scan extends Component {
       return <div className={styles.frame}>
         {QrReader ? <QrReader
           facingMode={'rear'}
-          delay={300}
+          delay={100}
           onError={this.handleError.bind(this)}
           onScan={this.handleOtherScan.bind(this)}
           style={{ width: '600px' }}
