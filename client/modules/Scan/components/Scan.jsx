@@ -67,7 +67,7 @@ class Scan extends Component {
           delay={10}
           onError={this.handleError.bind(this)}
           onScan={this.handleOtherScan.bind(this)}
-          style={{ width: '600px' }}
+          style={{ width: '100%' }}
         /> : null}
         <div className={styles.scanResult}>
           <button className={styles.clear} onClick={this.clearProduct.bind(this)}>Clear</button>
