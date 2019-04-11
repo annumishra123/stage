@@ -21,6 +21,7 @@ class Scan extends Component {
 
   handleFirstScan(data) {
     if (data) {
+      alert('Look Scanned: ' + data);
       let scanArray = data.split('-');
       let scannedTypes = [];
       scannedTypes.push(scanArray[1]);
@@ -143,7 +144,7 @@ class Scan extends Component {
           {this.props.scannedLook ? this.renderLook() : <div>
             {QrReader ? <QrReader
               facingMode={'rear'}
-              delay={300}
+              delay={100}
               onError={this.handleError.bind(this)}
               onScan={this.handleFirstScan.bind(this)}
               style={{ width: '100%' }}
