@@ -21,7 +21,6 @@ class Scan extends Component {
 
   handleFirstScan(data) {
     if (data) {
-      alert('Look Scanned: ' + data);
       let scanArray = data.split('-');
       let scannedTypes = [];
       scannedTypes.push(scanArray[1]);
@@ -34,7 +33,7 @@ class Scan extends Component {
   }
 
   handleOtherScan(data) {
-    if (data) {
+    if (data && this.props.scannedLook) {
       let scanArray = data.split('-');
       if (scanArray[0] == this.props.scannedLook.sku) {
         let scannedTypes = this.state.scannedTypes;
@@ -62,17 +61,6 @@ class Scan extends Component {
   renderLook() {
     if (this.props.scannedLook) {
       return <div className="">
-        <center>
-          {QrReader ? <QrReader
-            delay={100}
-            onError={this.handleError.bind(this)}
-            onScan={this.handleOtherScan.bind(this)}
-            style={{
-              height: 500,
-              width: 500,
-            }}
-          /> : null}
-        </center>
         <div className={styles.scanResult}>
           <button className={styles.clear} onClick={this.clearProduct.bind(this)}>Clear</button>
           <div className={styles.col30}>
@@ -145,17 +133,18 @@ class Scan extends Component {
       <section className="">
         <h1>QR Scan</h1>
         <div className="">
-          {this.props.scannedLook ? this.renderLook() : <center>
+          <center>
             {QrReader ? <QrReader
               delay={100}
               onError={this.handleError.bind(this)}
-              onScan={this.handleFirstScan.bind(this)}
+              onScan={this.state.scannedSKU ? this.handleOtherScan.bind(this) : this.handleFirstScan.bind(this)}
               style={{
                 height: 500,
                 width: 500,
               }}
             /> : null}
-          </center>}
+          </center>
+          {this.renderLook()}
         </div>
       </section>
     )
