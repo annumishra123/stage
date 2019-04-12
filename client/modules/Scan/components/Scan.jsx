@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-if (typeof window !== 'undefined') { var QrReader = require('react-qr-scanner'); }
+if (typeof window !== 'undefined') { var QrReader = require('react-qr-reader'); }
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getScannedLook, clearScannedLook, saveScannedLocation } from '../ScanActions';
@@ -61,17 +61,18 @@ class Scan extends Component {
 
   renderLook() {
     if (this.props.scannedLook) {
-      return <div className={styles.frame}>
-        {QrReader ? <QrReader
-          facingMode={'rear'}
-          delay={100}
-          onError={this.handleError.bind(this)}
-          onScan={this.handleOtherScan.bind(this)}
-          style={{
-            height: 400,
-            width: 400,
-          }}
-        /> : null}
+      return <div className="">
+        <center>
+          {QrReader ? <QrReader
+            delay={100}
+            onError={this.handleError.bind(this)}
+            onScan={this.handleOtherScan.bind(this)}
+            style={{
+              height: 500,
+              width: 500,
+            }}
+          /> : null}
+        </center>
         <div className={styles.scanResult}>
           <button className={styles.clear} onClick={this.clearProduct.bind(this)}>Clear</button>
           <div className={styles.col30}>
@@ -141,22 +142,21 @@ class Scan extends Component {
 
   render() {
     return (
-      <section className={styles.scan}>
+      <section className="">
         <h1>QR Scan</h1>
-        <div className={styles.brder}>
-          {this.props.scannedLook ? this.renderLook() : <div>
+        <div className="">
+          {this.props.scannedLook ? this.renderLook() : <center>
             {QrReader ? <QrReader
-              facingMode={'rear'}
               delay={100}
               onError={this.handleError.bind(this)}
               onScan={this.handleFirstScan.bind(this)}
               style={{
-                height: 400,
-                width: 400,
+                height: 500,
+                width: 500,
               }}
             /> : null}
-            <p>{this.state.result}</p>
-          </div>}</div>
+          </center>}
+        </div>
       </section>
     )
   }
