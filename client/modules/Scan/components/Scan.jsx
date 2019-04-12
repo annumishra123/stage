@@ -64,11 +64,13 @@ class Scan extends Component {
       return <div className={styles.frame}>
         {QrReader ? <QrReader
           facingMode={'rear'}
-          delay={false}
-          legacyMode={true}
+          delay={100}
           onError={this.handleError.bind(this)}
           onScan={this.handleOtherScan.bind(this)}
-          style={{ width: '100%' }}
+          style={{
+            height: 240,
+            width: 320,
+          }}
         /> : null}
         <div className={styles.scanResult}>
           <button className={styles.clear} onClick={this.clearProduct.bind(this)}>Clear</button>
@@ -145,11 +147,13 @@ class Scan extends Component {
           {this.props.scannedLook ? this.renderLook() : <div>
             {QrReader ? <QrReader
               facingMode={'rear'}
-              delay={false}
-              legacyMode={true}
+              delay={100}
               onError={this.handleError.bind(this)}
               onScan={this.handleFirstScan.bind(this)}
-              style={{ width: '100%' }}
+              style={{
+                height: 240,
+                width: 320,
+              }}
             /> : null}
             <p>{this.state.result}</p>
           </div>}</div>
