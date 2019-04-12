@@ -6,6 +6,7 @@ var cssnext = require('postcss-cssnext');
 var postcssFocus = require('postcss-focus');
 var postcssReporter = require('postcss-reporter');
 var cssnano = require('cssnano');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
   devtool: 'hidden-source-map',
@@ -27,7 +28,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
     modules: [
       'client',
       'node_modules',
@@ -82,18 +83,26 @@ module.exports = {
         warnings: false,
       }
     }),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        context: __dirname,
+        postcss: [
+          autoprefixer
+        ]
+      }
+    })
   ],
 
-  postcss: () => [
-    postcssFocus(),
-    cssnext({
-      browsers: ['last 2 versions', 'IE > 10'],
-    }),
-    cssnano({
-      autoprefixer: false
-    }),
-    postcssReporter({
-      clearMessages: true,
-    }),
-  ],
+  // postcss: () => [
+  //   postcssFocus(),
+  //   cssnext({
+  //     browsers: ['last 2 versions', 'IE > 10'],
+  //   }),
+  //   cssnano({
+  //     autoprefixer: false
+  //   }),
+  //   postcssReporter({
+  //     clearMessages: true,
+  //   }),
+  // ],
 };
