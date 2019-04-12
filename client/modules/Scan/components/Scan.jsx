@@ -68,8 +68,8 @@ class Scan extends Component {
           onError={this.handleError.bind(this)}
           onScan={this.handleOtherScan.bind(this)}
           style={{
-            height: 240,
-            width: 320,
+            height: 500,
+            width: 500,
           }}
         /> : null}
         <div className={styles.scanResult}>
@@ -151,8 +151,8 @@ class Scan extends Component {
               onError={this.handleError.bind(this)}
               onScan={this.handleFirstScan.bind(this)}
               style={{
-                height: 240,
-                width: 320,
+                height: 500,
+                width: 500,
               }}
             /> : null}
             <p>{this.state.result}</p>
