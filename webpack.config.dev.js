@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var cssnext = require('postcss-cssnext');
 var postcssFocus = require('postcss-focus');
 var postcssReporter = require('postcss-reporter');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -27,7 +28,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
     modules: [
       'client',
       'node_modules',
@@ -71,15 +72,23 @@ module.exports = {
         'NODE_ENV': JSON.stringify('development'),
       }
     }),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        context: __dirname,
+        postcss: [
+          autoprefixer
+        ]
+      }
+    })
   ],
 
-  postcss: () => [
-    postcssFocus(),
-    cssnext({
-      browsers: ['last 2 versions', 'IE > 10'],
-    }),
-    postcssReporter({
-      clearMessages: true,
-    }),
-  ],
+  // postcss: () => [
+  //   postcssFocus(),
+  //   cssnext({
+  //     browsers: ['last 2 versions', 'IE > 10'],
+  //   }),
+  //   postcssReporter({
+  //     clearMessages: true,
+  //   }),
+  // ],
 };
