@@ -7,7 +7,7 @@ var postcssFocus = require('postcss-focus');
 var postcssReporter = require('postcss-reporter');
 var cssnano = require('cssnano');
 const autoprefixer = require('autoprefixer');
-const TerserPlugin = require('terser-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin-legacy');
 
 module.exports = {
   devtool: 'hidden-source-map',
