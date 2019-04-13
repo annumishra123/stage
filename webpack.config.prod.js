@@ -7,6 +7,7 @@ var postcssFocus = require('postcss-focus');
 var postcssReporter = require('postcss-reporter');
 var cssnano = require('cssnano');
 const autoprefixer = require('autoprefixer');
+const Uglify = require("uglifyjs-webpack-plugin");
 
 module.exports = {
   devtool: 'hidden-source-map',
@@ -47,6 +48,7 @@ module.exports = {
         loaders: ['style-loader', 'css-loader'],
       }, {
         test: /\.jsx*$/,
+        exclude: /node_modules/,
         loader: 'babel',
       }, {
         test: /\.(jpe?g|gif|png|svg)$/i,
@@ -77,11 +79,7 @@ module.exports = {
       filename: "chunk-manifest.json",
       manifestVariable: "webpackManifest",
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false,
-      }
-    }),
+    new Uglify(),
     new webpack.LoaderOptionsPlugin({
       options: {
         context: __dirname,
