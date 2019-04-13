@@ -47,8 +47,6 @@ module.exports = {
         loaders: ['style-loader', 'css-loader'],
       }, {
         test: /\.jsx*$/,
-        exclude: /node_modules/,
-        include: /node_modules\/react-qr-reader/,
         loader: 'babel',
       }, {
         test: /\.(jpe?g|gif|png|svg)$/i,
