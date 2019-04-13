@@ -48,9 +48,7 @@ module.exports = {
       }, {
         test: /\.jsx*$/,
         exclude: /node_modules/,
-        include: [
-          /node_modules\/react-qr-reader/
-       ],
+        include: /node_modules\/react-qr-reader/,
         loader: 'babel',
       }, {
         test: /\.(jpe?g|gif|png|svg)$/i,
