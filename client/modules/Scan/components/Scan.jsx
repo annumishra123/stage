@@ -139,8 +139,8 @@ class Scan extends Component {
               onError={this.handleError.bind(this)}
               onScan={this.state.scannedSKU ? this.handleOtherScan.bind(this) : this.handleFirstScan.bind(this)}
               style={{
-                height: 500,
-                width: 500,
+                height: 400,
+                width: 400,
               }}
             /> : null}
           </center>
