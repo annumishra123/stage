@@ -51,7 +51,7 @@ module.exports = {
         include: [
           /node_modules\/react-qr-reader/
        ],
-        loader: 'babel-loader',
+        loader: 'babel',
       }, {
         test: /\.(jpe?g|gif|png|svg)$/i,
         loader: 'url-loader?limit=10000',
