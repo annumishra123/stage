@@ -60,10 +60,6 @@ module.exports = {
     ],
   },
 
-  optimization: {
-    minimizer: [new TerserPlugin()],
-  },
-  
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
@@ -75,6 +71,7 @@ module.exports = {
       minChunks: Infinity,
       filename: 'vendor.js',
     }),
+    new TerserPlugin(),
     new ExtractTextPlugin('app.[chunkhash].css', { allChunks: true }),
     new ManifestPlugin({
       basePath: '/',
