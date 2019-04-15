@@ -64,7 +64,7 @@ export function saveScannedLocation(sku, location, reason) {
     }
 }
 
-export function getAllScanLogs(sku) {
+export function getAllLogsBySKU(sku) {
     return function (dispatch) {
         let token = localStorage.getItem('token');
         if (token) {
@@ -92,12 +92,17 @@ export function getAllScanLogs(sku) {
 }
 
 export function getLogsByLocation(location) {
-    let filter = {
-        where: {
-            location: location
-        }
-    };
-    let url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks?filter=' + JSON.stringify(filter);
+    let url = '';
+    if (location) {
+        let filter = {
+            where: {
+                location: location
+            }
+        };
+        url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks?filter=' + JSON.stringify(filter);
+    } else {
+        url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks';
+    }
     return function (dispatch) {
         return axios({
             url: url,

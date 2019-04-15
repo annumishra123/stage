@@ -9,7 +9,7 @@ const scanSchema = new Schema({
     },
     location: {
         type: 'String',
-        enum: ['hkv', 'rajouri', 'office', 'customer', 'dc', 'popup'],
+        enum: ['store-hkv', 'store-rjg', 'cafe-we', 'office', 'customer', 'dc', 'popup'],
         required: true
     },
     scannedBy: {
@@ -18,7 +18,7 @@ const scanSchema = new Schema({
     },
     reason: {
         type: 'String',
-        enum: ['item received', 'send to hkv', 'send to rajouri', 'send to office', 'send to customer', 'send to dc', 'send to popup', 'reconcile'],
+        enum: ['item received', 'send to hkv', 'send to rajouri', 'send to cafe-we', 'send to office', 'send to customer', 'send to dc', 'send to popup', 'reconcile'],
         required: true
     },
     timestamp: {

@@ -82,8 +82,8 @@ const clientConfig = {
     'measurements didn’t fit',
     'outfit now looking old',
   ],
-  scanLocations: ['hkv', 'rajouri', 'office', 'customer', 'dc', 'popup'],
-  scanReasons: ['item received', 'send to hkv', 'send to rajouri', 'send to office', 'send to customer', 'send to dc', 'send to popup', 'reconcile'],
+  scanLocations: ['store-hkv', 'store-rjg', 'cafe-we', 'office', 'customer', 'dc', 'popup'],
+  scanReasons: ['item received', 'send to hkv', 'send to rajouri', 'send to cafe-we', 'send to office', 'send to customer', 'send to dc', 'send to popup', 'reconcile'],
   targetURL: 'https://staging.stage3.co',
   paymentMethods: [
     'bank deposit',
@@ -818,25 +818,72 @@ const clientConfig = {
       return moment(o.createdDate).format('lll');
     },
   }],
-  scanLogsColumns:[{
+  scanLogsColumns: [{
     Header: 'SKU',
     accessor: 'sku',
   }, {
-    Header: 'Look Number',
-    accessor: 'looknumber',
+    Header: 'Scanned By',
+    accessor: 'scannedBy',
+  }, {
+    Header: 'Scan Reason',
+    accessor: 'reason',
+  }, {
+    id: 'timestamp',
+    Header: 'Scan Time',
+    accessor: o => {
+      return moment(o.timestamp).format('lll');
+    },
   }, {
     Header: 'Location',
     accessor: 'location',
+  }, {
+    id: 'alert',
+    Header: 'Alert',
+    accessor: o => {
+      let scanTimestamp = moment(o.timestamp);
+      let interval = moment().diff(scanTimestamp, 'hours');
+      if (interval > 48 && o.location !== 'customer') {
+        return 'Alert'
+      } else {
+        return 'Scanned';
+      }
+    },
   }],
-  locationLogsColumns:[{
+  locationLogsColumns: [{
     Header: 'SKU',
     accessor: 'sku',
   }, {
-    Header: 'Look Number',
-    accessor: 'looknumber',
+    Header: 'Look',
+    accessor: 'url',
   }, {
     Header: 'Location',
     accessor: 'location',
+  }, {
+    Header: 'Scanned By',
+    accessor: 'latestScan.scannedBy',
+  }, {
+    Header: 'Scan Reason',
+    accessor: 'latestScan.reason',
+  }, {
+    id: 'timestamp',
+    Header: 'Scan Time',
+    accessor: o => {
+      return o.latestScan ? moment(o.latestScan.timestamp).format('lll') : 'Not Scanned';
+    },
+  }, {
+    id: 'alert',
+    Header: 'Alert',
+    accessor: o => {
+      if (o.latestScan) {
+        let scanTimestamp = moment(o.latestScan.timestamp);
+        let interval = moment().diff(scanTimestamp, 'hours');
+        if (interval > 48 && o.location !== 'customer') {
+          return 'Alert'
+        } else {
+          return 'Scanned';
+        }
+      }
+    },
   }]
 };
 

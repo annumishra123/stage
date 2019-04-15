@@ -244,24 +244,24 @@ class Inventory extends React.Component {
                         </div>
                     });
                 }
-                if (!clientConfig.rentLooksColumns.find(o => o.id == 'changeLocation') && (this.props.role == 'admin' || this.props.role == 'delivery')) {
-                    clientConfig.rentLooksColumns.unshift({
-                        Header: '',
-                        id: 'changeLocation',
-                        accessor: '_id',
-                        Cell: ({ value }) => <div>
-                            <select onChange={this.handleChangeLocation.bind(this)}>
-                                <option value=""> -- Select Location -- </option>
-                                <option value="store-hkv">Store (HKV)</option>
-                                <option value="store-rjg">Store (RJG)</option>
-                                <option value="office">Office</option>
-                                <option value="customer">Customer</option>
-                                <option value="cafe-we">Cafe We</option>
-                            </select>
-                            <button onClick={this.changeRentLooksLocation.bind(this, value)}>Change</button>
-                        </div>
-                    });
-                }
+                // if (!clientConfig.rentLooksColumns.find(o => o.id == 'changeLocation') && (this.props.role == 'admin' || this.props.role == 'delivery')) {
+                //     clientConfig.rentLooksColumns.unshift({
+                //         Header: '',
+                //         id: 'changeLocation',
+                //         accessor: '_id',
+                //         Cell: ({ value }) => <div>
+                //             <select onChange={this.handleChangeLocation.bind(this)}>
+                //                 <option value=""> -- Select Location -- </option>
+                //                 <option value="store-hkv">Store (HKV)</option>
+                //                 <option value="store-rjg">Store (RJG)</option>
+                //                 <option value="office">Office</option>
+                //                 <option value="customer">Customer</option>
+                //                 <option value="cafe-we">Cafe We</option>
+                //             </select>
+                //             <button onClick={this.changeRentLooksLocation.bind(this, value)}>Change</button>
+                //         </div>
+                //     });
+                // }
                 if (this.props.role == 'admin') {
                     clientConfig.rentLooksColumns.unshift({
                         Header: '',

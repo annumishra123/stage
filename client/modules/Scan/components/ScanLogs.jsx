@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getAllScanLogs, getLogsByLocation } from '../ScanActions';
+import { getAllLogsBySKU, getLogsByLocation } from '../ScanActions';
 import ReactTable from 'react-table';
 import clientConfig from '../../../config';
 
@@ -13,12 +13,13 @@ class ScanLogs extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            location: ''
+            location: '',
+            sku: ''
         };
     }
 
     componentDidMount() {
-        this.props.getAllScanLogs();
+        this.props.getLogsByLocation();
     }
 
 
@@ -28,12 +29,19 @@ class ScanLogs extends React.Component {
         });
     }
 
+    handleSKU(e) {
+        this.setState({
+            sku: e.target.value
+        })
+    }
+
     getLogsByLocation() {
-        if (this.state.location) {
-            this.props.getLogsByLocation(this.state.location);
-            this.setState({
-                location: '',
-            })
+        this.props.getLogsByLocation(this.state.location);
+    }
+
+    getAllLogsBySKU() {
+        if (this.state.sku) {
+            this.props.getAllLogsBySKU(this.state.sku);
         }
     }
 
@@ -63,18 +71,14 @@ class ScanLogs extends React.Component {
 
     render() {
         return <section>
-            <div><h1>Scan Logs</h1></div>
-            <br />
             <button onClick={this.handleNavigationPage.bind(this)}><i aria-hidden="true"></i>Back</button>
             <br />
             <br />
-            {this.renderScanLogs()}
-            <br />
-            <div><h1>Search Logs By Location</h1></div>
+            <div><h1>Outfits By Location</h1></div>
             <br />
             <div>
                 <select onChange={this.handleLocationLogs.bind(this)}>
-                    <option value=""> -- Select Location -- </option>
+                    <option value="">All</option>
                     <option value="store-hkv">Store (HKV)</option>
                     <option value="store-rjg">Store (RJG)</option>
                     <option value="cafe-we">Cafe We</option>
@@ -88,13 +92,25 @@ class ScanLogs extends React.Component {
             <br />
             <br />
             {this.renderLogsByLocation()}
+            <br />
+            <br />
+            <div><h1>Search Outfit</h1></div>
+            <br />
+            <div>
+                <input type="text" placeholder="SKU" value={this.state.sku} onChange={(e) => this.handleSKU(e)} />
+                <button onClick={this.getAllLogsBySKU.bind(this)}>Search</button>
+            </div>
+            <br />
+            <br />
+            {this.renderScanLogs()}
+            <br />
         </section>
     }
 }
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        getAllScanLogs,
+        getAllLogsBySKU,
         getLogsByLocation
     }, dispatch);
 }
