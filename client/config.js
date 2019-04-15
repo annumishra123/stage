@@ -818,6 +818,26 @@ const clientConfig = {
       return moment(o.createdDate).format('lll');
     },
   }],
+  scanLogsColumns:[{
+    Header: 'SKU',
+    accessor: 'sku',
+  }, {
+    Header: 'Look Number',
+    accessor: 'looknumber',
+  }, {
+    Header: 'Location',
+    accessor: 'location',
+  }],
+  locationLogsColumns:[{
+    Header: 'SKU',
+    accessor: 'sku',
+  }, {
+    Header: 'Look Number',
+    accessor: 'looknumber',
+  }, {
+    Header: 'Location',
+    accessor: 'location',
+  }]
 };
 
 export default clientConfig;
