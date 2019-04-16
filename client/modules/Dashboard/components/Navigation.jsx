@@ -140,7 +140,7 @@ class Navigation extends React.Component {
         {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
           <Link to="/scanlogs">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-scan.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-scanlog.png" />
             </figure>
             <p>Scan Logs</p>
           </Link>

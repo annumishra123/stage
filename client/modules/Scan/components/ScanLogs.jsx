@@ -6,8 +6,8 @@ import { getAllLogsBySKU, getLogsByLocation } from '../ScanActions';
 import ReactTable from 'react-table';
 import clientConfig from '../../../config';
 
-// Import Style
-//import styles from './rentOrders.css';
+// Import CSS
+import styles from './scan.css';
 
 class ScanLogs extends React.Component {
     constructor(props) {
@@ -70,8 +70,8 @@ class ScanLogs extends React.Component {
     }
 
     render() {
-        return <section>
-            <button onClick={this.handleNavigationPage.bind(this)}><i aria-hidden="true"></i>Back</button>
+        return <section className={styles.scanLogs}>
+            <button className={styles.backBtn} onClick={this.handleNavigationPage.bind(this)}><i aria-hidden="true"></i>Back</button>
             <br />
             <br />
             <div><h1>Outfits By Location</h1></div>
@@ -87,7 +87,7 @@ class ScanLogs extends React.Component {
                     <option value="dry-cleaning">Dry Cleaning</option>
                     <option value="pop-up">Pop-Up</option>
                 </select>
-                <button onClick={this.getLogsByLocation.bind(this)}>Search</button>
+                <button className={styles.srchBtn} onClick={this.getLogsByLocation.bind(this)}>Search</button>
             </div>
             <br />
             <br />
@@ -95,10 +95,9 @@ class ScanLogs extends React.Component {
             <br />
             <br />
             <div><h1>Search Outfit</h1></div>
-            <br />
             <div>
                 <input type="text" placeholder="SKU" value={this.state.sku} onChange={(e) => this.handleSKU(e)} />
-                <button onClick={this.getAllLogsBySKU.bind(this)}>Search</button>
+                <button className={styles.srchBtn} onClick={this.getAllLogsBySKU.bind(this)}>Search</button>
             </div>
             <br />
             <br />
