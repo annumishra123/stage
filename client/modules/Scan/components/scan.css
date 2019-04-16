@@ -66,6 +66,7 @@
 
 .scanResult .col30 img {
   width: 90%;
+  margin: 25px 0 0;
 }
 
 .scanResult p {
@@ -101,7 +102,8 @@
   font-size: 14px;
   font-family: 'Lato';
   line-height: 28px;
-  text-align: capitalize;
+  text-transform: capitalize;
+  margin: 0 0 5px;
 }
 
 .scanResult ul li img {
@@ -215,10 +217,11 @@
   .scanResult {
     width: 100%;
     margin: 10px auto 0;
+    padding: 10px;
   }
   .scanResult .clear {
-    margin: 0 0 5px;
-    font-size: 14px;
+    margin: 0 0 9px;
+    font-size: 13px;
   }
   .scanResult .col30 {
     width: 40%;
@@ -232,21 +235,22 @@
   }
   .scanResult p {
     font-size: 14px;
-    line-height: 20px;
+    line-height: 24px;
   }
   .scanResult ul {
     padding: 0 0 0 15px;
   }
   .scanResult ul li {
     line-height: 20px;
+    margin: 2px 0 5px;
   }
   .scanResult select {
     width: 100%;
-    margin: 0 0 10px;
+    margin: 5px 0 8px;
     padding: 5px 10px;
   }
   .scanResult .savebtn {
     width: 100%;
-    margin: 0;
+    margin: 5px 0 0;
   }
 }

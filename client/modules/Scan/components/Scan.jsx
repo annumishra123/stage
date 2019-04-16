@@ -68,7 +68,7 @@ class Scan extends Component {
           </div>
           <div className={styles.col70}>
             <p>{this.props.scannedLook.name}</p>
-            <p>{this.props.scannedLook.sku}</p>
+            <p>SKU - {this.props.scannedLook.sku}</p>
             {this.renderScannedComposition()}
             <select onChange={this.changeReason.bind(this)}>
               <option value="">-- Select Reason --</option>
