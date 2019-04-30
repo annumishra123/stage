@@ -611,3 +611,20 @@ export function getRefundsByUserId(customerId) {
         }
     }
 }
+
+export function customerFeedback(customerFeedBackObject) {
+    return function (dispatch) {
+        let url = clientConfig.targetURL + '/api/cart/api/UserInfos';
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            data: customerFeedBackObject,
+            responseType: 'json'
+        }).then(function (response) {
+            alert('Feedback Saved!');
+        }).catch(function (error) {
+            alert('Feedback Required');
+        });
+    }
+}

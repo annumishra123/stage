@@ -26,7 +26,8 @@ class CreateRentOrder extends React.Component {
             age: '',
             industry: '',
             rentReason: '',
-            feedBack: ''
+            feedBack: '',
+            currentTime: Date.now()
         }
     }
 
@@ -371,7 +372,7 @@ class CreateRentOrder extends React.Component {
 
     handleReason(e) {
         this.setState({
-            reason: e.target.value
+            rentReason: e.target.value
         });
     }
 
@@ -383,19 +384,20 @@ class CreateRentOrder extends React.Component {
 
     onFormSubmit(e) {
         e.preventDefault();
-        if (this.props.location.query.email) {
+        if (this.props.customerDetail.email) {
             let customerFeedBackObject = {
-                user: this.props.location.query.email,
+                user: this.props.customerDetail.email,
                 agegroup: this.state.age,
                 industry: this.state.industry,
                 reason: this.state.rentReason,
-                feedback: this.state.feedBack
+                feedback: this.state.feedBack,
+                createdtimestamp: this.state.currentTime
             }
             this.props.customerFeedback(customerFeedBackObject);
             this.setState({
                 age: '',
                 industry: '',
-                reason: '',
+                rentReason: '',
                 feedBack: ''
             })
         }
@@ -413,6 +415,7 @@ class CreateRentOrder extends React.Component {
                             <h2>What age group do you belong to?</h2>
                             <h4>Age Group: </h4>
                             <select type="text" onChange={this.handleAge.bind(this)}>
+                                <option value="">--Select--</option>
                                 <option value="0-25">0 to 25</option>
                                 <option value="25-30">25 to 30</option>
                                 <option value="30-35">30 to 35</option>
