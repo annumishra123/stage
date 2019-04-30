@@ -64,5 +64,65 @@ export function saveScannedLocation(sku, location, reason) {
     }
 }
 
+export function getAllLogsBySKU(sku) {
+    return function (dispatch) {
+        let token = localStorage.getItem('token');
+        if (token) {
+            if (sku) {
+                let url = '/scan/getAllLogsBySKU?sku=' + sku;
+                return axios({
+                    url: url,
+                    timeout: 20000,
+                    method: 'get',
+                    responseType: 'json',
+                    headers: {
+                        Authorization: 'JWT ' + token
+                    },
+                }).then(function (response) {
+                    dispatch({
+                        type: 'FETCH_SCAN_LOGS',
+                        payload: response.data
+                    })
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }
+    }
+}
+
+export function getLogsByLocation(location) {
+    let url = '';
+    if (location) {
+        let filter = {
+            where: {
+                location: location
+            }
+        };
+        url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks?filter=' + JSON.stringify(filter);
+    } else {
+        url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks';
+    }
+    return function (dispatch) {
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then(function (response) {
+            dispatch({
+                type: 'FETCH_LOCATION_LOGS',
+                payload: response.data
+            })
+        }).catch(function (error) {
+            console.log(error);
+        });
+    };
+}
+
+
+
+
+
 
 

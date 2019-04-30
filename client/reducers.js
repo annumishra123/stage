@@ -20,7 +20,7 @@ import { reducer as formReducer } from 'redux-form';
 import { tasks, contexts, dispositions, taskDetail } from './modules/CRM/CRMReducer';
 import { waybills } from './modules/Shipping/ShippingReducer';
 import { allRawMaterials, allOutfits } from './modules/AlayaInventoryManager/AlayaInventoryReducer';
-import { scannedLook } from './modules/Scan/ScanReducer';
+import { scannedLook, scanLogs, locationLogs } from './modules/Scan/ScanReducer';
 
 // Combine all reducers into one root reducer
 export default combineReducers({
@@ -78,5 +78,7 @@ export default combineReducers({
   allOutfits,
   refundLogs,
   customerRefundLogs,
-  scannedLook
+  scannedLook,
+  scanLogs,
+  locationLogs
 });
