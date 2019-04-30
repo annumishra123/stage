@@ -414,7 +414,7 @@ class CreateRentOrder extends React.Component {
                     <form>
                         <div>
                             <h3>What age group do you belong to?</h3>
-                            <select type="text" onChange={this.handleAge.bind(this)}>
+                            <select type="text" value={this.state.age} onChange={this.handleAge.bind(this)}>
                                 <option value="">--Select Age Group--</option>
                                 <option value="0-25">0 to 25</option>
                                 <option value="25-30">25 to 30</option>
