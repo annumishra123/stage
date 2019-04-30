@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { fetchProduct, addItemToCart, placeOrder, removeItemFromCart, fetchAccessory, getBookedDates, getDeliveryDates, applyDiscount } from '../RentActions';
+import { fetchProduct, addItemToCart, placeOrder, removeItemFromCart, fetchAccessory, getBookedDates, getDeliveryDates, applyDiscount, customerFeedback } from '../RentActions';
 import { getLastQCStatus } from '../../Inventory/InventoryActions';
 import clientConfig from '../../../config';
 import DatePicker from 'react-datepicker';
@@ -22,7 +22,11 @@ class CreateRentOrder extends React.Component {
             occasionDate: moment(),
             days: 3,
             discountCode: '',
-            source: ''
+            source: '',
+            age: '',
+            industry: '',
+            rentReason: '',
+            feedBack: ''
         }
     }
 
@@ -316,6 +320,7 @@ class CreateRentOrder extends React.Component {
                         </option>
                     })}
                 </select>
+                {this.renderFeedBackForm()}
                 <button onClick={this.placeOrder.bind(this)}>Place Order</button>
             </div>
         }
@@ -352,6 +357,92 @@ class CreateRentOrder extends React.Component {
         }
     }
 
+    handleAge(e) {
+        this.setState({
+            age: e.target.value
+        });
+    }
+
+    handleIndustry(e) {
+        this.setState({
+            industry: e.target.value
+        });
+    }
+
+    handleReason(e) {
+        this.setState({
+            reason: e.target.value
+        });
+    }
+
+    handleFeedback(e) {
+        this.setState({
+            feedBack: e.target.value
+        });
+    }
+
+    onFormSubmit(e) {
+        e.preventDefault();
+        if (this.props.location.query.email) {
+            let customerFeedBackObject = {
+                user: this.props.location.query.email,
+                agegroup: this.state.age,
+                industry: this.state.industry,
+                reason: this.state.rentReason,
+                feedback: this.state.feedBack
+            }
+            this.props.customerFeedback(customerFeedBackObject);
+            this.setState({
+                age: '',
+                industry: '',
+                reason: '',
+                feedBack: ''
+            })
+        }
+        else {
+            alert('Please fill in all the details!')
+        }
+    }
+
+    renderFeedBackForm() {
+        return (
+            <div>
+                <div>
+                    <form>
+                        <div>
+                            <h2>What age group do you belong to?</h2>
+                            <h4>Age Group: </h4>
+                            <select type="text" onChange={this.handleAge.bind(this)}>
+                                <option value="0-25">0 to 25</option>
+                                <option value="25-30">25 to 30</option>
+                                <option value="30-35">30 to 35</option>
+                                <option value="35-100">35 to 100</option>
+                            </select>
+                        </div>
+                        <div>
+                            <h2>Are you working? If yes, what industry are you in?</h2>
+                            <h4>Industry: </h4>
+                            <input type="text" value={this.state.industry} onChange={this.handleIndustry.bind(this)} />
+                        </div>
+                        <div>
+                            <h2>What made you rent?</h2>
+                            <h4>Rent Reason: </h4>
+                            <input type="text" value={this.state.rentReason} onChange={this.handleReason.bind(this)} />
+                        </div>
+                        <div>
+                            <h2>What kind of inventory would you like to see more of ? What will make you rent more frequently?</h2>
+                            <h4>Feedback: </h4>
+                            <input type="text" value={this.state.feedBack} onChange={this.handleFeedback.bind(this)} />
+                        </div>
+                        <br />
+                        <button onClick={this.onFormSubmit.bind(this)}>Save</button>
+                    </form>
+                </div>
+            </div>
+        );
+    }
+
+
     render() {
         return <section className={styles.rentOrders}>
             {this.renderCustomerDetails()}
@@ -384,7 +475,8 @@ function matchDispatchToProps(dispatch) {
         getBookedDates,
         getDeliveryDates,
         applyDiscount,
-        getLastQCStatus
+        getLastQCStatus,
+        customerFeedback
     }, dispatch);
 }
 
