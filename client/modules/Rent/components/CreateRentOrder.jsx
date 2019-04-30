@@ -408,14 +408,14 @@ class CreateRentOrder extends React.Component {
 
     renderFeedBackForm() {
         return (
-            <div>
+            <div className={styles.feedback}>
+                <h2>Feedback</h2>
                 <div>
                     <form>
                         <div>
-                            <h2>What age group do you belong to?</h2>
-                            <h4>Age Group: </h4>
+                            <h3>What age group do you belong to?</h3>
                             <select type="text" onChange={this.handleAge.bind(this)}>
-                                <option value="">--Select--</option>
+                                <option value="">--Select Age Group--</option>
                                 <option value="0-25">0 to 25</option>
                                 <option value="25-30">25 to 30</option>
                                 <option value="30-35">30 to 35</option>
@@ -423,19 +423,16 @@ class CreateRentOrder extends React.Component {
                             </select>
                         </div>
                         <div>
-                            <h2>Are you working? If yes, what industry are you in?</h2>
-                            <h4>Industry: </h4>
-                            <input type="text" value={this.state.industry} onChange={this.handleIndustry.bind(this)} />
+                            <h3>Are you working? If yes, what industry are you in?</h3>
+                            <input placeholder="Industry" type="text" value={this.state.industry} onChange={this.handleIndustry.bind(this)} />
                         </div>
                         <div>
-                            <h2>What made you rent?</h2>
-                            <h4>Rent Reason: </h4>
-                            <input type="text" value={this.state.rentReason} onChange={this.handleReason.bind(this)} />
+                            <h3>What made you rent?</h3>
+                            <input placeholder="Rent Reason" type="text" value={this.state.rentReason} onChange={this.handleReason.bind(this)} />
                         </div>
                         <div>
-                            <h2>What kind of inventory would you like to see more of ? What will make you rent more frequently?</h2>
-                            <h4>Feedback: </h4>
-                            <input type="text" value={this.state.feedBack} onChange={this.handleFeedback.bind(this)} />
+                            <h3>What kind of inventory would you like to see more of ? What will make you rent more frequently?</h3>
+                            <input placeholder="Feedback" type="text" value={this.state.feedBack} onChange={this.handleFeedback.bind(this)} />
                         </div>
                         <br />
                         <button onClick={this.onFormSubmit.bind(this)}>Save</button>
