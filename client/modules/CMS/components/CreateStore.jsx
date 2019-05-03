@@ -19,7 +19,6 @@ class CreateStore extends React.Component {
             title: '',
             header_image_desktop: '',
             header_image_mobile: '',
-            createdOn: ''
         };
     }
 
@@ -57,10 +56,6 @@ class CreateStore extends React.Component {
         this.setState({ header_image_mobile: mobileImageUrl });
     }
 
-    handleCreateDate(e) {
-        this.setState({ createdOn: e.target.value });
-    }
-
     createStore(e) {
         e.preventDefault();
         if (this.state.looks != '' && this.state.url != '' && this.state.title != '') {
@@ -70,7 +65,6 @@ class CreateStore extends React.Component {
                 title: this.state.title,
                 header_image_desktop: this.state.header_image_desktop,
                 header_image_mobile: this.state.header_image_mobile,
-                createdOn: this.state.createdOn
             }
             this.props.createStore(store);
             this.setState({
@@ -79,7 +73,6 @@ class CreateStore extends React.Component {
                 title: '',
                 header_image_desktop: '',
                 header_image_mobile: '',
-                createdOn: ''
             })
         }
         else {
@@ -129,10 +122,6 @@ class CreateStore extends React.Component {
             <div>
                 <h4>Title: </h4>
                 <input type="text" value={this.state.title} onChange={this.handleCreateTitle.bind(this)} />
-            </div>
-            <div>
-                <h4>Created On: </h4>
-                <input type="date" value={this.state.createdOn} onChange={this.handleCreateDate.bind(this)} />
             </div>
             <br />
             <button className={styles.submitBtn} onClick={this.createStore.bind(this)}>Create Store</button>

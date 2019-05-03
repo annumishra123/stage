@@ -78,14 +78,12 @@ class ScanLogs extends React.Component {
             <br />
             <div>
                 <select onChange={this.handleLocationLogs.bind(this)}>
-                    <option value="">All</option>
-                    <option value="store-hkv">Store (HKV)</option>
-                    <option value="store-rjg">Store (RJG)</option>
-                    <option value="cafe-we">Cafe We</option>
-                    <option value="office">Office</option>
-                    <option value="customer">Customer</option>
-                    <option value="dry-cleaning">Dry Cleaning</option>
-                    <option value="pop-up">Pop-Up</option>
+                    <option value="">-- Select Location --</option>
+                    {Object.keys(clientConfig.scanLocations).map((location, i) => {
+                        return <option key={i} value={location}>
+                            {clientConfig.scanLocations[location]}
+                        </option>;
+                    })}
                 </select>
                 <button className={styles.srchBtn} onClick={this.getLogsByLocation.bind(this)}>Search</button>
             </div>
