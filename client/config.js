@@ -1,6 +1,9 @@
 import moment from 'moment';
 import React from 'react';
 
+// Import Style
+import styles from 'modules/Scan/components/scan.css';
+
 const clientConfig = {
   serviceCities: [{
     city: 'Delhi',
@@ -82,7 +85,7 @@ const clientConfig = {
     'measurements didn’t fit',
     'outfit now looking old',
   ],
-  scanLocations: ['store-hkv', 'store-rjg', 'cafe-we', 'office', 'customer', 'dc', 'popup'],
+  scanLocations: {'store-hkv': 'Hauz Khas Store', 'store-rjg': 'Rajouri Store', 'cafe-we': 'Cafe-We Store', 'office': 'Office', 'customer': 'Customer', 'dc': 'Dry Cleaning', 'popup': 'Pop-Up'},
   scanReasons: ['item received', 'send to hkv', 'send to rajouri', 'send to cafe-we', 'send to office', 'send to customer', 'send to dc', 'send to popup', 'reconcile'],
   targetURL: 'https://staging.stage3.co',
   paymentMethods: [
@@ -843,9 +846,9 @@ const clientConfig = {
       let scanTimestamp = moment(o.timestamp);
       let interval = moment().diff(scanTimestamp, 'hours');
       if (interval > 48 && o.location !== 'customer') {
-        return 'Alert'
+        return <p><img src="https://ik.imagekit.io/stage3/icon-alert.png" className={styles.alertimg} /></p>
       } else {
-        return 'Scanned';
+        return <p><img src="https://ik.imagekit.io/stage3/tr:n-web/icon-ok2.png" className={styles.alertimg} /></p>
       }
     },
   }],
@@ -878,9 +881,9 @@ const clientConfig = {
         let scanTimestamp = moment(o.latestScan.timestamp);
         let interval = moment().diff(scanTimestamp, 'hours');
         if (interval > 48 && o.location !== 'customer') {
-          return 'Alert'
+          return <p><img src="https://ik.imagekit.io/stage3/icon-alert.png" className={styles.alertimg} /></p>
         } else {
-          return 'Scanned';
+          return <p><img src="https://ik.imagekit.io/stage3/tr:n-web/icon-ok2.png" className={styles.alertimg} /></p>
         }
       }
     },
