@@ -1,6 +1,9 @@
 import moment from 'moment';
 import React from 'react';
 
+// Import Style
+import styles from 'modules/Scan/components/scan.css';
+
 const clientConfig = {
   serviceCities: [{
     city: 'Delhi',
@@ -843,9 +846,9 @@ const clientConfig = {
       let scanTimestamp = moment(o.timestamp);
       let interval = moment().diff(scanTimestamp, 'hours');
       if (interval > 48 && o.location !== 'customer') {
-        return 'Alert'
+        return <p><img src="https://ik.imagekit.io/stage3/icon-alert.png" className={styles.alertimg} /></p>
       } else {
-        return 'Scanned';
+        return <p><img src="https://ik.imagekit.io/stage3/tr:n-web/icon-ok2.png" className={styles.alertimg} /></p>
       }
     },
   }],
@@ -878,9 +881,9 @@ const clientConfig = {
         let scanTimestamp = moment(o.latestScan.timestamp);
         let interval = moment().diff(scanTimestamp, 'hours');
         if (interval > 48 && o.location !== 'customer') {
-          return 'Alert'
+          return <p><img src="https://ik.imagekit.io/stage3/icon-alert.png" className={styles.alertimg} /></p>
         } else {
-          return 'Scanned';
+          return <p><img src="https://ik.imagekit.io/stage3/tr:n-web/icon-ok2.png" className={styles.alertimg} /></p>
         }
       }
     },
