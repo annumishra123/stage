@@ -347,10 +347,7 @@ const clientConfig = {
   }, {
     id: 'image',
     Header: 'Image',
-    accessor: o => < a target = "blank"
-    href = {
-      o.frontimage
-    } > Link < /a>,
+    accessor: o => <a target="blank" href={o.frontimage}>Link</a>,
   }, {
     Header: 'Location',
     accessor: 'location',
@@ -370,10 +367,7 @@ const clientConfig = {
   }, {
     id: 'image',
     Header: 'Image',
-    accessor: o => < a target = "blank"
-    href = {
-      o.frontimage
-    } > Link < /a>,
+    accessor: o => <a target="blank" href={o.frontimage}>Link</a>,
   }, {
     Header: 'Location',
     accessor: 'location',
@@ -387,10 +381,7 @@ const clientConfig = {
   }, {
     id: 'image',
     Header: 'Image',
-    accessor: o => < a target = "blank"
-    href = {
-      o.image
-    } > Link < /a>,
+    accessor: o => <a target="blank" href={o.image}>Link</a>,
   }, {
     Header: 'Location',
     accessor: 'location',
@@ -431,13 +422,9 @@ const clientConfig = {
   }, {
     id: 'name',
     Header: 'Name',
-    accessor: o => < a target = "blank"
-    href = {
-      o.image
-    } > {
-      o.outfitname
-    } <
-    /a>,
+    accessor: o => <a target="blank" href={o.image}>
+      {o.outfitname}
+    </a>,
   }, {
     id: 'orderDate',
     Header: 'Order Date',
@@ -487,10 +474,7 @@ const clientConfig = {
     id: 'image',
     Header: 'Image',
     accessor: o => {
-      return <a target = "blank"
-      href = {
-        o.image
-      } > Link < /a>;
+      return <a target="blank" href={o.image}>Link</a>;
     },
   }, {
     id: 'date',
@@ -572,21 +556,15 @@ const clientConfig = {
   }, {
     id: 'isAdvertized',
     Header: 'Advertized',
-    accessor: o => {
-      return o.isAdvertized ? 'Yes' : 'No';
-    },
+    accessor: o => { return o.isAdvertized ? 'Yes' : 'No'; },
   }, {
     id: 'isDeleted',
     Header: 'Deleted',
-    accessor: o => {
-      return o.isDeleted ? 'Yes' : 'No';
-    },
+    accessor: o => { return o.isDeleted ? 'Yes' : 'No'; },
   }, {
     id: 'isReusable',
     Header: 'Reusable',
-    accessor: o => {
-      return o.isReusable ? 'Yes' : 'No';
-    },
+    accessor: o => { return o.isReusable ? 'Yes' : 'No'; },
   }],
   taskColumns: [{
     id: 'name',
@@ -688,10 +666,7 @@ const clientConfig = {
     id: 'link',
     Header: 'Link',
     accessor: o => {
-      return <a href = {
-        o.mediaLink
-      }
-      target = "blank" > Download < /a>;
+      return <a href={o.mediaLink} target="blank">Download</a>;
     },
   }, {
     Header: 'Status',
@@ -741,9 +716,9 @@ const clientConfig = {
     Header: 'Status',
     accessor: o => {
       if (o.alert) {
-        return <p > < img src = "https://ik.imagekit.io/stage3/tr:n-web/icon-alert1.png" / > < /p>
+        return <p><img src="https://ik.imagekit.io/stage3/tr:n-web/icon-alert1.png" /></p>
       } else {
-        return <p > < img src = "https://ik.imagekit.io/stage3/tr:n-web/icon-ok2.png" / > < /p>
+        return <p><img src="https://ik.imagekit.io/stage3/tr:n-web/icon-ok2.png" /></p>
       }
     },
   }, {
@@ -868,19 +843,9 @@ const clientConfig = {
       let scanTimestamp = moment(o.timestamp);
       let interval = moment().diff(scanTimestamp, 'hours');
       if (interval > 48 && o.location !== 'customer') {
-        return <p > < img src = "https://ik.imagekit.io/stage3/icon-alert.png"
-        alt = ""
-        className = {
-          styles.alertimg
-        }
-        / > < /p >
+        return 'Alert'
       } else {
-        return <p > < img src = "https://ik.imagekit.io/stage3/tr:n-web/icon-ok2.png"
-        alt = ""
-        className = {
-          styles.alertimg
-        }
-        / > < /p >
+        return 'Scanned';
       }
     },
   }],
@@ -913,19 +878,9 @@ const clientConfig = {
         let scanTimestamp = moment(o.latestScan.timestamp);
         let interval = moment().diff(scanTimestamp, 'hours');
         if (interval > 48 && o.location !== 'customer') {
-          return <p > < img src = "https://ik.imagekit.io/stage3/icon-alert.png"
-          alt = ""
-          className = {
-            styles.alertimg
-          }
-          / > < /p >
+          return 'Alert'
         } else {
-          return <p > < img src = "https://ik.imagekit.io/stage3/tr:n-web/icon-ok2.png"
-          alt = ""
-          className = {
-            styles.alertimg
-          }
-          / > < /p >
+          return 'Scanned';
         }
       }
     },
