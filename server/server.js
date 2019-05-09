@@ -69,9 +69,6 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
 var options = {
   target: serverConfig.targetURL,
   changeOrigin: true,
-  pathRewrite: {
-    "^//": "/"
-  },
   logLevel: 'debug',
   headers: {
     'Authorization': serverConfig.access_token,
