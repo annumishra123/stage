@@ -41,7 +41,7 @@ export function getCompletedOrders(owner, startDate, endDate) {
                 }]
             }
         };
-        let url = '/market/revshare/api/orderlinelogs?filter=' + encodeURIComponent(JSON.stringify(loopbackFilter));
+        let url = '/api/revshare/api/orderlinelogs?filter=' + encodeURIComponent(JSON.stringify(loopbackFilter));
         return axios({
             url: url,
             timeout: 20000,
@@ -73,7 +73,7 @@ export function getPendingOrders(owner) {
                 }]
             }
         };
-        let url = '/market/revshare/api/orderlinelogs?filter=' + encodeURIComponent(JSON.stringify(loopbackFilter));
+        let url = '/api/revshare/api/orderlinelogs?filter=' + encodeURIComponent(JSON.stringify(loopbackFilter));
         return axios({
             url: url,
             timeout: 20000,
@@ -105,7 +105,7 @@ export function getCancelledOrders(owner, startDate, endDate) {
                 }]
             }
         };
-        let url = '/market/revshare/api/orderlinelogs?filter=' + encodeURIComponent(JSON.stringify(loopbackFilter));
+        let url = '/api/revshare/api/orderlinelogs?filter=' + encodeURIComponent(JSON.stringify(loopbackFilter));
         return axios({
             url: url,
             timeout: 20000,
@@ -125,7 +125,7 @@ export function getCancelledOrders(owner, startDate, endDate) {
 export function createOwner(owner) {
     console.log(owner)
     return function(dispatch) {
-        let url = '/market/revshare/api/owners/';
+        let url = '/api/revshare/api/owners/';
         axios({
             url,
             timeout: 20000,
@@ -143,7 +143,7 @@ export function createOwner(owner) {
 
 export function getOwners() {
     return function(dispatch) {
-        let url = '/market/revshare/api/owners/';
+        let url = '/api/revshare/api/owners/';
         axios({
             url,
             timeout: 20000,
@@ -167,7 +167,7 @@ export function getOwnerShare(owner) {
                 ownername: owner
             }
         };
-        let url = '/market/revshare/api/owners/?filter=' + encodeURIComponent(JSON.stringify(loopbackFilter));
+        let url = '/api/revshare/api/owners/?filter=' + encodeURIComponent(JSON.stringify(loopbackFilter));
         return axios({
             url: url,
             timeout: 20000,
