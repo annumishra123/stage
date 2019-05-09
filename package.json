@@ -44,7 +44,7 @@
     "cuid": "^1.3.8",
     "debug.log": "0.0.3",
     "express": "^4.13.4",
-    "http-proxy-middleware": "^0.19.1",
+    "http-proxy-middleware": "0.17.4",
     "intl": "^1.2.4",
     "intl-locales-supported": "^1.0.0",
     "isomorphic-fetch": "^2.2.1",
