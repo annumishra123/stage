@@ -129,7 +129,7 @@ class Navigation extends React.Component {
             <p>Refunds</p>
           </Link>
         </li> : null}
-        {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
+        {this.props.role == 'admin' || this.props.role == 'superuser' || this.props.role == 'delivery' ? <li>
           <Link to="/scan">
             <figure>
               <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-scan.png" />
