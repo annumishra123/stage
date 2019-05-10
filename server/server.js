@@ -65,7 +65,7 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
   dummyData();
 });
 
-// API Proxy Server Config
+// Proxy Server Config
 var options = {
   target: serverConfig.targetURL,
   changeOrigin: true,
@@ -77,16 +77,6 @@ var options = {
 };
 var proxyServer = proxy(options);
 app.use('/api', proxyServer);
-
-// Revshare Proxy Server Config
-var optionsRevshare = {
-  target: serverConfig.targetURL + '/api',
-  changeOrigin: true,
-  logLevel: 'debug',
-  pathRewrite: { '^/market' : '' }
-};
-var proxyRevshareServer = proxy(optionsRevshare);
-app.use('/market', proxyRevshareServer);
 
 // Apply body Parser and server public assets and routes
 app.use(compression());
