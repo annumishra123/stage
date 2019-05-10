@@ -80,9 +80,9 @@ class Scan extends Component {
             </select>
             <select onChange={this.changeLocation.bind(this)}>
               <option value="">-- Select Location --</option>
-              {clientConfig.scanLocations.map((reason, i) => {
-                return <option key={i} value={reason}>
-                  {reason}
+              {Object.keys(clientConfig.scanLocations).map((location, i) => {
+                return <option key={i} value={location}>
+                  {clientConfig.scanLocations[location]}
                 </option>;
               })}
             </select>
