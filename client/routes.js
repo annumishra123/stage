@@ -244,7 +244,7 @@ export default function getRoutes(store, req) {
           cb(null, require('./modules/CMS/components/Instagram').default);
         });
       }} />
-      <Route path="/login/update" onEnter={checkDesigner} getComponent={(nextState, cb) => {
+      <Route path="/login/update" onEnter={checkAuth} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Auth/components/ChangePassword').default);
         });

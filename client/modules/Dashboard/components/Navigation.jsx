@@ -169,6 +169,14 @@ class Navigation extends React.Component {
             <p>Create Store</p>
           </Link>
         </li> : null}
+        <li>
+          <Link to="/login/update">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-change-password.png" />
+            </figure>
+            <p>Change Password</p>
+          </Link>
+        </li>
       </ul> : <div>
           <h1>{this.props.owner.toUpperCase()}</h1>
           <ul>
