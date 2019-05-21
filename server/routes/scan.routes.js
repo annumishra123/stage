@@ -67,4 +67,18 @@ router.get('/getAllLogsBySKU', passport.authenticate('jwt', {
     }
 });
 
+router.get('/getAllLogsByEmail', passport.authenticate('jwt', {
+    session: false,
+}), (req, res) => {
+    if (req.user.role === 'admin' || req.user.role === 'delivery') {
+        Scan.find({ scannedBy : req.query.email }).then(logs => {
+            res.status(200).send(logs);
+        }).catch(error => {
+            res.status(300).send('No Logs Found');
+        });
+    } else {
+        res.status(401).send('Unauthorized');
+    }
+});
+
 export default router;

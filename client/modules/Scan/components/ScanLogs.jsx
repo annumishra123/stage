@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getAllLogsBySKU, getLogsByLocation } from '../ScanActions';
+import { getAllLogsBySKU, getLogsByLocation, getAllLogsByEmail } from '../ScanActions';
 import ReactTable from 'react-table';
 import clientConfig from '../../../config';
 
@@ -14,7 +14,8 @@ class ScanLogs extends React.Component {
         super(props);
         this.state = {
             location: '',
-            sku: ''
+            sku: '',
+            email: ''
         };
     }
 
@@ -35,6 +36,12 @@ class ScanLogs extends React.Component {
         })
     }
 
+    handleEmail(e) {
+        this.setState({
+            email: e.target.value
+        })
+    }
+
     getLogsByLocation() {
         this.props.getLogsByLocation(this.state.location);
     }
@@ -45,11 +52,27 @@ class ScanLogs extends React.Component {
         }
     }
 
+    getAllLogsByEmail() {
+        if (this.state.email) {
+            this.props.getAllLogsByEmail(this.state.email);
+        }
+    }
+
     handleNavigationPage() {
         browserHistory.push('/menu');
     }
 
     renderScanLogs() {
+        if (this.props.scanLogs) {
+            if (this.props.scanLogs.length > 0) {
+                return <div>
+                    <ReactTable filterable data={this.props.scanLogs} columns={clientConfig.scanLogsColumns} className="-striped -highlight" />
+                </div>
+            }
+        }
+    }
+
+    renderScanLogsByEmail() {
         if (this.props.scanLogs) {
             if (this.props.scanLogs.length > 0) {
                 return <div>
@@ -101,6 +124,14 @@ class ScanLogs extends React.Component {
             <br />
             {this.renderScanLogs()}
             <br />
+            <div><h1>Scan Count</h1></div>
+            <div>
+                <input type="text" placeholder="Email" value={this.state.email} onChange={(e) => this.handleEmail(e)} />
+                <button className={styles.srchBtn} onClick={this.getAllLogsByEmail.bind(this)}>Search</button>
+            </div>
+            <br />
+            <br />
+            {this.renderScanLogsByEmail()}
         </section>
     }
 }
@@ -108,7 +139,8 @@ class ScanLogs extends React.Component {
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         getAllLogsBySKU,
-        getLogsByLocation
+        getLogsByLocation,
+        getAllLogsByEmail
     }, dispatch);
 }
 
