@@ -93,16 +93,22 @@ export function getAllLogsBySKU(sku) {
 
 export function getLogsByLocation(location) {
     let url = '';
+    let filter = null
     if (location) {
-        let filter = {
+        filter = {
             where: {
-                location: location
+                location: location,
+                disabled: false
             }
         };
-        url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks?filter=' + JSON.stringify(filter);
     } else {
-        url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks';
+        filter = {
+            where: {
+                disabled: false
+            }
+        };
     }
+    url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks?filter=' + JSON.stringify(filter);
     return function (dispatch) {
         return axios({
             url: url,
