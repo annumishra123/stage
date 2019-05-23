@@ -60,7 +60,21 @@ router.get('/getAllLogsBySKU', passport.authenticate('jwt', {
         Scan.find({ sku: req.query.sku }).then(logs => {
             res.status(200).send(logs);
         }).catch(error => {
-            res.status(300).send('No Logs Found');
+            res.status(500).send('No Logs Found');
+        });
+    } else {
+        res.status(401).send('Unauthorized');
+    }
+});
+
+router.get('/getAllLogsByEmail', passport.authenticate('jwt', {
+    session: false,
+}), (req, res) => {
+    if (req.user.role === 'admin' || req.user.role === 'delivery') {
+        Scan.find({ scannedBy : req.query.email }).sort({ "timestamp": -1 }).then(logs => {
+            res.status(200).send(logs);
+        }).catch(error => {
+            res.status(500).send('No Logs Found');
         });
     } else {
         res.status(401).send('Unauthorized');

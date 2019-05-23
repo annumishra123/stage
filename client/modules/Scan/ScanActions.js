@@ -93,16 +93,22 @@ export function getAllLogsBySKU(sku) {
 
 export function getLogsByLocation(location) {
     let url = '';
+    let filter = null
     if (location) {
-        let filter = {
+        filter = {
             where: {
-                location: location
+                location: location,
+                disabled: false
             }
         };
-        url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks?filter=' + JSON.stringify(filter);
     } else {
-        url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks';
+        filter = {
+            where: {
+                disabled: false
+            }
+        };
     }
+    url = clientConfig.targetURL + '/catalogv2/catalogv2/Looks?filter=' + JSON.stringify(filter);
     return function (dispatch) {
         return axios({
             url: url,
@@ -120,6 +126,32 @@ export function getLogsByLocation(location) {
     };
 }
 
+export function getAllLogsByEmail(email) {
+    return function (dispatch) {
+        let token = localStorage.getItem('token');
+        if (token) {
+            if (email) {
+                let url = '/scan/getAllLogsByEmail?email=' + email;
+                return axios({
+                    url: url,
+                    timeout: 20000,
+                    method: 'get',
+                    responseType: 'json',
+                    headers: {
+                        Authorization: 'JWT ' + token
+                    },
+                }).then(function (response) {
+                    dispatch({
+                        type: 'FETCH_SCAN_LOGS',
+                        payload: response.data
+                    })
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }
+    }
+}
 
 
 
