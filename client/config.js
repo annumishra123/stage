@@ -880,7 +880,7 @@ const clientConfig = {
       if (o.latestScan) {
         let scanTimestamp = moment(o.latestScan.timestamp);
         let interval = moment().diff(scanTimestamp, 'hours');
-        if (interval > 48 && o.location !== 'customer') {
+        if (interval > 72 && o.location !== 'customer') {
           return <p><img src="https://ik.imagekit.io/stage3/icon-alert.png" className={styles.alertimg} /></p>
         } else {
           return <p><img src="https://ik.imagekit.io/stage3/tr:n-web/icon-ok2.png" className={styles.alertimg} /></p>
