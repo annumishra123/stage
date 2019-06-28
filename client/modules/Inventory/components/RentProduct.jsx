@@ -23,7 +23,8 @@ class RentProduct extends React.Component {
             measurementType: null,
             minMeasurement: 0,
             maxMeasurement: 0,
-            loosingMeasurement: 0
+            loosingMeasurement: 0,
+            productStatus: ''
         }
     }
 
@@ -112,8 +113,10 @@ class RentProduct extends React.Component {
         this.state.rentProduct.composition = e.target.value;
     }
 
-    handleChangeProductStatus(e) {
-        this.state.rentProduct.status = e;
+    changeProductStatus(e) {
+        this.setState({
+            productStatus: e.target.value
+        })
     }
 
     handleChangeProductCategory(e) {
@@ -142,6 +145,15 @@ class RentProduct extends React.Component {
 
     updateRentProductDetails() {
         let product = this.state.rentProduct;
+        if (this.state.productStatus == 'enable') {
+            this.state.rentProduct.status = true;
+            this.state.rentProduct.disabled = false;
+        } else if (this.state.productStatus == 'temporary-disable') {
+            this.state.rentProduct.status = false;
+        } else if (this.state.productStatus == 'permanent-disable') {
+            this.state.rentProduct.disabled = true;
+            this.state.rentProduct.status = false;
+        }
         product.size = product.size ? product.size.split(',').map(function (size) {
             return size.trim()
         }) : product.size;
@@ -337,15 +349,21 @@ class RentProduct extends React.Component {
                                                         <h4>Composition: </h4>
                                                         <input type="text" defaultValue={ this.state.rentProduct.composition } onChange={ this.handleChangeProductComposition.bind(this) } />
                                                       </div>*/ }
-                <div>
+                <div className={styles.proDisable}>
                     <h3>{this.state.rentProduct.name}</h3>
                     <br />
                     <br />
-                    <input type="radio" name="status" defaultChecked={this.state.rentProduct.status} onClick={this.handleChangeProductStatus.bind(this, true)} />
-                    <label> Enable </label>
+                    <select value={this.state.productStatus} onChange={this.changeProductStatus.bind(this)}>
+                        <option value="">-- Select Status --</option>
+                        {Object.keys(clientConfig.rentProductStatus).map((status, i) => {
+                            return <option key={i} value={status}>
+                                {clientConfig.rentProductStatus[status]}
+                            </option>;
+                        })}
+                    </select>
                     <br />
-                    <input type="radio" name="status" defaultChecked={!this.state.rentProduct.status} onClick={this.handleChangeProductStatus.bind(this, false)} />
-                    <label> Disable </label>
+                    <br />
+                    <h5>{this.state.rentProduct.disabled == true ? 'The product is Permanently Disabled' : this.state.rentProduct.status == true ? 'The product is Enable' : this.state.rentProduct.status == false ? 'The product is Temporarily Disabled' : null}</h5>
                 </div>
                 { /*<div>
                                                         <h4>Category: </h4>
@@ -363,6 +381,7 @@ class RentProduct extends React.Component {
                                                         <h4>Location: </h4>
                                                         <input type="text" defaultValue={ this.state.rentProduct.location } onChange={ this.handleChangeProductLocation.bind(this) } />
                                                       </div>*/ }
+                <br />
                 <button onClick={this.updateRentProductDetails.bind(this)}>Update Product</button>
             </div>)
 

@@ -85,6 +85,7 @@ const clientConfig = {
     'measurements didn’t fit',
     'outfit now looking old',
   ],
+  rentProductStatus: {'enable': 'Active', 'temporary-disable': 'Temporary Disable', 'permanent-disable': 'Permanent Disable'},
   scanLocations: {'store-hkv': 'Hauz Khas Store', 'store-rjg': 'Rajouri Store', 'cafe-we': 'Cafe-We Store', 'office': 'Office', 'customer': 'Customer', 'dc': 'Dry Cleaning', 'popup': 'Pop-Up'},
   scanReasons: ['item received', 'send to hkv', 'send to rajouri', 'send to cafe-we', 'send to office', 'send to customer', 'send to dc', 'send to popup', 'reconcile'],
   targetURL: 'https://staging.stage3.co',
