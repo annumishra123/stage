@@ -349,7 +349,7 @@ class RentProduct extends React.Component {
                                                         <h4>Composition: </h4>
                                                         <input type="text" defaultValue={ this.state.rentProduct.composition } onChange={ this.handleChangeProductComposition.bind(this) } />
                                                       </div>*/ }
-                <div>
+                <div className={styles.proDisable}>
                     <h3>{this.state.rentProduct.name}</h3>
                     <br />
                     <br />
@@ -363,7 +363,7 @@ class RentProduct extends React.Component {
                     </select>
                     <br />
                     <br />
-                    <h2>{this.state.rentProduct.disabled == true ? 'The product is Permanently Disabled' : this.state.rentProduct.status == true ? 'The product is Enable' : this.state.rentProduct.status == false ? 'The product is Temporarily Disabled' : null}</h2>
+                    <h5>{this.state.rentProduct.disabled == true ? 'The product is Permanently Disabled' : this.state.rentProduct.status == true ? 'The product is Enable' : this.state.rentProduct.status == false ? 'The product is Temporarily Disabled' : null}</h5>
                 </div>
                 { /*<div>
                                                         <h4>Category: </h4>
