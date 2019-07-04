@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { createStore, getAllStores, deleteStore } from '../CMSActions';
+import { createStore, getAllStores, deleteStore, lookDeactivate } from '../CMSActions';
 import ReactTable from 'react-table';
 import clientConfig from '../../../config';
 
@@ -19,6 +19,8 @@ class CreateStore extends React.Component {
             title: '',
             header_image_desktop: '',
             header_image_mobile: '',
+            deactivateLook: '',
+            lookStore: ''
         };
     }
 
@@ -56,6 +58,14 @@ class CreateStore extends React.Component {
         this.setState({ header_image_mobile: mobileImageUrl });
     }
 
+    handleDeactivateLook(e) {
+        this.setState({ deactivateLook: e.target.value });
+    }
+
+    handleLookStore(e) {
+        this.setState({ lookStore: e.target.value });
+    }
+
     createStore(e) {
         e.preventDefault();
         if (this.state.looks != '' && this.state.url != '' && this.state.title != '') {
@@ -78,6 +88,15 @@ class CreateStore extends React.Component {
         else {
             alert('Fill in all the details');
         }
+    }
+
+    lookDeactivate(e) {
+        e.preventDefault();
+        this.props.lookDeactivate(this.state.deactivateLook, this.state.lookStore);
+        this.setState({
+            deactivateLook: '',
+            lookStore: '',
+        })
     }
 
     renderStores() {
@@ -127,6 +146,19 @@ class CreateStore extends React.Component {
             <button className={styles.submitBtn} onClick={this.createStore.bind(this)}>Create Store</button>
             <br />
             {this.renderStores()}
+            <br />
+            <h1>Deactivate Look</h1>
+            <div>
+                <h4>Look: </h4>
+                <input type="text" value={this.state.deactivateLook} onChange={this.handleDeactivateLook.bind(this)} />
+            </div>
+            <div>
+                <h4>Store: </h4>
+                <input type="text" value={this.state.lookStore} onChange={this.handleLookStore.bind(this)} />
+            </div>
+            <br />
+            <button onClick={this.lookDeactivate.bind(this)}>Deactivate</button>
+            <br />
         </section>)
     }
 }
@@ -135,7 +167,8 @@ function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         getAllStores,
         createStore,
-        deleteStore
+        deleteStore,
+        lookDeactivate
     }, dispatch);
 }
 
