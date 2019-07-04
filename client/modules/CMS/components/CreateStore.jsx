@@ -157,7 +157,7 @@ class CreateStore extends React.Component {
                 <input type="text" value={this.state.lookStore} onChange={this.handleLookStore.bind(this)} />
             </div>
             <br />
-            <button onClick={this.lookDeactivate.bind(this)}>Deactivate</button>
+            <button className={styles.submitBtn} onClick={this.lookDeactivate.bind(this)}>Deactivate</button>
             <br />
         </section>)
     }

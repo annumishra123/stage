@@ -152,7 +152,6 @@ export function deleteStore(title) {
 }
 
 export function lookDeactivate(deactivateLook, lookStore) {
-    debugger;
     return function (dispatch) {
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/DynamicCollections/unassignLookNumber?look=' + deactivateLook + '&store=' + lookStore;
         return axios({
