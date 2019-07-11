@@ -163,6 +163,18 @@ class RentProduct extends React.Component {
         this.props.updateRentProduct(this.state.rentProduct);
     }
 
+    renderProductStatus() {
+        if (this.state.rentProduct.disabled == true && this.state.rentProduct.status == false) {
+            return ('The Product Is Permamently Disabled')
+        } else if (this.state.rentProduct.status == false && this.state.rentProduct.disabled == false) {
+            return ('The Product Is Temporarily Disabled')
+        } else if (this.state.rentProduct.status == true && this.state.rentProduct.disabled == false) {
+            return ('The Product Is Enabled')
+        } else {
+            return ('Please check the status')
+        }
+    }
+
     renderRentLooks() {
         if (this.props.rentCatalog) {
             if (this.props.rentCatalog.length > 0) {
@@ -363,7 +375,7 @@ class RentProduct extends React.Component {
                     </select>
                     <br />
                     <br />
-                    <h5>{this.state.rentProduct.disabled == true ? 'The product is Permanently Disabled' : this.state.rentProduct.status == true ? 'The product is Enable' : this.state.rentProduct.status == false ? 'The product is Temporarily Disabled' : null}</h5>
+                    <h5>{this.renderProductStatus()}</h5>
                 </div>
                 { /*<div>
                                                         <h4>Category: </h4>

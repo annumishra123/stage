@@ -150,3 +150,19 @@ export function deleteStore(title) {
         });
     }
 }
+
+export function lookDeactivate(deactivateLook, lookStore) {
+    return function (dispatch) {
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/DynamicCollections/unassignLookNumber?look=' + deactivateLook + '&store=' + lookStore;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then(function (response) {
+            alert('Look Deactivated');
+        }).catch(function (error) {
+            alert('Look Not Deactivated');
+        });
+    }
+}
