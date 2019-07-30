@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getScannedLook, clearScannedLook, saveScannedLocation } from '../ScanActions';
 import clientConfig from '../../../config';
+import BarcodeReader from 'react-barcode-reader';
 
 // Import CSS
 import styles from './scan.css';
@@ -128,6 +129,10 @@ class Scan extends Component {
     return <button className={styles.savebtn} disabled={!flag} onClick={this.updateScannedLocation.bind(this)}>Save</button>;
   }
 
+  handleError(error) {
+    console.log(error);
+  }
+
   render() {
     return (
       <section className="">
@@ -143,6 +148,10 @@ class Scan extends Component {
                 width: 350,
               }}
             /> : null}
+            <BarcodeReader
+              onError={this.handleError.bind(this)}
+              onScan={this.state.scannedSKU ? this.handleOtherScan.bind(this) : this.handleFirstScan.bind(this)}
+            />
           </center>
           {this.renderLook()}
         </div>
