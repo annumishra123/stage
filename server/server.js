@@ -70,6 +70,7 @@ var options = {
   target: serverConfig.targetURL,
   changeOrigin: true,
   logLevel: 'debug',
+  secure: false,
   headers: {
     'Authorization': serverConfig.access_token,
     'Content-Type': 'application/json',
