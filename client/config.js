@@ -421,6 +421,16 @@ const clientConfig = {
     id: '6day',
     Header: '6 Days Rental',
     accessor: o => Math.round(o.discountedrentalprice * 4.2),
+  },{
+    id: 'returned',
+    Header: 'Returned',
+    accessor: o => {
+      if (o.returned == false) {
+        return 'No';
+      } else {
+        return 'Yes';
+      }
+    },
   }],
   ownersColumns: [{
     Header: 'Name',
