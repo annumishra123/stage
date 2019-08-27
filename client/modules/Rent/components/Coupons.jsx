@@ -55,7 +55,7 @@ class Coupons extends React.Component {
                 }
                 return <div>
                     <h1>Coupons</h1>
-                    <ReactTable filterable data={this.props.allCoupons} defaultPageSize={this.state.pageSize} columns={clientConfig.rentalCouponColumns} pages={this.props.pages} onFetchData={(state, instance) => { this.fetchData(state) }} className="-striped -highlight" />
+                    <ReactTable data={this.props.allCoupons} manual defaultPageSize={this.state.pageSize} columns={clientConfig.rentalCouponColumns} pages={this.props.pages} onFetchData={(state, instance) => { this.fetchData(state) }} className="-striped -highlight" />
                 </div>
             }
         }
