@@ -22,7 +22,7 @@ class Navigation extends React.Component {
             <figure>
               <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-newuser2.png" />
             </figure>
-            <p>Create/Find Customer</p>
+            <p>Customer</p>
           </Link>
         </li>
         <li>
