@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import clientConfig from '../../../config';
 import { getAllContexts, getAllDispositions, createInboundTask } from '../CRMActions';
 import Select from 'react-select';
+import { getCustomerDetailByPhoneNumber } from '../../Customer/CustomerActions';
 
 
 // Import Style
@@ -27,7 +28,8 @@ class Inbound extends React.Component {
 
     componentDidMount() {
         this.props.getAllContexts();
-        this.props.getAllDispositions();
+        this.props.getAllDispositions(); debugger;
+        if (this.props.location.query.phoneNumber) { this.props.getCustomerDetailByPhoneNumber(this.props.location.query.phoneNumber); }
     }
 
     changeLabel(e) {
@@ -80,8 +82,13 @@ class Inbound extends React.Component {
         }
     }
 
+    renderCustomerInformation() {
+
+    }
+
     render() {
         return <section className={styles.inboundCall}>
+            {this.renderCustomerInformation()}
             <h1>Inbound Call</h1>
             <div>
                 <label>Label </label>
@@ -131,7 +138,8 @@ function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         getAllContexts,
         getAllDispositions,
-        createInboundTask
+        createInboundTask,
+        getCustomerDetailByPhoneNumber
     }, dispatch);
 }
 
