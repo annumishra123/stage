@@ -6,6 +6,7 @@ import clientConfig from '../../../config';
 import { getAllContexts, getAllDispositions, createInboundTask } from '../CRMActions';
 import Select from 'react-select';
 import { getCustomerDetailByPhoneNumber } from '../../Customer/CustomerActions';
+import CustomerForm from '../../Customer/components/CustomerForm';
 
 
 // Import Style
@@ -28,8 +29,20 @@ class Inbound extends React.Component {
 
     componentDidMount() {
         this.props.getAllContexts();
-        this.props.getAllDispositions(); debugger;
-        if (this.props.location.query.phoneNumber) { this.props.getCustomerDetailByPhoneNumber(this.props.location.query.phoneNumber); }
+        this.props.getAllDispositions();
+        if (this.props.location.query.phoneNumber) {
+            this.props.getCustomerDetailByPhoneNumber(this.props.location.query.phoneNumber);
+            this.setState({
+                taskObject: {
+                    "actionLabel": "",
+                    "comment": "",
+                    "creater": "",
+                    "name": "",
+                    "phoneNumber": this.props.location.query.phoneNumber,
+                    "reasonCode": ""
+                }
+            })
+        }
     }
 
     changeLabel(e) {
@@ -83,7 +96,13 @@ class Inbound extends React.Component {
     }
 
     renderCustomerInformation() {
-
+        if (this.props.customerDetail) {
+            return <div>
+                <p>Email: {this.props.customerDetail.email}</p>
+                <p>Name: {this.props.customerDetail.firstName + ' ' + this.props.customerDetail.lastName}</p>
+                <p>Source: {this.props.customerDetail.dataSource}</p>
+            </div>;
+        }
     }
 
     render() {
@@ -112,7 +131,7 @@ class Inbound extends React.Component {
             <br />
             <div>
                 <label>Phone Number </label>
-                <input type="number" onChange={(e) => this.changePhoneNumber(e)} />
+                <input type="number" value={this.state.taskObject.phoneNumber} onChange={(e) => this.changePhoneNumber(e)} />
             </div>
             <br />
             <div>
@@ -147,6 +166,7 @@ function mapStateToProps(state) {
     return {
         role: state.auth.role,
         user: state.auth.email,
+        customerDetail: state.customerDetail,
         dispositions: state.dispositions,
         contexts: state.contexts
     };
