@@ -309,6 +309,14 @@ section h1 {
     display: block;
     width: auto;
 }
+.inboundCustomerDetails {
+    margin: 0 0 30px;
+}
+.inboundCustomerDetails p {
+    font-size: 15px;
+    line-height: 26px;
+    letter-spacing: 0.5px;
+}
 
 
 /*====== Metadata page ============*/

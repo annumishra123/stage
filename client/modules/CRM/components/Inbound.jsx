@@ -97,7 +97,8 @@ class Inbound extends React.Component {
 
     renderCustomerInformation() {
         if (this.props.customerDetail) {
-            return <div>
+            return <div className={styles.inboundCustomerDetails}>
+                <h1>Customer Details</h1>
                 <p>Email: {this.props.customerDetail.email}</p>
                 <p>Name: {this.props.customerDetail.firstName + ' ' + this.props.customerDetail.lastName}</p>
                 <p>Source: {this.props.customerDetail.dataSource}</p>
