@@ -150,6 +150,7 @@ class RentProduct extends React.Component {
             this.state.rentProduct.disabled = false;
         } else if (this.state.productStatus == 'temporary-disable') {
             this.state.rentProduct.status = false;
+            this.state.rentProduct.disabled = false;
         } else if (this.state.productStatus == 'permanent-disable') {
             this.state.rentProduct.disabled = true;
             this.state.rentProduct.status = false;
