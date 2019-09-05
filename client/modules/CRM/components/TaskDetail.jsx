@@ -30,7 +30,6 @@ class TaskDetail extends React.Component {
     }
 
   componentDidMount() {
-    debugger;
       this.props.getTaskById(this.props.location.query.uui);
     }
 
