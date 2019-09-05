@@ -30,7 +30,8 @@ class TaskDetail extends React.Component {
     }
 
   componentDidMount() {
-      this.props.getTaskById(this.props.params.id);
+    debugger;
+      this.props.getTaskById(this.props.location.query.uui);
     }
 
   viewCustomerProfile(phoneNumber) {

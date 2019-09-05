@@ -284,7 +284,7 @@ export default function getRoutes(store, req) {
           cb(null, require('./modules/CRM/components/Tasks').default);
         });
       }} />
-      <Route path="/crm/tasks/:id" onEnter={checkAdmin} getComponent={(nextState, cb) => {
+      <Route path="/crm/tasks/detail" onEnter={checkAdmin} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/CRM/components/TaskDetail').default);
         });
