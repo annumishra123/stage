@@ -99,7 +99,7 @@ class Tasks extends React.Component {
     }
 
     viewTask(task) {
-        browserHistory.push('/crm/tasks/detail/?uui=' + task.id);
+        browserHistory.push('/crm/tasks/detail?uui=' + task.id);
     }
 
     getIcon(task) {
