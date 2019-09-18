@@ -30,8 +30,8 @@ class TaskDetail extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.location.query.uui) {
-      this.props.getTaskById(this.props.location.query.uui);
+    if (this.props.location.query.UUI) {
+      this.props.getTaskById(this.props.location.query.UUI);
     }
   }
 
