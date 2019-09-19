@@ -6,6 +6,7 @@ import clientConfig from '../../../config';
 import { getTasksByContext, getAllContexts } from '../CRMActions';
 import ReactTable from 'react-table';
 import moment from 'moment';
+import { CSVLink } from 'react-csv';
 
 // Import Style
 import styles from './crm.css';
@@ -19,7 +20,8 @@ class Tasks extends React.Component {
             context: this.props.params.context,
             sortBy: this.props.params.sort,
             lastUpdated: moment(),
-            phoneNumber: this.props.params.number
+            phoneNumber: this.props.params.number,
+            crmTasksCSV: null
         };
     }
 
@@ -50,6 +52,17 @@ class Tasks extends React.Component {
                 phoneNumber: props.params.number
             });
             this.props.getTasksByContext(props.params.context == 'all' ? '' : props.params.context, props.params.sort, props.params.page, props.params.size, props.params.number != 0 ? props.params.number : '');
+        }
+        if (this.props.tasks) {
+            let crmTasksCSV = props.tasks.map((item) => {
+                return {
+                    'phoneNumber': item.phoneNumber,
+                    'taskId': item.id,
+                }
+            });
+            this.setState({
+                crmTasksCSV: crmTasksCSV
+            });
         }
     }
 
@@ -138,6 +151,7 @@ class Tasks extends React.Component {
                     <p className={styles.lastUpdate}>Last Updated: {this.state.lastUpdated.fromNow()} </p>
                     <br />
                     <ReactTable className={styles.tasktable} data={this.props.tasks} manual defaultPageSize={this.state.pageSize} columns={clientConfig.taskColumns} pages={this.props.pages} onFetchData={(state, instance) => { this.fetchData(state); }} className="-striped -highlight" />
+                    {this.state.crmTasksCSV ? <CSVLink data={this.state.crmTasksCSV} filename={"CRM Taks.csv"}>Export CSV</CSVLink> : null}
                 </div>);
             }
         }
