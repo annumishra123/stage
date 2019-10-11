@@ -50,7 +50,8 @@ class RentDeliveryOrders extends React.Component {
         });
     }
 
-    getOrders() {
+    getOrders(e) {
+        e.preventDefault();
         this.setState({
             csvData: null
         });
@@ -72,7 +73,7 @@ class RentDeliveryOrders extends React.Component {
     generateExportLink() {
         let csvData = [];
         let csvDataArray = this.deliveryTable.getResolvedState().sortedData;
-        csvDataArray.map(row=>{
+        csvDataArray.map(row => {
             let data = {
                 frontendOrderId: row['parentOrder.frontendOrderId'],
                 email: row['profile.email'],
@@ -247,28 +248,30 @@ class RentDeliveryOrders extends React.Component {
                 <h3>Rent Orders {this.renderOrderCount()}</h3>
                 <br />
                 <div>
-                    <div>
+                    <form onSubmit={this.getOrders.bind(this)}>
                         <div>
-                            <h4>Date Type</h4>
-                            <select onChange={this.handleChangeDateType.bind(this)}>
-                                <option value="orderDate">Order</option>
-                                <option value="deliveryDate">Delivery</option>
-                                <option value="pickupDate">Pickup</option>
-                            </select>
+                            <div>
+                                <h4>Date Type</h4>
+                                <select onChange={this.handleChangeDateType.bind(this)}>
+                                    <option value="orderDate">Order</option>
+                                    <option value="deliveryDate">Delivery</option>
+                                    <option value="pickupDate">Pickup</option>
+                                </select>
+                            </div>
+                            <div>
+                                <h4>Start Date</h4>
+                                <DatePicker selected={this.state.startDate} onChange={this.handleChangeStartDate.bind(this)} />
+                            </div>
+                            <div>
+                                <h4>End Date</h4>
+                                <DatePicker selected={this.state.endDate} onChange={this.handleChangeEndDate.bind(this)} />
+                            </div>
                         </div>
+                        <br />
                         <div>
-                            <h4>Start Date</h4>
-                            <DatePicker selected={this.state.startDate} onChange={this.handleChangeStartDate.bind(this)} />
+                            <button type="submit" onClick={this.getOrders.bind(this)}>Search</button>
                         </div>
-                        <div>
-                            <h4>End Date</h4>
-                            <DatePicker selected={this.state.endDate} onChange={this.handleChangeEndDate.bind(this)} />
-                        </div>
-                    </div>
-                    <br />
-                    <div>
-                        <button onClick={this.getOrders.bind(this)}>Search</button>
-                    </div>
+                    </form>
                 </div>
                 <br />
                 {this.renderOrders()}

@@ -132,15 +132,18 @@ class RentOrders extends React.Component {
     }
   }
 
-  getOrders() {
+  getOrders(e) {
+    e.preventDefault();
     this.props.getShopOrderListByDate(this.state.startDate, this.state.endDate);
   }
 
-  getOrdersByUserId() {
+  getOrdersByUserId(e) {
+    e.preventDefault();
     this.props.getOrdersByUserId(this.state.emailId);
   }
 
-  getOrdersByPhoneNumber() {
+  getOrdersByPhoneNumber(e) {
+    e.preventDefault();
     this.props.getOrdersByPhoneNumber(this.state.phoneNumber);
   }
 
@@ -641,39 +644,47 @@ class RentOrders extends React.Component {
         <div>
           <h3>Rent Orders</h3>
           <div>
-            <div className={styles.width50}>
-              <div>
-                <h4>Start Date</h4>
-                <DatePicker selected={this.state.startDate} onChange={this.handleChangeStartDate.bind(this)} />
+            <form onSubmit={this.getOrders.bind(this)}>
+              <div className={styles.width50}>
+                <div>
+                  <h4>Start Date</h4>
+                  <DatePicker selected={this.state.startDate} onChange={this.handleChangeStartDate.bind(this)} />
+                </div>
+                <div>
+                  <h4>End Date</h4>
+                  <DatePicker selected={this.state.endDate} onChange={this.handleChangeEndDate.bind(this)} />
+                </div>
               </div>
               <div>
-                <h4>End Date</h4>
-                <DatePicker selected={this.state.endDate} onChange={this.handleChangeEndDate.bind(this)} />
+                <button type="submit" onClick={this.getOrders.bind(this)}>Search By Date</button>
               </div>
+            </form>
+            <div>
+              <form onSubmit={this.getOrdersByUserId.bind(this)}>
+                <h4>Email Id</h4>
+                <input type="text" onChange={this.handleChangeEmailId.bind(this)} />
+                <div>
+                  <button type="submit" onClick={this.getOrdersByUserId.bind(this)}>Search By Email Id</button>
+                </div>
+              </form>
             </div>
             <div>
-              <button onClick={this.getOrders.bind(this)}>Search By Date</button>
+              <form onSubmit={this.showOrderDetail.bind(this)}>
+                <h4>Order Id</h4>
+                <input type="text" onChange={this.handleChangeOrderId.bind(this)} />
+                <div>
+                  <button type="submit" onClick={this.showOrderDetail.bind(this, this.state.orderId)}>Search By Order Id</button>
+                </div>
+              </form>
             </div>
             <div>
-              <h4>Email Id</h4>
-              <input type="text" onChange={this.handleChangeEmailId.bind(this)} />
-              <div>
-                <button onClick={this.getOrdersByUserId.bind(this)}>Search By Email Id</button>
-              </div>
-            </div>
-            <div>
-              <h4>Order Id</h4>
-              <input type="text" onChange={this.handleChangeOrderId.bind(this)} />
-              <div>
-                <button onClick={this.showOrderDetail.bind(this, this.state.orderId)}>Search By Order Id</button>
-              </div>
-            </div>
-            <div>
-              <h4>Phone Number</h4>
-              <input type="text" onChange={this.handleChangePhoneNumber.bind(this)} />
-              <div>
-                <button onClick={this.getOrdersByPhoneNumber.bind(this)}>Search By Phone Number</button>
-              </div>
+              <form onSubmit={this.getOrdersByPhoneNumber.bind(this)}>
+                <h4>Phone Number</h4>
+                <input type="text" onChange={this.handleChangePhoneNumber.bind(this)} />
+                <div>
+                  <button type="submit" onClick={this.getOrdersByPhoneNumber.bind(this)}>Search By Phone Number</button>
+                </div>
+              </form>
             </div>
             {/* <div>
                      <h4>Look Number</h4>

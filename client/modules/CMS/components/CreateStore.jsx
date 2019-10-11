@@ -122,28 +122,30 @@ class CreateStore extends React.Component {
         return (<section className={styles.createStore}>
             <button className={styles.backBtn} onClick={this.handleNavigationPage.bind(this)}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true"></i> Back</button>
             <h1>Create Store</h1>
-            <div>
-                <h4>Looks: </h4>
-                <textarea type="text" value={this.state.looks} onChange={this.handleCreateLooks.bind(this)} />
-            </div>
-            <div>
-                <h4>Desktop Header Image: </h4>
-                <textarea type="text" value={this.state.desktopImageUrl} onChange={this.handleCreateDesktopImage.bind(this)} />
-            </div>
-            <div>
-                <h4>Mobile Header Image: </h4>
-                <textarea type="text" value={this.state.mobileImageUrl} onChange={this.handleCreateMobileImage.bind(this)} />
-            </div>
-            <div>
-                <h4>URL: </h4>
-                <input type="text" value={this.state.url} onChange={this.handleCreateUrl.bind(this)} />
-            </div>
-            <div>
-                <h4>Title: </h4>
-                <input type="text" value={this.state.title} onChange={this.handleCreateTitle.bind(this)} />
-            </div>
-            <br />
-            <button className={styles.submitBtn} onClick={this.createStore.bind(this)}>Create Store</button>
+            <form onSubmit={this.createStore.bind(this)}>
+                <div>
+                    <h4>Looks: </h4>
+                    <textarea type="text" value={this.state.looks} onChange={this.handleCreateLooks.bind(this)} />
+                </div>
+                <div>
+                    <h4>Desktop Header Image: </h4>
+                    <textarea type="text" value={this.state.desktopImageUrl} onChange={this.handleCreateDesktopImage.bind(this)} />
+                </div>
+                <div>
+                    <h4>Mobile Header Image: </h4>
+                    <textarea type="text" value={this.state.mobileImageUrl} onChange={this.handleCreateMobileImage.bind(this)} />
+                </div>
+                <div>
+                    <h4>URL: </h4>
+                    <input type="text" value={this.state.url} onChange={this.handleCreateUrl.bind(this)} />
+                </div>
+                <div>
+                    <h4>Title: </h4>
+                    <input type="text" value={this.state.title} onChange={this.handleCreateTitle.bind(this)} />
+                </div>
+                <br />
+                <button type="submit" className={styles.submitBtn} onClick={this.createStore.bind(this)}>Create Store</button>
+            </form>
             <br />
             {this.renderStores()}
             <br />

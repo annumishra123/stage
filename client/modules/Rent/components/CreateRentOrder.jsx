@@ -453,10 +453,10 @@ class CreateRentOrder extends React.Component {
             <button onClick={this.findProduct.bind(this)}>Find</button>
             <br />
             <br />
-            <h4>Find Accessory</h4>
+            {/* <h4>Find Accessory</h4>
             <label>SKU: </label>
             <input type="text" onChange={this.handleChangeSKU.bind(this)} />
-            <button onClick={this.findAccessory.bind(this)}>Find</button>
+            <button onClick={this.findAccessory.bind(this)}>Find</button> */}
             <br />
             <br />
             {this.renderProductPreview()}
