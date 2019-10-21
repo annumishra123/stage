@@ -52,7 +52,8 @@ class Customer extends React.Component {
         });
     }
 
-    getCustomerDetailByPhoneNumber() {
+    getCustomerDetailByPhoneNumber(e) {
+        e.preventDefault();
         this.props.getCustomerDetailByPhoneNumber(this.state.phoneNumber);
     }
 
@@ -69,51 +70,53 @@ class Customer extends React.Component {
     renderComments() {
         if (this.props.customerComments && this.props.customerComments.length > 0) {
             return <table>
-                     <tr>
-                       <th>Comment</th>
-                       <th>Date</th>
-                     </tr>
-                     { this.props.customerComments.map((comment) => {
-                           return <tr>
-                                    <td>
-                                      { comment.comment }
-                                    </td>
-                                    <td>
-                                      { moment.unix(comment.createdtimestamp).format('lll') }
-                                    </td>
-                                  </tr>
-                       }) }
-                   </table>
+                <tr>
+                    <th>Comment</th>
+                    <th>Date</th>
+                </tr>
+                {this.props.customerComments.map((comment) => {
+                    return <tr>
+                        <td>
+                            {comment.comment}
+                        </td>
+                        <td>
+                            {moment.unix(comment.createdtimestamp).format('lll')}
+                        </td>
+                    </tr>
+                })}
+            </table>
         }
     }
 
     render() {
-        return (<section className={ styles.createCustomer }>
-                  <EmailForm />
-                  <div className={ styles.byMailbtn }>
-                    <FormSubmitButton formName="createEmail" text="Find Customer By Email" />
-                  </div>
-                  <br/>
-                  <label htmlFor="email">Phone Number </label>
-                  <input type="text" onChange={ this.handleChangeMobileNumber.bind(this) } />
-                  <div className={ styles.byMailbtn }>
-                    <button style={ style } onClick={ this.getCustomerDetailByPhoneNumber.bind(this) }>Find Customer By Number</button>
-                  </div>
-                  <CustomerForm />
-                  { this.props.role === 'admin' ? <FormSubmitButton formName="createCustomer" text="Save Contact" /> : <br/> }
-                  <AddressForm selectAddress={ this.selectAddress.bind(this) } />
-                  { this.props.role === 'admin' ? <FormSubmitButton formName="createAddress" text="Save Address" /> : <br/> }
-                  <MeasurementsForm />
-                  { this.props.role === 'admin' ? <FormSubmitButton formName="createMeasurements" text="Save Measurements" /> : <br/> }
-                  { this.props.role === 'admin' ? <button type="button" style={ style } onClick={ this.saveAllCustomerDetails.bind(this) }>Save All Information</button> : <br/> }
-                  { this.renderComments() }
-                  <div>
-                    <input type="text" onChange={ this.handleChangeComment.bind(this) } />
-                    <button onClick={ this.saveComment.bind(this) }>Save Comment</button>
-                  </div>
-                  { this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" className={ styles.marginSides } style={ style } onClick={ this.createShopOrder.bind(this) }>New Shop Order</button> : <br/> }
-                  { this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" className={ styles.marginSides } style={ style } onClick={ this.createRentOrder.bind(this) }>New Rent Order</button> : <br/> }
-                </section>);
+        return (<section className={styles.createCustomer}>
+            <EmailForm />
+            <div className={styles.byMailbtn}>
+                <FormSubmitButton formName="createEmail" text="Find Customer By Email" />
+            </div>
+            <br />
+            <form onSubmit={this.getCustomerDetailByPhoneNumber.bind(this)}>
+                <label htmlFor="email">Phone Number </label>
+                <input type="text" onChange={this.handleChangeMobileNumber.bind(this)} />
+                <div className={styles.byMailbtn}>
+                    <button type="submit" style={style} onClick={this.getCustomerDetailByPhoneNumber.bind(this)}>Find Customer By Number</button>
+                </div>
+            </form>
+            <CustomerForm />
+            {this.props.role === 'admin' ? <FormSubmitButton formName="createCustomer" text="Save Contact" /> : <br />}
+            <AddressForm selectAddress={this.selectAddress.bind(this)} />
+            {this.props.role === 'admin' ? <FormSubmitButton formName="createAddress" text="Save Address" /> : <br />}
+            <MeasurementsForm />
+            {this.props.role === 'admin' ? <FormSubmitButton formName="createMeasurements" text="Save Measurements" /> : <br />}
+            {this.props.role === 'admin' ? <button type="button" style={style} onClick={this.saveAllCustomerDetails.bind(this)}>Save All Information</button> : <br />}
+            {this.renderComments()}
+            <div>
+                <input type="text" onChange={this.handleChangeComment.bind(this)} />
+                <button onClick={this.saveComment.bind(this)}>Save Comment</button>
+            </div>
+            {this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" className={styles.marginSides} style={style} onClick={this.createShopOrder.bind(this)}>New Shop Order</button> : <br />}
+            {this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" className={styles.marginSides} style={style} onClick={this.createRentOrder.bind(this)}>New Rent Order</button> : <br />}
+        </section>);
     }
 }
 

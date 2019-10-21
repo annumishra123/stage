@@ -25,14 +25,14 @@ class Navigation extends React.Component {
             <p>Customer</p>
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/shop">
             <figure>
               <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-shop-orders2.png" />
             </figure>
             <p>Shop Orders</p>
           </Link>
-        </li>
+        </li> */}
         <li>
           <Link to="/rent">
             <figure>
@@ -49,14 +49,14 @@ class Navigation extends React.Component {
             <p>Rent Delivery</p>
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/delivery/shop">
             <figure>
               <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-shop-delivery.png" />
             </figure>
             <p>Shop Delivery</p>
           </Link>
-        </li>
+        </li> */}
         <li>
           <Link to="/inventory">
             <figure>
@@ -81,14 +81,14 @@ class Navigation extends React.Component {
             <p>Instagram</p>
           </Link>
         </li> : null}
-        {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
+        {/* {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
           <Link to="/inventory/shop/stock">
             <figure>
               <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-shop-stock.png" />
             </figure>
             <p>Shop Stock</p>
           </Link>
-        </li> : null}
+        </li> : null} */}
         {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
           <Link to="/rent/coupons">
             <figure>

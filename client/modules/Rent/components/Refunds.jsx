@@ -33,7 +33,8 @@ class Refunds extends React.Component {
         });
     }
 
-    getRefundsByUserId() {
+    getRefundsByUserId(e) {
+        e.preventDefault();
         if (this.state.customerId) {
             this.props.getRefundsByUserId(this.state.customerId);
             this.setState({
@@ -91,10 +92,12 @@ class Refunds extends React.Component {
             <br />
             <div><h1>Search Refunds By Email</h1></div>
             <br />
-            <div className={styles.emailform}>
-                <input type="text" placeholder="Email" value={this.state.customerId} onChange={(e) => this.handleCustomerId(e)} />
-                <button onClick={this.getRefundsByUserId.bind(this)}>Search</button>
-            </div>
+            <form onSubmit={this.getRefundsByUserId.bind(this)}>
+                <div className={styles.emailform}>
+                    <input type="text" placeholder="Email" value={this.state.customerId} onChange={(e) => this.handleCustomerId(e)} />
+                    <button type="submit" onClick={this.getRefundsByUserId.bind(this)}>Search</button>
+                </div>
+            </form>
             <br />
             <br />
             {this.renderRefundsByUserId()}

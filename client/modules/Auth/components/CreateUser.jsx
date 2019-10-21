@@ -101,14 +101,14 @@ class CreateUser extends React.Component {
         return (<section className={styles.createUser}>
             <button className={styles.back} onClick={this.handleNavigationPage.bind(this)}><i className={styles.backicon + " fa fa-chevron-left"} aria-hidden="true"></i>Back</button>
             <h1>Create User</h1>
-            <form>
+            <form onSubmit={this.createUser.bind(this)}>
                 <div>
                     <h4>Email: </h4>
-                    <input type="email" value= {this.state.email} onChange={this.handleCreateEmail.bind(this)} />
+                    <input type="email" value={this.state.email} onChange={this.handleCreateEmail.bind(this)} />
                 </div>
                 <div>
                     <h4>Name: </h4>
-                    <input type="text" value= {this.state.name} onChange={this.handleCreateName.bind(this)} />
+                    <input type="text" value={this.state.name} onChange={this.handleCreateName.bind(this)} />
                 </div>
                 <div>
                     <h4> Role </h4>
@@ -122,14 +122,14 @@ class CreateUser extends React.Component {
                 </div>
                 <div>
                     <h4>Password: </h4>
-                    <input type="password" value= {this.state.password} onChange={this.handleCreatePassword.bind(this)} />
+                    <input type="password" value={this.state.password} onChange={this.handleCreatePassword.bind(this)} />
                 </div>
                 <div>
                     <h4>Owner: </h4>
-                    <input type="text" value= {this.state.owner} onChange={this.handleCreateOwner.bind(this)} />
+                    <input type="text" value={this.state.owner} onChange={this.handleCreateOwner.bind(this)} />
                 </div>
                 <br />
-                <button className={styles.submitBtn} onClick={this.createUser.bind(this)}>Create User</button>
+                <button type="submit" className={styles.submitBtn} onClick={this.createUser.bind(this)}>Create User</button>
             </form>
             <br />
             {this.renderUsers()}

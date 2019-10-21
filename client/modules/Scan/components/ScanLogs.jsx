@@ -81,13 +81,15 @@ class ScanLogs extends React.Component {
         this.props.getLogsByLocation(this.state.location);
     }
 
-    getAllLogsBySKU() {
+    getAllLogsBySKU(e) {
+        e.preventDefault();
         if (this.state.sku) {
             this.props.getAllLogsBySKU(this.state.sku);
         }
     }
 
-    getAllLogsByEmail() {
+    getAllLogsByEmail(e) {
+        e.preventDefault();
         if (this.state.email) {
             this.props.getAllLogsByEmail(this.state.email);
         }
@@ -143,16 +145,20 @@ class ScanLogs extends React.Component {
             <br />
             <br />
             <div><h1>Search Outfit</h1></div>
-            <div>
-                <input type="text" placeholder="SKU" value={this.state.sku} onChange={(e) => this.handleSKU(e)} />
-                <button className={styles.srchBtn} onClick={this.getAllLogsBySKU.bind(this)}>Search</button>
-            </div>
+            <form onSubmit={this.getAllLogsBySKU.bind(this)}>
+                <div>
+                    <input type="text" placeholder="SKU" value={this.state.sku} onChange={(e) => this.handleSKU(e)} />
+                    <button type="submit" className={styles.srchBtn} onClick={this.getAllLogsBySKU.bind(this)}>Search</button>
+                </div>
+            </form>
             <br />
             <div><h1>Scan Count</h1></div>
-            <div>
-                <input type="text" placeholder="Email" value={this.state.email} onChange={(e) => this.handleEmail(e)} />
-                <button className={styles.srchBtn} onClick={this.getAllLogsByEmail.bind(this)}>Search</button>
-            </div>
+            <form onSubmit={this.getAllLogsByEmail.bind(this)}>
+                <div>
+                    <input type="text" placeholder="Email" value={this.state.email} onChange={(e) => this.handleEmail(e)} />
+                    <button className={styles.srchBtn} onClick={this.getAllLogsByEmail.bind(this)}>Search</button>
+                </div>
+            </form>
             <br />
             <br />
             {this.renderScanLogs()}
