@@ -53,6 +53,9 @@
 .navigations ul li a figure img {
     width: 100%;
 }
+.navigations ul li a p {
+    height: 38px;
+}
 
 
 @media (max-width: 767px){
@@ -83,6 +86,7 @@
         letter-spacing: 0;
         margin: 3px 0 0;
         text-transform: capitalize;
+        height: auto;
     }
 
 }
