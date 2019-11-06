@@ -51,6 +51,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Rent/components/Refunds');
   require('./modules/Scan/components/Scan');
   require('./modules/Scan/components/ScanLogs');
+  require('./modules/CMS/components/Cms');
 }
 
 // react-router setup with code-splitting
@@ -332,6 +333,11 @@ export default function getRoutes(store, req) {
       <Route path="/scanlogs" onEnter={checkAdmin} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Scan/components/ScanLogs').default);
+        });
+      }} />
+       <Route path="/cms" onEnter={checkAdmin} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/CMS/components/Cms').default);
         });
       }} />
     </Route>

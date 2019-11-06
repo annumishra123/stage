@@ -15,3 +15,12 @@ export function allStores(state = null, action) {
     }
     return state;
 }
+
+export function cmsConfig(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_CMS_CONFIG':
+            return action.payload;
+            break;
+    }
+    return state;
+}
