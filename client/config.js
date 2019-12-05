@@ -421,7 +421,7 @@ const clientConfig = {
     id: '6day',
     Header: '6 Days Rental',
     accessor: o => Math.round(o.discountedrentalprice * 4.2),
-  },{
+  }, {
     id: 'returned',
     Header: 'Returned',
     accessor: o => {
@@ -430,7 +430,11 @@ const clientConfig = {
       } else {
         return 'Yes';
       }
-    },
+    }
+  }, {
+    id: 'image',
+    Header: 'Image',
+    accessor: o => <a target="blank" href={o.frontimage}>Link</a>,
   }],
   ownersColumns: [{
     Header: 'Name',
