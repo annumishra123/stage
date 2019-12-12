@@ -86,8 +86,8 @@ const clientConfig = {
     'outfit now looking old',
   ],
   rentProductStatus: { 'enable': 'Active', 'temporary-disable': 'Temporary Disable', 'permanent-disable': 'Permanent Disable' },
-  scanLocations: { 'store-hkv': 'Hauz Khas Store', 'store-scw': 'City Walk Store', 'office': 'Office', 'customer': 'Customer', 'dc': 'Dry Cleaning', 'popup': 'Pop-Up', 'warehouse-nfc': 'NFC Warehouse' },
-  scanReasons: ['item received', 'send to hkv', 'send to nfc', 'send to city walk', 'send to office', 'send to customer', 'send to dc', 'send to popup', 'reconcile'],
+  scanLocations: { 'store-sdn': 'Sadhna Store', 'warehouse-sdn': 'Sadhna Warehouse', 'store-hkv': 'Hauz Khas Store', 'store-scw': 'City Walk Store', 'office': 'Office', 'customer': 'Customer', 'dc': 'Dry Cleaning', 'popup': 'Pop-Up', 'warehouse-nfc': 'NFC Warehouse' },
+  scanReasons: ['item received', 'send to sadhna warehouse', 'send to sadhna store', 'send to hkv', 'send to nfc', 'send to city walk', 'send to office', 'send to customer', 'send to dc', 'send to popup', 'reconcile'],
   targetURL: 'https://staging.stage3.co',
   paymentMethods: [
     'bank deposit',

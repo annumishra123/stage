@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { getScannedLook, clearScannedLook, saveScannedLocation } from '../ScanActions';
 import clientConfig from '../../../config';
 import BarcodeReader from 'react-barcode-reader';
+import moment from 'moment';
 
 // Import CSS
 import styles from './scan.css';
@@ -69,7 +70,17 @@ class Scan extends Component {
           </div>
           <div className={styles.col70}>
             <p>{this.props.scannedLook.name}</p>
-            <p>SKU - {this.props.scannedLook.sku}</p>
+            <br />
+            <p>SKU: {this.props.scannedLook.sku}</p>
+            <br />
+            <p>Home Location: {this.props.scannedLook.homelocation ? this.props.scannedLook.homelocation : 'N/A'}</p>
+            {this.props.scannedLook.latestScan ? <div>
+              <br />
+              <p>Last Location: {clientConfig.scanLocations[this.props.scannedLook.latestScan.location]}</p>
+              <p>Scan Reason: {this.props.scannedLook.latestScan.reason}</p>
+              <p>Scanned By: {this.props.scannedLook.latestScan.scannedBy}</p>
+              <p>Updated On: {moment(this.props.scannedLook.latestScan.timestamp).format('lll')}</p>
+            </div> : null}
             {this.renderScannedComposition()}
             <select onChange={this.changeReason.bind(this)}>
               <option value="">-- Select Reason --</option>

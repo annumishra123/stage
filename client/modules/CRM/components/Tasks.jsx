@@ -56,8 +56,15 @@ class Tasks extends React.Component {
         if (this.props.tasks) {
             let crmTasksCSV = props.tasks.map((item) => {
                 return {
-                    'phoneNumber': item.phoneNumber,
-                    'taskId': item.id,
+                    'Phone Number': item.phoneNumber,
+                    'Stored Name': item.profile ? item.profile.firstName + ' ' + item.profile.lastName : 'N/A',
+                    'Provided Name': item.name,
+                    'Task Id': item.id,
+                    'Created Time': moment(item.createdTime).format('lll'),
+                    'Updated Time': moment(item.updatedTime).format('lll'),
+                    'Email Id': item.customerId,
+                    'Context': item.primaryCallbackContext,
+                    'Status': item.status
                 }
             });
             this.setState({
@@ -183,7 +190,7 @@ class Tasks extends React.Component {
                         <option value="priorityScore">Priority Score</option>
                     </select>
                 </div>
-                    <button className={styles.taskapply} onClick={() => this.getFilteredTasks()}>Apply</button>
+                <button className={styles.taskapply} onClick={() => this.getFilteredTasks()}>Apply</button>
             </div>
             <br />
             {this.renderTasks()}
