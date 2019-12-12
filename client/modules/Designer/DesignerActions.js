@@ -38,6 +38,8 @@ export function getCompletedOrders(owner, startDate, endDate) {
                     }
                 }, {
                     isCancelled: false
+                }, {
+                    softBook: false
                 }]
             }
         };

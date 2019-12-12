@@ -63,10 +63,10 @@ class Orders extends React.Component {
                 <h4>Start Date</h4>
                 <DatePicker selected={this.state.startDate} onChange={this.handleChangeStartDate.bind(this)} />
             </div>
-            <div className={styles.width50}>
+            {/* <div className={styles.width50}>
                 <h4>End Date</h4>
                 <DatePicker selected={this.state.endDate} onChange={this.handleChangeEndDate.bind(this)} />
-            </div>
+            </div> */}
             <button onClick={this.refreshDesignerOrders.bind(this)}><img src="https://res.cloudinary.com/stage3/image/upload/f_auto,q_auto:low/icon-refresh.png" alt="refresh" />Refresh</button>
         </div>;
     }
