@@ -3,7 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 export function getDesignerInventory(owner) {
-    return function(dispatch) {
+    return function (dispatch) {
         let loopbackFilter = {
             where: {
                 owner: owner
@@ -27,7 +27,7 @@ export function getDesignerInventory(owner) {
 }
 
 export function getCompletedOrders(owner, startDate, endDate) {
-    return function(dispatch) {
+    return function (dispatch) {
         let loopbackFilter = {
             where: {
                 and: [{
@@ -61,7 +61,7 @@ export function getCompletedOrders(owner, startDate, endDate) {
 }
 
 export function getPendingOrders(owner) {
-    return function(dispatch) {
+    return function (dispatch) {
         let loopbackFilter = {
             where: {
                 and: [{
@@ -93,14 +93,14 @@ export function getPendingOrders(owner) {
 }
 
 export function getCancelledOrders(owner, startDate, endDate) {
-    return function(dispatch) {
+    return function (dispatch) {
         let loopbackFilter = {
             where: {
                 and: [{
                     owner: owner
                 }, {
                     pickupDateUTC: {
-                        between: [startDate, endDate]
+                        gt: moment().unix() * 1000
                     }
                 }, {
                     isCancelled: true
@@ -126,7 +126,7 @@ export function getCancelledOrders(owner, startDate, endDate) {
 
 export function createOwner(owner) {
     console.log(owner)
-    return function(dispatch) {
+    return function (dispatch) {
         let url = '/api/revshare/api/owners/';
         axios({
             url,
@@ -144,7 +144,7 @@ export function createOwner(owner) {
 }
 
 export function getOwners() {
-    return function(dispatch) {
+    return function (dispatch) {
         let url = '/api/revshare/api/owners/';
         axios({
             url,
@@ -163,7 +163,7 @@ export function getOwners() {
 }
 
 export function getOwnerShare(owner) {
-    return function(dispatch) {
+    return function (dispatch) {
         let loopbackFilter = {
             where: {
                 ownername: owner
