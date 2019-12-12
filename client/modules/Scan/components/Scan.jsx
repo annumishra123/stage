@@ -73,7 +73,7 @@ class Scan extends Component {
             <br />
             <p>SKU: {this.props.scannedLook.sku}</p>
             <br />
-            <p>Home Location: {this.props.scannedLook.homelocation ? this.props.scannedLook.homelocation : 'N/A'}</p>
+            <p>Home Location: {this.props.scannedLook.homeLocation ? this.props.scannedLook.homeLocation : 'N/A'}</p>
             {this.props.scannedLook.latestScan ? <div>
               <br />
               <p>Last Location: {clientConfig.scanLocations[this.props.scannedLook.latestScan.location]}</p>
