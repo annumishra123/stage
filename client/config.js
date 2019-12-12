@@ -894,8 +894,11 @@ const clientConfig = {
     Header: 'Look',
     accessor: 'url',
   }, {
-    Header: 'Location',
+    Header: 'Last Location',
     accessor: 'location',
+  }, {
+    Header: 'Home Location',
+    accessor: 'homeLocation',
   }, {
     Header: 'Scanned By',
     accessor: 'latestScan.scannedBy',

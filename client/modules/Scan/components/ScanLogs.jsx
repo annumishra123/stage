@@ -33,10 +33,11 @@ class ScanLogs extends React.Component {
                 return {
                     'sku': log.sku,
                     'look': log.url,
-                    'location': log.location,
+                    'last location': log.location,
                     'scanned by': log.latestScan ? log.latestScan.scannedBy : null,
                     'scan reason': log.latestScan ? log.latestScan.reason : null,
-                    'scan time': log.latestScan ? moment(log.latestScan.timestamp).format('lll') : 'Not Scanned'
+                    'scan time': log.latestScan ? moment(log.latestScan.timestamp).format('lll') : 'Not Scanned',
+                    'home location': log.homeLocation ? log.homeLocation : 'N/A'
                 }
             });
             this.setState({
@@ -50,7 +51,7 @@ class ScanLogs extends React.Component {
                     'scanned by': log.scannedBy,
                     'scan reason': log.reason,
                     'scan time': moment(log.timestamp).format('lll'),
-                    'location': log.location
+                    'last location': log.location
                 }
             });
             this.setState({
