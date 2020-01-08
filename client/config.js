@@ -66,6 +66,9 @@ const clientConfig = {
     city: 'Chennai',
     state: 'TamilNadu',
   }, {
+    city: 'Goa',
+    state: 'Goa',
+  }, {
     city: 'Other',
     state: 'Other',
   }],
