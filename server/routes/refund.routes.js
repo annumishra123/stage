@@ -211,45 +211,4 @@ router.get("/getRefundsByUserId", passport.authenticate('jwt', {
     }
 });
 
-router.post("/provideBankDetails", (req, res) => {
-    RefundLog.findById(req.body.id).then(refundLog => {
-        if (refundLog.bankDetailsProvided) {
-            res.status(500).json({
-                status: 'ALREADY_PROVIDED'
-            });
-        } else {
-            if (res.body.accountHolder && res.body.accountType && res.body.bank && res.body.branch && res.body.accountNumber && res.body.ifscCode) {
-                refundLog.accountHolder = res.body.accountHolder;
-                refundLog.accountType = res.body.accountType;
-                refundLog.bank = res.body.bank;
-                refundLog.branch = res.body.branch;
-                refundLog.accountNumber = res.body.accountNumber;
-                refundLog.ifscCode = res.body.ifscCode;
-                refundLog.bankDetailsProvidedOn = Date.now();
-                refundLog.bankDetailsProvided = true;
-                refundLog.save().then(item => {
-                    res.status(200).json({
-                        status: 'SUCCESS',
-                        data: item
-                    });
-                }).catch(err => {
-                    console.log(err);
-                    res.status(500).json({
-                        status: 'FAILED'
-                    });
-                });
-            } else {
-                res.status(500).json({
-                    status: 'MISSING_FIELD'
-                });
-            }
-        }
-    }).catch(err => {
-        console.log(err);
-        res.status(500).json({
-            status: 'NOT_FOUND'
-        });
-    });
-});
-
 export default router;
