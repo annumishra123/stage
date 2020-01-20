@@ -551,18 +551,6 @@ class RentOrders extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th>Deposit Price</th>
-                  <td>
-                    {line.originalDeposit}
-                  </td>
-                </tr>
-                <tr>
-                  <th>Deposit Price</th>
-                  <td>
-                    {line.originalDeposit}
-                  </td>
-                </tr>
-                <tr>
                   <th>Order Source</th>
                   <td>
                     {line.orderType.split('_')[1]}
