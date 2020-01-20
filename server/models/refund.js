@@ -4,44 +4,59 @@ const Schema = mongoose.Schema;
 
 const refundLogSchema = new Schema({
     orderId: {
-        type: 'String',
-        required: true,
+        type: 'String'
     },
     orderLineId: {
-        type: 'String',
-        required: true
+        type: 'String'
     },
     createdDate: {
         type: 'Date',
-        default: Date.now,
-        required: true
+        default: Date.now
     },
     createdBy: {
         type: 'String',
-        required: true
     },
     amount: {
         type: 'Number',
-        required: true
     },
     looknumber: {
         type: 'String',
-        required: true
     },
     customerId: {
         type: 'String',
-        required: true
     },
     refunded: {
-        type: 'Boolean',
-        required: true,
-        default: false
+        type: 'Boolean'
     },
     refundedDate: {
         type: 'Date'
     },
     phoneNumber: {
         type: 'Number',
+    },
+    accountHolder: {
+        type: 'String'
+    },
+    accountType: {
+        type: 'String'
+    },
+    bank: {
+        type: 'String'
+    },
+    branch: {
+        type: 'String'
+    },
+    accountNumber: {
+        type: 'String'
+    },
+    ifscCode: {
+        type: 'String'
+    },
+    bankDetailsProvidedOn: {
+        type: 'Date'
+    },
+    bankDetailsProvided: {
+        type: 'Boolean'
     }
 });
 
