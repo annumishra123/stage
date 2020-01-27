@@ -114,21 +114,23 @@ class RentOrders extends React.Component {
     });
   }
 
-  approveRefund(id, lookNumber) {
-    if (this.state.refundAmount) {
+  approveRefund(line) {
+    if (this.state.refundAmount && this.state.refundAmount <= (line.deposit + line.price)) {
       let data = {
         orderId: this.props.orderDetail.frontendOrderId,
-        orderLineId: id,
+        orderLineId: line.id,
         createdBy: this.props.user,
         customerId: this.props.orderDetail.userId,
         amount: this.state.refundAmount,
-        looknumber: lookNumber,
+        looknumber: line.product.lookNumber,
         phoneNumber: this.props.details ? this.props.details.phoneNumber : null
       }
       this.props.approveRefund(data);
       this.setState({
         refundAmount: '',
       })
+    } else {
+      alert('Kindly check the refund amount');
     }
   }
 
@@ -613,7 +615,7 @@ class RentOrders extends React.Component {
                 {line.product.type === "product" && this.props.role === 'admin' ? <div>
                   <h4>Refund Amount: </h4>
                   <input type="number" onChange={(e) => this.handleChangeRefundAmount(e)} />
-                  <button onClick={this.approveRefund.bind(this, line.id, line.product.lookNumber)}>Approve Refund</button>
+                  <button onClick={this.approveRefund.bind(this, line)}>Approve Refund</button>
                   <br />
                   {this.getRefundLogs(line.id)}
                 </div> : null}
