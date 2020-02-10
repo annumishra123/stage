@@ -1,7 +1,3 @@
-/* eslint-disable array-callback-return */
-/* eslint-disable prefer-const */
-/* eslint-disable react/prop-types */
-/* eslint-disable indent */
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
@@ -77,18 +73,13 @@ class RentDeliveryOrders extends React.Component {
     generateExportLink() {
         let csvData = [];
         let csvDataArray = this.deliveryTable.getResolvedState().sortedData;
-        console.log(csvDataArray)
-        csvDataArray.sort((a,b) => {return new Date(a.orderDate) - new Date(b.orderDate); })
-        csvDataArray.map(row => {
+        csvDataArray.sort((a,b) => {return new Date(a.orderDate) - new Date(b.orderDate); }).map(row => {
             let data = {
                 frontendOrderId: row['parentOrder.frontendOrderId'],
                 email: row['profile.email'],
                 name: row.name,
                 phoneNumber: row['profile.phoneNumber'],
                 address: `${row['deliveryAddress.address']}, ${row['deliveryAddress.city']}, ${row['deliveryAddress.state']}, ${row['deliveryAddress.pincode']}`,
-                // city: row['deliveryAddress.city'],
-                // state: row['deliveryAddress.state'],
-                // pincode: row['deliveryAddress.pincode'],
                 productName: row['product.name'],
                 lookNumber: row['product.lookNumber'],
                 gender: row.gender,
