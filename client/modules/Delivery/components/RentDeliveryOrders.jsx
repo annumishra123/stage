@@ -73,8 +73,7 @@ class RentDeliveryOrders extends React.Component {
     generateExportLink() {
         let csvData = [];
         let csvDataArray = this.deliveryTable.getResolvedState().sortedData;
-        // console.log(csvDataArray)
-        csvDataArray.sort((a,b) => {return new Date(a.orderDate) - new Date(b.orderDate) }).map(row => {
+        csvDataArray.sort((a,b) => {return new Date(a.orderDate) - new Date(b.orderDate); }).map(row => {
             let data = {
                 frontendOrderId: row['parentOrder.frontendOrderId'],
                 email: row['profile.email'],
