@@ -75,7 +75,7 @@ class CreateUser extends React.Component {
 
     createUser(e) {
         e.preventDefault();
-        if (this.state.email != '' && this.state.name != '' && this.state.role != '' && this.state.password != '' && this.state.owner != '') {
+        if (this.state.email != '' && this.state.name != '' && this.state.role != '' && this.state.password != '') {
             let user = {
                 email: this.state.email,
                 name: this.state.name,
@@ -118,6 +118,7 @@ class CreateUser extends React.Component {
                         <option value="designer">Designer</option>
                         <option value="viewer">Marketing</option>
                         <option value="delivery">Delivery</option>
+                        <option value="finance">Finance</option>
                     </select>
                 </div>
                 <div>
