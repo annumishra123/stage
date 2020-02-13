@@ -121,14 +121,6 @@ class Navigation extends React.Component {
             <p>CRM Metadata</p>
           </Link>
         </li> : null}
-        {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
-          <Link to="/refunds">
-            <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-refund.png" />
-            </figure>
-            <p>Refunds</p>
-          </Link>
-        </li> : null}
         {this.props.role == 'admin' || this.props.role == 'superuser' || this.props.role == 'delivery' ? <li>
           <Link to="/scan">
             <figure>

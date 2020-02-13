@@ -48,7 +48,6 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Shipping/components/WayBills');
   require('./modules/CMS/components/CreateStore');
   require('./modules/AlayaInventoryManager/components/AlayaInventory');
-  require('./modules/Rent/components/Refunds');
   require('./modules/Scan/components/Scan');
   require('./modules/Scan/components/ScanLogs');
 }
@@ -97,10 +96,30 @@ export default function getRoutes(store, req) {
     }
   };
 
+  const checkFinance = (nextState, replace, cb) => {
+    function checkAuth() {
+      const { auth: { role } } = store.getState();
+      if (role !== 'finance' && role !== 'superuser') {
+        replace('/');
+      }
+      cb();
+    }
+    if (typeof window !== 'undefined') {
+      const { auth: { role } } = store.getState();
+      if (!role && localStorage.getItem('token')) {
+        store.dispatch(Actions.checkToken(localStorage.getItem('token'))).then(checkAuth);
+      } else {
+        checkAuth();
+      }
+    } else {
+      cb();
+    }
+  };
+
   const checkEmployee = (nextState, replace, cb) => {
     function checkAuth() {
       const { auth: { role } } = store.getState();
-      if (role !== 'admin' && role !== 'viewer' && role !== 'superuser' && role !== 'delivery') {
+      if (role !== 'admin' && role !== 'viewer' && role !== 'superuser' && role !== 'delivery' && role !== 'finance') {
         replace('/');
       }
       cb();
@@ -120,7 +139,7 @@ export default function getRoutes(store, req) {
   const checkAuth = (nextState, replace, cb) => {
     function checkAuth() {
       const { auth: { role } } = store.getState();
-      if (role !== 'admin' && role !== 'viewer' && role !== 'superuser' && role !== 'delivery' && role !== 'designer') {
+      if (role !== 'admin' && role !== 'viewer' && role !== 'superuser' && role !== 'delivery' && role !== 'designer' && role !== 'finance') {
         replace('/');
       }
       cb();
@@ -317,11 +336,6 @@ export default function getRoutes(store, req) {
       <Route path="/alaya" onEnter={checkAdmin} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/AlayaInventoryManager/components/AlayaInventory').default);
-        });
-      }} />
-      <Route path="/refunds" onEnter={checkAdmin} getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Rent/components/Refunds').default);
         });
       }} />
       <Route path="/scan" onEnter={checkEmployee} getComponent={(nextState, cb) => {

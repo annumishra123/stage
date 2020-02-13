@@ -27,7 +27,7 @@ class RentOrders extends React.Component {
       paymentStatus: '',
       phoneNumber: '',
       sku: '',
-      refundAmount: ''
+      refundAmount: 0
     };
   }
 
@@ -115,15 +115,15 @@ class RentOrders extends React.Component {
   }
 
   approveRefund(line) {
-    if (this.state.refundAmount && this.state.refundAmount <= (line.deposit + line.price)) {
+    if (this.state.refundAmount <= (line.deposit + line.price) && this.state.refundAmount > 0) {
       let data = {
         orderId: this.props.orderDetail.frontendOrderId,
         orderLineId: line.id,
-        createdBy: this.props.user,
         customerId: this.props.orderDetail.userId,
         amount: this.state.refundAmount,
         looknumber: line.product.lookNumber,
-        phoneNumber: this.props.details ? this.props.details.phoneNumber : null
+        phoneNumber: this.props.details ? `${this.props.details.phoneNumber}` : '',
+        name: this.props.details ? this.props.details.firstName : ''
       }
       this.props.approveRefund(data);
       this.setState({
@@ -612,14 +612,14 @@ class RentOrders extends React.Component {
                 </select>
                 <button onClick={this.removeItem.bind(this, line.id)}>Remove Item</button>
                 <br />
-                {line.product.type === "product" && this.props.role === 'admin' ? <div>
-                  <h4>Refund Amount: </h4>
-                  <input type="number" onChange={(e) => this.handleChangeRefundAmount(e)} />
-                  <button onClick={this.approveRefund.bind(this, line)}>Approve Refund</button>
-                  <br />
-                  {this.getRefundLogs(line.id)}
-                </div> : null}
               </div> : null}
+              {line.product.type === "product" && this.props.role === 'finance' ? <div>
+                <h4>Refund Amount: </h4>
+                <input type="number" onChange={(e) => this.handleChangeRefundAmount(e)} />
+                <button onClick={this.approveRefund.bind(this, line)}>Approve Refund</button>
+              </div> : null}
+              <br />
+              {this.getRefundLogs(line.id)}
               <br />
             </div>)
         })}
