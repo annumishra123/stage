@@ -81,7 +81,7 @@ class RentDeliveryOrders extends React.Component {
                 phoneNumber: row['profile.phoneNumber'],
                 address: `${row['deliveryAddress.address']}, ${row['deliveryAddress.city']}, ${row['deliveryAddress.state']}, ${row['deliveryAddress.pincode']}`,
                 city: `${row['deliveryAddress.city']}`,
-                pincode: `${row['deliveryAddress.pincode']}',
+                pincode: `${row['deliveryAddress.pincode']}`,
                 productName: row['product.name'],
                 lookNumber: row['product.lookNumber'],
                 gender: row.gender,
