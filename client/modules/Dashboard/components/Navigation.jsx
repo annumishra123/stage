@@ -169,14 +169,6 @@ class Navigation extends React.Component {
             <p>Create Store</p>
           </Link>
         </li> : null}
-        {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
-          <Link to="/cms">
-            <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-cms.png" />
-            </figure>
-            <p>CMS</p>
-          </Link>
-        </li> : null}
         <li>
           <Link to="/login/update">
             <figure>

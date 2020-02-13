@@ -166,22 +166,3 @@ export function lookDeactivate(deactivateLook, lookStore) {
         });
     }
 }
-
-export function fetchCmsConfig() {
-    return function (dispatch) {
-        let url = clientConfig.targetURL + '/catalogv2/catalogv2/Configurations/getConfig';
-        return axios({
-            url: url,
-            timeout: 20000,
-            method: 'get',
-            responseType: 'json'
-        }).then((response) => {
-            dispatch({
-                type: 'FETCH_CMS_CONFIG',
-                payload: response.data
-            });
-        }).catch((error) => {
-            console.log(error);
-        });
-    }
-}

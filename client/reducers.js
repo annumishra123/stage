@@ -11,7 +11,7 @@ import { rentOrders, rentOrderDetail, rentProductDetail, rentalPricing, bookable
 import { authReducer as auth, allUsers } from './modules/Auth/AuthReducer';
 import { customerDetail, selectedAddress, creditPoints, customerComments } from './modules/Customer/CustomerReducer';
 import { rentDeliveryOrders, shopDeliveryOrders } from './modules/Delivery/DeliveryReducer';
-import { instagramFeeds, allStores, cmsConfig } from './modules/CMS/CMSReducer';
+import { instagramFeeds, allStores } from './modules/CMS/CMSReducer';
 import { accessoryCatalog, rentCatalog, shopCatalog, rentProduct, shopProduct, updateProduct, updateRentProduct, accessory, updateAccessory, shopStock, uploadLogs, lastQCStatus } from './modules/Inventory/InventoryReducer';
 import { designerInventory, cancelledDesignerOrders, completedDesignerOrders, pendingDesignerOrders, designerShare } from './modules/Designer/DesignerReducer';
 import { revshares } from './modules/Designer/DesignerReducer';
@@ -21,7 +21,6 @@ import { tasks, contexts, dispositions, taskDetail } from './modules/CRM/CRMRedu
 import { waybills } from './modules/Shipping/ShippingReducer';
 import { allRawMaterials, allOutfits } from './modules/AlayaInventoryManager/AlayaInventoryReducer';
 import { scannedLook, scanLogs, locationLogs } from './modules/Scan/ScanReducer';
-
 
 // Combine all reducers into one root reducer
 export default combineReducers({
@@ -81,6 +80,5 @@ export default combineReducers({
   customerRefundLogs,
   scannedLook,
   scanLogs,
-  locationLogs,
-  cmsConfig
+  locationLogs
 });
