@@ -2,7 +2,6 @@ import { Router } from 'express';
 import passport from '../passport';
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
-import RefundLog from '../models/refund';
 import cuid from 'cuid';
 import config from '../config';
 import axios from 'axios';
