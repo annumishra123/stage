@@ -499,7 +499,7 @@ export function approveRefund(data) {
                     Authorization: 'JWT ' + token
                 },
             }).then(function (response) {
-                alert('Refund link generated!');
+                alert(response.data.message.message);
             }).catch(function (error) {
                 alert('Something went wrong!');
             });
