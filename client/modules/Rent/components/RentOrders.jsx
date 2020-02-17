@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, confirmPayment, cancelOrder, getOrdersByPhoneNumber, getOrdersByLookNumber, approveRefund, getRefundLogsByOrderId } from '../RentActions';
+import { getShopOrderListByDate, getOrderDetail, removeItem, getOrdersByUserId, getOrderDetailByOrderId, confirmPayment, cancelOrder, getOrdersByPhoneNumber, getOrdersByLookNumber, approveRefund } from '../RentActions';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import clientConfig from '../../../config';
@@ -33,7 +33,6 @@ class RentOrders extends React.Component {
 
   componentDidMount() {
     if (this.props.location.query.orderId) {
-      this.props.getRefundLogsByOrderId(this.props.location.query.orderId);
       this.props.getOrderDetail(this.props.location.query.orderId);
       this.setState({
         viewOrderDetail: true,
@@ -50,7 +49,6 @@ class RentOrders extends React.Component {
   componentWillReceiveProps(next) {
     if (this.props.location.query.orderId !== next.location.query.orderId) {
       if (next.location.query.orderId) {
-        this.props.getRefundLogsByOrderId(next.location.query.orderId);
         this.props.getOrderDetail(next.location.query.orderId);
         this.setState({
           viewOrderDetail: true,
@@ -706,8 +704,7 @@ function matchDispatchToProps(dispatch) {
     cancelOrder,
     clearCustomerDetail,
     getOrdersByLookNumber,
-    approveRefund,
-    getRefundLogsByOrderId
+    approveRefund
   }, dispatch);
 }
 
