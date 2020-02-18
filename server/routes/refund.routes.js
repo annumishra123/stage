@@ -16,7 +16,7 @@ router.post("/create", passport.authenticate('jwt', {
     if (req.user.role === 'finance') {
         var refundObject = {
             remarks: req.body.orderLineId,
-            id: req.body.req.body.looknumber + "_" + req.body.orderId,
+            id: req.body.looknumber + "_" + req.body.orderId,
             triggeredBy: req.user.email,
             amount: req.body.amount,
             email: req.body.customerId,
