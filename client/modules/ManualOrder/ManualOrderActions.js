@@ -8,7 +8,10 @@ export function getOrderlineById(id) {
                 url: url,
                 timeout: 20000,
                 method: 'get',
-                responseType: 'json'
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
             }).then(function(response) {
                 dispatch({
                     type: 'FETCH_REVSHARE_ORDERLINE',
@@ -29,7 +32,10 @@ export function updateOrderline(orderLine) {
             timeout: 20000,
             method: 'post',
             data: orderLine,
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function(response) {
             alert('The Order Has Been Updated');
             dispatch({
@@ -50,7 +56,10 @@ export function createOrderline(orderLine) {
             timeout: 20000,
             method: 'post',
             data: orderLine,
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function(response) {
             alert('The Order Has Been Created');
             dispatch({
@@ -71,7 +80,10 @@ export function deleteOrderLine(id) {
                 url: url,
                 timeout: 20000,
                 method: 'delete',
-                responseType: 'json'
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
             }).then(function(response) {
                 alert('The Order Has Been Deleted');
             }).catch(function(error) {

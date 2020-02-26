@@ -48,7 +48,10 @@ export function getCompletedOrders(owner, startDate, endDate) {
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then((response) => {
             dispatch({
                 type: 'FETCH_COMPLETED_DESIGNER_ORDERS',
@@ -80,7 +83,10 @@ export function getPendingOrders(owner) {
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then((response) => {
             dispatch({
                 type: 'FETCH_PENDING_DESIGNER_ORDERS',
@@ -112,7 +118,10 @@ export function getCancelledOrders(owner, startDate, endDate) {
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then((response) => {
             dispatch({
                 type: 'FETCH_CANCELLED_DESIGNER_ORDERS',
@@ -133,7 +142,10 @@ export function createOwner(owner) {
             timeout: 20000,
             method: 'put',
             responseType: 'json',
-            data: owner
+            data: owner,
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then((response) => {
             dispatch(getOwners());
             alert('Owner information has been saved.');
@@ -151,6 +163,9 @@ export function getOwners() {
             timeout: 20000,
             method: 'get',
             responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then((response) => {
             dispatch({
                 type: 'FETCH_REVSHARES',
@@ -175,6 +190,9 @@ export function getOwnerShare(owner) {
             timeout: 20000,
             method: 'get',
             responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then((response) => {
             dispatch({
                 type: 'FETCH_DESIGNER_SHARE',
@@ -184,4 +202,28 @@ export function getOwnerShare(owner) {
             console.log(error);
         });
     };
+}
+
+export function downloadInvoice(url) {
+    return axios({
+        url: url,
+        timeout: 20000,
+        method: 'get',
+        headers: {
+            "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null,
+            'Content-Disposition': "attachment; filename=template.xlsx",
+            'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        },
+        responseType: 'arraybuffer'
+    }).then((response) => {
+        console.log(response);
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'invoice.xlsx');
+        document.body.appendChild(link);
+        link.click();
+    }).catch((error) => {
+        console.log(error);
+    });
 }

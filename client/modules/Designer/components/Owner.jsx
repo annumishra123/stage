@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
-import { getOwners, getCompletedOrders, getPendingOrders, getCancelledOrders, getOwnerShare } from '../DesignerActions';
+import { getOwners, getCompletedOrders, getPendingOrders, getCancelledOrders, getOwnerShare, downloadInvoice } from '../DesignerActions';
 import clientConfig from '../../../config';
 import FormSubmitButton from '../../Customer/components/FormSubmitButton.js';
 import OwnerForm from './OwnerForm.jsx';
@@ -213,6 +213,11 @@ class Owner extends React.Component {
         }
     }
 
+    generateInvoice() {
+        let url = '/api/revshare/api/owners/invoice?owner=' + encodeURIComponent(this.state.designer) + '&month=' + this.state.month + '&year=' + this.state.year + '&ut=' + this.state.isDelhi;
+        downloadInvoice(url);
+    }
+
     render() {
         return <section className={styles.owners}>
             <h1>Owners</h1>
@@ -229,13 +234,13 @@ class Owner extends React.Component {
             <label>Designer</label>
             <div className={styles.crmReason}>
                 {this.props.revshares ? <Select name="form-field-name"
-                        value={this.state.designer}
-                        onChange={(e) => this.handleChangeDesigner(e)}
-                        options={this.props.revshares.map((share, i) => {
-                            return { value: share.ownername, label: share.ownername }
-                        })}></Select>
-                 : null}
-                 </div>
+                    value={this.state.designer}
+                    onChange={(e) => this.handleChangeDesigner(e)}
+                    options={this.props.revshares.map((share, i) => {
+                        return { value: share.ownername, label: share.ownername }
+                    })}></Select>
+                    : null}
+            </div>
             <select defaultValue={this.state.month} onChange={this.handleChangeMonth.bind(this)}>
                 <option value="1">January</option>
                 <option value="2">February</option>
@@ -257,7 +262,7 @@ class Owner extends React.Component {
             <input type="radio" name="city" onClick={this.handleChangeCity.bind(this, 0)} />
             <label> Other </label>
             <br />
-            <a target="blank" className={styles.link} href={'/api/revshare/api/owners/invoice?owner=' + encodeURIComponent(this.state.designer) + '&month=' + this.state.month + '&year=' + this.state.year + '&ut=' + this.state.isDelhi}>Generate Invoice</a>
+            <a target="blank" className={styles.link} onClick={() => this.generateInvoice()}>Generate Invoice</a>
             <br />
             {this.state.designer ? <div>
                 <br />

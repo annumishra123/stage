@@ -25,7 +25,10 @@ export function createCustomer(customer) {
                 timeout: 20000,
                 method: 'post',
                 data: cust,
-                responseType: 'json'
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
             }).then(function(response) {
                 dispatch(getCustomerDetail(cust.emailId));
                 alert('Customer information has been saved.');
@@ -64,7 +67,10 @@ export function getCustomerDetail(email) {
                 url: url,
                 timeout: 20000,
                 method: 'get',
-                responseType: 'json'
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
             }).then(function(response) {
                 let customer = response.data;
                 if (customer) {
@@ -130,7 +136,10 @@ export function getCustomerDetailByPhoneNumber(phoneNumber) {
                 url: url,
                 timeout: 20000,
                 method: 'get',
-                responseType: 'json'
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
             }).then(function(response) {
                 let customer = response.data;
                 if (customer) {
@@ -175,7 +184,10 @@ export function createComment(comment) {
                     comment: comment,
                     createdtimestamp: moment().unix()
                 },
-                responseType: 'json'
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
             }).then(function(response) {
                 dispatch(getCustomerComments(response.data.user));
             }).catch(function(error) {
@@ -200,7 +212,10 @@ export function getCustomerComments(email) {
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function(response) {
             dispatch({
                 type: 'FETCH_CUSTOMER_COMMENTS',
@@ -239,7 +254,10 @@ export function createMeasurements(measurements) {
                 timeout: 20000,
                 method: 'post',
                 data: measurements,
-                responseType: 'json'
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
             }).then(function(response) {
                 dispatch(getCustomerDetail(measurements.email));
                 alert('Customer measurements have been saved');
@@ -269,7 +287,10 @@ export function createAddress(address) {
                 timeout: 20000,
                 method: 'post',
                 data: address,
-                responseType: 'json'
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
             }).then(function(response) {
                 dispatch(reset('createAddress'));
                 dispatch(getCustomerDetail(address.userId));
@@ -309,7 +330,10 @@ export function saveAllCustomerDetails() {
                 timeout: 20000,
                 method: 'post',
                 data: cust,
-                responseType: 'json'
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
             }).then(function(response) {
                 alert('Customer information has been saved.');
                 dispatch(submit('createAddress'));
@@ -343,7 +367,10 @@ export function getCreditPoints(userId) {
                 data: {
                     "userId": userId
                 },
-                responseType: 'json'
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
             }).then(function(response) {
                 dispatch({
                     type: 'FETCH_CREDIT_POINTS',

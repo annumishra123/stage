@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import moment from 'moment';
-import { getDesignerInventory } from '../DesignerActions';
+import { getDesignerInventory, downloadInvoice } from '../DesignerActions';
 import clientConfig from '../../../config';
 
 // Import Style
@@ -39,6 +39,11 @@ class Invoice extends React.Component {
         });
     }
 
+    generateInvoice() {
+        let url = '/api/revshare/api/owners/invoice?owner=' + encodeURIComponent(this.props.owner) + '&month=' + this.state.month + '&year=' + this.state.year + '&ut=' + this.state.isDelhi;
+        downloadInvoice(url);
+    }
+
     render() {
         return <section className={styles.designerInvoice}>
             <h1>Create Invoice</h1>
@@ -67,7 +72,7 @@ class Invoice extends React.Component {
             <label> Other City</label>
             <br />
             <br />
-            <a target="blank" href={'/api/revshare/api/owners/invoice?owner=' + encodeURIComponent(this.props.owner) + '&month=' + this.state.month + '&year=' + this.state.year + '&ut=' + this.state.isDelhi}>Generate Invoice</a>
+            <a target="blank" onClick={()=>this.generateInvoice()}>Generate Invoice</a>
             <br />
         </section>
     }
