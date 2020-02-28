@@ -113,12 +113,17 @@ class CreateUser extends React.Component {
                 <div>
                     <h4> Role </h4>
                     <select value={this.state.designation} onChange={this.handleCreateDesignation.bind(this)}>
-                        <option value="superuser">SuperUser</option>
+                        <option value="superuser">Super User</option>
                         <option value="admin">Admin</option>
                         <option value="designer">Designer</option>
-                        <option value="viewer">Marketing</option>
+                        <option value="viewer">Viewer</option>
                         <option value="delivery">Delivery</option>
                         <option value="finance">Finance</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="logistics">Logistics</option>
+                        <option value="warehouse">Warehouse</option>
+                        <option value="qa-executive">QA Executive</option>
+                        <option value="qa-manager">QA Manager</option>
                     </select>
                 </div>
                 <div>
