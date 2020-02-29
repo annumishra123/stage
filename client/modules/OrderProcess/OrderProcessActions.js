@@ -2,8 +2,8 @@ import axios from 'axios';
 import clientConfig from '../../config';
 
 export function getOrderlinesForDelivery(data) {
-    return function(dispatch) {
-        if (startDate && endDate && dateParam) {
+    return function (dispatch) {
+        if (data) {
             let url = '/api/om/orders/backend/get/orderlines/delivery';
             return axios({
                 url: url,
@@ -26,8 +26,8 @@ export function getOrderlinesForDelivery(data) {
 }
 
 export function getRefundConfirmedOrderlines(data) {
-    return function(dispatch) {
-        if (startDate && endDate && dateParam) {
+    return function (dispatch) {
+        if (data) {
             let url = '/api/om/orders/backend/get/orderlines/refundconfirmed';
             return axios({
                 url: url,
@@ -50,8 +50,8 @@ export function getRefundConfirmedOrderlines(data) {
 }
 
 export function getReceivedOrderlines(data) {
-    return function(dispatch) {
-        if (startDate && endDate && dateParam) {
+    return function (dispatch) {
+        if (data) {
             let url = '/api/om/orders/backend/get/orderlines/received';
             return axios({
                 url: url,
@@ -74,8 +74,8 @@ export function getReceivedOrderlines(data) {
 }
 
 export function getOrderLinesToBeReceived(data) {
-    return function(dispatch) {
-        if (startDate && endDate && dateParam) {
+    return function (dispatch) {
+        if (data) {
             let url = '/api/om/orders/backend/get/orderlines/receive';
             return axios({
                 url: url,
@@ -98,8 +98,8 @@ export function getOrderLinesToBeReceived(data) {
 }
 
 export function getQC3FailOrderlines(data) {
-    return function(dispatch) {
-        if (startDate && endDate && dateParam) {
+    return function (dispatch) {
+        if (data) {
             let url = '/api/om/orders/backend/get/orderlines/qc3fail';
             return axios({
                 url: url,
@@ -122,8 +122,8 @@ export function getQC3FailOrderlines(data) {
 }
 
 export function getPickupOrderLines(data) {
-    return function(dispatch) {
-        if (startDate && endDate && dateParam) {
+    return function (dispatch) {
+        if (data) {
             let url = '/api/om/orders/backend/get/orderlines/pickup';
             return axios({
                 url: url,
@@ -146,8 +146,8 @@ export function getPickupOrderLines(data) {
 }
 
 export function getToBePickedOrderlines(data) {
-    return function(dispatch) {
-        if (startDate && endDate && dateParam) {
+    return function (dispatch) {
+        if (data) {
             let url = '/api/om/orders/backend/get/orderlines/outpickup';
             return axios({
                 url: url,
@@ -170,8 +170,8 @@ export function getToBePickedOrderlines(data) {
 }
 
 export function getOutForDeliveryOrderlines(data) {
-    return function(dispatch) {
-        if (startDate && endDate && dateParam) {
+    return function (dispatch) {
+        if (data) {
             let url = '/api/om/orders/backend/get/orderlines/outdelivery';
             return axios({
                 url: url,
@@ -194,8 +194,8 @@ export function getOutForDeliveryOrderlines(data) {
 }
 
 export function markQC3Damage(data) {
-    return function(dispatch) {
-        if (startDate && endDate && dateParam) {
+    return function (dispatch) {
+        if (data) {
             let url = '/api/om/orders/backend/process/refund/calculate';
             return axios({
                 url: url,
@@ -216,8 +216,8 @@ export function markQC3Damage(data) {
 }
 
 export function approveRefund(data) {
-    return function(dispatch) {
-        if (startDate && endDate && dateParam) {
+    return function (dispatch) {
+        if (data) {
             let url = '/api/om/orders/backend/process/refund/approve';
             return axios({
                 url: url,
@@ -238,8 +238,8 @@ export function approveRefund(data) {
 }
 
 export function markQC3(data) {
-    return function(dispatch) {
-        if (startDate && endDate && dateParam) {
+    return function (dispatch) {
+        if (data) {
             let url = '/api/om/orders/backend/process/qc3';
             return axios({
                 url: url,
@@ -260,8 +260,8 @@ export function markQC3(data) {
 }
 
 export function markReceived(data) {
-    return function(dispatch) {
-        if (startDate && endDate && dateParam) {
+    return function (dispatch) {
+        if (data) {
             let url = '/api/om/orders/backend/process/logistics/receive';
             return axios({
                 url: url,
@@ -282,8 +282,8 @@ export function markReceived(data) {
 }
 
 export function markDispatched(data) {
-    return function(dispatch) {
-        if (startDate && endDate && dateParam) {
+    return function (dispatch) {
+        if (data) {
             let url = '/api/om/orders/backend/process/logistics/dispatch';
             return axios({
                 url: url,
@@ -304,8 +304,8 @@ export function markDispatched(data) {
 }
 
 export function markDelivered(data) {
-    return function(dispatch) {
-        if (startDate && endDate && dateParam) {
+    return function (dispatch) {
+        if (data) {
             let url = '/api/om/orders/backend/process/logistics/deliver';
             return axios({
                 url: url,
@@ -326,8 +326,8 @@ export function markDelivered(data) {
 }
 
 export function assignRunnerToOrderlinesDelivery(data) {
-    return function(dispatch) {
-        if (startDate && endDate && dateParam) {
+    return function (dispatch) {
+        if (data) {
             let url = '/api/om/orders/backend/process/assignRunner/delivery';
             return axios({
                 url: url,
@@ -348,8 +348,8 @@ export function assignRunnerToOrderlinesDelivery(data) {
 }
 
 export function assignRunnerToOrderlinesPickup(data) {
-    return function(dispatch) {
-        if (startDate && endDate && dateParam) {
+    return function (dispatch) {
+        if (data) {
             let url = '/api/om/orders/backend/process/assignRunner/pickup';
             return axios({
                 url: url,
@@ -370,8 +370,8 @@ export function assignRunnerToOrderlinesPickup(data) {
 }
 
 export function generateWayBills(data) {
-    return function(dispatch) {
-        if (startDate && endDate && dateParam) {
+    return function (dispatch) {
+        if (data) {
             let url = clientConfig.targetURL + '/shipping/awb/generatewaybills';
             return axios({
                 url: url,
