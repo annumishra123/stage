@@ -65,18 +65,28 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
   dummyData();
 });
 
+app.use('/api', passport.authenticate('jwt', {
+  session: false,
+}), (req, res, next) => {
+  if (req.user) {
+    next();
+  } else {
+    res.status(401).send("UNAUTHORISED");
+  }
+});
+
 // Proxy Server Config
 var options = {
   target: serverConfig.targetURL,
   changeOrigin: true,
   logLevel: 'debug',
-  headers: {
-    'Authorization': serverConfig.access_token,
-    'Content-Type': 'application/json',
-  },
+  onProxyReq: (proxyReq, req) => {
+    // Convert session authentication into API authentication
+    proxyReq.setHeader("Authorization", serverConfig.access_token);
+  }
 };
-var proxyServer = proxy(options);
-app.use('/api', proxyServer);
+
+app.use(proxy('/api', options));
 
 // Apply body Parser and server public assets and routes
 app.use(compression());

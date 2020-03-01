@@ -12,7 +12,10 @@ export function getShopOrderListByDate(startDate, endDate) {
                 url: url,
                 timeout: 20000,
                 method: 'get',
-                responseType: 'json'
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
             }).then(function (response) {
                 dispatch({
                     type: 'FETCH_RENT_ORDERS',
@@ -33,7 +36,10 @@ export function getOrdersByUserId(userId) {
                 url: url,
                 timeout: 20000,
                 method: 'get',
-                responseType: 'json'
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
             }).then(function (response) {
                 dispatch({
                     type: 'FETCH_RENT_ORDERS',
@@ -56,7 +62,10 @@ export function getOrdersByPhoneNumber(phoneNumber) {
                 url: url,
                 timeout: 20000,
                 method: 'get',
-                responseType: 'json'
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
             }).then(function (response) {
                 let customer = response.data;
                 if (customer) {
@@ -82,7 +91,10 @@ export function getOrdersByLookNumber(looknumber) {
                 url: url,
                 timeout: 20000,
                 method: 'get',
-                responseType: 'json'
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
             }).then(function (response) {
                 dispatch({
                     type: 'FETCH_RENT_ORDERS',
@@ -106,7 +118,10 @@ export function getOrderDetail(id) {
                 url: url,
                 timeout: 20000,
                 method: 'get',
-                responseType: 'json'
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
             }).then(function (response) {
                 dispatch(getMeasurementStatus(response.data.id));
                 dispatch({
@@ -129,7 +144,10 @@ export function getMeasurementStatus(orderId) {
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             dispatch({
                 type: 'FETCH_MEASUREMENT_STATUS',
@@ -154,7 +172,10 @@ export function removeItem(cancelRequest) {
             timeout: 20000,
             method: 'post',
             data: cancellationObject,
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             dispatch(getOrderDetail(cancelRequest.frontendOrderId));
             alert('Product has been removed from the order');
@@ -178,7 +199,10 @@ export function cancelOrder(cancelRequest) {
             timeout: 20000,
             method: 'post',
             data: cancellationObject,
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             dispatch(getOrderDetail(cancelRequest.frontendOrderId));
             alert('The order has been canceled');
@@ -253,7 +277,10 @@ export function getBookedDates(date) {
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             response.data.productAvailability.expressDates = response.data.productAvailability.expressDates.map((date) => {
                 return moment(date);
@@ -280,7 +307,10 @@ export function getDeliveryDates(date, isSixDay) {
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             dispatch({
                 type: 'FETCH_DELIVERY_DATES',
@@ -310,7 +340,10 @@ export function getPricingOfRentalCart(cart, discountCode = '') {
             timeout: 20000,
             method: 'post',
             data: cartObject,
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             dispatch({
                 type: 'FETCH_RENT_PRICING',
@@ -393,7 +426,10 @@ export function placeOrder(orderObject) {
             timeout: 20000,
             method: 'post',
             data: orderObject,
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             dispatch({
                 type: 'FETCH_RENT_PRICING',
@@ -415,7 +451,10 @@ export function confirmPayment(confirmPaymentObject) {
             timeout: 20000,
             method: 'post',
             data: confirmPaymentObject,
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             alert('Payment has been recorded');
             browserHistory.push('/customer');
@@ -433,7 +472,10 @@ export function getAllCoupons(page, size) {
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             dispatch({
                 type: 'FETCH_ALL_COUPONS',
@@ -454,7 +496,10 @@ export function createCoupon(couponObject, page, size) {
                 timeout: 20000,
                 method: 'post',
                 data: couponObject,
-                responseType: 'json'
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
             }).then(function (response) {
                 dispatch(getAllCoupons(page, size));
                 alert('Coupon has been created');
@@ -474,7 +519,10 @@ export function deleteCoupon(couponName, page, size) {
             url: url,
             timeout: 20000,
             method: 'delete',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             dispatch(getAllCoupons(page, size));
             alert('Coupon has been deleted');
@@ -499,7 +547,7 @@ export function approveRefund(data) {
                     Authorization: 'JWT ' + token
                 },
             }).then(function (response) {
-                alert('Refund link generated!');
+                alert(JSON.parse(response.data.message).message);
             }).catch(function (error) {
                 alert('Something went wrong!');
             });

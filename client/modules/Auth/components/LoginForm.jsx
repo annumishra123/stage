@@ -9,25 +9,26 @@ class LoginForm extends Component {
         this.handleLogin = this.handleLogin.bind(this);
     }
 
-    handleLogin() {
-        const {email, password} = this.refs;
+    handleLogin(e) {
+        e.preventDefault();
+        const { email, password } = this.refs;
         this.props.handleLogin(email.value, password.value);
         email.value = password.value = '';
     }
 
     render() {
         return (
-            <div className={ styles.loginForm }>
-              <h2>Login</h2>
-              <br/>
-              <input placeholder="Email address" type="email" className="form-field" ref="email" />
-              <br/>
-              <br/>
-              <input placeholder="Password" type="password" className="form-field" ref="password" />
-              <br/>
-              <br/>
-              <a className="post-submit-button" href="#" onClick={ this.handleLogin }>Submit</a>
-            </div>
+            <form onSubmit={this.handleLogin} className={styles.loginForm}>
+                <h2>Login</h2>
+                <br />
+                <input placeholder="Email address" type="email" className="form-field" ref="email" />
+                <br />
+                <br />
+                <input placeholder="Password" type="password" className="form-field" ref="password" />
+                <br />
+                <br />
+                <button className="post-submit-button" type="submit" onClick={this.handleLogin}>Submit</button>
+            </form>
         )
     }
 }

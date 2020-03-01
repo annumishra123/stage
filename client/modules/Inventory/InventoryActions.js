@@ -318,7 +318,10 @@ export function fetchShopStock() {
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then((response) => {
             dispatch({
                 type: 'FETCH_SHOP_STOCK',
@@ -342,7 +345,10 @@ export function updateShopStock(id, sku, quantity) {
                 quantityDiff: quantity,
                 sku: sku
             },
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then((response) => {
             alert('Quantity has been updated');
             dispatch(fetchShopStock());
@@ -359,7 +365,10 @@ export function reconcileAll() {
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then((response) => {
             alert('All quantities reconciled');
         }).catch((error) => {
@@ -419,7 +428,10 @@ export function setQCStatus(qcObject) {
             url: url,
             timeout: 20000,
             method: 'post',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             alert('Changed QC Status');
         }).catch(function (error) {
@@ -439,7 +451,10 @@ export function getLastQCStatus(looknumber) {
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             dispatch({
                 type: 'FETCH_QC_STATUS',

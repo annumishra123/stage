@@ -2,7 +2,7 @@ import axios from 'axios';
 import clientConfig from '../../config';
 
 export function uploadWaybillCSV(file, user) {
-    let url = clientConfig.targetURL + '/api/leads/backend/upload/waybills';
+    let url = '/api/leads/backend/upload/waybills';
     let fileObj = new FormData();
     fileObj.append('file', file);
     return function (dispatch) {
@@ -11,6 +11,7 @@ export function uploadWaybillCSV(file, user) {
             url: url,
             data: fileObj,
             headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null,
                 'user': user
             }
         }).then(function (response) {
@@ -28,7 +29,10 @@ export function getWaybills(phoneNumber, pageNumber, pageSize, waybillNumber) {
     return function (dispatch) {
         return axios({
             method: 'GET',
-            url: url
+            url: url,
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             dispatch({
                 type: 'FETCH_WAYBILLS',

@@ -13,6 +13,9 @@ export function getRentOrderListByDate(dateParam, startDate, endDate) {
                     "endDate": endDate,
                     "startDate": startDate
                 },
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                },
                 responseType: 'json'
             }).then(function (response) {
                 dispatch({
@@ -34,7 +37,10 @@ export function getShopOrderListByDate(startDate, endDate) {
                 url: url,
                 timeout: 20000,
                 method: 'get',
-                responseType: 'json'
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
             }).then(function (response) {
                 dispatch({
                     type: 'FETCH_SHOP_DELIVERY_ORDERS',
@@ -55,7 +61,10 @@ export function changeDeliveryStatus(deliveryObject) {
             timeout: 20000,
             method: 'post',
             data: deliveryObject,
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             alert('Delivery status has been changed');
         }).catch(function (error) {
@@ -72,7 +81,10 @@ export function setQCStatus(qcObject) {
             url: url,
             timeout: 20000,
             method: 'post',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             alert('Changed QC Status');
         }).catch(function (error) {

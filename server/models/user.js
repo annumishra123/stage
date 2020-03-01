@@ -19,7 +19,7 @@ const userSchema = new Schema({
     },
     role: {
         type: 'String',
-        enum: ['superuser', 'admin', 'viewer', 'delivery', 'designer', 'finance'],
+        enum: ['superuser', 'admin', 'viewer', 'delivery', 'logistics', 'warehouse', 'qa-executive', 'qa-manager', 'designer', 'finance', 'marketing'],
         required: true
     },
     name: {

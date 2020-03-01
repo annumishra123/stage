@@ -8,12 +8,15 @@ export function getTasksByContext(context, sortBy, pageNumber, pageSize, phoneNu
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             dispatch({
                 type: 'FETCH_TASKS',
                 payload: response.data
-            })
+            });
         }).catch(function (error) {
             console.log(error);
         });
@@ -27,7 +30,10 @@ export function getTaskById(id) {
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             dispatch({
                 type: 'FETCH_TASK_DETAIL',
@@ -47,7 +53,10 @@ export function updateCallbackRequest(requestObject) {
             timeout: 20000,
             method: 'post',
             responseType: 'json',
-            data: requestObject
+            data: requestObject,
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             dispatch({
                 type: 'FETCH_TASK_DETAIL',
@@ -67,7 +76,10 @@ export function createInboundTask(taskObject) {
             timeout: 20000,
             method: 'post',
             responseType: 'json',
-            data: taskObject
+            data: taskObject,
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             browserHistory.goBack();
         }).catch(function (error) {
@@ -83,7 +95,10 @@ export function getAllContexts() {
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             dispatch({
                 type: 'FETCH_ALL_CONTEXTS',
@@ -103,7 +118,10 @@ export function createContext(contextObject) {
             timeout: 20000,
             method: 'post',
             responseType: 'json',
-            data: contextObject
+            data: contextObject,
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             dispatch(getAllContexts());
             alert('Context has been created');
@@ -120,7 +138,10 @@ export function getAllDispositions() {
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             dispatch({
                 type: 'FETCH_ALL_DISPOSITIONS',
@@ -140,7 +161,10 @@ export function createDisposition(dispositionObject) {
             timeout: 20000,
             method: 'post',
             responseType: 'json',
-            data: dispositionObject
+            data: dispositionObject,
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then(function (response) {
             dispatch(getAllDispositions());
             alert('Disposition has been created');
