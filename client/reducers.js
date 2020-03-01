@@ -21,6 +21,7 @@ import { tasks, contexts, dispositions, taskDetail } from './modules/CRM/CRMRedu
 import { waybills } from './modules/Shipping/ShippingReducer';
 import { allRawMaterials, allOutfits } from './modules/AlayaInventoryManager/AlayaInventoryReducer';
 import { scannedLook, scanLogs, locationLogs } from './modules/Scan/ScanReducer';
+import { getOrderlinesForNCRDelivery, getOrderLinesForNCRPickup, getOrderlinesForOutstationDelivery, getOrderLinesForOutstationPickup } from './modules/OrderProcess/OrderProcessReducer';
 
 // Combine all reducers into one root reducer
 export default combineReducers({
@@ -80,5 +81,9 @@ export default combineReducers({
   customerRefundLogs,
   scannedLook,
   scanLogs,
-  locationLogs
+  locationLogs,
+  getOrderlinesForNCRDelivery,
+  getOrderLinesForOutstationPickup,
+  getOrderlinesForOutstationDelivery,
+  getOrderLinesForNCRPickup
 });

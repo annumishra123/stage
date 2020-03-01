@@ -6,7 +6,7 @@ import clientConfig from '../../../config';
 import ReactTable from 'react-table';
 
 
-class LogisticsPickups extends React.Component {
+class DeliveryExecutive extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -35,4 +35,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, matchDispatchToProps)(LogisticsPickups);
+export default connect(mapStateToProps, matchDispatchToProps)(DeliveryExecutive);

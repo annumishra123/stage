@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import clientConfig from '../../../config';
 import ReactTable from 'react-table';
+import { getOrderlinesForNCRDelivery, get } from '../OrderProcessActions';
 
 
 class LogisticsDeliveries extends React.Component {
@@ -12,7 +13,15 @@ class LogisticsDeliveries extends React.Component {
         this.state = {};
     }
 
-    componentDidMount() { }
+    componentDidMount() {
+        let dataForNCR = {
+            location: 'ncr',
+            pageNumber: 0,
+            pageSize: 100,
+            daysBeforePickupDate: 2
+        }
+        this.props.getOrderlinesForNCRDelivery(dataForNCR);
+    }
 
     render() {
         return <section className="">
@@ -23,7 +32,7 @@ class LogisticsDeliveries extends React.Component {
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-
+        getOrderlinesForNCRDelivery
     }, dispatch);
 }
 

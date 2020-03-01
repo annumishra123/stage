@@ -1,10 +1,35 @@
 import axios from 'axios';
 import clientConfig from '../../config';
 
-export function getOrderlinesForDelivery(data) {
+export function getOrderlinesForNCRDelivery(data) {
     return function (dispatch) {
         if (data) {
-            let url = '/api/om/orders/backend/get/orderlines/delivery';
+            let url = `/api/om/orders/backend/get/orderlines/delivery?location=ncr&daysBeforePickupDate=${data.daysBeforePickupDate}&pageNumber=${data.pageNumber}&pageSize=${data.pageSize}`;
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'get',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                },
+                responseType: 'json'
+            }).then(function (response) {
+                console.log(response);
+                dispatch({
+                    type: 'FETCH_ORDERLINES_FOR_NCR_DELIVERY',
+                    payload: response.data
+                })
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+}
+
+export function getOrderLinesForNCRPickup(data) {
+    return function (dispatch) {
+        if (data) {
+            let url = `/api/om/orders/backend/get/orderlines/pickup?location=ncr&daysBeforePickupDate=${data.daysBeforePickupDate}&pageNumber=${data.pageNumber}&pageSize=${data.pageSize}`;
             return axios({
                 url: url,
                 timeout: 20000,
@@ -15,7 +40,104 @@ export function getOrderlinesForDelivery(data) {
                 responseType: 'json'
             }).then(function (response) {
                 dispatch({
-                    type: 'FETCH_ORDERLINES_FOR_DELIVERY',
+                    type: 'FETCH_ORDERLINES_FOR_NCR_PICKUP',
+                    payload: response.data
+                })
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+}
+
+export function getOrderlinesForOutstationDelivery(data) {
+    return function (dispatch) {
+        if (data) {
+            let url = `/api/om/orders/backend/get/orderlines/delivery?location=non_ncr&daysBeforePickupDate=${data.daysBeforePickupDate}&pageNumber=${data.pageNumber}&pageSize=${data.pageSize}`;
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'get',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                },
+                responseType: 'json'
+            }).then(function (response) {
+                console.log(response);
+                dispatch({
+                    type: 'FETCH_ORDERLINES_FOR_OUTSTATION_DELIVERY',
+                    payload: response.data
+                })
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+}
+
+export function getOrderLinesForOutstationPickup(data) {
+    return function (dispatch) {
+        if (data) {
+            let url = `/api/om/orders/backend/get/orderlines/pickup?location=non_ncr&daysBeforePickupDate=${data.daysBeforePickupDate}&pageNumber=${data.pageNumber}&pageSize=${data.pageSize}`;
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'get',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                },
+                responseType: 'json'
+            }).then(function (response) {
+                dispatch({
+                    type: 'FETCH_ORDERLINES_FOR_OUTSTATION_PICKUP',
+                    payload: response.data
+                })
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+}
+
+export function getOrderLinesToBeDispatched(data) {
+    return function (dispatch) {
+        if (data) {
+            let url = `/api/om/orders/backend/get/orderlines/dispatch?pageNumber=${data.pageNumber}&pageSize=${data.pageSize}`;
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'get',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                },
+                responseType: 'json'
+            }).then(function (response) {
+                dispatch({
+                    type: 'FETCH_ORDERLINES_TO_BE_DISPATCHED',
+                    payload: response.data
+                })
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+}
+
+export function getOrderLinesToBeReceived(data) {
+    return function (dispatch) {
+        if (data) {
+            let url = `/api/om/orders/backend/get/orderlines/receive?pageNumber=${data.pageNumber}&pageSize=${data.pageSize}`;
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'get',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                },
+                responseType: 'json'
+            }).then(function (response) {
+                dispatch({
+                    type: 'FETCH_ORDERLINES_TO_BE_RECEIVED',
                     payload: response.data
                 })
             }).catch(function (error) {
@@ -73,30 +195,6 @@ export function getReceivedOrderlines(data) {
     }
 }
 
-export function getOrderLinesToBeReceived(data) {
-    return function (dispatch) {
-        if (data) {
-            let url = '/api/om/orders/backend/get/orderlines/receive';
-            return axios({
-                url: url,
-                timeout: 20000,
-                method: 'get',
-                headers: {
-                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
-                },
-                responseType: 'json'
-            }).then(function (response) {
-                dispatch({
-                    type: 'FETCH_ORDERLINES_TO_BE_RECEIVED',
-                    payload: response.data
-                })
-            }).catch(function (error) {
-                console.log(error);
-            });
-        }
-    }
-}
-
 export function getQC3FailOrderlines(data) {
     return function (dispatch) {
         if (data) {
@@ -112,30 +210,6 @@ export function getQC3FailOrderlines(data) {
             }).then(function (response) {
                 dispatch({
                     type: 'FETCH_QC3_FAIL_ORDERLINES',
-                    payload: response.data
-                })
-            }).catch(function (error) {
-                console.log(error);
-            });
-        }
-    }
-}
-
-export function getPickupOrderLines(data) {
-    return function (dispatch) {
-        if (data) {
-            let url = '/api/om/orders/backend/get/orderlines/pickup';
-            return axios({
-                url: url,
-                timeout: 20000,
-                method: 'get',
-                headers: {
-                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
-                },
-                responseType: 'json'
-            }).then(function (response) {
-                dispatch({
-                    type: 'FETCH_PICKEDUP_ORDERLINES',
                     payload: response.data
                 })
             }).catch(function (error) {
@@ -391,7 +465,7 @@ export function generateWayBills(data) {
     }
 }
 
-export function approveRefund(data) {
+export function createRefund(data) {
     return function (dispatch) {
         let url = '/refund/create';
         let token = localStorage.getItem('token');

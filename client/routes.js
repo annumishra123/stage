@@ -50,6 +50,17 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/AlayaInventoryManager/components/AlayaInventory');
   require('./modules/Scan/components/Scan');
   require('./modules/Scan/components/ScanLogs');
+  require('./modules/OrderProcess/components/LogisticsDeliveriesNCR');
+  require('./modules/OrderProcess/components/LogisticsDeliveriesOutstation');
+  require('./modules/OrderProcess/components/LogisticsPickupsNCR');
+  require('./modules/OrderProcess/components/LogisticsPickupsOutstation');
+  require('./modules/OrderProcess/components/WarehouseDispatches');
+  require('./modules/OrderProcess/components/WarehouseReceivals');
+  require('./modules/OrderProcess/components/RunnerDeliveries');
+  require('./modules/OrderProcess/components/RunnerPickups');
+  require('./modules/OrderProcess/components/PostOrderQA');
+  require('./modules/OrderProcess/components/QADeductions');
+  require('./modules/OrderProcess/components/Refunds');
 }
 
 // react-router setup with code-splitting
@@ -80,6 +91,107 @@ export default function getRoutes(store, req) {
     function checkAuth() {
       const { auth: { role } } = store.getState();
       if (role !== 'admin' && role !== 'superuser') {
+        replace('/');
+      }
+      cb();
+    }
+    if (typeof window !== 'undefined') {
+      const { auth: { role } } = store.getState();
+      if (!role && localStorage.getItem('token')) {
+        store.dispatch(Actions.checkToken(localStorage.getItem('token'))).then(checkAuth);
+      } else {
+        checkAuth();
+      }
+    } else {
+      cb();
+    }
+  };
+
+  const checkLogistics = (nextState, replace, cb) => {
+    function checkAuth() {
+      const { auth: { role } } = store.getState();
+      if (role !== 'logistics' && role !== 'superuser') {
+        replace('/');
+      }
+      cb();
+    }
+    if (typeof window !== 'undefined') {
+      const { auth: { role } } = store.getState();
+      if (!role && localStorage.getItem('token')) {
+        store.dispatch(Actions.checkToken(localStorage.getItem('token'))).then(checkAuth);
+      } else {
+        checkAuth();
+      }
+    } else {
+      cb();
+    }
+  };
+
+  const checkWarehouse = (nextState, replace, cb) => {
+    function checkAuth() {
+      const { auth: { role } } = store.getState();
+      if (role !== 'warehouse' && role !== 'superuser') {
+        replace('/');
+      }
+      cb();
+    }
+    if (typeof window !== 'undefined') {
+      const { auth: { role } } = store.getState();
+      if (!role && localStorage.getItem('token')) {
+        store.dispatch(Actions.checkToken(localStorage.getItem('token'))).then(checkAuth);
+      } else {
+        checkAuth();
+      }
+    } else {
+      cb();
+    }
+  };
+
+  const checkRunner = (nextState, replace, cb) => {
+    function checkAuth() {
+      const { auth: { role } } = store.getState();
+      if (role !== 'delivery' && role !== 'superuser') {
+        replace('/');
+      }
+      cb();
+    }
+    if (typeof window !== 'undefined') {
+      const { auth: { role } } = store.getState();
+      if (!role && localStorage.getItem('token')) {
+        store.dispatch(Actions.checkToken(localStorage.getItem('token'))).then(checkAuth);
+      } else {
+        checkAuth();
+      }
+    } else {
+      cb();
+    }
+  };
+
+
+  const checkQAManager = (nextState, replace, cb) => {
+    function checkAuth() {
+      const { auth: { role } } = store.getState();
+      if (role !== 'qa-manager' && role !== 'superuser') {
+        replace('/');
+      }
+      cb();
+    }
+    if (typeof window !== 'undefined') {
+      const { auth: { role } } = store.getState();
+      if (!role && localStorage.getItem('token')) {
+        store.dispatch(Actions.checkToken(localStorage.getItem('token'))).then(checkAuth);
+      } else {
+        checkAuth();
+      }
+    } else {
+      cb();
+    }
+  };
+
+  const checkQAExecutive = (nextState, replace, cb) => {
+    function checkAuth() {
+      const { auth: { role } } = store.getState();
+      if (role !== 'qa-executive' && role !== 'superuser') {
         replace('/');
       }
       cb();
@@ -346,6 +458,61 @@ export default function getRoutes(store, req) {
       <Route path="/scanlogs" onEnter={checkAdmin} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Scan/components/ScanLogs').default);
+        });
+      }} />
+      <Route path="/logistics/deliveries/ncr" onEnter={checkLogistics} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/OrderProcess/components/LogisticsDeliveriesNCR').default);
+        });
+      }} />
+      <Route path="/logistics/deliveries/outstation" onEnter={checkLogistics} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/OrderProcess/components/LogisticsDeliveriesOutstation').default);
+        });
+      }} />
+      <Route path="/logistics/pickups/ncr" onEnter={checkLogistics} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/OrderProcess/components/LogisticsPickupsNCR').default);
+        });
+      }} />
+      <Route path="/logistics/pickups/outstation" onEnter={checkLogistics} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/OrderProcess/components/LogisticsPickupsOutstation').default);
+        });
+      }} />
+      <Route path="/warehouse/dispatches" onEnter={checkWarehouse} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/OrderProcess/components/WarehouseDispatches').default);
+        });
+      }} />
+      <Route path="/warehouse/receivals" onEnter={checkWarehouse} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/OrderProcess/components/WarehouseReceivals').default);
+        });
+      }} />
+      <Route path="/runner/deliveries" onEnter={checkRunner} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/OrderProcess/components/RunnerDeliveries').default);
+        });
+      }} />
+      <Route path="/runner/pickups" onEnter={checkRunner} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/OrderProcess/components/RunnerPickups').default);
+        });
+      }} />
+      <Route path="/quality/check" onEnter={checkQAExecutive} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/OrderProcess/components/PostOrderQA').default);
+        });
+      }} />
+      <Route path="/quality/approve" onEnter={checkQAManager} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/OrderProcess/components/QADeductions').default);
+        });
+      }} />
+      <Route path="/finance/refunds" onEnter={checkFinance} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/OrderProcess/components/Refunds').default);
         });
       }} />
     </Route>

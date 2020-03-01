@@ -16,6 +16,24 @@ export function getOrderlinesForOutstationDelivery(state = null, action) {
     return state;
 }
 
+export function getOrderLinesForNCRPickup(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_ORDERLINES_FOR_NCR_PICKUP':
+            return action.payload;
+            break;
+    }
+    return state;
+}
+
+export function getOrderLinesForOutstationPickup(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_ORDERLINES_FOR_OUTSTATION_PICKUP':
+            return action.payload;
+            break;
+    }
+    return state;
+}
+
 export function getRefundConfirmedOrderlines(state = null, action) {
     switch (action.type) {
         case 'FETCH_REFUND_CONFIRMED_ORDERLINES':
@@ -55,15 +73,6 @@ export function getQC3FailOrderlines(state = null, action) {
 export function getPickupOrderLines(state = null, action) {
     switch (action.type) {
         case 'FETCH_PICKEDUP_ORDERLINES':
-            return action.payload;
-            break;
-    }
-    return state;
-}
-
-export function getToBePickedOrderlines(state = null, action) {
-    switch (action.type) {
-        case 'FETCH_ORDERLINES_TO_BE_PICKED':
             return action.payload;
             break;
     }
