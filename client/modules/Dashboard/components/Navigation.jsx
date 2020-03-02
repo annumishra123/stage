@@ -20,7 +20,7 @@ class Navigation extends React.Component {
         {this.props.role == 'logistics' || this.props.role == 'superuser' ? <li>
           <Link to="/logistics/deliveries/ncr">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-instagram.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-logistic-delivery.png" />
             </figure>
             <p>Logistics Delivery (NCR)</p>
           </Link>
@@ -28,7 +28,7 @@ class Navigation extends React.Component {
         {this.props.role == 'logistics' || this.props.role == 'superuser' ? <li>
           <Link to="/logistics/deliveries/outstation">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-instagram.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-logistic-delivery-2.png" />
             </figure>
             <p>Logistics Delivery (Out Station)</p>
           </Link>
@@ -36,7 +36,7 @@ class Navigation extends React.Component {
         {this.props.role == 'logistics' || this.props.role == 'superuser' ? <li>
           <Link to="/logistics/pickups/ncr">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-instagram.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-logistic-pickup.png" />
             </figure>
             <p>Logistics Pickup (NCR)</p>
           </Link>
@@ -44,7 +44,7 @@ class Navigation extends React.Component {
         {this.props.role == 'logistics' || this.props.role == 'superuser' ? <li>
           <Link to="/logistics/pickups/outstation">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-instagram.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-logistic-pickup.png" />
             </figure>
             <p>Logistics Pickup (Out Station)</p>
           </Link>
@@ -52,7 +52,7 @@ class Navigation extends React.Component {
         {this.props.role == 'warehouse' || this.props.role == 'superuser' ? <li>
           <Link to="/warehouse/dispatches">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-instagram.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-dispatches.png" />
             </figure>
             <p>Warehouse Dispatches</p>
           </Link>
@@ -60,7 +60,7 @@ class Navigation extends React.Component {
         {this.props.role == 'warehouse' || this.props.role == 'superuser' ? <li>
           <Link to="/warehouse/receivals">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-instagram.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-warehouse-receivals.png" />
             </figure>
             <p>Warehouse Receivals</p>
           </Link>
@@ -68,7 +68,7 @@ class Navigation extends React.Component {
         {this.props.role == 'delivery' || this.props.role == 'superuser' ? <li>
           <Link to="/runner/deliveries">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-instagram.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-runner.png" />
             </figure>
             <p>Runner Deliveries</p>
           </Link>
@@ -76,7 +76,7 @@ class Navigation extends React.Component {
         {this.props.role == 'delivery' || this.props.role == 'superuser' ? <li>
           <Link to="/runner/pickups">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-instagram.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-runner.png" />
             </figure>
             <p>Runner Pickups</p>
           </Link>
@@ -84,7 +84,7 @@ class Navigation extends React.Component {
         {this.props.role == 'qa-executive' || this.props.role == 'superuser' ? <li>
           <Link to="/quality/check">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-instagram.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-qa.png" />
             </figure>
             <p>QA (Post Order)</p>
           </Link>
@@ -92,7 +92,7 @@ class Navigation extends React.Component {
         {this.props.role == 'qa-manager' || this.props.role == 'superuser' ? <li>
           <Link to="/quality/approve">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-instagram.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-decuctions.png" />
             </figure>
             <p>QA (Deductions)</p>
           </Link>
@@ -100,7 +100,7 @@ class Navigation extends React.Component {
         {this.props.role == 'finance' || this.props.role == 'superuser' ? <li>
           <Link to="/finance/refunds">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-instagram.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-refund.png" />
             </figure>
             <p>Refunds</p>
           </Link>
