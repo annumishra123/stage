@@ -18,7 +18,8 @@ class CreateUser extends React.Component {
             name: '',
             designation: '',
             password: '',
-            owner: ''
+            owner: '',
+            phoneNumber: ''
         };
     }
 
@@ -44,6 +45,10 @@ class CreateUser extends React.Component {
 
     handleCreateDesignation(e) {
         this.setState({ designation: e.target.value });
+    }
+
+    handleCreatePhoneNumber(e) {
+        this.setState({ phoneNumber: e.target.value });
     }
 
     handleCreatePassword(e) {
@@ -81,7 +86,8 @@ class CreateUser extends React.Component {
                 name: this.state.name,
                 role: this.state.designation,
                 password: this.state.password,
-                owner: this.state.owner
+                owner: this.state.owner,
+                phoneNumber: this.state.phoneNumber
             }
             this.props.createUser(user);
             this.setState({
@@ -89,7 +95,8 @@ class CreateUser extends React.Component {
                 name: '',
                 designation: '',
                 password: '',
-                owner: ''
+                owner: '',
+                phoneNumber: ''
             })
         }
         else {
@@ -130,10 +137,14 @@ class CreateUser extends React.Component {
                     <h4>Password: </h4>
                     <input type="password" value={this.state.password} onChange={this.handleCreatePassword.bind(this)} />
                 </div>
-                <div>
+                {this.state.designation == 'designer' ? <div>
                     <h4>Owner: </h4>
                     <input type="text" value={this.state.owner} onChange={this.handleCreateOwner.bind(this)} />
-                </div>
+                </div> : null}
+                {this.state.designation == 'delivery' ? <div>
+                    <h4>Phone Number: </h4>
+                    <input type="text" value={this.state.phoneNumber} onChange={this.handleCreatePhoneNumber.bind(this)} />
+                </div> : null}
                 <br />
                 <button type="submit" className={styles.submitBtn} onClick={this.createUser.bind(this)}>Create User</button>
             </form>

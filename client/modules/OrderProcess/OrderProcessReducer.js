@@ -87,3 +87,12 @@ export function getOutForDeliveryOrderlines(state = null, action) {
     }
     return state;
 }
+
+export function getAllRunners(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_ALL_RUNNERS':
+            return action.payload;
+            break;
+    }
+    return state;
+}

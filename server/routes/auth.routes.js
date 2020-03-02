@@ -38,7 +38,8 @@ router.post('/login', (req, res, next) => {
                     role: user.role,
                     email: user.email,
                     name: user.name,
-                    owner: user.owner
+                    owner: user.owner,
+                    phoneNumber: user.phoneNumber
                 },
             });
         }
@@ -54,7 +55,8 @@ router.get('/me', passport.authenticate('jwt', {
             role: req.user.role,
             email: req.user.email,
             name: req.user.name,
-            owner: req.user.owner
+            owner: req.user.owner,
+            phoneNumber: req.user.phoneNumber
         },
     });
 });
@@ -64,6 +66,23 @@ router.get("/getusers", passport.authenticate('jwt', {
 }), (req, res) => {
     if (req.user.role === 'superuser') {
         User.find({}).then(users => {
+            res.json(users);
+        }).catch(err => {
+            console.log(err);
+            res.status(400).json({
+                status: 'FAILED'
+            });
+        });
+    } else {
+        res.status(401).send('Unauthorized');
+    }
+});
+
+router.get("/getrunners", passport.authenticate('jwt', {
+    session: false,
+}), (req, res) => {
+    if (req.user.role === 'superuser' || req.user.role === 'logistics') {
+        User.find({ 'role': 'delivery' }).then(users => {
             res.json(users);
         }).catch(err => {
             console.log(err);
@@ -92,7 +111,8 @@ router.post("/createuser", passport.authenticate('jwt', {
                         role: req.body.role.trim(),
                         name: req.body.name.trim(),
                         owner: req.body.owner ? req.body.owner.trim() : '',
-                        dateAdded: Date.now()
+                        dateAdded: Date.now(),
+                        phoneNumber: req.body.phoneNumber
                     });
                     newUser.password = newUser.generateHash(req.body.password);
                     newUser.save().then(item => {
@@ -110,7 +130,8 @@ router.post("/createuser", passport.authenticate('jwt', {
                         role: req.body.role.trim(),
                         name: req.body.name.trim(),
                         owner: req.body.owner.trim(),
-                        password: user.generateHash(req.body.password)
+                        password: user.generateHash(req.body.password),
+                        phoneNumber: req.body.phoneNumber
                     });
                     user.save().then(item => {
                         res.json({

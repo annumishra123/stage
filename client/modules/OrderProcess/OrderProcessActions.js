@@ -4,7 +4,7 @@ import clientConfig from '../../config';
 export function getOrderlinesForNCRDelivery(data) {
     return function (dispatch) {
         if (data) {
-            let url = `/api/om/orders/backend/get/orderlines/delivery?location=ncr&daysBeforePickupDate=${data.daysBeforePickupDate}&pageNumber=${data.pageNumber}&pageSize=${data.pageSize}`;
+            let url = `/api/om/orders/backend/get/orderlines/delivery?location=ncr&daysBeforeDeliveryDate=${data.daysBeforeDeliveryDate}&pageNumber=${data.pageNumber}&pageSize=${data.pageSize}`;
             return axios({
                 url: url,
                 timeout: 20000,
@@ -53,7 +53,7 @@ export function getOrderLinesForNCRPickup(data) {
 export function getOrderlinesForOutstationDelivery(data) {
     return function (dispatch) {
         if (data) {
-            let url = `/api/om/orders/backend/get/orderlines/delivery?location=non_ncr&daysBeforePickupDate=${data.daysBeforePickupDate}&pageNumber=${data.pageNumber}&pageSize=${data.pageSize}`;
+            let url = `/api/om/orders/backend/get/orderlines/delivery?location=non_ncr&daysBeforeDeliveryDate=${data.daysBeforeDeliveryDate}&pageNumber=${data.pageNumber}&pageSize=${data.pageSize}`;
             return axios({
                 url: url,
                 timeout: 20000,
@@ -452,9 +452,6 @@ export function generateWayBills(data) {
                 timeout: 20000,
                 method: 'post',
                 data: data,
-                headers: {
-                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
-                },
                 responseType: 'json'
             }).then(function (response) {
                 console.log(response);
@@ -489,6 +486,31 @@ export function createRefund(data) {
         }
     }
 }
+
+export function getAllRunners() {
+    return function (dispatch) {
+      let url = '/auth/getrunners';
+      let token = localStorage.getItem('token');
+      if (token) {
+        return axios({
+          url: url,
+          timeout: 20000,
+          method: 'get',
+          responseType: 'json',
+          headers: {
+            Authorization: 'JWT ' + token,
+          },
+        }).then(function (response) {
+          dispatch({
+            type: 'FETCH_ALL_RUNNERS',
+            payload: response.data
+          })
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }
+    }
+  }
 
 
 

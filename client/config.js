@@ -95,7 +95,7 @@ const clientConfig = {
     'chose another service'
   ],
   rentProductStatus: { 'enable': 'Active', 'temporary-disable': 'Temporary Disable', 'permanent-disable': 'Permanent Disable' },
-  scanLocations: { 'store-sdn': 'Sadhna Store', 'warehouse-sdn': 'Sadhna Warehouse', 'store-hkv': 'Hauz Khas Store', 'store-scw': 'City Walk Store', 'office': 'Office', 'customer': 'Customer', 'dc': 'Dry Cleaning', 'popup': 'Pop-Up', 'warehouse-nfc': 'NFC Warehouse' , 'bus': 'Bus' },
+  scanLocations: { 'store-sdn': 'Sadhna Store', 'warehouse-sdn': 'Sadhna Warehouse', 'store-hkv': 'Hauz Khas Store', 'store-scw': 'City Walk Store', 'office': 'Office', 'customer': 'Customer', 'dc': 'Dry Cleaning', 'popup': 'Pop-Up', 'warehouse-nfc': 'NFC Warehouse', 'bus': 'Bus' },
   scanReasons: ['item received', 'send to sadhna warehouse', 'send to sadhna store', 'send to hkv', 'send to nfc', 'send to city walk', 'send to office', 'send to customer', 'send to dc', 'send to popup', 'send to bus', 'reconcile'],
   targetURL: 'https://staging.stage3.co',
   paymentMethods: [
@@ -127,6 +127,319 @@ const clientConfig = {
   rentDeliveryColumns: [{
     Header: 'Order Id',
     accessor: 'parentOrder.frontendOrderId',
+  }, {
+    Header: 'Email Id',
+    accessor: 'profile.email',
+  }, {
+    id: 'name',
+    Header: 'Name',
+    accessor: o => o.profile.firstName + ' ' + o.profile.lastName,
+  }, {
+    Header: 'Phone',
+    accessor: 'profile.phoneNumber',
+  }, {
+    Header: 'Address',
+    accessor: 'deliveryAddress.address',
+  }, {
+    Header: 'City',
+    accessor: 'deliveryAddress.city',
+  }, {
+    Header: 'State',
+    accessor: 'deliveryAddress.state',
+  }, {
+    Header: 'Pincode',
+    accessor: 'deliveryAddress.pincode',
+  }, {
+    Header: 'Product Name',
+    accessor: 'product.name',
+  }, {
+    Header: 'Look No.',
+    accessor: 'product.lookNumber',
+  }, {
+    id: 'gender',
+    Header: 'Gender',
+    accessor: o => o.product.url ? o.product.url.split('/')[0] : '',
+  }, {
+    Header: 'SKU',
+    accessor: 'product.sku',
+  }, {
+    Header: 'Designer',
+    accessor: 'product.designer',
+  }, {
+    Header: 'Owner',
+    accessor: 'product.owner',
+  }, {
+    Header: 'Measurements',
+    accessor: 'measurementStatus',
+  }, {
+    id: 'orderDate',
+    Header: 'Order Date',
+    accessor: o => moment(o.parentOrder.orderDate).format('lll'),
+  }, {
+    id: 'deliveryDate',
+    Header: 'Delivery Date',
+    accessor: o => moment(o.deliveryDateUTC).format('DD-MM-YYYY'),
+  }, {
+    id: 'occasionDate',
+    Header: 'Occasion Date',
+    accessor: o => moment(o.occasionDateUTC).format('DD-MM-YYYY'),
+  }, {
+    id: 'pickupDate',
+    Header: 'Pickup Date',
+    accessor: o => moment(o.pickupDateUTC).format('DD-MM-YYYY'),
+  }, {
+    id: 'grossAmount',
+    Header: 'Gross Amount',
+    accessor: o => o.originalPrice + o.originalDeposit,
+  }, {
+    id: 'discount',
+    Header: 'Discount',
+    accessor: o => o.originalPrice - o.price,
+  }, {
+    id: 'netAmount',
+    Header: 'Net Amount',
+    accessor: o => o.price + o.deposit,
+  }, {
+    Header: 'Rental',
+    accessor: 'price',
+  }, {
+    Header: 'Deposit',
+    accessor: 'deposit',
+  }, {
+    Header: 'Deposit',
+    accessor: 'deposit',
+  }, {
+    id: 'loss',
+    Header: 'Loss',
+    accessor: o => o.price - o.invoicePrice,
+  }, {
+    Header: 'Status',
+    accessor: 'currentStatus',
+  }, {
+    Header: 'Payment Type',
+    accessor: 'parentOrder.paymentType',
+  }, {
+    Header: 'Discount Coupon',
+    accessor: 'parentOrder.discountCoupon',
+  }, {
+    id: 'source',
+    Header: 'Source',
+    accessor: o => o.orderType.split('_')[1],
+  }, {
+    id: 'quality',
+    Header: 'Quality',
+    accessor: 'qcStatus'
+  }],
+  rentalColumns: [{
+    Header: 'Order Id',
+    accessor: 'frontendOrderId',
+  }, {
+    Header: 'User Id',
+    accessor: 'userId',
+  }, {
+    id: 'dateOrder',
+    Header: 'Date Of Order',
+    accessor: o => moment(o.orderDate).format('lll'),
+  }, {
+    Header: 'Status',
+    accessor: 'status',
+  }],
+  orderProcessColumns: [{
+    Header: 'Order Id',
+    accessor: 'parentOrder.frontendOrderId',
+  }, {
+    Header: 'Active',
+    accessor: 'orderlineProcess.active',
+  }, {
+    Header: 'Damaged Amount',
+    accessor: 'orderlineProcess.calulatedDamageAmount',
+  }, {
+    Header: 'Damage Reason',
+    accessor: 'orderlineProcess.damageReason',
+  }, {
+    Header: 'Delivered EndTime',
+    accessor: 'orderlineProcess.delivered.endTime',
+  }, {
+    Header: 'Delivered Expected EndTime',
+    accessor: 'orderlineProcess.delivered.expectedEndTime',
+  }, {
+    Header: 'Delivered Resolved By',
+    accessor: 'orderlineProcess.delivered.resolvedBy',
+  }, {
+    Header: 'Delivered Status',
+    accessor: 'orderlineProcess.delivered.status',
+  }, {
+    Header: 'Delivery AWB No',
+    accessor: 'orderlineProcess.deliverylogisticResourceInfo.awbNo',
+  }, {
+    id: 'deliveryLink',
+    Header: 'Delivery link',
+    accessor: o => o.orderlineProcess ? <a href={o.orderlineProcess.deliverylogisticResourceInfo.link} target="blank">Link</a> : '',
+  }, {
+    Header: 'Delivery Message',
+    accessor: 'orderlineProcess.deliverylogisticResourceInfo.message',
+  }, {
+    Header: 'Delivery Runner Contact',
+    accessor: 'orderlineProcess.deliverylogisticResourceInfo.runnerContact',
+  }, {
+    Header: 'Delivery Runner Id',
+    accessor: 'orderlineProcess.deliverylogisticResourceInfo.runnerId',
+  }, {
+    Header: 'Delivery Runner Name',
+    accessor: 'orderlineProcess.deliverylogisticResourceInfo.runnerName',
+  }, {
+    Header: 'Dispatched End Time',
+    accessor: 'orderlineProcess.dispatched.endTime',
+  }, {
+    Header: 'Dispatched Expected End Time',
+    accessor: 'orderlineProcess.dispatched.expectedEndTime',
+  }, {
+    Header: 'Dispatched Resolved By',
+    accessor: 'orderlineProcess.dispatched.resolvedBy',
+  }, {
+    Header: 'Dispatched Status',
+    accessor: 'orderlineProcess.dispatched.status',
+  }, {
+    Header: 'Next Action SLA',
+    accessor: 'orderlineProcess.nextActionSla',
+  }, {
+    Header: 'OutForDelivery End Time',
+    accessor: 'orderlineProcess.outForDelivery.endTime',
+  }, {
+    Header: 'OutForDelivery Expected End Time ',
+    accessor: 'orderlineProcess.outForDelivery.expectedEndTime',
+  }, {
+    Header: 'OutForDelivery Resolved By',
+    accessor: 'orderlineProcess.outForDelivery.resolvedBy',
+  }, {
+    Header: 'OutForDelivery Status',
+    accessor: 'orderlineProcess.outForDelivery.status',
+  }, {
+    Header: 'Out For Pickup End Time',
+    accessor: 'orderlineProcess.outForPickup.endTime',
+  }, {
+    Header: 'Out For Pickup Expected End Time',
+    accessor: 'orderlineProcess.outForPickup.expectedEndTime',
+  }, {
+    Header: 'Out For Pickup Resolved By',
+    accessor: 'orderlineProcess.outForPickup.resolvedBy',
+  }, {
+    Header: 'Out For Pickup Status',
+    accessor: 'orderlineProcess.outForPickup.status',
+  }, {
+    Header: 'OutStation',
+    accessor: 'orderlineProcess.outstation',
+  }, {
+    Header: 'Picked End Time',
+    accessor: 'orderlineProcess.picked.endTime',
+  }, {
+    Header: 'Picked Expected End Time',
+    accessor: 'orderlineProcess.picked.expectedEndTime',
+  }, {
+    Header: 'Picked Resolved By',
+    accessor: 'orderlineProcess.picked.resolvedBy',
+  }, {
+    Header: 'Picked Status',
+    accessor: 'orderlineProcess.picked.status',
+  }, {
+    Header: 'Pickup Active',
+    accessor: 'orderlineProcess.pickupActive',
+  }, {
+    Header: 'Pickup Logistic End Time',
+    accessor: 'orderlineProcess.pickupLogisticResourceAssigned.endTime',
+  }, {
+    Header: 'Pickup Logistic Expected End Time',
+    accessor: 'orderlineProcess.pickupLogisticResourceAssigned.expectedEndTime',
+  }, {
+    Header: 'Pickup Logistic Resolved By',
+    accessor: 'orderlineProcess.pickupLogisticResourceAssigned.resolvedBy',
+  }, {
+    Header: 'Pickup Logistic Status',
+    accessor: 'orderlineProcess.pickupLogisticResourceAssigned.status',
+  }, {
+    Header: 'Pickup Logistic AWB No',
+    accessor: 'orderlineProcess.pickuplogisticResourceInfo.awbNo',
+  }, {
+    Header: 'Pickup Logistic Link',
+    accessor: 'orderlineProcess.pickuplogisticResourceInfo.link',
+  }, {
+    Header: 'Pickup Logistic Message',
+    accessor: 'orderlineProcess.pickuplogisticResourceInfo.message',
+  }, {
+    Header: 'Pickup Logistic Runner Contact',
+    accessor: 'orderlineProcess.pickuplogisticResourceInfo.runnerContact',
+  }, {
+    Header: 'Pickup Logistic Runner Id',
+    accessor: 'orderlineProcess.pickuplogisticResourceInfo.runnerId',
+  }, {
+    Header: 'Pickup Logistic Runner Name',
+    accessor: 'orderlineProcess.pickuplogisticResourceInfo.runnerName',
+  }, {
+    Header: 'QC3 End Time',
+    accessor: 'orderlineProcess.qc3.endTime',
+  }, {
+    Header: 'QC3 Expected End Time',
+    accessor: 'orderlineProcess.qc3.expectedEndTime',
+  }, {
+    Header: 'QC3 Resolved By',
+    accessor: 'orderlineProcess.qc3.resolvedBy',
+  }, {
+    Header: 'QC3 Status',
+    accessor: 'orderlineProcess.qc3.status',
+  }, {
+    Header: 'QC3 Result Failure reason',
+    accessor: 'orderlineProcess.qc3Result.failReason',
+  }, {
+    Header: 'QC3 Result Passed',
+    accessor: 'orderlineProcess.qc3Result.pass',
+  }, {
+    Header: 'QC3 Result Remarks ',
+    accessor: 'orderlineProcess.qc3Result.remarks',
+  }, {
+    Header: 'Received End Time',
+    accessor: 'orderlineProcess.received.endTime',
+  }, {
+    Header: 'Received Expected End Time',
+    accessor: 'orderlineProcess.received.expectedEndTime',
+  }, {
+    Header: 'Received Resolved By',
+    accessor: 'orderlineProcess.received.resolvedBy',
+  }, {
+    Header: 'Received Status',
+    accessor: 'orderlineProcess.received.status',
+  }, {
+    Header: 'Refund Amount',
+    accessor: 'orderlineProcess.refundAmount',
+  }, {
+    Header: 'Refund Approved End Time',
+    accessor: 'orderlineProcess.refundApproved.endTime',
+  }, {
+    Header: 'Refund Approved Expected End Time',
+    accessor: 'orderlineProcess.refundApproved.expectedEndTime',
+  }, {
+    Header: 'Refund Approved Resolved By',
+    accessor: 'orderlineProcess.refundApproved.resolvedBy',
+  }, {
+    Header: 'Refund Approved Status',
+    accessor: 'orderlineProcess.refundApproved.status',
+  }, {
+    Header: 'Refund Calculation End Time',
+    accessor: 'orderlineProcess.refundCalculated.endTime',
+  }, {
+    Header: 'Refund Calculation Expected End Time',
+    accessor: 'orderlineProcess.refundCalculated.expectedEndTime',
+  }, {
+    Header: 'Refund Calculation Resolved By',
+    accessor: 'orderlineProcess.refundCalculated.resolvedBy',
+  }, {
+    Header: 'Refund Calculation Status',
+    accessor: 'orderlineProcess.refundCalculated.status',
+  }, {
+    Header: 'Refund Reason ',
+    accessor: 'orderlineProcess.refundReason',
+  }, {
+    Header: 'Status',
+    accessor: 'orderlineProcess.status',
   }, {
     Header: 'Email Id',
     accessor: 'profile.email',
@@ -750,6 +1063,9 @@ const clientConfig = {
   }, {
     Header: 'Owner',
     accessor: 'owner',
+  }, {
+    Header: 'Phone Number',
+    accessor: 'phoneNumber',
   }, {
     id: 'created',
     Header: 'Created',

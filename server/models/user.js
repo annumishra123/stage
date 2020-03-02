@@ -26,6 +26,10 @@ const userSchema = new Schema({
         type: 'String',
         required: true
     },
+    phoneNumber: {
+        type: 'Number',
+        required: false
+    },
     owner: {
         type: 'String'
     },

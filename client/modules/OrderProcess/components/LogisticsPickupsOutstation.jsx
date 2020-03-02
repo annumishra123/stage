@@ -4,35 +4,99 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import clientConfig from '../../../config';
 import ReactTable from 'react-table';
-import { getOrderlinesForNCRDelivery } from '../OrderProcessActions';
+import { getOrderLinesForOutstationPickup, generateWayBills } from '../OrderProcessActions';
+import moment from 'moment';
 
 
-class LogisticsDeliveries extends React.Component {
+class LogisticsPickups extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            delivery: {
+            pickup: {
                 pageNumber: 0,
                 pageSize: 0,
-                daysBeforePickupDate: 2
-            }
+                daysBeforePickupDate: 5
+            },
+            selectedOrderlines: []
         };
     }
 
     componentDidMount() {
-        this.props.getOrderlinesForNCRDelivery(this.state.delivery);
+        this.props.getOrderLinesForOutstationPickup(this.state.pickup);
+    }
+
+    makeid(length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
+
+    selectOrderline(value, e) {
+        let array = this.state.selectedOrderlines;
+        if (e.target.checked) {
+            array.push({
+                "consigneeName": `${value.profile.firstName} ${value.profile.lastName}`,
+                "consigneeAddress1": value.deliveryAddress.address.slice(0, 30),
+                "consigneeAddress2": value.deliveryAddress.address.slice(30, 60),
+                "consigneeAddress3": value.deliveryAddress.address.slice(60, 90),
+                "consigneeMobile": value.profile.phoneNumber,
+                "consigneePincode": value.deliveryAddress.pincode,
+                "consigneeTelephone": value.profile.phoneNumber,
+                "actualWeight": 3,
+                "collectableAmount": 0,
+                "commodity": {},
+                "creditReferenceNo": this.makeid(20),
+                "declaredValue": (value.price + value.deposit),
+                "prepaid": true,
+                "orderLineId": value.id,
+                "isReversePickup": true,
+                "pickupDate": moment(value.pickupDateUTC).format('DD-MMM-YYYY'),
+                "pieces": 1,
+                "productType": "dox",
+                "userId": this.props.user
+            });
+        } else {
+            array = array.filter(function (obj) {
+                return obj.orderLineID !== value.id;
+            });
+        }
+        this.setState({
+            selectedOrderlines: array
+        });
+    }
+
+    generateWaybills() {
+        this.props.generateWayBills(this.state.selectedOrderlines);
     }
 
     renderDeliveries() {
-        if (this.props.deliveries) {
-            return <ReactTable filterable data={this.props.deliveries} columns={clientConfig.rentDeliveryColumns}
-                defaultPageSize={20} className="data-table -striped -highlight" />;
+        if (this.props.pickups) {
+            let deliveryIndex = clientConfig.orderProcessColumns.findIndex(o => o.id == 'generateWaybill');
+            if (deliveryIndex != -1) { clientConfig.orderProcessColumns.splice(deliveryIndex, 1); }
+
+            clientConfig.orderProcessColumns.unshift({
+                Header: '',
+                id: 'generateWaybill',
+                accessor: o => {
+                    return <div>
+                        <input type="checkbox" className="" onChange={this.selectOrderline.bind(this, o)} />
+                    </div>
+                }
+            });
+
+            return <ReactTable filterable data={this.props.pickups} columns={clientConfig.orderProcessColumns}
+                defaultPageSize={10} className="data-table -striped -highlight" />;
         }
     }
 
     render() {
         return <section className="">
-            <h1>Deliveries</h1>
+            <h1>Pickups (Out Station)</h1><br />
+            <button onClick={() => { this.generateWaybills() }}>Generate Waybills</button><br /><br />
             {this.renderDeliveries()}
         </section>
     }
@@ -40,17 +104,18 @@ class LogisticsDeliveries extends React.Component {
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        getOrderlinesForNCRDelivery
+        getOrderLinesForOutstationPickup,
+        generateWayBills
     }, dispatch);
 }
 
 function mapStateToProps(state) {
     return {
-        deliveries: state.getOrderlinesForNCRDelivery,
+        pickups: state.getOrderLinesForOutstationPickup,
         role: state.auth.role,
         user: state.auth.email
     };
 }
 
 
-export default connect(mapStateToProps, matchDispatchToProps)(LogisticsDeliveries);
+export default connect(mapStateToProps, matchDispatchToProps)(LogisticsPickups);

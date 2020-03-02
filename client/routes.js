@@ -251,7 +251,7 @@ export default function getRoutes(store, req) {
   const checkAuth = (nextState, replace, cb) => {
     function checkAuth() {
       const { auth: { role } } = store.getState();
-      if (role !== 'admin' && role !== 'viewer' && role !== 'superuser' && role !== 'delivery' && role !== 'designer' && role !== 'finance') {
+      if (role !== 'admin' && role !== 'viewer' && role !== 'superuser' && role !== 'delivery' && role !== 'designer' && role !== 'finance' && role !== 'logistics' && role !== 'warehouse' && role !== 'qa-executive' && role !== 'qa-manager') {
         replace('/');
       }
       cb();
