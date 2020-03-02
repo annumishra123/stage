@@ -20,7 +20,7 @@ class Navigation extends React.Component {
         {this.props.role == 'logistics' || this.props.role == 'superuser' ? <li>
           <Link to="/logistics/deliveries/ncr">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-logistic-delivery.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-delivery.png" />
             </figure>
             <p>Logistics Delivery (NCR)</p>
           </Link>
@@ -28,7 +28,7 @@ class Navigation extends React.Component {
         {this.props.role == 'logistics' || this.props.role == 'superuser' ? <li>
           <Link to="/logistics/deliveries/outstation">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-logistic-delivery-2.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-logistic-delivery.png" />
             </figure>
             <p>Logistics Delivery (Out Station)</p>
           </Link>
@@ -36,7 +36,7 @@ class Navigation extends React.Component {
         {this.props.role == 'logistics' || this.props.role == 'superuser' ? <li>
           <Link to="/logistics/pickups/ncr">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-logistic-pickup.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-delivery-flip.png" />
             </figure>
             <p>Logistics Pickup (NCR)</p>
           </Link>
@@ -44,7 +44,7 @@ class Navigation extends React.Component {
         {this.props.role == 'logistics' || this.props.role == 'superuser' ? <li>
           <Link to="/logistics/pickups/outstation">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-logistic-pickup.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-truck-flip.png" />
             </figure>
             <p>Logistics Pickup (Out Station)</p>
           </Link>
@@ -76,7 +76,7 @@ class Navigation extends React.Component {
         {this.props.role == 'delivery' || this.props.role == 'superuser' ? <li>
           <Link to="/runner/pickups">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-runner.png" />
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-runner-flip.png" />
             </figure>
             <p>Runner Pickups</p>
           </Link>
