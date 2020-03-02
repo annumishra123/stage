@@ -66,7 +66,7 @@ class RunnerPickups extends React.Component {
 
     render() {
         return <section className="">
-            <h1>Deliveries</h1><br />
+            <h1>Pickups</h1><br />
             {this.props.runners && (this.props.role == 'superuser') ? <select onChange={(e) => { this.selectRunner(e) }} className={styles.orderProcessSelect}>
                 <option value=""> -- Select Runner -- </option>
                 {this.props.runners.map((runner, i) => {
