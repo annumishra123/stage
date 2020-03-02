@@ -7,6 +7,9 @@ import ReactTable from 'react-table';
 import { getOrderlinesForOutstationDelivery, generateWayBills } from '../OrderProcessActions';
 import moment from 'moment';
 
+// Import Style
+import styles from './OrderProcess.css';
+
 
 class LogisticsDeliveries extends React.Component {
     constructor(props) {
@@ -96,7 +99,7 @@ class LogisticsDeliveries extends React.Component {
     render() {
         return <section className="">
             <h1>Deliveries (Out Station)</h1><br />
-            <button onClick={() => { this.generateWaybills() }}>Generate Waybills</button><br /><br />
+            <button className={styles.btnBlack} onClick={() => { this.generateWaybills() }}>Generate Waybills</button><br /><br />
             {this.renderDeliveries()}
         </section>
     }

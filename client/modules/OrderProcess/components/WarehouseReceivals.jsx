@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import clientConfig from '../../../config';
 import ReactTable from 'react-table';
 
+// Import Style
+import styles from './OrderProcess.css';
 
 class WarehousePickups extends React.Component {
     constructor(props) {

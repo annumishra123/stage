@@ -6,6 +6,9 @@ import clientConfig from '../../../config';
 import ReactTable from 'react-table';
 import { getOrderlinesForNCRDelivery, getAllRunners, assignRunnerToOrderlinesDelivery } from '../OrderProcessActions';
 
+// Import Style
+import styles from './OrderProcess.css';
+
 
 class LogisticsDeliveries extends React.Component {
     constructor(props) {
@@ -84,13 +87,13 @@ class LogisticsDeliveries extends React.Component {
     render() {
         return <section className="">
             <h1>Deliveries (NCR)</h1><br />
-            {this.props.runners ? <select onChange={(e) => { this.selectRunner(e) }}>
+            {this.props.runners ? <select onChange={(e) => { this.selectRunner(e) }} className={styles.orderProcessSelect}>
                 <option value=""> -- Select Runner -- </option>
                 {this.props.runners.map((runner, i) => {
                     return <option key={i} value={runner.email}>{runner.name}</option>;
                 })}
             </select> : null}
-            <button onClick={(e) => { this.assignRunner(e) }}>Assign</button>
+            <button className={ styles.btnBlack } onClick={(e) => { this.assignRunner(e) }}>Assign</button>
             <br /><br />
             {this.renderDeliveries()}
         </section>

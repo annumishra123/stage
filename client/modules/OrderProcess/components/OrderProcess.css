@@ -1,0 +1,26 @@
+.btnBlack {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    font-size: 15px;
+    font-family: 'Lato', sans-serif;
+    padding: 10px 20px;
+    margin: 5px;
+    border: 0;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+.btnBlack:hover,
+.btnBlack:focus {
+    outline: none;
+}
+.orderProcessSelect {
+    border: 1px solid #333;
+    border-radius: 0;
+    font-size: 15px;
+    font-family: 'Lato', sans-serif;
+    padding: 9px;
+    letter-spacing: 1px;
+    width: 300px;
+    margin: 0 10px 10px 0;
+}
