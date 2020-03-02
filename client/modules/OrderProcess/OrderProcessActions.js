@@ -150,7 +150,7 @@ export function getOrderLinesToBeReceived(data) {
 export function getRefundConfirmedOrderlines(data) {
     return function (dispatch) {
         if (data) {
-            let url = '/api/om/orders/backend/get/orderlines/refundconfirmed';
+            let url = `/api/om/orders/backend/get/orderlines/refundconfirmed?pageNumber=${data.pageNumber}&pageSize=${data.pageSize}`;
             return axios({
                 url: url,
                 timeout: 20000,
@@ -174,7 +174,7 @@ export function getRefundConfirmedOrderlines(data) {
 export function getReceivedOrderlines(data) {
     return function (dispatch) {
         if (data) {
-            let url = '/api/om/orders/backend/get/orderlines/received';
+            let url = `/api/om/orders/backend/get/orderlines/received?pageNumber=${data.pageNumber}&pageSize=${data.pageSize}`;
             return axios({
                 url: url,
                 timeout: 20000,
@@ -198,7 +198,7 @@ export function getReceivedOrderlines(data) {
 export function getQC3FailOrderlines(data) {
     return function (dispatch) {
         if (data) {
-            let url = '/api/om/orders/backend/get/orderlines/qc3fail';
+            let url = `/api/om/orders/backend/get/orderlines/qc3fail?pageNumber=${data.pageNumber}&pageSize=${data.pageSize}`;
             return axios({
                 url: url,
                 timeout: 20000,
@@ -222,7 +222,7 @@ export function getQC3FailOrderlines(data) {
 export function getToBePickedOrderlines(data) {
     return function (dispatch) {
         if (data) {
-            let url = '/api/om/orders/backend/get/orderlines/outpickup';
+            let url = `/api/om/orders/backend/get/orderlines/outpickup?pageNumber=${data.pageNumber}&pageSize=${data.pageSize}&runnerId=${data.runnerId}`;
             return axios({
                 url: url,
                 timeout: 20000,
@@ -246,7 +246,7 @@ export function getToBePickedOrderlines(data) {
 export function getOutForDeliveryOrderlines(data) {
     return function (dispatch) {
         if (data) {
-            let url = '/api/om/orders/backend/get/orderlines/outdelivery';
+            let url = `/api/om/orders/backend/get/orderlines/outdelivery?pageNumber=${data.pageNumber}&pageSize=${data.pageSize}&runnerId=${data.runnerId}`;
             return axios({
                 url: url,
                 timeout: 20000,
@@ -267,27 +267,31 @@ export function getOutForDeliveryOrderlines(data) {
     }
 }
 
-export function markQC3Damage(data) {
-    return function (dispatch) {
-        if (data) {
-            let url = '/api/om/orders/backend/process/refund/calculate';
-            return axios({
-                url: url,
-                timeout: 20000,
-                method: 'post',
-                data: data,
-                headers: {
-                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
-                },
-                responseType: 'json'
-            }).then(function (response) {
-                console.log(response);
-            }).catch(function (error) {
-                console.log(error);
-            });
-        }
-    }
-}
+// export function markQC3Damage(data) {
+//     return function (dispatch) {
+//         if (data) {
+//             let url = '/api/om/orders/backend/process/refund/calculate';
+//             return axios({
+//                 url: url,
+//                 timeout: 20000,
+//                 method: 'post',
+//                 data: data,
+//                 headers: {
+//                     "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+//                 },
+//                 responseType: 'json'
+//             }).then(function (response) {
+//                 console.log(response);
+//                 dispatch(getQC3FailOrderlines({
+//                     pageNumber: 0,
+//                     pageSize: 0
+//                 }));
+//             }).catch(function (error) {
+//                 console.log(error);
+//             });
+//         }
+//     }
+// }
 
 export function approveRefund(data) {
     return function (dispatch) {
@@ -304,6 +308,10 @@ export function approveRefund(data) {
                 responseType: 'json'
             }).then(function (response) {
                 console.log(response);
+                dispatch(getQC3FailOrderlines({
+                    pageNumber: 0,
+                    pageSize: 0
+                }));
             }).catch(function (error) {
                 console.log(error);
             });
@@ -326,6 +334,10 @@ export function markQC3(data) {
                 responseType: 'json'
             }).then(function (response) {
                 console.log(response);
+                dispatch(getReceivedOrderlines({
+                    pageNumber: 0,
+                    pageSize: 0
+                }));
             }).catch(function (error) {
                 console.log(error);
             });
@@ -336,7 +348,7 @@ export function markQC3(data) {
 export function markReceived(data) {
     return function (dispatch) {
         if (data) {
-            let url = '/api/om/orders/backend/process/logistics/receive';
+            let url = `/api/om/orders/backend/process/logistics/receive?orderlineId=${data.orderlineId}&user=${data.user}`;
             return axios({
                 url: url,
                 timeout: 20000,
@@ -348,6 +360,10 @@ export function markReceived(data) {
                 responseType: 'json'
             }).then(function (response) {
                 console.log(response);
+                dispatch(getOrderLinesToBeReceived({
+                    pageNumber: 0,
+                    pageSize: 0
+                }));
             }).catch(function (error) {
                 console.log(error);
             });
@@ -358,7 +374,7 @@ export function markReceived(data) {
 export function markDispatched(data) {
     return function (dispatch) {
         if (data) {
-            let url = '/api/om/orders/backend/process/logistics/dispatch';
+            let url = `/api/om/orders/backend/process/logistics/dispatch?orderlineId=${data.orderlineId}&user=${data.user}`;
             return axios({
                 url: url,
                 timeout: 20000,
@@ -370,6 +386,10 @@ export function markDispatched(data) {
                 responseType: 'json'
             }).then(function (response) {
                 console.log(response);
+                dispatch(getOrderLinesToBeDispatched({
+                    pageNumber: 0,
+                    pageSize: 0
+                }));
             }).catch(function (error) {
                 console.log(error);
             });
@@ -392,6 +412,40 @@ export function markDelivered(data) {
                 responseType: 'json'
             }).then(function (response) {
                 console.log(response);
+                let obj = {
+                    pageNumber: 0,
+                    pageSize: 0,
+                    runnerId: data.user
+                }
+                dispatch(getOutForDeliveryOrderlines(obj));
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+}
+
+export function markPicked(data) {
+    return function (dispatch) {
+        if (data) {
+            let url = '/api/om/orders/backend/process/logistics/picked';
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'post',
+                data: data,
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                },
+                responseType: 'json'
+            }).then(function (response) {
+                console.log(response);
+                let obj = {
+                    pageNumber: 0,
+                    pageSize: 0,
+                    runnerId: data.user
+                }
+                dispatch(getToBePickedOrderlines(obj));
             }).catch(function (error) {
                 console.log(error);
             });
@@ -414,6 +468,12 @@ export function assignRunnerToOrderlinesDelivery(data) {
                 responseType: 'json'
             }).then(function (response) {
                 console.log(response);
+                let delivery = {
+                    pageNumber: 0,
+                    pageSize: 0,
+                    daysBeforeDeliveryDate: 5
+                }
+                dispatch(getOrderlinesForNCRDelivery(delivery));
             }).catch(function (error) {
                 console.log(error);
             });
@@ -436,6 +496,12 @@ export function assignRunnerToOrderlinesPickup(data) {
                 responseType: 'json'
             }).then(function (response) {
                 console.log(response);
+                let obj = {
+                    pageNumber: 0,
+                    pageSize: 0,
+                    daysBeforePickupDate: 5
+                };
+                dispatch(getOrderLinesForNCRPickup(obj));
             }).catch(function (error) {
                 console.log(error);
             });
@@ -455,6 +521,18 @@ export function generateWayBills(data) {
                 responseType: 'json'
             }).then(function (response) {
                 console.log(response);
+                let delivery = {
+                    pageNumber: 0,
+                    pageSize: 0,
+                    daysBeforeDeliveryDate: 5
+                };
+                let pickup = {
+                    pageNumber: 0,
+                    pageSize: 0,
+                    daysBeforeDeliveryDate: 5
+                };
+                dispatch(getOrderlinesForNCRDelivery(delivery));
+                dispatch(getOrderLinesForNCRPickup(pickup));
             }).catch(function (error) {
                 console.log(error);
             });
@@ -477,7 +555,11 @@ export function createRefund(data) {
                     Authorization: 'JWT ' + token
                 },
             }).then(function (response) {
-                alert(JSON.parse(response.data.message).message);
+                alert(response.data.message.message);
+                dispatch(getRefundConfirmedOrderlines({
+                    pageNumber: 0,
+                    pageSize: 0
+                }));
             }).catch(function (error) {
                 alert('Something went wrong!');
             });
@@ -489,28 +571,28 @@ export function createRefund(data) {
 
 export function getAllRunners() {
     return function (dispatch) {
-      let url = '/auth/getrunners';
-      let token = localStorage.getItem('token');
-      if (token) {
-        return axios({
-          url: url,
-          timeout: 20000,
-          method: 'get',
-          responseType: 'json',
-          headers: {
-            Authorization: 'JWT ' + token,
-          },
-        }).then(function (response) {
-          dispatch({
-            type: 'FETCH_ALL_RUNNERS',
-            payload: response.data
-          })
-        }).catch(function (error) {
-          console.log(error);
-        });
-      }
+        let url = '/auth/getrunners';
+        let token = localStorage.getItem('token');
+        if (token) {
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'get',
+                responseType: 'json',
+                headers: {
+                    Authorization: 'JWT ' + token,
+                },
+            }).then(function (response) {
+                dispatch({
+                    type: 'FETCH_ALL_RUNNERS',
+                    payload: response.data
+                })
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
     }
-  }
+}
 
 
 

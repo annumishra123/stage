@@ -59,7 +59,15 @@ class LogisticsPickups extends React.Component {
                 "pickupDate": moment(value.pickupDateUTC).format('DD-MMM-YYYY'),
                 "pieces": 1,
                 "productType": "dox",
-                "userId": this.props.user
+                "userId": this.props.user,
+                "orderDates": {
+                    dispatchDateUTC: value.dispatchDateUTC,
+                    occasionDateUTC: value.occasionDateUTC,
+                    deliveryDateUTC: value.deliveryDateUTC,
+                    pickupDateUTC: value.pickupDateUTC,
+                    receivedDateUTC: value.receivedDateUTC,
+                    availableDateUTC: value.availableDateUTC
+                }
             });
         } else {
             array = array.filter(function (obj) {
