@@ -34,6 +34,15 @@ export function getOrderLinesForOutstationPickup(state = null, action) {
     return state;
 }
 
+export function getOrderLinesToBeDispatched(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_ORDERLINES_TO_BE_DISPATCHED':
+            return action.payload;
+            break;
+    }
+    return state;
+}
+
 export function getRefundConfirmedOrderlines(state = null, action) {
     switch (action.type) {
         case 'FETCH_REFUND_CONFIRMED_ORDERLINES':
@@ -82,6 +91,24 @@ export function getPickupOrderLines(state = null, action) {
 export function getOutForDeliveryOrderlines(state = null, action) {
     switch (action.type) {
         case 'FETCH_OUT_FOR_DELIVERY_ORDERLINES':
+            return action.payload;
+            break;
+    }
+    return state;
+}
+
+export function getToBePickedOrderlines(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_ORDERLINES_TO_BE_PICKED':
+            return action.payload;
+            break;
+    }
+    return state;
+}
+
+export function getAllRunners(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_ALL_RUNNERS':
             return action.payload;
             break;
     }

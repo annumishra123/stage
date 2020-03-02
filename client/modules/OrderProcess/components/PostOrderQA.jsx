@@ -4,31 +4,74 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import clientConfig from '../../../config';
 import ReactTable from 'react-table';
+import { getReceivedOrderlines, markQC3 } from '../OrderProcessActions';
 
+// Import Style
+import styles from './OrderProcess.css';
 
 class PostOrderQA extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            delivery: {
+                pageNumber: 0,
+                pageSize: 0
+            }
+        };
     }
 
-    componentDidMount() { }
+    componentDidMount() {
+        this.props.getReceivedOrderlines(this.state.delivery);
+    }
+
+    markQC3(id, status) {
+        let data = {
+            orderlineId: id,
+            user: this.props.user,
+            isPass: status
+        }
+        this.props.markQC3(data)
+    }
+
+    renderDeliveries() {
+        if (this.props.deliveries) {
+            let deliveryIndex = clientConfig.orderProcessColumns.findIndex(o => o.id == 'generateWaybill');
+            if (deliveryIndex != -1) { clientConfig.orderProcessColumns.splice(deliveryIndex, 1); }
+
+            clientConfig.orderProcessColumns.unshift({
+                Header: '',
+                id: 'generateWaybill',
+                accessor: o => {
+                    return <div>
+                        <button onClick={() => this.markQC3(o.id, true)} className="">Pass</button>
+                        <button onClick={() => this.markQC3(o.id, false)} className="">Fail</button>
+                    </div>
+                }
+            });
+
+            return <ReactTable filterable data={this.props.deliveries} columns={clientConfig.orderProcessColumns}
+                defaultPageSize={10} className="data-table -striped -highlight" />;
+        }
+    }
 
     render() {
         return <section className="">
-
+            <h1>QC3 - Received Orderlines</h1><br />
+            {this.renderDeliveries()}
         </section>
     }
 }
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-
+        getReceivedOrderlines,
+        markQC3
     }, dispatch);
 }
 
 function mapStateToProps(state) {
     return {
+        deliveries: state.getReceivedOrderlines,
         role: state.auth.role,
         user: state.auth.email
     };

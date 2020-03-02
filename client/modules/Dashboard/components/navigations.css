@@ -16,10 +16,10 @@
     padding: 0;
 }
 .navigations ul li {
-    width:20%;
+    width: 20%;
     min-height: 50%;
-    float:left;
-    padding: 5px;
+    float: left;
+    padding: 5px 15px;
 }
 .navigations ul li a {
     display: block;
@@ -53,6 +53,9 @@
 .navigations ul li a figure img {
     width: 100%;
 }
+.navigations ul li a p {
+    height: 40px;
+}
 
 
 @media (max-width: 767px){
@@ -63,12 +66,12 @@
         margin: 10px 0 10px;
     }
     .navigations ul li {
-        width: 50%;
+        width: 33%;
         border: 0;
         padding: 5px;
     }
     .navigations ul li a {
-        padding: 5px 0;
+        padding: 1px 0;
         font-size: 15px;
     }
     .navigations ul li a figure {
@@ -76,12 +79,12 @@
         height: 80px;
         padding: 15px;
         display: inline-block;
-        margin: 5px auto 5px;
+        margin: 5px auto 3px;
     }
     .navigations ul li a p {
-        font-size: 14px;
+        font-size: 13px;
         letter-spacing: 0;
-        margin: 3px 0 0;
+        margin: 1px 0 0;
         text-transform: capitalize;
     }
 
