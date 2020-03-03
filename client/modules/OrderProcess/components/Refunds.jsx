@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import clientConfig from '../../../config';
 import ReactTable from 'react-table';
-import { getRefundConfirmedOrderlines, createRefund } from '../OrderProcessActions';
+import { getRefundConfirmedOrderlines, approveRefund } from '../OrderProcessActions';
 
 // Import Style
 import styles from './OrderProcess.css';
@@ -25,7 +25,7 @@ class Refunds extends React.Component {
     }
 
     refund(id) {
-        this.props.createRefund({
+        this.props.approveRefund({
             orderlineId: id,
             user: this.props.user
         });
@@ -61,7 +61,7 @@ class Refunds extends React.Component {
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        createRefund,
+        approveRefund,
         getRefundConfirmedOrderlines
     }, dispatch);
 }
