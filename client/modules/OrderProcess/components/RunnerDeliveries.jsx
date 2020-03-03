@@ -32,7 +32,7 @@ class RunnerDeliveries extends React.Component {
             orderlineId: id,
             user: this.props.user
         }
-        this.props.markDelivered(data)
+        this.props.markDelivered(data, this.state.delivery)
     }
 
     renderDeliveries() {

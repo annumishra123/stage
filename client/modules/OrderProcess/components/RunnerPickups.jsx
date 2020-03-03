@@ -32,7 +32,7 @@ class RunnerPickups extends React.Component {
             orderlineId: id,
             user: this.props.user
         }
-        this.props.markPicked(data)
+        this.props.markPicked(data, this.state.delivery);
     }
 
     renderDeliveries() {
