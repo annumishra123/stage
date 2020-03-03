@@ -267,31 +267,31 @@ export function getOutForDeliveryOrderlines(data) {
     }
 }
 
-// export function markQC3Damage(data) {
-//     return function (dispatch) {
-//         if (data) {
-//             let url = '/api/om/orders/backend/process/refund/calculate';
-//             return axios({
-//                 url: url,
-//                 timeout: 20000,
-//                 method: 'post',
-//                 data: data,
-//                 headers: {
-//                     "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
-//                 },
-//                 responseType: 'json'
-//             }).then(function (response) {
-//                 console.log(response);
-//                 dispatch(getQC3FailOrderlines({
-//                     pageNumber: 0,
-//                     pageSize: 0
-//                 }));
-//             }).catch(function (error) {
-//                 console.log(error);
-//             });
-//         }
-//     }
-// }
+export function markQC3Damage(data) {
+    return function (dispatch) {
+        if (data) {
+            let url = '/api/om/orders/backend/process/refund/calculate';
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'post',
+                data: data,
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                },
+                responseType: 'json'
+            }).then(function (response) {
+                console.log(response);
+                dispatch(getQC3FailOrderlines({
+                    pageNumber: 0,
+                    pageSize: 0
+                }));
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+}
 
 export function approveRefund(data) {
     return function (dispatch) {
@@ -308,7 +308,7 @@ export function approveRefund(data) {
                 responseType: 'json'
             }).then(function (response) {
                 console.log(response);
-                dispatch(getQC3FailOrderlines({
+                dispatch(getRefundConfirmedOrderlines({
                     pageNumber: 0,
                     pageSize: 0
                 }));
@@ -540,35 +540,6 @@ export function generateWayBills(data) {
     }
 }
 
-export function createRefund(data) {
-    return function (dispatch) {
-        let url = '/refund/create';
-        let token = localStorage.getItem('token');
-        if (token && data) {
-            return axios({
-                url: url,
-                timeout: 20000,
-                method: 'post',
-                data: data,
-                responseType: 'json',
-                headers: {
-                    Authorization: 'JWT ' + token
-                },
-            }).then(function (response) {
-                alert(response.data.message.message);
-                dispatch(getRefundConfirmedOrderlines({
-                    pageNumber: 0,
-                    pageSize: 0
-                }));
-            }).catch(function (error) {
-                alert('Something went wrong!');
-            });
-        } else {
-            alert('Refund link was not sent!');
-        }
-    }
-}
-
 export function getAllRunners() {
     return function (dispatch) {
         let url = '/auth/getrunners';
@@ -586,7 +557,7 @@ export function getAllRunners() {
                 dispatch({
                     type: 'FETCH_ALL_RUNNERS',
                     payload: response.data
-                })
+                });
             }).catch(function (error) {
                 console.log(error);
             });

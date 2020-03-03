@@ -245,8 +245,9 @@ const clientConfig = {
     accessor: 'status',
   }],
   orderProcessColumns: [{
+    id: 'Order Id',
     Header: 'Order Id',
-    accessor: 'parentOrder.frontendOrderId',
+    accessor: o => `${o.parentOrder.frontendOrderId}_${o.product.sku}`,
   }, {
     Header: 'Active',
     accessor: 'orderlineProcess.active',
@@ -274,10 +275,11 @@ const clientConfig = {
   }, {
     id: 'deliveryLink',
     Header: 'Delivery link',
-    accessor: o => o.orderlineProcess ? <a href={o.orderlineProcess.deliverylogisticResourceInfo.link} target="blank">Link</a> : '',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.deliverylogisticResourceInfo && o.orderlineProcess.deliverylogisticResourceInfo.link ? <a href={o.orderlineProcess.deliverylogisticResourceInfo.link} target="blank">Link</a> : 'N/A',
   }, {
+    id: 'Delivery Message',
     Header: 'Delivery Message',
-    accessor: 'orderlineProcess.deliverylogisticResourceInfo.message',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.deliverylogisticResourceInfo && o.orderlineProcess.deliverylogisticResourceInfo.message ? JSON.parse(o.orderlineProcess.deliverylogisticResourceInfo.message).WayBillGenerationStatus.StatusInformation : '',
   }, {
     Header: 'Delivery Runner Contact',
     accessor: 'orderlineProcess.deliverylogisticResourceInfo.runnerContact',
@@ -288,11 +290,13 @@ const clientConfig = {
     Header: 'Delivery Runner Name',
     accessor: 'orderlineProcess.deliverylogisticResourceInfo.runnerName',
   }, {
+    id: 'dispatched.endTime',
     Header: 'Dispatched End Time',
-    accessor: 'orderlineProcess.dispatched.endTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.dispatched && o.orderlineProcess.dispatched.endTime ? moment(o.orderlineProcess.dispatched.endTime).format('lll') : ''
   }, {
+    id: 'Dispatched Expected End Time',
     Header: 'Dispatched Expected End Time',
-    accessor: 'orderlineProcess.dispatched.expectedEndTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.dispatched && o.orderlineProcess.dispatched.expectedEndTime ? moment(o.orderlineProcess.dispatched.expectedEndTime).format('lll') : '',
   }, {
     Header: 'Dispatched Resolved By',
     accessor: 'orderlineProcess.dispatched.resolvedBy',
@@ -300,14 +304,16 @@ const clientConfig = {
     Header: 'Dispatched Status',
     accessor: 'orderlineProcess.dispatched.status',
   }, {
+    id: 'Next Action SLA',
     Header: 'Next Action SLA',
-    accessor: 'orderlineProcess.nextActionSla',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.nextActionSla ? moment(o.orderlineProcess.nextActionSla).format('lll') : '',
   }, {
     Header: 'OutForDelivery End Time',
     accessor: 'orderlineProcess.outForDelivery.endTime',
   }, {
+    id: 'OutForDelivery Expected End Time ',
     Header: 'OutForDelivery Expected End Time ',
-    accessor: 'orderlineProcess.outForDelivery.expectedEndTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.outForDelivery && o.orderlineProcess.outForDelivery.expectedEndTime ? moment(o.orderlineProcess.outForDelivery.expectedEndTime).format('lll') : '',
   }, {
     Header: 'OutForDelivery Resolved By',
     accessor: 'orderlineProcess.outForDelivery.resolvedBy',
@@ -315,11 +321,13 @@ const clientConfig = {
     Header: 'OutForDelivery Status',
     accessor: 'orderlineProcess.outForDelivery.status',
   }, {
+    id: 'Out For Pickup End Time',
     Header: 'Out For Pickup End Time',
-    accessor: 'orderlineProcess.outForPickup.endTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.outForPickup && o.orderlineProcess.outForPickup.endTime ? moment(o.orderlineProcess.outForPickup.endTime).format('lll') : '',
   }, {
+    id: 'Out For Pickup Expected End Time',
     Header: 'Out For Pickup Expected End Time',
-    accessor: 'orderlineProcess.outForPickup.expectedEndTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.outForPickup && o.orderlineProcess.outForPickup.expectedEndTime ? moment(o.orderlineProcess.outForPickup.expectedEndTime).format('lll') : '',
   }, {
     Header: 'Out For Pickup Resolved By',
     accessor: 'orderlineProcess.outForPickup.resolvedBy',
@@ -330,11 +338,13 @@ const clientConfig = {
     Header: 'OutStation',
     accessor: 'orderlineProcess.outstation',
   }, {
+    id: 'Picked End Time',
     Header: 'Picked End Time',
-    accessor: 'orderlineProcess.picked.endTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.picked && o.orderlineProcess.picked.endTime ? moment(o.orderlineProcess.picked.endTime).format('lll') : '',
   }, {
+    id: 'Picked Expected End Time',
     Header: 'Picked Expected End Time',
-    accessor: 'orderlineProcess.picked.expectedEndTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.picked && o.orderlineProcess.picked.expectedEndTime ? moment(o.orderlineProcess.picked.expectedEndTime).format('lll') : '',
   }, {
     Header: 'Picked Resolved By',
     accessor: 'orderlineProcess.picked.resolvedBy',
@@ -345,11 +355,13 @@ const clientConfig = {
     Header: 'Pickup Active',
     accessor: 'orderlineProcess.pickupActive',
   }, {
+    id: 'Pickup Logistic End Time',
     Header: 'Pickup Logistic End Time',
-    accessor: 'orderlineProcess.pickupLogisticResourceAssigned.endTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.pickupLogisticResourceAssigned && o.orderlineProcess.pickupLogisticResourceAssigned.endTime ? moment(o.orderlineProcess.pickupLogisticResourceAssigned.endTime).format('lll') : '',
   }, {
+    id: 'Pickup Logistic Expected End Time',
     Header: 'Pickup Logistic Expected End Time',
-    accessor: 'orderlineProcess.pickupLogisticResourceAssigned.expectedEndTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.pickupLogisticResourceAssigned && o.orderlineProcess.pickupLogisticResourceAssigned.expectedEndTime ? moment(o.orderlineProcess.pickupLogisticResourceAssigned.expectedEndTime).format('lll') : '',
   }, {
     Header: 'Pickup Logistic Resolved By',
     accessor: 'orderlineProcess.pickupLogisticResourceAssigned.resolvedBy',
@@ -375,11 +387,13 @@ const clientConfig = {
     Header: 'Pickup Logistic Runner Name',
     accessor: 'orderlineProcess.pickuplogisticResourceInfo.runnerName',
   }, {
+    id: 'QC3 End Time',
     Header: 'QC3 End Time',
-    accessor: 'orderlineProcess.qc3.endTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.qc3 && o.orderlineProcess.qc3.endTime ? moment(o.orderlineProcess.qc3.endTime).format('lll') : '',
   }, {
+    id: 'QC3 Expected End Time',
     Header: 'QC3 Expected End Time',
-    accessor: 'orderlineProcess.qc3.expectedEndTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.qc3 && o.orderlineProcess.qc3.expectedEndTime ? moment(o.orderlineProcess.qc3.expectedEndTime).format('lll') : '',
   }, {
     Header: 'QC3 Resolved By',
     accessor: 'orderlineProcess.qc3.resolvedBy',
@@ -396,11 +410,13 @@ const clientConfig = {
     Header: 'QC3 Result Remarks ',
     accessor: 'orderlineProcess.qc3Result.remarks',
   }, {
+    id: 'Received End Time',
     Header: 'Received End Time',
-    accessor: 'orderlineProcess.received.endTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.received && o.orderlineProcess.received.endTime ? moment(o.orderlineProcess.received.endTime).format('lll') : '',
   }, {
+    id: 'Received Expected End Time',
     Header: 'Received Expected End Time',
-    accessor: 'orderlineProcess.received.expectedEndTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.received && o.orderlineProcess.received.expectedEndTime ? moment(o.orderlineProcess.received.expectedEndTime).format('lll') : '',
   }, {
     Header: 'Received Resolved By',
     accessor: 'orderlineProcess.received.resolvedBy',
@@ -411,11 +427,13 @@ const clientConfig = {
     Header: 'Refund Amount',
     accessor: 'orderlineProcess.refundAmount',
   }, {
+    id: 'Refund Approved End Time',
     Header: 'Refund Approved End Time',
-    accessor: 'orderlineProcess.refundApproved.endTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.refundApproved && o.orderlineProcess.refundApproved.endTime ? moment(o.orderlineProcess.refundApproved.endTime).format('lll') : '',
   }, {
+    id: 'Refund Approved Expected End Time',
     Header: 'Refund Approved Expected End Time',
-    accessor: 'orderlineProcess.refundApproved.expectedEndTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.refundApproved && o.orderlineProcess.refundApproved.expectedEndTime ? moment(o.orderlineProcess.refundApproved.expectedEndTime).format('lll') : '',
   }, {
     Header: 'Refund Approved Resolved By',
     accessor: 'orderlineProcess.refundApproved.resolvedBy',
@@ -423,11 +441,13 @@ const clientConfig = {
     Header: 'Refund Approved Status',
     accessor: 'orderlineProcess.refundApproved.status',
   }, {
+    id: 'Refund Calculation End Time',
     Header: 'Refund Calculation End Time',
-    accessor: 'orderlineProcess.refundCalculated.endTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.refundCalculated && o.orderlineProcess.refundCalculated.endTime ? moment(o.orderlineProcess.refundCalculated.endTime).format('lll') : '',
   }, {
+    id: 'Refund Calculation Expected End Time',
     Header: 'Refund Calculation Expected End Time',
-    accessor: 'orderlineProcess.refundCalculated.expectedEndTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.refundCalculated && o.orderlineProcess.refundCalculated.expectedEndTime ? moment(o.orderlineProcess.refundCalculated.expectedEndTime).format('lll') : '',
   }, {
     Header: 'Refund Calculation Resolved By',
     accessor: 'orderlineProcess.refundCalculated.resolvedBy',

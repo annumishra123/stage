@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import clientConfig from '../../../config';
 import ReactTable from 'react-table';
-import { getQC3FailOrderlines, approveRefund } from '../OrderProcessActions';
+import { getQC3FailOrderlines, markQC3Damage } from '../OrderProcessActions';
 import ReactModal from 'react-modal';
 
 // Import Style
@@ -46,14 +46,14 @@ class QADeductions extends React.Component {
         });
     }
 
-    approveRefund() {
+    markQC3Damage() {
         let data = {
             orderlineId: this.state.orderlineId,
             user: this.props.user,
-            refundAmount: this.state.amount,
+            damageAmount: this.state.amount,
             reason: this.state.reason
         }
-        this.props.approveRefund(data)
+        this.props.markQC3Damage(data);
     }
 
     changeAmount(e) {
@@ -95,11 +95,11 @@ class QADeductions extends React.Component {
             <ReactModal className="" isOpen={this.state.viewQCModal} onRequestClose={this.hideQCModal.bind(this)} contentLabel="Change QC Status">
                 <span onClick={this.hideQCModal.bind(this)}>×</span>
                 <br />
-                <h3>Deduct Refund</h3>
+                <h3>Calculate Damage</h3>
                 <br />
                 <input type="number" onChange={() => { this.changeAmount(e) }} value={this.state.amount} /><br />
                 <input type="text" onChange={() => { this.changeReason(e) }} value={this.state.reason} /><br />
-                <button className="" onClick={this.approveRefund.bind(this)}>Approve</button>
+                <button className="" onClick={this.markQC3Damage.bind(this)}>Approve Damage</button>
             </ReactModal>
         </section>
     }
@@ -108,7 +108,7 @@ class QADeductions extends React.Component {
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         getQC3FailOrderlines,
-        approveRefund
+        markQC3Damage
     }, dispatch);
 }
 
