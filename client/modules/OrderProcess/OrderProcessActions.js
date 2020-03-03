@@ -397,7 +397,7 @@ export function markDispatched(data) {
     }
 }
 
-export function markDelivered(data) {
+export function markDelivered(data, obj) {
     return function (dispatch) {
         if (data) {
             let url = '/api/om/orders/backend/process/logistics/deliver';
@@ -412,11 +412,6 @@ export function markDelivered(data) {
                 responseType: 'json'
             }).then(function (response) {
                 console.log(response);
-                let obj = {
-                    pageNumber: 0,
-                    pageSize: 0,
-                    runnerId: data.user
-                }
                 dispatch(getOutForDeliveryOrderlines(obj));
             }).catch(function (error) {
                 console.log(error);
@@ -425,7 +420,7 @@ export function markDelivered(data) {
     }
 }
 
-export function markPicked(data) {
+export function markPicked(data, obj) {
     return function (dispatch) {
         if (data) {
             let url = '/api/om/orders/backend/process/logistics/picked';
@@ -440,11 +435,6 @@ export function markPicked(data) {
                 responseType: 'json'
             }).then(function (response) {
                 console.log(response);
-                let obj = {
-                    pageNumber: 0,
-                    pageSize: 0,
-                    runnerId: data.user
-                }
                 dispatch(getToBePickedOrderlines(obj));
             }).catch(function (error) {
                 console.log(error);
@@ -471,7 +461,7 @@ export function assignRunnerToOrderlinesDelivery(data) {
                 let delivery = {
                     pageNumber: 0,
                     pageSize: 0,
-                    daysBeforeDeliveryDate: 5
+                    daysBeforeDeliveryDate: 10
                 }
                 dispatch(getOrderlinesForNCRDelivery(delivery));
             }).catch(function (error) {
@@ -499,7 +489,7 @@ export function assignRunnerToOrderlinesPickup(data) {
                 let obj = {
                     pageNumber: 0,
                     pageSize: 0,
-                    daysBeforePickupDate: 5
+                    daysBeforePickupDate: 10
                 };
                 dispatch(getOrderLinesForNCRPickup(obj));
             }).catch(function (error) {
@@ -524,12 +514,12 @@ export function generateWayBills(data) {
                 let delivery = {
                     pageNumber: 0,
                     pageSize: 0,
-                    daysBeforeDeliveryDate: 5
+                    daysBeforeDeliveryDate: 10
                 };
                 let pickup = {
                     pageNumber: 0,
                     pageSize: 0,
-                    daysBeforeDeliveryDate: 5
+                    daysBeforePickupDate: 10
                 };
                 dispatch(getOrderlinesForNCRDelivery(delivery));
                 dispatch(getOrderLinesForNCRPickup(pickup));
