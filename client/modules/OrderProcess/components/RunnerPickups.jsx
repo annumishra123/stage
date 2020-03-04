@@ -45,7 +45,7 @@ class RunnerPickups extends React.Component {
                 id: 'generateWaybill',
                 accessor: o => {
                     return <div>
-                        <button onClick={() => this.markPicked(o.id)} className="">Picked</button>
+                        <button onClick={() => this.markPicked(o.id)} className={styles.deductBtn}>Picked</button>
                     </div>
                 }
             });

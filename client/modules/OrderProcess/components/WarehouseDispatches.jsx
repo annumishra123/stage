@@ -42,7 +42,7 @@ class WarehouseDeliveries extends React.Component {
                 id: 'generateWaybill',
                 accessor: o => {
                     return <div>
-                        <button onClick={() => this.markDispatched(o.id)} className="">Dispatched</button>
+                        <button onClick={() => this.markDispatched(o.id)} className={styles.deductBtn}>Dispatched</button>
                     </div>
                 }
             });
