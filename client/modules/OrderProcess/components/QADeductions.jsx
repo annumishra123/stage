@@ -79,7 +79,7 @@ class QADeductions extends React.Component {
                 id: 'generateWaybill',
                 accessor: o => {
                     return <div>
-                        <button onClick={() => this.viewModal(o.id)} className="">Deduct</button>
+                        <button onClick={() => this.viewModal(o.id)} className={styles.deductBtn}>Deduct</button>
                     </div>
                 }
             });
@@ -91,9 +91,9 @@ class QADeductions extends React.Component {
 
     render() {
         return <section className="">
-            <h1>QC3 - Failed Orderlines</h1><br />
+            <h1>QC3 - Failed Orderlines</h1><br /><br/>
             {this.renderDeliveries()}
-            <ReactModal className="" isOpen={this.state.viewQCModal} onRequestClose={this.hideQCModal.bind(this)} contentLabel="Change QC Status">
+            <ReactModal className={styles.statusPop} isOpen={this.state.viewQCModal} onRequestClose={this.hideQCModal.bind(this)} contentLabel="Change QC Status">
                 <span onClick={this.hideQCModal.bind(this)}>×</span>
                 <br />
                 <h3>Calculate Damage</h3>
