@@ -41,7 +41,7 @@ class Refunds extends React.Component {
                 id: 'generateWaybill',
                 accessor: o => {
                     return <div>
-                        <button onClick={() => this.refund(o.id)} className="">Refund</button>
+                        <button onClick={() => this.refund(o.id)} className={styles.deductBtn}>Refund</button>
                     </div>
                 }
             });
