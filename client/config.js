@@ -258,11 +258,13 @@ const clientConfig = {
     Header: 'Damage Reason',
     accessor: 'orderlineProcess.damageReason',
   }, {
+    id: 'Delivered EndTime',
     Header: 'Delivered EndTime',
-    accessor: 'orderlineProcess.delivered.endTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.delivered && o.orderlineProcess.delivered.endTime ? moment(o.orderlineProcess.delivered.endTime).format('lll') : '',
   }, {
+    id: 'Delivered Expected EndTime',
     Header: 'Delivered Expected EndTime',
-    accessor: 'orderlineProcess.delivered.expectedEndTime',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.delivered && o.orderlineProcess.delivered.expectedEndTime ? moment(o.orderlineProcess.delivered.expectedEndTime).format('lll') : '',
   }, {
     Header: 'Delivered Resolved By',
     accessor: 'orderlineProcess.delivered.resolvedBy',

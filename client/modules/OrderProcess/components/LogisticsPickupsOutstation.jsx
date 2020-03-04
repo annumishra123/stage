@@ -17,7 +17,7 @@ class LogisticsPickups extends React.Component {
             pickup: {
                 pageNumber: 0,
                 pageSize: 0,
-                daysBeforePickupDate: 10
+                daysBeforePickupDate: 30
             },
             selectedOrderlines: []
         };

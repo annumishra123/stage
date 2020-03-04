@@ -18,7 +18,7 @@ class LogisticsDeliveries extends React.Component {
             delivery: {
                 pageNumber: 0,
                 pageSize: 0,
-                daysBeforeDeliveryDate: 10
+                daysBeforeDeliveryDate: 30
             },
             selectedOrderlines: []
         };
