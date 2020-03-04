@@ -461,7 +461,7 @@ export function assignRunnerToOrderlinesDelivery(data) {
                 let delivery = {
                     pageNumber: 0,
                     pageSize: 0,
-                    daysBeforeDeliveryDate: 10
+                    daysBeforeDeliveryDate: 30
                 }
                 dispatch(getOrderlinesForNCRDelivery(delivery));
             }).catch(function (error) {
@@ -489,7 +489,7 @@ export function assignRunnerToOrderlinesPickup(data) {
                 let obj = {
                     pageNumber: 0,
                     pageSize: 0,
-                    daysBeforePickupDate: 10
+                    daysBeforePickupDate: 30
                 };
                 dispatch(getOrderLinesForNCRPickup(obj));
             }).catch(function (error) {
@@ -514,12 +514,12 @@ export function generateWayBills(data) {
                 let delivery = {
                     pageNumber: 0,
                     pageSize: 0,
-                    daysBeforeDeliveryDate: 10
+                    daysBeforeDeliveryDate: 30
                 };
                 let pickup = {
                     pageNumber: 0,
                     pageSize: 0,
-                    daysBeforePickupDate: 10
+                    daysBeforePickupDate: 30
                 };
                 dispatch(getOrderlinesForNCRDelivery(delivery));
                 dispatch(getOrderLinesForNCRPickup(pickup));
