@@ -60,7 +60,10 @@ class RunnerPickups extends React.Component {
             pageNumber: 0,
             pageSize: 0,
             runnerId: e.target.value
-        }
+        };
+        this.setState({
+            delivery: delivery
+        });
         this.props.getToBePickedOrderlines(delivery);
     }
 

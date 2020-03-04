@@ -54,6 +54,7 @@ class QADeductions extends React.Component {
             reason: this.state.reason
         }
         this.props.markQC3Damage(data);
+        this.hideQCModal();
     }
 
     changeAmount(e) {
@@ -97,8 +98,14 @@ class QADeductions extends React.Component {
                 <br />
                 <h3>Calculate Damage</h3>
                 <br />
-                <input type="number" onChange={() => { this.changeAmount(e) }} value={this.state.amount} /><br />
-                <input type="text" onChange={() => { this.changeReason(e) }} value={this.state.reason} /><br />
+                <label>Amount: </label>
+                <input type="number" onChange={(e) => { this.changeAmount(e) }} value={this.state.amount} /><br /><br />
+                <label>Reason: </label>
+                <select type="text" onChange={(e) => { this.changeReason(e) }} value={this.state.reason}>
+                    <option value=""> -- SELECT REASON -- </option>
+                    <option value="COFFEE_STAIN">Coffee Stain</option>
+                    <option value="WINE_STAIN">Wine Stain</option>
+                </select><br /><br />
                 <button className="" onClick={this.markQC3Damage.bind(this)}>Approve Damage</button>
             </ReactModal>
         </section>
