@@ -521,8 +521,8 @@ export function generateWayBills(data) {
                     pageSize: 0,
                     daysBeforePickupDate: 30
                 };
-                dispatch(getOrderlinesForNCRDelivery(delivery));
-                dispatch(getOrderLinesForNCRPickup(pickup));
+                dispatch(getOrderlinesForOutstationDelivery(delivery));
+                dispatch(getOrderLinesForOutstationPickup(pickup));
             }).catch(function (error) {
                 console.log(error);
             });
