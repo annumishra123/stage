@@ -97,15 +97,15 @@
     margin: 10px auto;
     width: 200px;
 }
-.alert-red {
+.alert_red {
     background: #EF7575;
     color: #fff;
 }
-.alert-yellow {
+.alert_yellow {
     background: #F2D885;
     color: #000;
 }
-.alert-green {
+.alert_green {
     background: #66A078;
     color: #fff;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import clientConfig from '../../../config';
+import { logisticsDeliveryNCRColumns } from '../../../orderProcessTableConfig';
 import ReactTable from 'react-table';
 import { getOrderlinesForNCRDelivery, getAllRunners, assignRunnerToOrderlinesDelivery } from '../OrderProcessActions';
 
@@ -46,10 +46,10 @@ class LogisticsDeliveries extends React.Component {
 
     renderDeliveries() {
         if (this.props.deliveries) {
-            let deliveryIndex = clientConfig.orderProcessColumns.findIndex(o => o.id == 'generateWaybill');
-            if (deliveryIndex != -1) { clientConfig.orderProcessColumns.splice(deliveryIndex, 1); }
+            let deliveryIndex = logisticsDeliveryNCRColumns.findIndex(o => o.id == 'generateWaybill');
+            if (deliveryIndex != -1) { logisticsDeliveryNCRColumns.splice(deliveryIndex, 1); }
 
-            clientConfig.orderProcessColumns.unshift({
+            logisticsDeliveryNCRColumns.unshift({
                 Header: '',
                 id: 'generateWaybill',
                 accessor: o => {
@@ -59,7 +59,7 @@ class LogisticsDeliveries extends React.Component {
                 }
             });
 
-            return <ReactTable filterable data={this.props.deliveries} columns={clientConfig.orderProcessColumns}
+            return <ReactTable filterable data={this.props.deliveries} columns={logisticsDeliveryNCRColumns}
                 defaultPageSize={10} className="data-table -striped -highlight" />;
         }
     }
@@ -71,8 +71,8 @@ class LogisticsDeliveries extends React.Component {
             "runnerId": this.state.selectedRunner.email,
             "runnerName": this.state.selectedRunner.name,
             "user": this.props.user
-          };
-          this.props.assignRunnerToOrderlinesDelivery(data);
+        };
+        this.props.assignRunnerToOrderlinesDelivery(data);
     }
 
     selectRunner(e) {
@@ -93,7 +93,7 @@ class LogisticsDeliveries extends React.Component {
                     return <option key={i} value={runner.email}>{runner.name}</option>;
                 })}
             </select> : null}
-            <button className={ styles.btnBlack } onClick={(e) => { this.assignRunner(e) }}>Assign</button>
+            <button className={styles.btnBlack} onClick={(e) => { this.assignRunner(e) }}>Assign</button>
             <br /><br />
             {this.renderDeliveries()}
         </section>

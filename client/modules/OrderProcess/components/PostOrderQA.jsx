@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import clientConfig from '../../../config';
+import { qaPostOrderColumns } from '../../../orderProcessTableConfig';
 import ReactTable from 'react-table';
 import { getReceivedOrderlines, markQC3 } from '../OrderProcessActions';
 
@@ -35,10 +35,10 @@ class PostOrderQA extends React.Component {
 
     renderDeliveries() {
         if (this.props.deliveries) {
-            let deliveryIndex = clientConfig.orderProcessColumns.findIndex(o => o.id == 'generateWaybill');
-            if (deliveryIndex != -1) { clientConfig.orderProcessColumns.splice(deliveryIndex, 1); }
+            let deliveryIndex = qaPostOrderColumns.findIndex(o => o.id == 'generateWaybill');
+            if (deliveryIndex != -1) { qaPostOrderColumns.splice(deliveryIndex, 1); }
 
-            clientConfig.orderProcessColumns.unshift({
+            qaPostOrderColumns.unshift({
                 Header: '',
                 id: 'generateWaybill',
                 accessor: o => {
@@ -49,7 +49,7 @@ class PostOrderQA extends React.Component {
                 }
             });
 
-            return <ReactTable filterable data={this.props.deliveries} columns={clientConfig.orderProcessColumns}
+            return <ReactTable filterable data={this.props.deliveries} columns={qaPostOrderColumns}
                 defaultPageSize={10} className="data-table -striped -highlight" />;
         }
     }

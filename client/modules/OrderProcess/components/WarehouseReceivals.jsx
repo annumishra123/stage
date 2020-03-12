@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import clientConfig from '../../../config';
+import { warehouseReceiveColumns } from '../../../orderProcessTableConfig';
 import ReactTable from 'react-table';
 import { getOrderLinesToBeReceived, markReceived } from '../OrderProcessActions';
 
@@ -34,10 +34,10 @@ class WarehousePickups extends React.Component {
 
     renderDeliveries() {
         if (this.props.deliveries) {
-            let deliveryIndex = clientConfig.orderProcessColumns.findIndex(o => o.id == 'generateWaybill');
-            if (deliveryIndex != -1) { clientConfig.orderProcessColumns.splice(deliveryIndex, 1); }
+            let deliveryIndex = warehouseReceiveColumns.findIndex(o => o.id == 'generateWaybill');
+            if (deliveryIndex != -1) { warehouseReceiveColumns.splice(deliveryIndex, 1); }
 
-            clientConfig.orderProcessColumns.unshift({
+            warehouseReceiveColumns.unshift({
                 Header: '',
                 id: 'generateWaybill',
                 accessor: o => {
@@ -47,7 +47,7 @@ class WarehousePickups extends React.Component {
                 }
             });
 
-            return <ReactTable filterable data={this.props.deliveries} columns={clientConfig.orderProcessColumns}
+            return <ReactTable filterable data={this.props.deliveries} columns={warehouseReceiveColumns}
                 defaultPageSize={10} className="data-table -striped -highlight" />;
         }
     }

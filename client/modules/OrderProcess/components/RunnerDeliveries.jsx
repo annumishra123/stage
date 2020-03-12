@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import clientConfig from '../../../config';
+import { runnerDeliveryColumns } from '../../../orderProcessTableConfig';
 import ReactTable from 'react-table';
 import { getOutForDeliveryOrderlines, markDelivered, getAllRunners } from '../OrderProcessActions';
 
@@ -37,10 +37,10 @@ class RunnerDeliveries extends React.Component {
 
     renderDeliveries() {
         if (this.props.deliveries) {
-            let deliveryIndex = clientConfig.orderProcessColumns.findIndex(o => o.id == 'generateWaybill');
-            if (deliveryIndex != -1) { clientConfig.orderProcessColumns.splice(deliveryIndex, 1); }
+            let deliveryIndex = runnerDeliveryColumns.findIndex(o => o.id == 'generateWaybill');
+            if (deliveryIndex != -1) { runnerDeliveryColumns.splice(deliveryIndex, 1); }
 
-            clientConfig.orderProcessColumns.unshift({
+            runnerDeliveryColumns.unshift({
                 Header: '',
                 id: 'generateWaybill',
                 accessor: o => {
@@ -50,7 +50,7 @@ class RunnerDeliveries extends React.Component {
                 }
             });
 
-            return <ReactTable filterable data={this.props.deliveries} columns={clientConfig.orderProcessColumns}
+            return <ReactTable filterable data={this.props.deliveries} columns={runnerDeliveryColumns}
                 defaultPageSize={10} className="data-table -striped -highlight" />;
         }
     }
