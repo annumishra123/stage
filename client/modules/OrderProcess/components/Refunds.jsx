@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import clientConfig from '../../../config';
+import { refundColumns } from '../../../orderProcessTableConfig';
 import ReactTable from 'react-table';
 import { getRefundConfirmedOrderlines, approveRefund } from '../OrderProcessActions';
 
@@ -33,10 +33,10 @@ class Refunds extends React.Component {
 
     renderDeliveries() {
         if (this.props.deliveries) {
-            let deliveryIndex = clientConfig.orderProcessColumns.findIndex(o => o.id == 'generateWaybill');
-            if (deliveryIndex != -1) { clientConfig.orderProcessColumns.splice(deliveryIndex, 1); }
+            let deliveryIndex = refundColumns.findIndex(o => o.id == 'generateWaybill');
+            if (deliveryIndex != -1) { refundColumns.splice(deliveryIndex, 1); }
 
-            clientConfig.orderProcessColumns.unshift({
+            refundColumns.unshift({
                 Header: '',
                 id: 'generateWaybill',
                 accessor: o => {
@@ -46,7 +46,7 @@ class Refunds extends React.Component {
                 }
             });
 
-            return <ReactTable filterable data={this.props.deliveries} columns={clientConfig.orderProcessColumns}
+            return <ReactTable filterable data={this.props.deliveries} columns={refundColumns}
                 defaultPageSize={10} className="data-table -striped -highlight" />;
         }
     }

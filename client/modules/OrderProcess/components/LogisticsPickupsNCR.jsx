@@ -2,7 +2,8 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import clientConfig from '../../../config';
+import { logisticsPickupNCRColumns } from '../../../orderProcessTableConfig';
+
 import ReactTable from 'react-table';
 import { getOrderLinesForNCRPickup, getAllRunners, assignRunnerToOrderlinesPickup } from '../OrderProcessActions';
 
@@ -45,10 +46,10 @@ class LogisticsPickups extends React.Component {
 
     renderpickups() {
         if (this.props.pickups) {
-            let deliveryIndex = clientConfig.orderProcessColumns.findIndex(o => o.id == 'generateWaybill');
-            if (deliveryIndex != -1) { clientConfig.orderProcessColumns.splice(deliveryIndex, 1); }
+            let deliveryIndex = logisticsPickupNCRColumns.findIndex(o => o.id == 'generateWaybill');
+            if (deliveryIndex != -1) { logisticsPickupNCRColumns.splice(deliveryIndex, 1); }
 
-            clientConfig.orderProcessColumns.unshift({
+            logisticsPickupNCRColumns.unshift({
                 Header: '',
                 id: 'generateWaybill',
                 accessor: o => {
@@ -58,7 +59,7 @@ class LogisticsPickups extends React.Component {
                 }
             });
 
-            return <ReactTable filterable data={this.props.pickups} columns={clientConfig.orderProcessColumns}
+            return <ReactTable filterable data={this.props.pickups} columns={logisticsPickupNCRColumns}
                 defaultPageSize={10} className="data-table -striped -highlight" />;
         }
     }

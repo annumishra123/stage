@@ -97,6 +97,18 @@
     margin: 10px auto;
     width: 200px;
 }
+.alert_red {
+    background: #EF7575;
+    color: #fff;
+}
+.alert_yellow {
+    background: #F2D885;
+    color: #000;
+}
+.alert_green {
+    background: #66A078;
+    color: #fff;
+}
 
 
 @media (max-width: 767px){

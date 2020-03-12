@@ -2,7 +2,8 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import clientConfig from '../../../config';
+import { qaDeductionsColumns } from '../../../orderProcessTableConfig';
+
 import ReactTable from 'react-table';
 import { getQC3FailOrderlines, markQC3Damage } from '../OrderProcessActions';
 import ReactModal from 'react-modal';
@@ -71,10 +72,10 @@ class QADeductions extends React.Component {
 
     renderDeliveries() {
         if (this.props.deliveries) {
-            let deliveryIndex = clientConfig.orderProcessColumns.findIndex(o => o.id == 'generateWaybill');
-            if (deliveryIndex != -1) { clientConfig.orderProcessColumns.splice(deliveryIndex, 1); }
+            let deliveryIndex = qaDeductionsColumns.findIndex(o => o.id == 'generateWaybill');
+            if (deliveryIndex != -1) { qaDeductionsColumns.splice(deliveryIndex, 1); }
 
-            clientConfig.orderProcessColumns.unshift({
+            qaDeductionsColumns.unshift({
                 Header: '',
                 id: 'generateWaybill',
                 accessor: o => {
@@ -84,7 +85,7 @@ class QADeductions extends React.Component {
                 }
             });
 
-            return <ReactTable filterable data={this.props.deliveries} columns={clientConfig.orderProcessColumns}
+            return <ReactTable filterable data={this.props.deliveries} columns={qaDeductionsColumns}
                 defaultPageSize={10} className="data-table -striped -highlight" />;
         }
     }
