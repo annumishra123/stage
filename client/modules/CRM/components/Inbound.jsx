@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import clientConfig from '../../../config';
 import { getAllContexts, getAllDispositions, createInboundTask } from '../CRMActions';
 import Select from 'react-select';
-import { getCustomerDetailByPhoneNumber } from '../../Customer/CustomerActions';
+import { getCustomerDetailByPhoneNumber, getCustomerComments, createComment } from '../../Customer/CustomerActions';
 import CustomerForm from '../../Customer/components/CustomerForm';
-
+import moment from 'moment';
 
 // Import Style
 import styles from './crm.css';
@@ -23,7 +23,8 @@ class Inbound extends React.Component {
                 "name": "",
                 "phoneNumber": "",
                 "reasonCode": ""
-            }
+            },
+            comment: ""
         }
     }
 
@@ -42,6 +43,48 @@ class Inbound extends React.Component {
                     "reasonCode": ""
                 }
             })
+        }
+    }
+
+    componentWillReceiveProps(props) {
+        if (this.props.customerDetail !== props.customerDetail) {
+            this.props.getCustomerComments(props.customerDetail.email);
+        }
+    }
+
+    saveComment() {
+        this.props.createComment(this.props.customerDetail.email, this.state.comment);
+    }
+
+    handleChangeComment(e) {
+        this.setState({
+            comment: e.target.value
+        });
+    }
+
+    renderComments() {
+        if (this.props.customerComments && this.props.customerComments.length > 0) {
+            return <div><table>
+                <tr>
+                    <th>Comment</th>
+                    <th>Date</th>
+                </tr>
+                {this.props.customerComments.map((comment) => {
+                    return <tr>
+                        <td>
+                            {comment.comment}
+                        </td>
+                        <td>
+                            {moment.unix(comment.createdtimestamp).format('lll')}
+                        </td>
+                    </tr>
+                })}
+            </table><br />
+                <div>
+                    <input type="text" onChange={this.handleChangeComment.bind(this)} />
+                    <button onClick={this.saveComment.bind(this)}>Save Comment</button>
+                </div>
+                <br /></div>
         }
     }
 
@@ -110,6 +153,7 @@ class Inbound extends React.Component {
         return <section className={styles.inboundCall}>
             {this.renderCustomerInformation()}
             <h1>Inbound Call</h1>
+            {this.renderComments()}
             <div>
                 <label>Label </label>
                 {this.props.contexts ? <select onChange={(e) => this.changeLabel(e)}>
@@ -148,7 +192,7 @@ class Inbound extends React.Component {
                 </div>
             </div>
             <br />
-            <button onClick={() => this.createInboundTask()}>Create</button>
+            <button onClick={(e) => this.createInboundTask(e)}>Create</button>
         </section>
     }
 }
@@ -159,7 +203,9 @@ function matchDispatchToProps(dispatch) {
         getAllContexts,
         getAllDispositions,
         createInboundTask,
-        getCustomerDetailByPhoneNumber
+        getCustomerDetailByPhoneNumber,
+        createComment,
+        getCustomerComments
     }, dispatch);
 }
 
@@ -168,6 +214,7 @@ function mapStateToProps(state) {
         role: state.auth.role,
         user: state.auth.email,
         customerDetail: state.customerDetail,
+        customerComments: state.customerComments,
         dispositions: state.dispositions,
         contexts: state.contexts
     };
