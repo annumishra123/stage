@@ -64,7 +64,7 @@ class Customer extends React.Component {
     }
 
     saveComment() {
-        this.props.createComment(this.state.comment);
+        this.props.createComment(this.props.customerDetail.email, this.state.comment);
     }
 
     renderComments() {

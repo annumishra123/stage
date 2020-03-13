@@ -4,7 +4,7 @@ import clientConfig from '../../config';
 import moment from 'moment';
 
 export function createCustomer(customer) {
-    return function(dispatch) {
+    return function (dispatch) {
         let isValid = false;
         let mobileRegex = /^\d{10}$/;
         let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -29,10 +29,10 @@ export function createCustomer(customer) {
                 headers: {
                     "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
                 }
-            }).then(function(response) {
+            }).then(function (response) {
                 dispatch(getCustomerDetail(cust.emailId));
                 alert('Customer information has been saved.');
-            }).catch(function(error) {
+            }).catch(function (error) {
                 console.log(error);
             });
         } else {
@@ -42,7 +42,7 @@ export function createCustomer(customer) {
 }
 
 export function getCustomerDetail(email) {
-    return function(dispatch) {
+    return function (dispatch) {
         let regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         let isValid = regex.test(email);
         if (isValid) {
@@ -71,7 +71,7 @@ export function getCustomerDetail(email) {
                 headers: {
                     "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
                 }
-            }).then(function(response) {
+            }).then(function (response) {
                 let customer = response.data;
                 if (customer) {
                     dispatch({
@@ -87,7 +87,7 @@ export function getCustomerDetail(email) {
                     });
                     alert('Customer not found.');
                 }
-            }).catch(function(error) {
+            }).catch(function (error) {
                 dispatch({
                     type: 'FETCH_CUSTOMER_DETAIL',
                     payload: null
@@ -102,7 +102,7 @@ export function getCustomerDetail(email) {
 }
 
 export function clearCustomerDetail() {
-    return function(dispatch) {
+    return function (dispatch) {
         dispatch({
             type: 'FETCH_CUSTOMER_DETAIL',
             payload: null
@@ -111,7 +111,7 @@ export function clearCustomerDetail() {
 }
 
 export function getCustomerDetailByPhoneNumber(phoneNumber) {
-    return function(dispatch) {
+    return function (dispatch) {
         let mobileRegex = /^\d{10}$/;
         let isValid = mobileRegex.test(phoneNumber);
         if (isValid) {
@@ -140,7 +140,7 @@ export function getCustomerDetailByPhoneNumber(phoneNumber) {
                 headers: {
                     "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
                 }
-            }).then(function(response) {
+            }).then(function (response) {
                 let customer = response.data;
                 if (customer) {
                     dispatch({
@@ -156,7 +156,7 @@ export function getCustomerDetailByPhoneNumber(phoneNumber) {
                     });
                     alert('Customer not found.');
                 }
-            }).catch(function(error) {
+            }).catch(function (error) {
                 dispatch({
                     type: 'FETCH_CUSTOMER_DETAIL',
                     payload: null
@@ -170,17 +170,17 @@ export function getCustomerDetailByPhoneNumber(phoneNumber) {
     }
 }
 
-export function createComment(comment) {
-    return function(dispatch, getState) {
+export function createComment(email, comment) {
+    return function (dispatch, getState) {
         let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         let url = clientConfig.targetURL + '/api/cart/api/UserComments';
-        if (emailRegex.test(getState().form.createCustomer.values.email) && comment) {
+        if (emailRegex.test(email) && comment) {
             return axios({
                 url: url,
                 timeout: 20000,
                 method: 'post',
                 data: {
-                    user: getState().form.createCustomer.values.email,
+                    user: email,
                     comment: comment,
                     createdtimestamp: moment().unix()
                 },
@@ -188,9 +188,9 @@ export function createComment(comment) {
                 headers: {
                     "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
                 }
-            }).then(function(response) {
+            }).then(function (response) {
                 dispatch(getCustomerComments(response.data.user));
-            }).catch(function(error) {
+            }).catch(function (error) {
                 alert("Comment couldn't be saved");
                 console.log(error);
             });
@@ -201,7 +201,7 @@ export function createComment(comment) {
 }
 
 export function getCustomerComments(email) {
-    return function(dispatch) {
+    return function (dispatch) {
         let filter = {
             where: {
                 user: email
@@ -216,19 +216,19 @@ export function getCustomerComments(email) {
             headers: {
                 "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
             }
-        }).then(function(response) {
+        }).then(function (response) {
             dispatch({
                 type: 'FETCH_CUSTOMER_COMMENTS',
                 payload: response.data
             });
-        }).catch(function(error) {
+        }).catch(function (error) {
             console.log(error);
         });
     }
 }
 
 export function createMeasurements(measurements) {
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
         let isValidMeasurements = true;
         if (Object.keys(measurements).length > 0) {
             measurements.email = getState().form.createCustomer.values.email;
@@ -258,10 +258,10 @@ export function createMeasurements(measurements) {
                 headers: {
                     "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
                 }
-            }).then(function(response) {
+            }).then(function (response) {
                 dispatch(getCustomerDetail(measurements.email));
                 alert('Customer measurements have been saved');
-            }).catch(function(error) {
+            }).catch(function (error) {
                 alert("Customer measurements couldn't be saved");
                 console.log(error);
             });
@@ -272,7 +272,7 @@ export function createMeasurements(measurements) {
 }
 
 export function createAddress(address) {
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
         let isValid = false;
         let pincodeRegex = /^[0-9]{6}$/;
         let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -291,11 +291,11 @@ export function createAddress(address) {
                 headers: {
                     "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
                 }
-            }).then(function(response) {
+            }).then(function (response) {
                 dispatch(reset('createAddress'));
                 dispatch(getCustomerDetail(address.userId));
                 alert('New address has been saved.');
-            }).catch(function(error) {
+            }).catch(function (error) {
                 alert("Couldn't save new address.");
                 console.log(error);
             });
@@ -306,7 +306,7 @@ export function createAddress(address) {
 }
 
 export function saveAllCustomerDetails() {
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
         let customer = getState().form.createCustomer.values;
         let isValid = false;
         let mobileRegex = /^\d{10}$/;
@@ -334,11 +334,11 @@ export function saveAllCustomerDetails() {
                 headers: {
                     "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
                 }
-            }).then(function(response) {
+            }).then(function (response) {
                 alert('Customer information has been saved.');
                 dispatch(submit('createAddress'));
                 dispatch(submit('createMeasurements'));
-            }).catch(function(error) {
+            }).catch(function (error) {
                 console.log(error);
             });
         } else {
@@ -348,7 +348,7 @@ export function saveAllCustomerDetails() {
 }
 
 export function selectAddress(id) {
-    return function(dispatch) {
+    return function (dispatch) {
         dispatch({
             type: 'SELECT_ADDRESS',
             payload: id
@@ -357,7 +357,7 @@ export function selectAddress(id) {
 }
 
 export function getCreditPoints(userId) {
-    return function(dispatch) {
+    return function (dispatch) {
         if (userId) {
             let url = '/api/credits/getAccount/';
             return axios({
@@ -371,12 +371,12 @@ export function getCreditPoints(userId) {
                 headers: {
                     "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
                 }
-            }).then(function(response) {
+            }).then(function (response) {
                 dispatch({
                     type: 'FETCH_CREDIT_POINTS',
                     payload: response.data.availablePoints
                 })
-            }).catch(function(error) {
+            }).catch(function (error) {
                 console.log(error);
             });
         }
