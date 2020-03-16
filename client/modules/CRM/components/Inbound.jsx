@@ -79,11 +79,7 @@ class Inbound extends React.Component {
                         </td>
                     </tr>
                 })}
-            </table><br />
-                <div>
-                    <input type="text" onChange={this.handleChangeComment.bind(this)} />
-                    <button onClick={this.saveComment.bind(this)}>Save Comment</button>
-                </div>
+            </table>
                 <br /></div>
         }
     }
@@ -154,6 +150,12 @@ class Inbound extends React.Component {
             {this.renderCustomerInformation()}
             <h1>Inbound Call</h1>
             {this.renderComments()}
+            <br />
+            <div>
+                <input type="text" onChange={this.handleChangeComment.bind(this)} />
+                <button onClick={this.saveComment.bind(this)}>Save Comment</button>
+            </div>
+            <br />
             <div>
                 <label>Label </label>
                 {this.props.contexts ? <select onChange={(e) => this.changeLabel(e)}>
