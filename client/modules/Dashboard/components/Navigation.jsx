@@ -49,7 +49,7 @@ class Navigation extends React.Component {
             <p>Logistics Pickup (Out Station)</p>
           </Link>
         </li> : null}
-        {this.props.role == 'warehouse' || this.props.role == 'superuser' ? <li>
+        {this.props.role == 'warehouse' || this.props.role == 'logistics' || this.props.role == 'superuser' ? <li>
           <Link to="/warehouse/dispatches">
             <figure>
               <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-dispatches.png" />
@@ -57,7 +57,7 @@ class Navigation extends React.Component {
             <p>Warehouse Dispatches</p>
           </Link>
         </li> : null}
-        {this.props.role == 'warehouse' || this.props.role == 'superuser' ? <li>
+        {this.props.role == 'warehouse' || this.props.role == 'logistics' || this.props.role == 'superuser' ? <li>
           <Link to="/warehouse/receivals">
             <figure>
               <img src="https://ik.imagekit.io/stage3/tr:n-web/dashboard-warehouse-receivals.png" />
