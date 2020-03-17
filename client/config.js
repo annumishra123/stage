@@ -114,7 +114,9 @@ const clientConfig = {
     'Rent Paid Razorpay',
     'Security Paid Razorpay',
     'Security Paid Paytm',
-    'Pine Labs'
+    'Pine Labs',
+    'Rent Paid Pine Labs',
+    'Security Paid Pine Labs',
   ],
   rentDeliveryColumns: [{
     Header: 'Order Id',
