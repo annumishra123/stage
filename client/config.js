@@ -122,7 +122,8 @@ const clientConfig = {
     'Security Paid Razorpay',
     'Security Paid Mswipe',
     'Security Paid Ezetap',
-    'Security Paid Paytm'
+    'Security Paid Paytm',
+    'Pine Labs'
   ],
   rentDeliveryColumns: [{
     Header: 'Order Id',
