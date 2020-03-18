@@ -1435,10 +1435,6 @@ export const completeOrderProcessColumns = [
         Header: 'Refund Amount',
         accessor: 'orderlineProcess.refundAmount',
     }, {
-        id: 'netAmount',
-        Header: 'Net Amount',
-        accessor: o => o.price + o.deposit,
-    }, {
         Header: 'Refund Approved By',
         accessor: 'orderlineProcess.refundApproved.resolvedBy',
     }, {
@@ -1509,10 +1505,6 @@ export const completeOrderProcessColumns = [
             }
             return {};
         }
-    }, {
-        id: 'Collectable Amount By Runner',
-        Header: 'Collectable Amount',
-        accessor: 'orderlineProcess.collectableAmount',
     }, {
         id: 'orderlineProcess.received.expectedEndTime',
         Header: 'Receiving Expected End Time',
@@ -1625,6 +1617,14 @@ export const completeOrderProcessColumns = [
         id: 'Deposit',
         Header: 'Deposit',
         accessor: o => !isNaN(o.deposit) ? Math.round(o.deposit) : "-"
+    }, {
+        id: 'netAmount',
+        Header: 'Net Amount',
+        accessor: o => Math.round(o.price) + Math.round(o.deposit),
+    }, {
+        id: 'Collectable Amount',
+        Header: 'Collectable Amount',
+        accessor: o => o.orderlineProcess ? Math.round(o.orderlineProcess.collectableAmount) : "-",
     }, {
         id: 'orderType',
         Header: 'orderType',
