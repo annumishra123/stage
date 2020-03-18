@@ -25,6 +25,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Rent/components/RentOrders');
   require('./modules/Rent/components/CreateRentOrder');
   require('./modules/Delivery/components/RentDeliveryOrders');
+  require('./modules/OrderProcess/components/RentDeliveryOrdersV2');
   require('./modules/Delivery/components/ShopDeliveryOrders');
   require('./modules/Inventory/components/Inventory');
   require('./modules/Inventory/components/ShopProduct');
@@ -338,6 +339,11 @@ export default function getRoutes(store, req) {
       <Route path="/delivery/rent" onEnter={checkEmployee} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Delivery/components/RentDeliveryOrders').default);
+        });
+      }} />
+      <Route path="/delivery/rentv2" onEnter={checkEmployee} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/OrderProcess/components/RentDeliveryOrdersV2').default);
         });
       }} />
       <Route path="/delivery/shop" onEnter={checkEmployee} getComponent={(nextState, cb) => {

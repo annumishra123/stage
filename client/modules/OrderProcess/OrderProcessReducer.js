@@ -114,3 +114,12 @@ export function getAllRunners(state = null, action) {
     }
     return state;
 }
+
+export function rentDeliveryOrdersV2(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_RENT_DELIVERY_ORDERS_V2':
+            return action.payload;
+            break;
+    }
+    return state;
+}

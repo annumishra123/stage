@@ -6,6 +6,7 @@ import { logisticsDeliveryNonNCRColumns } from '../../../orderProcessTableConfig
 import ReactTable from 'react-table';
 import { getOrderlinesForOutstationDelivery, generateWayBills } from '../OrderProcessActions';
 import moment from 'moment';
+import clientConfig from '../../../config';
 
 // Import Style
 import styles from './OrderProcess.css';
@@ -18,7 +19,7 @@ class LogisticsDeliveries extends React.Component {
             delivery: {
                 pageNumber: 0,
                 pageSize: 0,
-                daysBeforeDeliveryDate: 30
+                daysBeforeDeliveryDate: clientConfig.daysBeforeDeliveryOrPickup
             },
             selectedOrderlines: []
         };
@@ -72,7 +73,7 @@ class LogisticsDeliveries extends React.Component {
             });
         } else {
             array = array.filter(function (obj) {
-                return obj.orderLineID !== value.id;
+                return obj.orderLineId !== value.id;
             });
         }
         this.setState({

@@ -5,6 +5,7 @@ import React from 'react';
 import styles from 'modules/Scan/components/scan.css';
 
 const clientConfig = {
+  daysBeforeDeliveryOrPickup: 10,
   serviceCities: [{
     city: 'Delhi',
     state: 'Delhi',

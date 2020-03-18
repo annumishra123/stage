@@ -307,11 +307,12 @@ export function approveRefund(data) {
                 },
                 responseType: 'json'
             }).then(function (response) {
-                console.log(response);
+                console.log(response);                
                 dispatch(getRefundConfirmedOrderlines({
                     pageNumber: 0,
                     pageSize: 0
                 }));
+                alert(JSON.parse(response.data.message).message);
             }).catch(function (error) {
                 console.log(error);
             });
@@ -461,7 +462,7 @@ export function assignRunnerToOrderlinesDelivery(data) {
                 let delivery = {
                     pageNumber: 0,
                     pageSize: 0,
-                    daysBeforeDeliveryDate: 30
+                    daysBeforeDeliveryDate: clientConfig.daysBeforeDeliveryOrPickup
                 }
                 dispatch(getOrderlinesForNCRDelivery(delivery));
             }).catch(function (error) {
@@ -489,7 +490,7 @@ export function assignRunnerToOrderlinesPickup(data) {
                 let obj = {
                     pageNumber: 0,
                     pageSize: 0,
-                    daysBeforePickupDate: 30
+                    daysBeforePickupDate: clientConfig.daysBeforeDeliveryOrPickup
                 };
                 dispatch(getOrderLinesForNCRPickup(obj));
             }).catch(function (error) {
@@ -514,12 +515,12 @@ export function generateWayBills(data) {
                 let delivery = {
                     pageNumber: 0,
                     pageSize: 0,
-                    daysBeforeDeliveryDate: 30
+                    daysBeforeDeliveryDate: clientConfig.daysBeforeDeliveryOrPickup
                 };
                 let pickup = {
                     pageNumber: 0,
                     pageSize: 0,
-                    daysBeforePickupDate: 30
+                    daysBeforePickupDate: clientConfig.daysBeforeDeliveryOrPickup
                 };
                 dispatch(getOrderlinesForOutstationDelivery(delivery));
                 dispatch(getOrderLinesForOutstationPickup(pickup));
@@ -557,3 +558,31 @@ export function getAllRunners() {
 
 
 
+export function getRentOrderListByDateV2(dateParam, startDate, endDate) {
+    return function (dispatch) {
+        if (startDate && endDate && dateParam) {
+            let url = '/api/om/orders/backend/orderlines/v2';
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'post',
+                data: {
+                    "dateParam": dateParam,
+                    "endDate": endDate,
+                    "startDate": startDate
+                },
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                },
+                responseType: 'json'
+            }).then(function (response) {
+                dispatch({
+                    type: 'FETCH_RENT_DELIVERY_ORDERS_V2',
+                    payload: response.data
+                })
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+}
