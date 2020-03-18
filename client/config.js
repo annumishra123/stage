@@ -5,6 +5,7 @@ import React from 'react';
 import styles from 'modules/Scan/components/scan.css';
 
 const clientConfig = {
+  daysBeforeDeliveryOrPickup: 10,
   serviceCities: [{
     city: 'Delhi',
     state: 'Delhi',
@@ -104,12 +105,7 @@ const clientConfig = {
     'cheque',
     'COD',
     'FREE',
-    'ICICI',
-    'payu',
-    'payumoney',
     'razorpay',
-    'Mswipe',
-    'ezetap',
     'advance cash paid',
     'rent paid COD',
     '10 percent rent paid online',
@@ -117,12 +113,11 @@ const clientConfig = {
     'Paytm',
     'Rent Paid Paytm',
     'Rent Paid Razorpay',
-    'Rent Paid Mswipe',
-    'Rent paid Ezetap',
     'Security Paid Razorpay',
-    'Security Paid Mswipe',
-    'Security Paid Ezetap',
-    'Security Paid Paytm'
+    'Security Paid Paytm',
+    'Pine Labs',
+    'Rent Paid Pine Labs',
+    'Security Paid Pine Labs',
   ],
   rentDeliveryColumns: [{
     Header: 'Order Id',

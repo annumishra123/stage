@@ -6,6 +6,7 @@ import { logisticsPickupNonNCRColumns } from '../../../orderProcessTableConfig';
 import ReactTable from 'react-table';
 import { getOrderLinesForOutstationPickup, generateWayBills } from '../OrderProcessActions';
 import moment from 'moment';
+import clientConfig from '../../../config';
 
 // Import Style
 import styles from './OrderProcess.css';
@@ -17,7 +18,7 @@ class LogisticsPickups extends React.Component {
             pickup: {
                 pageNumber: 0,
                 pageSize: 0,
-                daysBeforePickupDate: 30
+                daysBeforePickupDate: clientConfig.daysBeforeDeliveryOrPickup
             },
             selectedOrderlines: []
         };

@@ -21,7 +21,10 @@ import { tasks, contexts, dispositions, taskDetail } from './modules/CRM/CRMRedu
 import { waybills } from './modules/Shipping/ShippingReducer';
 import { allRawMaterials, allOutfits } from './modules/AlayaInventoryManager/AlayaInventoryReducer';
 import { scannedLook, scanLogs, locationLogs } from './modules/Scan/ScanReducer';
-import { getReceivedOrderlines, getQC3FailOrderlines, getRefundConfirmedOrderlines, getToBePickedOrderlines, getOutForDeliveryOrderlines, getOrderlinesForNCRDelivery, getOrderLinesForNCRPickup, getOrderlinesForOutstationDelivery, getOrderLinesForOutstationPickup, getAllRunners, getOrderLinesToBeDispatched, getOrderLinesToBeReceived } from './modules/OrderProcess/OrderProcessReducer';
+import { getReceivedOrderlines, getQC3FailOrderlines, getRefundConfirmedOrderlines, getToBePickedOrderlines,
+   getOutForDeliveryOrderlines, getOrderlinesForNCRDelivery, getOrderLinesForNCRPickup,
+   getOrderlinesForOutstationDelivery, getOrderLinesForOutstationPickup, getAllRunners, 
+   getOrderLinesToBeDispatched, getOrderLinesToBeReceived, rentDeliveryOrdersV2 } from './modules/OrderProcess/OrderProcessReducer';
 
 // Combine all reducers into one root reducer
 export default combineReducers({
@@ -31,6 +34,7 @@ export default combineReducers({
   orders,
   rentOrders,
   rentDeliveryOrders,
+  rentDeliveryOrdersV2,
   shopDeliveryOrders,
   orderDetail,
   rentOrderDetail,

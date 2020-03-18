@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { logisticsDeliveryNCRColumns } from '../../../orderProcessTableConfig';
 import ReactTable from 'react-table';
 import { getOrderlinesForNCRDelivery, getAllRunners, assignRunnerToOrderlinesDelivery } from '../OrderProcessActions';
-
+import clientConfig from '../../../config';
 // Import Style
 import styles from './OrderProcess.css';
 
@@ -17,7 +17,7 @@ class LogisticsDeliveries extends React.Component {
             delivery: {
                 pageNumber: 0,
                 pageSize: 0,
-                daysBeforeDeliveryDate: 30
+                daysBeforeDeliveryDate: clientConfig.daysBeforeDeliveryOrPickup
             },
             selectedRunner: null,
             selectedOrderlines: []
