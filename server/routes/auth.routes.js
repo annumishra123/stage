@@ -81,7 +81,7 @@ router.get("/getusers", passport.authenticate('jwt', {
 router.get("/getrunners", passport.authenticate('jwt', {
     session: false,
 }), (req, res) => {
-    if (req.user.role === 'superuser' || req.user.role === 'logistics') {
+    if (req.user.role === 'superuser' || req.user.role === 'logistics' || req.user.role === 'warehouse' || req.user.role === 'admin') {
         User.find({ 'role': 'delivery' }).then(users => {
             res.json(users);
         }).catch(err => {

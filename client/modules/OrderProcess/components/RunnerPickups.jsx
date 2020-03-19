@@ -70,7 +70,7 @@ class RunnerPickups extends React.Component {
     render() {
         return <section className="">
             <h1>Pickups</h1><br />
-            {this.props.runners && (this.props.role == 'superuser') ? <select onChange={(e) => { this.selectRunner(e) }} className={styles.orderProcessSelect}>
+            {this.props.runners && (this.props.role == 'superuser' || this.props.role == 'warehouse' || this.props.role == 'logistics' || this.props.role == 'admin') ? <select onChange={(e) => { this.selectRunner(e) }} className={styles.orderProcessSelect}>
                 <option value=""> -- Select Runner -- </option>
                 {this.props.runners.map((runner, i) => {
                     return <option key={i} value={runner.email}>{runner.name}</option>;

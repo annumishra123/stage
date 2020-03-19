@@ -547,7 +547,7 @@ export function approveRefund(data) {
                     Authorization: 'JWT ' + token
                 },
             }).then(function (response) {
-                alert(JSON.parse(response.data.message).message);
+                alert(response.data.message);
             }).catch(function (error) {
                 alert('Something went wrong!');
             });
