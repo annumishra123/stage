@@ -119,7 +119,7 @@ class RentOrders extends React.Component {
         orderLineId: line.id,
         customerId: this.props.orderDetail.userId,
         amount: this.state.refundAmount,
-        looknumber: line.product.lookNumber,
+        looknumber: line.product.sku,
         phoneNumber: this.props.details ? `${this.props.details.phoneNumber}` : '',
         name: this.props.details ? this.props.details.firstName : ''
       }

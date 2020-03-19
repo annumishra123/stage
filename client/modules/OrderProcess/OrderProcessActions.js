@@ -307,12 +307,12 @@ export function approveRefund(data) {
                 },
                 responseType: 'json'
             }).then(function (response) {
-                console.log(response);                
+                console.log(response);
                 dispatch(getRefundConfirmedOrderlines({
                     pageNumber: 0,
                     pageSize: 0
                 }));
-                alert(JSON.parse(response.data.message).message);
+                alert(response.data.message);
             }).catch(function (error) {
                 console.log(error);
             });

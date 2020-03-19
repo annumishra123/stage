@@ -232,7 +232,7 @@ export default function getRoutes(store, req) {
   const checkEmployee = (nextState, replace, cb) => {
     function checkAuth() {
       const { auth: { role } } = store.getState();
-      if (role !== 'admin' && role !== 'viewer' && role !== 'superuser' && role !== 'delivery' && role !== 'finance') {
+      if (role !== 'admin' && role !== 'viewer' && role !== 'superuser' && role !== 'delivery' && role !== 'finance' && role !== 'warehouse' && role !== 'logistics' && role !== 'qa-executive' && role !== 'qa-manager') {
         replace('/');
       }
       cb();
@@ -466,52 +466,52 @@ export default function getRoutes(store, req) {
           cb(null, require('./modules/Scan/components/ScanLogs').default);
         });
       }} />
-      <Route path="/logistics/deliveries/ncr" onEnter={checkLogistics} getComponent={(nextState, cb) => {
+      <Route path="/logistics/deliveries/ncr" onEnter={checkEmployee} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/OrderProcess/components/LogisticsDeliveriesNCR').default);
         });
       }} />
-      <Route path="/logistics/deliveries/outstation" onEnter={checkLogistics} getComponent={(nextState, cb) => {
+      <Route path="/logistics/deliveries/outstation" onEnter={checkEmployee} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/OrderProcess/components/LogisticsDeliveriesOutstation').default);
         });
       }} />
-      <Route path="/logistics/pickups/ncr" onEnter={checkLogistics} getComponent={(nextState, cb) => {
+      <Route path="/logistics/pickups/ncr" onEnter={checkEmployee} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/OrderProcess/components/LogisticsPickupsNCR').default);
         });
       }} />
-      <Route path="/logistics/pickups/outstation" onEnter={checkLogistics} getComponent={(nextState, cb) => {
+      <Route path="/logistics/pickups/outstation" onEnter={checkEmployee} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/OrderProcess/components/LogisticsPickupsOutstation').default);
         });
       }} />
-      <Route path="/warehouse/dispatches" onEnter={checkWarehouse} getComponent={(nextState, cb) => {
+      <Route path="/warehouse/dispatches" onEnter={checkEmployee} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/OrderProcess/components/WarehouseDispatches').default);
         });
       }} />
-      <Route path="/warehouse/receivals" onEnter={checkWarehouse} getComponent={(nextState, cb) => {
+      <Route path="/warehouse/receivals" onEnter={checkEmployee} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/OrderProcess/components/WarehouseReceivals').default);
         });
       }} />
-      <Route path="/runner/deliveries" onEnter={checkRunner} getComponent={(nextState, cb) => {
+      <Route path="/runner/deliveries" onEnter={checkEmployee} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/OrderProcess/components/RunnerDeliveries').default);
         });
       }} />
-      <Route path="/runner/pickups" onEnter={checkRunner} getComponent={(nextState, cb) => {
+      <Route path="/runner/pickups" onEnter={checkEmployee} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/OrderProcess/components/RunnerPickups').default);
         });
       }} />
-      <Route path="/quality/check" onEnter={checkQAExecutive} getComponent={(nextState, cb) => {
+      <Route path="/quality/check" onEnter={checkEmployee} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/OrderProcess/components/PostOrderQA').default);
         });
       }} />
-      <Route path="/quality/approve" onEnter={checkQAManager} getComponent={(nextState, cb) => {
+      <Route path="/quality/approve" onEnter={checkEmployee} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/OrderProcess/components/QADeductions').default);
         });
