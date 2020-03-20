@@ -752,6 +752,10 @@ export const warehouseDispatchColumns = [{
     Header: 'Order Id',
     accessor: o => `${o.parentOrder.frontendOrderId}_${o.product.sku}`,
 }, {
+    id: 'name',
+    Header: 'Customer Name',
+    accessor: o => o.profile.firstName + ' ' + o.profile.lastName,
+}, {
     Header: 'SKU',
     accessor: 'product.sku',
 }, {
@@ -823,6 +827,10 @@ export const warehouseReceiveColumns = [
         id: 'Order Id',
         Header: 'Order Id',
         accessor: o => `${o.parentOrder.frontendOrderId}_${o.product.sku}`,
+    }, {
+        id: 'name',
+        Header: 'Customer Name',
+        accessor: o => o.profile.firstName + ' ' + o.profile.lastName,
     }, {
         Header: 'SKU',
         accessor: 'product.sku',
