@@ -79,6 +79,7 @@ app.use('/api', passport.authenticate('jwt', {
 var options = {
   target: serverConfig.targetURL,
   changeOrigin: true,
+  secure: false,
   logLevel: 'debug',
   onProxyReq: (proxyReq, req) => {
     // Convert session authentication into API authentication
