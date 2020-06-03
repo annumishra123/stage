@@ -6,6 +6,7 @@ import cuid from 'cuid';
 import config from '../config';
 import axios from 'axios';
 import moment from 'moment';
+import https from 'https';
 
 const router = new Router();
 
@@ -33,6 +34,9 @@ router.post("/create", passport.authenticate('jwt', {
             method: 'post',
             data: refundObject,
             responseType: 'json',
+            httpsAgent: new https.Agent({
+                rejectUnauthorized: false
+            }),
             headers: {
                 'Authorization': config.access_token
             }
