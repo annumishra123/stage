@@ -34,6 +34,9 @@ router.post("/saveScan", passport.authenticate('jwt', {
                 url: url,
                 timeout: 20000,
                 method: 'post',
+                httpsAgent: new https.Agent({
+                    rejectUnauthorized: false
+                }),
                 data: {
                     sku: req.body.sku,
                     location: req.body.location,
@@ -43,7 +46,11 @@ router.post("/saveScan", passport.authenticate('jwt', {
             }).then(response => {
                 res.status(200).send('Outfit Scanned');
             }).catch(error => {
-                res.status(500).send('Cannot Update Catalog');
+                console.log(error);
+                res.status(500).send({
+                    status: 'Cannot Update Catalog',
+                    error: error
+                });
             });
         }).catch(error => {
             res.status(500).send('Cannot Save Log');
