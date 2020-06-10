@@ -6,6 +6,7 @@ import Scan from '../models/scan';
 import cuid from 'cuid';
 import config from '../config';
 import axios from 'axios';
+import https from 'https';
 
 const router = new Router();
 
