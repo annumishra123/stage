@@ -12,7 +12,7 @@ const router = new Router();
 router.post("/saveScan", passport.authenticate('jwt', {
     session: false,
 }), (req, res) => {
-    if (req.user.role === 'admin' || req.user.role === 'delivery') {
+    if (req.user) {
         let currentDateTime = Date.now();
         let scan = new Scan({
             sku: req.body.sku,
@@ -56,7 +56,7 @@ router.post("/saveScan", passport.authenticate('jwt', {
 router.get('/getAllLogsBySKU', passport.authenticate('jwt', {
     session: false,
 }), (req, res) => {
-    if (req.user.role === 'admin' || req.user.role === 'delivery') {
+    if (req.user) {
         Scan.find({ sku: req.query.sku }).then(logs => {
             res.status(200).send(logs);
         }).catch(error => {
@@ -70,8 +70,8 @@ router.get('/getAllLogsBySKU', passport.authenticate('jwt', {
 router.get('/getAllLogsByEmail', passport.authenticate('jwt', {
     session: false,
 }), (req, res) => {
-    if (req.user.role === 'admin' || req.user.role === 'delivery') {
-        Scan.find({ scannedBy : req.query.email }).sort({ "timestamp": -1 }).then(logs => {
+    if (req.user) {
+        Scan.find({ scannedBy: req.query.email }).sort({ "timestamp": -1 }).then(logs => {
             res.status(200).send(logs);
         }).catch(error => {
             res.status(500).send('No Logs Found');
