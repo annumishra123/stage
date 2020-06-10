@@ -53,7 +53,11 @@ router.post("/saveScan", passport.authenticate('jwt', {
                 });
             });
         }).catch(error => {
-            res.status(500).send('Cannot Save Log');
+            console.log(error);
+            res.status(500).send({
+                status: 'Cannot Save Log',
+                error: error
+            });
         });
     } else {
         res.status(401).send('Unauthorized');
