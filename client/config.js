@@ -101,7 +101,7 @@ const clientConfig = {
   targetURL: 'https://staging.stage3.co',
   paymentMethods: [
     'bank deposit',
-    'Bluedart COD',
+    'PAYU',
     'cheque',
     'COD',
     'FREE',
