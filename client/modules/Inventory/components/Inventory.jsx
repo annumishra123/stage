@@ -3,7 +3,7 @@ import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
-import { getLastQCStatus, setQCStatus, fetchAccessoryCatalog, fetchRentCatalog, fetchShopCatalog, changeShopLookLocation, changeRentLookLocation, changeRentAccessoryLocation, fetchShopProduct, fetchRentProduct, fetchAccessory, updateShopProduct, updateRentProduct, updateAccessory, clearShopProduct, clearRentProduct, clearAccessory, uploadCSV, uploadShopCSV, uploadAccessoryCSV, fetchUpdateLogs, downloadCSV } from '../InventoryActions';
+import { approveProduct, getLastQCStatus, setQCStatus, fetchAccessoryCatalog, fetchRentCatalog, fetchShopCatalog, changeShopLookLocation, changeRentLookLocation, changeRentAccessoryLocation, fetchShopProduct, fetchRentProduct, fetchAccessory, updateShopProduct, updateRentProduct, updateAccessory, clearShopProduct, clearRentProduct, clearAccessory, uploadCSV, uploadShopCSV, uploadAccessoryCSV, fetchUpdateLogs, downloadCSV } from '../InventoryActions';
 import clientConfig from '../../../config';
 import { CSVLink } from 'react-csv';
 import ReactModal from 'react-modal';
@@ -172,6 +172,12 @@ class Inventory extends React.Component {
         }
     }
 
+    handleApproveProduct(id) {
+        if (id) {
+            this.props.approveProduct(id);
+        }
+    }
+
 
     renderProductDetail(tab) {
         switch (tab) {
@@ -330,20 +336,13 @@ class Inventory extends React.Component {
                 //                            </div>
                 //     });
                 // }
-                if (!clientConfig.shopLooksColumns.find(o => o.id == 'changeLocation') && (this.props.role == 'admin' || this.props.role == 'delivery')) {
+                if (!clientConfig.shopLooksColumns.find(o => o.id == 'approve') && (this.props.role == 'admin' || this.props.role == 'superuser')) {
                     clientConfig.shopLooksColumns.unshift({
-                        Header: '',
-                        id: 'changeLocation',
+                        Header: 'Approve',
+                        id: 'approve',
                         accessor: 'id',
                         Cell: ({ value }) => <div>
-                            <select onChange={this.handleChangeLocation.bind(this)}>
-                                <option value=""> -- Select Location -- </option>
-                                <option value="store-hkv">Store (HKV)</option>
-                                <option value="store-rjg">Store (RJG)</option>
-                                <option value="office">Office</option>
-                                <option value="customer">Customer</option>
-                            </select>
-                            <button onClick={this.changeShopLooksLocation.bind(this, value)}>Change</button>
+                            <button onClick={this.handleApproveProduct.bind(this, value)}>Approve</button>
                         </div>
                     });
                 }
@@ -410,11 +409,11 @@ class Inventory extends React.Component {
                     <br />
                     <Tabs selectedIndex={this.state.tabIndex} onSelect={this.handleTabChange.bind(this)}>
                         <TabList>
-                            {/* <Tab>Shop</Tab> */}
+                            <Tab>Shop</Tab>
                             <Tab>Rent</Tab>
                             {/* <Tab>Accessory</Tab> */}
                         </TabList>
-                        {/* <TabPanel>
+                        <TabPanel>
                             <div className={styles.fileUpload}>
                                 <Dropzone onDrop={this.handleShopOnDrop.bind(this)}>
                                     <p>Select a file to upload.</p>
@@ -424,7 +423,7 @@ class Inventory extends React.Component {
                                 <button onClick={this.uploadShopCSV.bind(this)}>Upload CSV</button>
                             </div>
                             {this.renderShopLooks()}
-                        </TabPanel> */}
+                        </TabPanel>
                         <TabPanel>
                             <div className={styles.fileUpload}>
                                 <Dropzone onDrop={this.handleOnDrop.bind(this)}>
@@ -486,6 +485,7 @@ function matchDispatchToProps(dispatch) {
         fetchRentCatalog,
         fetchShopCatalog,
         changeShopLookLocation,
+        approveProduct,
         changeRentLookLocation,
         changeRentAccessoryLocation,
         fetchShopProduct,
