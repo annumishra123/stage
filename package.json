@@ -34,7 +34,7 @@
   "dependencies": {
     "@google-cloud/storage": "^1.7.0",
     "autoprefixer": "^9.5.1",
-    "axios": "^0.16.2",
+    "axios": "^0.21.1",
     "babel-core": "^6.9.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.1",
@@ -128,11 +128,11 @@
     "sinon": "^1.17.4",
     "style-loader": "^0.13.1",
     "supertest": "^1.2.0",
-    "terser-webpack-plugin-legacy": "^1.2.3",
+    "terser-webpack-plugin-legacy": "^1.2.5",
     "url-loader": "^0.5.7",
     "webpack": "2.1.0-beta.8",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-dev-server": "^2.9.4",
+    "webpack-dev-server": "^2.11.5",
     "webpack-externals-plugin": "^1.0.0",
     "webpack-hot-middleware": "^2.10.0",
     "webpack-manifest-plugin": "^1.0.1"

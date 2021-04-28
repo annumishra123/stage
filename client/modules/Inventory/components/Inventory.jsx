@@ -410,11 +410,11 @@ class Inventory extends React.Component {
                     <br />
                     <Tabs selectedIndex={this.state.tabIndex} onSelect={this.handleTabChange.bind(this)}>
                         <TabList>
-                            {/* <Tab>Shop</Tab> */}
+                            <Tab>Shop</Tab>
                             <Tab>Rent</Tab>
                             {/* <Tab>Accessory</Tab> */}
                         </TabList>
-                        {/* <TabPanel>
+                        <TabPanel>
                             <div className={styles.fileUpload}>
                                 <Dropzone onDrop={this.handleShopOnDrop.bind(this)}>
                                     <p>Select a file to upload.</p>
@@ -424,7 +424,7 @@ class Inventory extends React.Component {
                                 <button onClick={this.uploadShopCSV.bind(this)}>Upload CSV</button>
                             </div>
                             {this.renderShopLooks()}
-                        </TabPanel> */}
+                        </TabPanel>
                         <TabPanel>
                             <div className={styles.fileUpload}>
                                 <Dropzone onDrop={this.handleOnDrop.bind(this)}>
