@@ -687,15 +687,34 @@ const clientConfig = {
     Header: 'SKU',
     accessor: 'sku',
   }, {
+    id: 'image1',
+    Header: 'Image 1',
+    accessor: o => o.image1 ? <a target="blank" href={o.image1}>Link</a> : '-',
+  }, {
+    id: 'image2',
+    Header: 'Image 2',
+    accessor: o => o.image2 ? <a target="blank" href={o.image2}>Link</a> : '-',
+  }, {
+    id: 'image3',
+    Header: 'Image 3',
+    accessor: o => o.image3 ? <a target="blank" href={o.image3}>Link</a> : '-',
+  }, {
+    id: 'image4',
+    Header: 'Image 4',
+    accessor: o => o.image4 ? <a target="blank" href={o.image4}>Link</a> : '-',
+  }, {
+    id: 'video',
+    Header: 'Video',
+    accessor: o => o.video ? <a target="blank" href={o.video}>Link</a> : '-',
+  }, {
     Header: 'Name',
     accessor: 'name',
   }, {
-    id: 'image',
-    Header: 'Image',
-    accessor: o => <a target="blank" href={o.frontimage}>Link</a>,
+    Header: 'Description',
+    accessor: 'description',
   }, {
-    Header: 'Location',
-    accessor: 'location',
+    Header: 'Price',
+    accessor: 'saleprice',
   }],
   rentLooksColumns: [{
     Header: 'Look No.',

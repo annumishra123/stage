@@ -3,7 +3,13 @@ import axios from 'axios';
 
 export function fetchShopCatalog() {
     return function (dispatch) {
-        let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts';
+        let loopbackFilter = {
+            where: {
+                approved: false
+            },
+            order: 'uploadtime ASC'
+        };
+        let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts?filter=' + JSON.stringify(loopbackFilter);
         return axios({
             url: url,
             timeout: 20000,
@@ -276,6 +282,23 @@ export function changeShopLookLocation(id, location) {
         }).catch((error) => {
             console.log(error);
         });
+    }
+}
+
+export function approveProduct(id) {
+    return function (dispatch) {
+        alert("The product has been approved!");
+        // let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/changelocation?id=' + id + '&location=' + location;
+        // return axios({
+        //     url: url,
+        //     timeout: 20000,
+        //     method: 'get',
+        //     responseType: 'json'
+        // }).then((response) => {
+        //     dispatch(fetchShopCatalog());
+        // }).catch((error) => {
+        //     console.log(error);
+        // });
     }
 }
 
