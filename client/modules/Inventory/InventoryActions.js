@@ -56,13 +56,88 @@ export function clearShopProduct() {
 
 export function updateShopProduct(product) {
     return function (dispatch) {
-        let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/' + product.id + '/replace';
+        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/update?id=${product.id}`;
+        let formData = new FormData();
+        if (product.hasOwnProperty("name")) {
+            formData.append('name', product.name);
+        }
+        if (product.hasOwnProperty("description")) {
+            formData.append('description', product.description);
+        }
+        if (product.hasOwnProperty("originalretailprice")) {
+            formData.append('originalretailprice', product.originalretailprice);
+        }
+        if (product.hasOwnProperty("gender")) {
+            formData.append('gender', product.gender);
+        }
+        if (product.hasOwnProperty("status")) {
+            formData.append('status', product.status);
+        }
+        if (product.hasOwnProperty("size")) {
+            formData.append('size', product.size);
+        }
+        if (product.hasOwnProperty("seller")) {
+            formData.append('seller', product.seller);
+        }
+        if (product.hasOwnProperty("condition")) {
+            formData.append('condition', product.condition);
+        }
+        if (product.hasOwnProperty("saleprice")) {
+            formData.append('saleprice', product.saleprice);
+        }
+        if (product.hasOwnProperty("sequence")) {
+            formData.append('sequence', product.sequence);
+        }
+        if (product.hasOwnProperty("color")) {
+            formData.append('color', product.color);
+        }
+        if (product.hasOwnProperty("categories")) {
+            formData.append('categories', product.categories);
+        }
+        if (product.hasOwnProperty("subcategories")) {
+            formData.append('subcategories', product.subcategories);
+        }
+        if (product.hasOwnProperty("tags")) {
+            formData.append('tags', product.tags);
+        }
+        if (product.hasOwnProperty("quantity")) {
+            formData.append('quantity', product.quantity);
+        }
+        if (product.hasOwnProperty("notes")) {
+            formData.append('notes', product.notes);
+        }
+        if (product.hasOwnProperty("brand")) {
+            formData.append('brand', product.brand);
+        }
+        if (product.hasOwnProperty("approved")) {
+            formData.append('approved', product.approved);
+        }
+        if (product.hasOwnProperty("shippingsize")) {
+            formData.append('shippingsize', product.shippingsize);
+        }
+        if (product.hasOwnProperty("image1")) {
+            formData.append('image1', product.image1);
+        }
+        if (product.hasOwnProperty("image2")) {
+            formData.append('image2', product.image2);
+        }
+        if (product.hasOwnProperty("image3")) {
+            formData.append('image3', product.image3);
+        }
+        if (product.hasOwnProperty("image4")) {
+            formData.append('image4', product.image4);
+        }
+        if (product.hasOwnProperty("video")) {
+            formData.append('video', product.video);
+        }
         return axios({
             url: url,
-            timeout: 20000,
             method: 'post',
             responseType: 'json',
-            data: product
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         }).then((response) => {
             console.log(response.data)
             dispatch({
@@ -239,7 +314,6 @@ export function fetchAccessory(id) {
 
 export function updateAccessory(product) {
     return function (dispatch) {
-        debugger;
         let url = clientConfig.targetURL + '/catalogv2/catalogv2/Accessories/' + product.id + '/replace';
         return axios({
             url: url,

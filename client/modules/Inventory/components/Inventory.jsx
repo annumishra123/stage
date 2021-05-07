@@ -146,7 +146,7 @@ class Inventory extends React.Component {
         browserHistory.push('/inventory/rent/' + id);
     }
 
-    viewShopLook(id) {
+    handleEditProduct(id) {
         browserHistory.push('/inventory/shop/' + id);
     }
 
@@ -326,23 +326,23 @@ class Inventory extends React.Component {
     renderShopLooks() {
         if (this.props.shopCatalog) {
             if (this.props.shopCatalog.length > 0) {
-                // if (!clientConfig.shopLooksColumns.find(o => o.id == 'edit') && (this.props.role == 'admin')) {
-                //     clientConfig.shopLooksColumns.unshift({
-                //         Header: '',
-                //         id: 'edit',
-                //         accessor: 'id',
-                //         Cell: ({value}) => <div>
-                //                              {<button onClick={ this.viewShopLook.bind(this, value) }>Edit Product</button>}
-                //                            </div>
-                //     });
-                // }
+                if (!clientConfig.shopLooksColumns.find(o => o.id == 'edit') && (this.props.role == 'admin' || this.props.role == 'superuser')) {
+                    clientConfig.shopLooksColumns.unshift({
+                        Header: 'Edit',
+                        id: 'edit',
+                        accessor: 'id',
+                        Cell: ({ value }) => <div style={{ textAlign: 'center' }}>
+                            {<button className={styles.gridBtn} onClick={this.handleEditProduct.bind(this, value)}>Edit</button>}
+                        </div>
+                    });
+                }
                 if (!clientConfig.shopLooksColumns.find(o => o.id == 'approve') && (this.props.role == 'admin' || this.props.role == 'superuser')) {
                     clientConfig.shopLooksColumns.unshift({
                         Header: 'Approve',
                         id: 'approve',
                         accessor: 'id',
-                        Cell: ({ value }) => <div>
-                            <button onClick={this.handleApproveProduct.bind(this, value)}>Approve</button>
+                        Cell: ({ value }) => <div style={{ textAlign: 'center' }}>
+                            <button className={styles.gridBtn} onClick={this.handleApproveProduct.bind(this, value)}>Approve</button>
                         </div>
                     });
                 }
@@ -389,7 +389,7 @@ class Inventory extends React.Component {
                     Header: '',
                     id: 'download',
                     accessor: 'link',
-                    Cell: ({ value }) => <button onClick={() => this.downloadCSV(value)}>Download</button>
+                    Cell: ({ value }) => <button className={styles.gridBtn} onClick={() => this.downloadCSV(value)}>Download</button>
                 });
             }
             return <div>
