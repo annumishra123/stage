@@ -56,8 +56,8 @@ export function clearShopProduct() {
 
 export function updateShopProduct(product) {
     return function (dispatch) {
-        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/update?id=${product.id}`;
-        let formData = new FormData();
+        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/update?id=${product.id}`,
+            formData = new FormData();
         if (product.hasOwnProperty("name")) {
             formData.append('name', product.name);
         }
@@ -361,18 +361,25 @@ export function changeShopLookLocation(id, location) {
 
 export function approveProduct(id) {
     return function (dispatch) {
-        alert("The product has been approved!");
-        // let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts/changelocation?id=' + id + '&location=' + location;
-        // return axios({
-        //     url: url,
-        //     timeout: 20000,
-        //     method: 'get',
-        //     responseType: 'json'
-        // }).then((response) => {
-        //     dispatch(fetchShopCatalog());
-        // }).catch((error) => {
-        //     console.log(error);
-        // });
+        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/update?id=${id}`,
+            formData = new FormData();
+        formData.append('approved', true);
+
+        return axios({
+            url: url,
+            method: 'post',
+            responseType: 'json',
+            data: formData
+        }).then((response) => {
+            console.log(response.data);
+            alert("The product has been approved!");
+            dispatch({
+                type: 'FETCH_SHOP_PRODUCT',
+                payload: response.data
+            });
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 }
 
