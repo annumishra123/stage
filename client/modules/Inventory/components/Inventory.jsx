@@ -146,7 +146,7 @@ class Inventory extends React.Component {
         browserHistory.push('/inventory/rent/' + id);
     }
 
-    viewShopLook(id) {
+    handleEditProduct(id) {
         browserHistory.push('/inventory/shop/' + id);
     }
 
@@ -235,122 +235,124 @@ class Inventory extends React.Component {
     }
 
     renderRentLooks() {
-        if (this.props.rentCatalog) {
-            if (this.props.rentCatalog.length > 0) {
-                let qcIndex = clientConfig.rentLooksColumns.findIndex(o => o.id == 'qcStatus');
-                if (qcIndex != -1) { clientConfig.rentLooksColumns.splice(qcIndex, 1); }
+        const { rentCatalog, role } = this.props,
+            { rentCatalogCSV } = this.state;
+        if (rentCatalog && rentCatalog.length != 0) {
+            let qcIndex = clientConfig.rentLooksColumns.findIndex(o => o.id == 'qcStatus');
+            if (qcIndex != -1) { clientConfig.rentLooksColumns.splice(qcIndex, 1); }
 
-                if (!clientConfig.rentLooksColumns.find(o => o.id == 'edit') && (this.props.role == 'admin')) {
-                    clientConfig.rentLooksColumns.unshift({
-                        Header: '',
-                        id: 'edit',
-                        accessor: '_id',
-                        Cell: ({ value }) => <div>
-                            <button onClick={this.viewRentLook.bind(this, value)}>Edit Product</button>
-                        </div>
-                    });
-                }
-                // if (!clientConfig.rentLooksColumns.find(o => o.id == 'changeLocation') && (this.props.role == 'admin' || this.props.role == 'delivery')) {
-                //     clientConfig.rentLooksColumns.unshift({
-                //         Header: '',
-                //         id: 'changeLocation',
-                //         accessor: '_id',
-                //         Cell: ({ value }) => <div>
-                //             <select onChange={this.handleChangeLocation.bind(this)}>
-                //                 <option value=""> -- Select Location -- </option>
-                //                 <option value="store-hkv">Store (HKV)</option>
-                //                 <option value="store-rjg">Store (RJG)</option>
-                //                 <option value="office">Office</option>
-                //                 <option value="customer">Customer</option>
-                //                 <option value="cafe-we">Cafe We</option>
-                //             </select>
-                //             <button onClick={this.changeRentLooksLocation.bind(this, value)}>Change</button>
-                //         </div>
-                //     });
-                // }
-                if (this.props.role == 'admin') {
-                    clientConfig.rentLooksColumns.unshift({
-                        Header: '',
-                        id: 'qcStatus',
-                        accessor: (value) => <div>
-                            <button onClick={() => this.showQCModal(value)}>Approve Quality</button>
-                        </div>
-                    });
-                }
-                return <div>
-                    <ReactTable filterable data={this.props.rentCatalog} columns={clientConfig.rentLooksColumns} defaultPageSize={10} className="-striped -highlight" />
-                    {this.state.rentCatalogCSV ? <CSVLink data={this.state.rentCatalogCSV} filename={"Rent Inventory.csv"}>Export CSV</CSVLink> : null}
-                </div>;
+            if (!clientConfig.rentLooksColumns.find(o => o.id == 'edit') && (role == 'admin')) {
+                clientConfig.rentLooksColumns.unshift({
+                    Header: '',
+                    id: 'edit',
+                    accessor: '_id',
+                    Cell: ({ value }) => <div>
+                        <button onClick={this.viewRentLook.bind(this, value)}>Edit Product</button>
+                    </div>
+                });
             }
+            // if (!clientConfig.rentLooksColumns.find(o => o.id == 'changeLocation') && (this.props.role == 'admin' || this.props.role == 'delivery')) {
+            //     clientConfig.rentLooksColumns.unshift({
+            //         Header: '',
+            //         id: 'changeLocation',
+            //         accessor: '_id',
+            //         Cell: ({ value }) => <div>
+            //             <select onChange={this.handleChangeLocation.bind(this)}>
+            //                 <option value=""> -- Select Location -- </option>
+            //                 <option value="store-hkv">Store (HKV)</option>
+            //                 <option value="store-rjg">Store (RJG)</option>
+            //                 <option value="office">Office</option>
+            //                 <option value="customer">Customer</option>
+            //                 <option value="cafe-we">Cafe We</option>
+            //             </select>
+            //             <button onClick={this.changeRentLooksLocation.bind(this, value)}>Change</button>
+            //         </div>
+            //     });
+            // }
+            if (role == 'admin') {
+                clientConfig.rentLooksColumns.unshift({
+                    Header: '',
+                    id: 'qcStatus',
+                    accessor: (value) => <div>
+                        <button onClick={() => this.showQCModal(value)}>Approve Quality</button>
+                    </div>
+                });
+            }
+            return <div>
+                <ReactTable filterable data={rentCatalog} columns={clientConfig.rentLooksColumns} defaultPageSize={10} className="-striped -highlight" />
+                {rentCatalogCSV && <CSVLink data={rentCatalogCSV} filename={"Rent Inventory.csv"}>Export CSV</CSVLink>}
+            </div>;
         }
     }
 
     renderRentAccessories() {
-        if (this.props.accessoryCatalog) {
-            if (this.props.accessoryCatalog.length > 0) {
-                // if (!clientConfig.rentAccessoriesColumns.find(o => o.id == 'edit') && (this.props.role == 'admin')) {
-                //     clientConfig.rentAccessoriesColumns.unshift({
-                //         Header: '',
-                //         id: 'edit',
-                //         accessor: '_id',
-                //         Cell: ({value}) => <div>
-                //                              {<button onClick={ this.viewAccessory.bind(this, value) }>Edit Accessory</button>}
-                //                            </div>
-                //     });
-                // }
-                if (!clientConfig.rentAccessoriesColumns.find(o => o.id == 'changeLocation') && (this.props.role == 'admin' || this.props.role == 'delivery')) {
-                    clientConfig.rentAccessoriesColumns.unshift({
-                        Header: '',
-                        id: 'changeLocation',
-                        accessor: '_id',
-                        Cell: ({ value }) => <div>
-                            <select onChange={this.handleChangeLocation.bind(this)}>
-                                <option value=""> -- Select Location -- </option>
-                                <option value="store-hkv">Store (HKV)</option>
-                                <option value="store-rjg">Store (RJG)</option>
-                                <option value="office">Office</option>
-                                <option value="customer">Customer</option>
-                            </select>
-                            <button onClick={this.changeRentAccessoriesLocation.bind(this, value)}>Change</button>
-                        </div>
-                    });
-                }
-                return <div>
-                    <ReactTable filterable data={this.props.accessoryCatalog} columns={clientConfig.rentAccessoriesColumns} defaultPageSize={10} className="-striped -highlight" />
-                    {this.state.accessoryCSV ? <CSVLink data={this.state.accessoryCSV} filename={"Accessory Inventory.csv"}>Export CSV</CSVLink> : null}
-                </div>;
+        const { accessoryCatalog, role } = this.props,
+            { accessoryCSV } = this.state;
+        if (accessoryCatalog && accessoryCatalog.length != 0) {
+            // if (!clientConfig.rentAccessoriesColumns.find(o => o.id == 'edit') && (this.props.role == 'admin')) {
+            //     clientConfig.rentAccessoriesColumns.unshift({
+            //         Header: '',
+            //         id: 'edit',
+            //         accessor: '_id',
+            //         Cell: ({value}) => <div>
+            //                              {<button onClick={ this.viewAccessory.bind(this, value) }>Edit Accessory</button>}
+            //                            </div>
+            //     });
+            // }
+            if (!clientConfig.rentAccessoriesColumns.find(o => o.id == 'changeLocation') && (role == 'admin' || role == 'delivery')) {
+                clientConfig.rentAccessoriesColumns.unshift({
+                    Header: '',
+                    id: 'changeLocation',
+                    accessor: '_id',
+                    Cell: ({ value }) => <div>
+                        <select onChange={this.handleChangeLocation.bind(this)}>
+                            <option value=""> -- Select Location -- </option>
+                            <option value="store-hkv">Store (HKV)</option>
+                            <option value="store-rjg">Store (RJG)</option>
+                            <option value="office">Office</option>
+                            <option value="customer">Customer</option>
+                        </select>
+                        <button onClick={this.changeRentAccessoriesLocation.bind(this, value)}>Change</button>
+                    </div>
+                });
             }
+            return <div>
+                <ReactTable filterable data={accessoryCatalog} columns={clientConfig.rentAccessoriesColumns} defaultPageSize={10} className="-striped -highlight" />
+                {accessoryCSV && <CSVLink data={accessoryCSV} filename={"Accessory Inventory.csv"}>Export CSV</CSVLink>}
+            </div>;
         }
     }
 
     renderShopLooks() {
-        if (this.props.shopCatalog) {
-            if (this.props.shopCatalog.length > 0) {
-                // if (!clientConfig.shopLooksColumns.find(o => o.id == 'edit') && (this.props.role == 'admin')) {
-                //     clientConfig.shopLooksColumns.unshift({
-                //         Header: '',
-                //         id: 'edit',
-                //         accessor: 'id',
-                //         Cell: ({value}) => <div>
-                //                              {<button onClick={ this.viewShopLook.bind(this, value) }>Edit Product</button>}
-                //                            </div>
-                //     });
-                // }
-                if (!clientConfig.shopLooksColumns.find(o => o.id == 'approve') && (this.props.role == 'admin' || this.props.role == 'superuser')) {
+        const { shopCatalog, role } = this.props,
+            { shopCatalogCSV } = this.state;
+        if (shopCatalog && shopCatalog.length != 0) {
+            if (role == 'admin' || role == 'superuser') {
+                if (!clientConfig.shopLooksColumns.find(o => o.id == 'edit')) {
+                    clientConfig.shopLooksColumns.unshift({
+                        Header: 'Edit',
+                        id: 'edit',
+                        accessor: 'id',
+                        Cell: ({ value }) => <div style={{ textAlign: 'center' }}>
+                            {<button className={styles.gridBtn} onClick={this.handleEditProduct.bind(this, value)}>Edit</button>}
+                        </div>
+                    });
+                }
+                if (!clientConfig.shopLooksColumns.find(o => o.id == 'approve')) {
                     clientConfig.shopLooksColumns.unshift({
                         Header: 'Approve',
                         id: 'approve',
                         accessor: 'id',
-                        Cell: ({ value }) => <div>
-                            <button onClick={this.handleApproveProduct.bind(this, value)}>Approve</button>
+                        Cell: ({ value }) => <div style={{ textAlign: 'center' }}>
+                            <button className={styles.gridBtn} onClick={this.handleApproveProduct.bind(this, value)}>Approve</button>
                         </div>
                     });
                 }
-                return <div>
-                    <ReactTable filterable data={this.props.shopCatalog} columns={clientConfig.shopLooksColumns} defaultPageSize={10} className="-striped -highlight" />
-                    {this.state.shopCatalogCSV ? <CSVLink data={this.state.shopCatalogCSV} filename={"Shop Inventory.csv"}>Export CSV</CSVLink> : null}
-                </div>;
             }
+            return <div>
+                <ReactTable filterable data={shopCatalog} columns={clientConfig.shopLooksColumns} defaultPageSize={10} className="-striped -highlight" />
+                {shopCatalogCSV && <CSVLink data={shopCatalogCSV} filename={"Shop Inventory.csv"}>Export CSV</CSVLink>}
+            </div>;
         }
     }
 
@@ -383,20 +385,21 @@ class Inventory extends React.Component {
     }
 
     renderUploadLogs() {
-        if (this.props.uploadLogs && this.props.uploadLogs.length > 0) {
-            if (!clientConfig.uploadSheetColumns.find(o => o.id == 'download') && (this.props.role == 'admin' || this.props.role == 'superuser')) {
+        const { uploadLogs, role } = this.props;
+        if (uploadLogs && uploadLogs.length != 0) {
+            if (!clientConfig.uploadSheetColumns.find(o => o.id == 'download') && (role == 'admin' || role == 'superuser')) {
                 clientConfig.uploadSheetColumns.push({
                     Header: '',
                     id: 'download',
                     accessor: 'link',
-                    Cell: ({ value }) => <button onClick={() => this.downloadCSV(value)}>Download</button>
+                    Cell: ({ value }) => <button className={styles.gridBtn} onClick={() => this.downloadCSV(value)}>Download</button>
                 });
             }
             return <div>
                 <br />
                 <hr />
                 <h1>Uploaded Sheets</h1>
-                <ReactTable filterable data={this.props.uploadLogs} columns={clientConfig.uploadSheetColumns} defaultPageSize={10} className="-striped -highlight" />
+                <ReactTable filterable data={uploadLogs} columns={clientConfig.uploadSheetColumns} defaultPageSize={10} className="-striped -highlight" />
             </div>;
         }
     }
