@@ -118,8 +118,9 @@ class ShopProduct extends React.Component {
 				this.setState({ selectedBrand: value });
 				break;
 			case 'approved':
-				this.state.shopProduct.approved = value;
-				this.setState({ selectedApproveStatus: value });
+				let updateCombo = value == 'true' ? true : false;
+				this.state.shopProduct.approved = updateCombo;
+				this.setState({ selectedApproveStatus: updateCombo });
 				break;
 			case 'shippingsize':
 				this.state.shopProduct.shippingsize = value;
@@ -182,7 +183,7 @@ class ShopProduct extends React.Component {
 			}
 		}
 		productUpdatedData = Object.assign(productUpdatedData, this.state.shopProduct);
-		this.props.updateShopProduct(productUpdatedData);
+		this.props.updateShopProduct(productUpdatedData, this.props.user);
 		alert("Product Updated Successfully!!!");
 		this.setState({ imageFiles: [], previewFile: [] });
 		// browserHistory.goBack();  // if needs to go back to previous screen

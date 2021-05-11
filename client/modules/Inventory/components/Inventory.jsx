@@ -10,6 +10,8 @@ import ReactModal from 'react-modal';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Dropzone from 'react-dropzone';
 import moment from 'moment';
+import ColumnHeaderFilter from '../ColumnHeaderFilter';
+import * as constants from '../constants';
 
 // Import Style
 import styles from './inventory.css';
@@ -174,7 +176,13 @@ class Inventory extends React.Component {
 
     handleApproveProduct(id) {
         if (id) {
-            this.props.approveProduct(id);
+            const selectedRow = this.props.shopCatalog.find(item => item.id == id);
+            let rowData = {
+                sku: selectedRow.sku,
+                action: selectedRow.approved ? 'DISAPPROVED' : 'APPROVED',
+                user: this.props.user
+            }
+            this.props.approveProduct(rowData);
         }
     }
 
@@ -333,6 +341,8 @@ class Inventory extends React.Component {
                         Header: 'Edit',
                         id: 'edit',
                         accessor: 'id',
+                        filterable: false,
+                        sortable: false,
                         Cell: ({ value }) => <div style={{ textAlign: 'center' }}>
                             {<button className={styles.gridBtn} onClick={this.handleEditProduct.bind(this, value)}>Edit</button>}
                         </div>
@@ -343,14 +353,19 @@ class Inventory extends React.Component {
                         Header: 'Approve',
                         id: 'approve',
                         accessor: 'id',
-                        Cell: ({ value }) => <div style={{ textAlign: 'center' }}>
-                            <button className={styles.gridBtn} onClick={this.handleApproveProduct.bind(this, value)}>Approve</button>
-                        </div>
+                        Filter: <ColumnHeaderFilter colKey='approved' filterType='select' listData={constants.approvalStatus} />,
+                        sortable: false,
+                        Cell: ({ value }) => {
+                            let product = this.props.shopCatalog.find(i => i.id == value);
+                            return <div style={{ textAlign: 'center' }}>
+                                <button className={styles.gridBtn} onClick={this.handleApproveProduct.bind(this, value)}>{product.approved ? 'Disapprove' : 'Approve'}</button>
+                            </div>
+                        }
                     });
                 }
             }
             return <div>
-                <ReactTable filterable data={shopCatalog} columns={clientConfig.shopLooksColumns} defaultPageSize={10} className="-striped -highlight" />
+                <ReactTable defaultSorted={[{ id: "uploadtime", desc: false }]} filterable data={shopCatalog} columns={clientConfig.shopLooksColumns} defaultPageSize={10} className="-striped -highlight" />
                 {shopCatalogCSV && <CSVLink data={shopCatalogCSV} filename={"Shop Inventory.csv"}>Export CSV</CSVLink>}
             </div>;
         }
