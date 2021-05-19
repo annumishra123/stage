@@ -21,10 +21,14 @@ import { tasks, contexts, dispositions, taskDetail } from './modules/CRM/CRMRedu
 import { waybills } from './modules/Shipping/ShippingReducer';
 import { allRawMaterials, allOutfits } from './modules/AlayaInventoryManager/AlayaInventoryReducer';
 import { scannedLook, scanLogs, locationLogs } from './modules/Scan/ScanReducer';
-import { getReceivedOrderlines, getQC3FailOrderlines, getRefundConfirmedOrderlines, getToBePickedOrderlines,
-   getOutForDeliveryOrderlines, getOrderlinesForNCRDelivery, getOrderLinesForNCRPickup,
-   getOrderlinesForOutstationDelivery, getOrderLinesForOutstationPickup, getAllRunners, 
-   getOrderLinesToBeDispatched, getOrderLinesToBeReceived, rentDeliveryOrdersV2 } from './modules/OrderProcess/OrderProcessReducer';
+import {
+  getReceivedOrderlines, getQC3FailOrderlines, getRefundConfirmedOrderlines, getToBePickedOrderlines,
+  getOutForDeliveryOrderlines, getOrderlinesForNCRDelivery, getOrderLinesForNCRPickup,
+  getOrderlinesForOutstationDelivery, getOrderLinesForOutstationPickup, getAllRunners,
+  getOrderLinesToBeDispatched, getOrderLinesToBeReceived, rentDeliveryOrdersV2
+} from './modules/OrderProcess/OrderProcessReducer';
+import { stories, entireStore, entireSeller } from './modules/Stories/StoriesReducer';
+import { influencers } from './modules/Influencer/InfluencerReducer';
 
 // Combine all reducers into one root reducer
 export default combineReducers({
@@ -97,5 +101,9 @@ export default combineReducers({
   getToBePickedOrderlines,
   getReceivedOrderlines,
   getQC3FailOrderlines,
-  getRefundConfirmedOrderlines
+  getRefundConfirmedOrderlines,
+  stories,
+  influencers,
+  entireStore,
+  entireSeller
 });
