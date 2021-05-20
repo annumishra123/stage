@@ -72,7 +72,7 @@ export class Autocomplete extends Component {
                                     let sellerName = `${suggestion.firstName} ${suggestion.lastName}`;
                                     return (
                                         <li key={sellerName} className={styles.autocompleteLi} onClick={onClick}>
-                                            {<img className={styles.suggestionListImage} src={suggestion.profileImageUrl} />}<div className={styles.liText}>{sellerName}</div>
+                                            {<img className={styles.suggestionListImage} alt='No Image available' src={suggestion.profileImageUrl} />}<div className={styles.liText}>{sellerName}</div>
                                         </li>
                                     );
                                 default:

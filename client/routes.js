@@ -531,6 +531,11 @@ export default function getRoutes(store, req) {
           cb(null, require('./modules/Influencer/components/Influencer').default);
         });
       }} />
+      <Route path="/influencer/list" onEnter={checkAuth} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Influencer/components/InfluencerList').default);
+        });
+      }} />
     </Route>
   );
 }

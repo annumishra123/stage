@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchAllSpotlightInfluencers } from '../InfluencerAction';
+import clientConfig from '../../../config';
 
 // Import Style
 import styles from '../influencer.css';
@@ -32,7 +33,10 @@ class Influencer extends React.Component {
         return <section>
             <button className={styles.backBtn} onClick={() => browserHistory.goBack()}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true" /> Back</button>
             <div className={styles.influencerBodySection}>
-                <h1>INFLUENCERS SPOTLIGHT</h1>
+                <div style={{ display: 'flex' }}>
+                    <h1>INFLUENCERS SPOTLIGHT</h1>
+                    <button className={styles.seeMoreBtn} onClick={() => browserHistory.push('/influencer/list')}>See more</button>
+                </div>
                 <h4>From their wardrobe to yours <strong>#MakeitYours</strong></h4>
                 <div className={styles.influencerImageSection}>
                     {influencersList.length != 0 && influencersList.map((item, idx) => <div key={idx} className={styles.influencerImageDiv}>

@@ -28,7 +28,7 @@ import {
   getOrderLinesToBeDispatched, getOrderLinesToBeReceived, rentDeliveryOrdersV2
 } from './modules/OrderProcess/OrderProcessReducer';
 import { stories, entireStore, entireSeller } from './modules/Stories/StoriesReducer';
-import { spotlightInfluencers } from './modules/Influencer/InfluencerReducer';
+import { spotlightInfluencers, allInfluencers, influencersCarousel } from './modules/Influencer/InfluencerReducer';
 
 // Combine all reducers into one root reducer
 export default combineReducers({
@@ -103,7 +103,9 @@ export default combineReducers({
   getQC3FailOrderlines,
   getRefundConfirmedOrderlines,
   stories,
-  spotlightInfluencers,
   entireStore,
-  entireSeller
+  entireSeller,
+  spotlightInfluencers,
+  allInfluencers,
+  influencersCarousel
 });
