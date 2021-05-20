@@ -1,0 +1,53 @@
+.influencerBodySection h1 {
+    color: #000;
+    font-family: 'Lato', sans-serif;
+    font-size: 24px;
+    letter-spacing: 1px;
+    text-align: left;
+    margin: 0;
+}
+
+.influencerBodySection h4 {
+    color: gray;
+    margin: 8px 0 15px;
+}
+
+.influencerImageSection {
+    display: flex;
+    text-align: center;
+}
+
+.influencerText {
+    color: #000;
+    font-family: 'Lato', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.influencerImage {
+    border-radius: 6%;
+    width: 13em;
+    min-height: 10.6em;
+    line-height: 10em;
+    text-align: center;
+    font-style: italic;
+}
+
+.influencerImageDiv {
+    margin: 0.5em;
+}
+
+.influencerText {
+    text-transform: capitalize;
+}
+
+.backBtn {
+    background: none;
+    border: 0;
+    color: #333;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin: 1.5em 0 2em;
+    cursor: pointer;
+}

@@ -54,9 +54,9 @@ export function clearShopProduct() {
     }
 }
 
-export function updateShopProduct(product) {
+export function updateShopProduct(product, user) {
     return function (dispatch) {
-        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/update?id=${product.id}`,
+        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/update/backend?id=${product.id}&user=${user}`,
             formData = new FormData();
         if (product.hasOwnProperty("name")) {
             formData.append('name', product.name);
@@ -359,12 +359,10 @@ export function changeShopLookLocation(id, location) {
     }
 }
 
-export function approveProduct(id) {
+export function approveProduct(row) {
     return function (dispatch) {
-        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/update?id=${id}`,
+        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/approve?sku=${row.sku}&action=${row.action}&user=${row.user}`,
             formData = new FormData();
-        formData.append('approved', true);
-
         return axios({
             url: url,
             method: 'post',
@@ -372,9 +370,9 @@ export function approveProduct(id) {
             data: formData
         }).then((response) => {
             console.log(response.data);
-            alert("The product has been approved!");
+            alert("The product has been updated!");
             dispatch({
-                type: 'FETCH_SHOP_PRODUCT',
+                type: 'FETCH_SHOP_CATALOG',
                 payload: response.data
             });
         }).catch((error) => {
@@ -565,6 +563,28 @@ export function getLastQCStatus(looknumber) {
                 payload: response.data
             })
         }).catch(function (error) {
+            console.log(error);
+        });
+    }
+}
+
+export function fetchFilterData(param) {
+    return function (dispatch) {
+        if (param == '') {
+            param = 'approved=false';
+        }
+        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/filter?${param}`;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then((response) => {
+            dispatch({
+                type: 'FETCH_SHOP_CATALOG',
+                payload: response.data.docs
+            });
+        }).catch((error) => {
             console.log(error);
         });
     }

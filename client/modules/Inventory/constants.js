@@ -10,7 +10,7 @@ export const clothSubCategoryList = ["", "skirt", "mini dress", "Jackets/Coats",
 	"Playsuits/Romper", "Suit jackets", "pant", "t-shirts", "trousers", "Leggings", "Lounge sets", "Palazzos", "Shirt", "indian", "jumpsuit", "Nehru jackets", "Off shoulder Tops", "earrings", "jeans", "Midi Dress", "Pants/Trousers",
 	"T-Shirts", "blouse", "coats", "jackets", "kurta", "kurta sets", "palazzos", "playsuits", "romper", "Bags", "Bangles/Bracelets", "Chinos", "Crop Tops", "Earrings", "Formal Shoes", "Headband", "Kaftan", "Kurta sets", "Pocket squares",
 	"Polo shirts", "Shorts", "Skirt", "Sneakers", "Sunglasses", "Tank Tops", "Tshirts", "Vests", "bodysuits", "dress", "hoodies", "leggings", "lounge sets", "nightwear sets", "sari", "sweaters", "sweatshirts", "tshirts"];
-export const approvalStatus = [{ key: true, value: 'Yes' }, { key: false, value: 'No' }];
+export const approvalStatus = [{ key: "false", value: 'No' }, { key: "true", value: 'Yes' }];
 export const brandList = ["", "Adidas", "zara", "109F", "Ajio", "Accessorize", "unkown", "forever 21", "Armani Exchange", "Aeropostale", "flee", "shein", "mango", "stitched", "h&m", "koovs", "other", "banana republic", "Aurelia", "asos",
 	"new look", "puma", "Arrow", "bershka", "forever new", "next", "rheason", "topshop", "ucb", "vero moda", "Alaya by Stage3", "All", "Allen Solly", "adidas", "berksha", "dorothy perkins", "express", "gipsy", "olio", "pankaj & nidhi",
 	"sameer madan", "ALDO", "ASOS", "Caprese", "Desigual", "ESP", "Forever 21", "GAS", "H&M", "Jump USA", "Local", "Peter England", "Puma", "Rare rabbit", "Shein", "Unknown", "Vero moda", "Westside", "Wrogn", "Zara", "abercrombie & fitch",

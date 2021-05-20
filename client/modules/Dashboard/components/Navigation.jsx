@@ -258,6 +258,22 @@ class Navigation extends React.Component {
           </Link>
         </li> : null}
         <li>
+          <Link to="/stories">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-create-store.png" />
+            </figure>
+            <p>Stories</p>
+          </Link>
+        </li>
+        <li>
+          <Link to="/influencer">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-create-store.png" />
+            </figure>
+            <p>influencer</p>
+          </Link>
+        </li>
+        <li>
           <Link to="/login/update">
             <figure>
               <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-change-password.png" />
@@ -266,41 +282,41 @@ class Navigation extends React.Component {
           </Link>
         </li>
       </ul> : <div>
-          <h1>{this.props.owner.toUpperCase()}</h1>
-          <ul>
-            <li>
-              <Link to="/designer/inventory">
-                <figure>
-                  <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-inventory.png" />
-                </figure>
-                <p>Inventory</p></Link>
-            </li>
-            <li>
-              <Link to="/designer/orders">
-                <figure>
-                  <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-order3.png" />
-                </figure>
-                <p>Orders</p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/designer/invoice">
-                <figure>
-                  <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-invoice.png" />
-                </figure>
-                <p>Invoice</p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/login/update">
-                <figure>
-                  <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-change-password.png" />
-                </figure>
-                <p>Change Password</p>
-              </Link>
-            </li>
-          </ul>
-        </div>}
+        <h1>{this.props.owner.toUpperCase()}</h1>
+        <ul>
+          <li>
+            <Link to="/designer/inventory">
+              <figure>
+                <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-inventory.png" />
+              </figure>
+              <p>Inventory</p></Link>
+          </li>
+          <li>
+            <Link to="/designer/orders">
+              <figure>
+                <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-order3.png" />
+              </figure>
+              <p>Orders</p>
+            </Link>
+          </li>
+          <li>
+            <Link to="/designer/invoice">
+              <figure>
+                <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-invoice.png" />
+              </figure>
+              <p>Invoice</p>
+            </Link>
+          </li>
+          <li>
+            <Link to="/login/update">
+              <figure>
+                <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-change-password.png" />
+              </figure>
+              <p>Change Password</p>
+            </Link>
+          </li>
+        </ul>
+      </div>}
     </section>);
   }
 }

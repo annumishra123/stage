@@ -521,6 +521,16 @@ export default function getRoutes(store, req) {
           cb(null, require('./modules/OrderProcess/components/Refunds').default);
         });
       }} />
+      <Route path="/stories" onEnter={checkAuth} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Stories/components/Stories').default);
+        });
+      }} />
+      <Route path="/influencer" onEnter={checkAuth} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Influencer/components/Influencer').default);
+        });
+      }} />
     </Route>
   );
 }
