@@ -66,9 +66,6 @@ export function fetchFilterData(param) {
 export function createNewStore(param) {
     return function (dispatch) {
         let url = `${clientConfig.targetURL}/catalogv2/catalogv2/ShopDynamicCollections`,
-            //     formData = new FormData();
-            // formData.append('skus', param.skuList);
-            // formData.append('title', param.title);
             storeRawData = {
                 skus: param.skuList,
                 title: param.title
@@ -91,12 +88,6 @@ export function createNewStore(param) {
 export function createStories(param) {
     return function (dispatch) {
         let url = `${clientConfig.targetURL}/catalogv2/catalogv2/ShopStories`,
-            //     formData = new FormData();
-            // formData.append('title', param.title);
-            // formData.append('type', param.type);
-            // formData.append('link', param.link);
-            // formData.append('image', param.image);
-            // formData.append('status', param.status);
             storiesRawData = {
                 title: param.title,
                 type: param.type,
