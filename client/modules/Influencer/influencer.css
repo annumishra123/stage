@@ -5,6 +5,7 @@
     letter-spacing: 1px;
     text-align: left;
     margin: 0;
+    width: 90%;
 }
 
 .influencerBodySection h4 {
@@ -50,4 +51,95 @@
     letter-spacing: 1px;
     margin: 1.5em 0 2em;
     cursor: pointer;
+}
+
+.seeMoreBtn {
+    background: none;
+    border: 0;
+    color: green;
+    font-size: 13px;
+    margin: 1em 0 0;
+    cursor: pointer;
+    float: right;
+    text-decoration: underline;
+}
+
+.autocompleteLi {
+    display: flex;
+    /*removing underlines from anchor element*/
+    text-decoration: none;
+    cursor: pointer;
+    padding: 8px 10px;
+}
+
+.autocompleteUl {
+    /*removing predefined bullet points from list*/
+    list-style: none;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    background-color: #fff;
+    /* border: 1px solid #ccc; */
+    border-top-color: #e6e6e6;
+    box-shadow: 0 1px 0 rgb(0 0 0 / 6%);
+    box-sizing: border-box;
+    margin-top: -1px;
+    max-height: 200px;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    z-index: 1;
+    -webkit-overflow-scrolling: touch;
+    overflow: auto;
+}
+
+.autocompleteUl .autocompleteLi:hover {
+    background-color: rgba(0, 126, 255, 0.08);
+    color: #333;
+}
+
+.liText {
+    margin: 2em;
+}
+
+.suggestionListImage {
+    border: 2px solid #CC6600;
+    border-radius: 50%;
+    width: 6.5em;
+    height: 6.5em;
+    padding: 1px;
+    text-align: center;
+    font-style: italic;    
+}
+
+/* Carousel section */
+
+.carousel {
+	height:100%;
+	margin: 0;
+	width: 100%;
+    display: flex;
+    position: relative;
+}
+
+.slideArrowLeft,
+.slideArrowRight {
+	color: #333;
+	cursor: pointer;
+    position: initial;
+    display: block;
+	position: absolute;
+    font-weight: bold;
+    top: 45%;
+}
+
+.slideArrowRight {
+	right: 1rem;
+    float: right;
+	font-size: 4rem;
+}
+
+.slideArrowLeft {
+	left: 1rem;
+    float: left;
+	font-size: 4rem;
 }
