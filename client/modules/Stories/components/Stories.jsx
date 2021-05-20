@@ -456,7 +456,7 @@ class Stories extends React.Component {
                     status: true
                 };
             });
-            this.props.createNewStore(createStoreData);
+            this.props.createStories(createStoreData);
         } else {
             switch (selectedStoreType.toLowerCase()) {
                 case 'existing':
