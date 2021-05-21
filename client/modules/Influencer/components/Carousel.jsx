@@ -3,12 +3,6 @@ import React from 'react';
 // Import Style
 import styles from '../influencer.css';
 
-const imgUrls = [
-    "https://lh3.googleusercontent.com/oxPeODS2m6rYIVbhcQChRtOWEYeGDwbeeeB1cDU2o_WYAVPU61VIgx-_6BAh5gSL8Sw=h900",
-    "https://i0.wp.com/www.universodegatos.com/wp-content/uploads/2017/04/fivfelv7.jpg?resize=582%2C328",
-    "https://i.pinimg.com/736x/07/c3/45/07c345d0eca11d0bc97c894751ba1b46.jpg",
-];
-
 class Carousel extends React.Component {
     constructor(props) {
         super(props);
