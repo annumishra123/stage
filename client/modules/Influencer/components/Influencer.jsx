@@ -2,8 +2,8 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { fetchAllSpotlightInfluencers } from '../InfluencerAction';
-import clientConfig from '../../../config';
+import { fetchAllSpotlightInfluencers, getAllSellers } from '../InfluencerAction';
+import Autocomplete from './Autocomplete';
 
 // Import Style
 import styles from '../influencer.css';
@@ -12,12 +12,15 @@ class Influencer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            influencersList: []
+            influencersList: [],
+            allSellerList: [],
+            selectedListItem: {}
         }
     }
 
     componentDidMount() {
         this.props.fetchAllSpotlightInfluencers();
+        this.props.getAllSellers();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -26,10 +29,29 @@ class Influencer extends React.Component {
                 influencersList: nextProps.spotlightInfluencers
             });
         }
+        if (nextProps.allSellers) {
+            this.setState({
+                allSellerList: nextProps.allSellers
+            });
+        }
+    }
+
+    onItemSelectionChange(val) {
+        const { allSellerList } = this.state;
+        if (val == '') {
+            this.setState({ selectedListItem: {} });
+            return;
+        }
+        let selectedItem = allSellerList.filter(item => {
+            let sellerName = `${item.firstName} ${item.lastName}`;
+            return sellerName == val;
+        });
+        this.setState({ selectedListItem: selectedItem });
+        console.log(selectedItem);
     }
 
     render() {
-        const { influencersList } = this.state;
+        const { influencersList, allSellerList, selectedListItem } = this.state;
         return <section>
             <button className={styles.backBtn} onClick={() => browserHistory.goBack()}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true" /> Back</button>
             <div className={styles.influencerBodySection}>
@@ -45,13 +67,55 @@ class Influencer extends React.Component {
                     </div>)}
                 </div>
             </div>
+            <div className={styles.influencerBodySection} style={{ marginTop: '2em' }}>
+                <h1>Create Influencers</h1>
+                <div className={styles.wrapper}>
+                    <div className={styles.divOne}>
+                        <Autocomplete suggestions={allSellerList} selectedItem={this.onItemSelectionChange.bind(this)} />
+                    </div>
+                    <div className={styles.divTwo}>
+                        {Object.keys(selectedListItem).length != 0 && selectedListItem.map(item => <div key={item.email} className={styles.influencerDetailImageDiv}>
+                            <img className={styles.influencerImage} alt='No Image available' src={item.profileImageUrl} />
+                            <div className={styles.influencerText}>{`${item.firstName} ${item.lastName}`}</div>
+                        </div>)}
+                    </div>
+                    <div className={styles.divThree}>
+                        <label className={styles.optionSection}>
+                            <input
+                                type="checkbox"
+                                id="influencer"
+                                name="influencer"
+                                // value={item}
+                                // checked={itemList.length != 0 && itemList.includes(item) || false}
+                                // onChange={this.handleChange}
+                                className={styles.optionCheckbox}
+                            />
+                            <span className={styles.checkboxLabel}>Influencer</span>
+                        </label>
+                        <label className={styles.optionSection}>
+                            <input
+                                type="checkbox"
+                                id="spotlight"
+                                name="spotlight"
+                                // value={item}
+                                // checked={itemList.length != 0 && itemList.includes(item) || false}
+                                // onChange={this.handleChange}
+                                className={styles.optionCheckbox}
+                            />
+                            <span className={styles.checkboxLabel}>Spotlight Influencer</span>
+                        </label>
+                        <button className={styles.influencerBtn}>Create</button>
+                    </div>
+                </div>
+            </div>
         </section>
     }
 }
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        fetchAllSpotlightInfluencers
+        fetchAllSpotlightInfluencers,
+        getAllSellers
     }, dispatch);
 }
 
@@ -59,7 +123,8 @@ function mapStateToProps(state) {
     return {
         role: state.auth.role,
         user: state.auth.email,
-        spotlightInfluencers: state.spotlightInfluencers
+        spotlightInfluencers: state.spotlightInfluencers,
+        allSellers: state.allSellers
     };
 }
 
