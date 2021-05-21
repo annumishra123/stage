@@ -7,6 +7,7 @@ import { fetchShopProduct, updateShopProduct, updateProductImage } from '../Inve
 import clientConfig from '../../../config';
 import * as constants from '../constants';
 import axios from 'axios';
+import DropzoneComp from './DropzoneComp';
 
 // Import Style
 import styles from './inventory.css';
@@ -27,9 +28,7 @@ class ShopProduct extends React.Component {
 			selectedColor: '',
 			selectedBrand: '',
 			selectedApproveStatus: false,
-			selectedTag: '',
-			imageFiles: [],
-			previewFile: []
+			selectedTag: ''
 		}
 		this.handleChange = this.handleChange.bind(this);
 	}
@@ -128,76 +127,36 @@ class ShopProduct extends React.Component {
 		}
 	}
 
-	handleShopOnDrop(acceptedFiles, rejectedFiles) {
-		const me = this,
-			{ imageFiles, previewFile } = me.state;
-		acceptedFiles.forEach(file => {
-			if (previewFile.length > 0) {
-				previewFile[0] = file;
-			} else {
-				previewFile.push(file);
-			}
-			me.setState({ imageFiles: [], previewFile: previewFile });
-			let fileType = file.type.match(/^image/) ? 'image' : file.type.match(/^video/) ? 'video' : '';
-			const reader = new FileReader();
-			reader.onloadend = () => {
-				const fileAsArrayBuffer = reader.result;
-				console.log(fileAsArrayBuffer);
-				let blobData = new Blob([fileAsArrayBuffer], { type: `${file.type}` });
-				if (fileType != '') {
-					imageFiles.push(blobData);
-					me.setState({ imageFiles: imageFiles, fileType: fileType });
-				}
-			};
-			reader.onabort = () => console.log('file reading was aborted');
-			reader.onerror = () => console.log('file reading has failed');
-			reader.readAsArrayBuffer(file);
-		});
-	}
-
 	updateShopProductDetails() {
-		const { imageFiles, fileType } = this.state;
-		let tempImgIdxList = [], productUpdatedData = {};
-
-		//Check for image indexes already uploaded
-		Object.keys(this.state.shopProduct).forEach(key => {
-			if (key.match(/^image/) != null) {
-				tempImgIdxList.push(parseInt(key.substring(5, 6)));
-			}
-		});
-
-		if (imageFiles.length != 0 && this.props.user) {
-			let idx = 1;
-			while (Object.keys(productUpdatedData).length != imageFiles.length) {
-				imageFiles.forEach(item => {
-					if (fileType == 'image' && tempImgIdxList.length <= 4) {
-						if (!tempImgIdxList.includes(idx)) {
-							productUpdatedData[`image${idx}`] = item;
-						}
-					}
-					if (fileType == 'video') {
-						productUpdatedData['video'] = item;
-					}
-				});
-				idx++;
-			}
-		}
-		productUpdatedData = Object.assign(productUpdatedData, this.state.shopProduct);
-		this.props.updateShopProduct(productUpdatedData, this.props.user);
+		this.props.updateShopProduct(this.state.shopProduct, this.props.user);
 		alert("Product Updated Successfully!!!");
-		this.setState({ imageFiles: [], previewFile: [] });
 		// browserHistory.goBack();  // if needs to go back to previous screen
 	}
 
+	handleUpload(key, val, type) {
+		if (this.state.shopProduct.hasOwnProperty(key)) {
+			this.state.shopProduct[key] = val;
+		}
+		this.setState({ shopProduct: Object.assign({ [key]: val }, this.state.shopProduct) });
+	}
+
+	createDropzoneElement() {
+		let dropzoneList = [];
+		for (let i = 1; i < 6; i++) {
+			dropzoneList.push(<DropzoneComp title={i < 5 ? `Image ${i}` : 'Video'} type={i < 5 ? 'image' : 'video'} handleUpload={(key, val, type) => this.handleUpload(key, val, type)} />)
+		}
+		return dropzoneList;
+	}
+
 	render() {
-		const { shopProduct, selectedCondition, genderSelected, selectedSize, selectedCategory, selectedSubCategory, selectedColor, selectedBrand, selectedApproveStatus, selectedTag, previewFile } = this.state;
+		const { shopProduct, selectedCondition, genderSelected, selectedSize, selectedCategory, selectedSubCategory, selectedColor, selectedBrand, selectedApproveStatus, selectedTag } = this.state;
 		if (shopProduct) {
 			const { sku, name, description, originalretailprice, gender, status, size, seller, condition, saleprice, sequence, color, categories,
 				subcategories, tags, quantity, notes, brand, approved, shippingsize, image1, image2, image3, image4, video } = shopProduct;
 			return (<div className={styles.productDetailSection}>
 				<h1>Inventory Product detail</h1>
 				<br />
-				<button className={styles.productDetailBtn} onClick={() => browserHistory.goBack()}>Back</button>
+				<button className={styles.backBtn} onClick={() => browserHistory.goBack()}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true" /> Back</button>
 				<div className={styles.productDetailField}>
 					<h4>Sku: </h4>
 					<input type="text" name="sku" className={styles.productDetailFieldWidth} value={sku} disabled={true} />
@@ -353,32 +312,16 @@ class ShopProduct extends React.Component {
 				</div>
 				<div className={styles.productDetailField}>
 					<h4>Images/Video: </h4>
-					{image1 && <img id='image1' className={styles.productDetailImg} src={`${image1}`} />}
-					{image2 && <img id='image2' className={styles.productDetailImg} src={`${image2}`} />}
-					{image3 && <img id='image3' className={styles.productDetailImg} src={`${image3}`} />}
-					{image4 && <img id='image4' className={styles.productDetailImg} src={`${image4}`} />}
+					{image1 && typeof (image1) != 'object' && <img id='image1' className={styles.productDetailImg} src={`${image1}`} />}
+					{image2 && typeof (image2) != 'object' && <img id='image2' className={styles.productDetailImg} src={`${image2}`} />}
+					{image3 && typeof (image3) != 'object' && <img id='image3' className={styles.productDetailImg} src={`${image3}`} />}
+					{image4 && typeof (image4) != 'object' && <img id='image4' className={styles.productDetailImg} src={`${image4}`} />}
 					<br />
 					{
-						video && <video id='video' className={styles.productDetailVideo} src={`${video}`} controls type="video/mp4" />
+						video && typeof (video) != 'object' && <video id='video' className={styles.productDetailVideo} src={`${video}`} controls type="video/mp4" />
 					}
-					<div style={{ display: 'flex' }}>
-						<div className={styles.fileUpload} style={{ width: '25%' }}>
-							<Dropzone onDrop={this.handleShopOnDrop.bind(this)} accept="image/*,video/*" multiple={false}>
-								<p>Select a product image/video file to upload</p>
-							</Dropzone>
-						</div>
-						{previewFile.length > 0 ? <div>
-							<div>{previewFile.map((file) => {
-								if (file.type.match(/^image/)) {
-									return <img className={styles.productDetailImg} src={file.preview} />
-								}
-								if (file.type.match(/^video/)) {
-									return <video className={styles.productDetailVideo} src={file.preview} controls />
-								}
-							})}</div>
-						</div> : null}
-					</div>
 				</div>
+				{this.createDropzoneElement()}
 				<button className={styles.productDetailBtn} onClick={this.updateShopProductDetails.bind(this)}>Update Product</button>
 			</div>)
 		}

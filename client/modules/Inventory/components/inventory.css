@@ -151,7 +151,7 @@ section h1,
 
 /*====== Inventory =======*/
 .fileUpload {
-    margin: 10px 0 20px;
+    margin: 10px 0 0;
 }
 .fileUpload > div {
     background: rgba(0,0,0,0.1) !important;
@@ -231,6 +231,7 @@ section h1,
 .productDetailVideo {
     width: 20em;
     height: 15em;
+    margin-left: 1em;
 }
 
 .gridBtn {
@@ -243,6 +244,16 @@ section h1,
     cursor: pointer;
     border-radius: 0.5em;
     font-size: 12px;
+}
+
+.backBtn {
+    background: none;
+    border: 0;
+    color: #333;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin: 1.5em 0 2em;
+    cursor: pointer;
 }
 
 @media (max-width: 767px) {

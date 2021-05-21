@@ -35,10 +35,6 @@ class InfluencerList extends React.Component {
         }
     }
 
-    renderCarouselSection() {
-        const { influencersCarouselList } = this.state;
-    }
-
     renderListSection() {
         const { allInfluencersList } = this.state;
         return <ul className={styles.autocompleteUl}>
@@ -56,12 +52,12 @@ class InfluencerList extends React.Component {
     }
 
     render() {
+        const { influencersCarouselList } = this.state;
         return <section>
             <button className={styles.backBtn} onClick={() => browserHistory.goBack()}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true" /> Back</button>
             <div className={styles.influencerBodySection}>
                 <h1>Influencers closets</h1>
-                {this.renderCarouselSection()}
-                <Carousel />
+                <Carousel dataList={influencersCarouselList} />
                 {this.renderListSection()}
             </div>
         </section>
