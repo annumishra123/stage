@@ -42,10 +42,10 @@ class Influencer extends React.Component {
 
     onItemSelectionChange(val) {
         if (val == '') {
-            this.setState({ selectedListItem: {} });
+            this.setState({ selectedListItem: {}, isInfluencer: false, isSpotlight: false });
             return;
         }
-        this.setState({ selectedListItem: val });
+        this.setState({ selectedListItem: val, isInfluencer: val.influencer || this.state.isInfluencer, isSpotlight: val.spotlight || this.state.isSpotlight });
     }
 
     handleChange(e) {
@@ -67,38 +67,35 @@ class Influencer extends React.Component {
                 break;
             case 'influencer':
                 if (checked) {
-                    this.setState({ isInfluencer: true });
+                    this.setState({ isInfluencer: true, isInfluencerUpdated: true });
                 } else {
-                    this.setState({ isInfluencer: false });
+                    this.setState({ isInfluencer: false, isInfluencerUpdated: true });
                 }
                 break;
             case 'spotlight':
                 if (checked) {
-                    this.setState({ isSpotlight: true });
+                    this.setState({ isSpotlight: true, isSpotlightUpdated: true });
                 } else {
-                    this.setState({ isSpotlight: false });
+                    this.setState({ isSpotlight: false, isSpotlightUpdated: true });
                 }
                 break;
         }
     }
 
     createInfluencer() {
-        const { selectedListItem, isInfluencer, isSpotlight, counterValue } = this.state;
-        const bodyData = {
-            "emailId": Object.keys(selectedListItem).length != 0 && selectedListItem.email || '',
-            "influencer": isInfluencer,
-            "influencerSequence": counterValue,
-            "spotlight": isSpotlight
-        }
-        if (Object.keys(selectedListItem).length != 0 && isInfluencer) {
+        const { selectedListItem, isInfluencer, isSpotlight, counterValue } = this.state,
+            bodyData = {
+                "emailId": Object.keys(selectedListItem).length != 0 && selectedListItem.email || '',
+                "influencer": isInfluencer,
+                "influencerSequence": counterValue,
+                "spotlight": isSpotlight
+            }
+        if (Object.keys(selectedListItem).length != 0) {
             this.props.createUpdateInfluencer(bodyData);
         } else {
             if (Object.keys(selectedListItem).length == 0) {
                 alert('Please select seller!!!');
                 return;
-            }
-            if (!isInfluencer) {
-                alert('Please check influencer, for to create influencer!!!');
             }
         }
     }
@@ -115,7 +112,7 @@ class Influencer extends React.Component {
     }
 
     render() {
-        const { influencersList, allSellerList, selectedListItem, counterValue, isInfluencer } = this.state;
+        const { influencersList, allSellerList, selectedListItem, counterValue, isInfluencer, isSpotlight, isInfluencerUpdated, isSpotlightUpdated } = this.state;
         return <section>
             <button className={styles.backBtn} onClick={() => browserHistory.goBack()}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true" /> Back</button>
             <div className={styles.influencerBodySection}>
@@ -151,6 +148,7 @@ class Influencer extends React.Component {
                                 id="influencer"
                                 name="influencer"
                                 onChange={this.handleChange}
+                                checked={isInfluencerUpdated ? isInfluencer : (Object.keys(selectedListItem).length != 0 && selectedListItem.influencer)}
                                 className={styles.optionCheckbox}
                             />
                             <span className={styles.checkboxLabel}>Influencer</span>
@@ -162,6 +160,7 @@ class Influencer extends React.Component {
                                 name="spotlight"
                                 disabled={!isInfluencer}
                                 onChange={this.handleChange}
+                                checked={isSpotlightUpdated ? isSpotlight : (Object.keys(selectedListItem).length != 0 && selectedListItem.spotlight)}
                                 className={styles.optionCheckbox}
                             />
                             <span className={styles.checkboxLabel}>Spotlight Influencer</span>
