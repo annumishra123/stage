@@ -125,6 +125,7 @@
     max-height: 16em !important;
 }
 
+.influencerInput,
 input[type="search"] {
     background-color: #fff;
     border-color: #d9d9d9 #ccc #b3b3b3;
@@ -165,6 +166,7 @@ input[type="search"] {
 	width: 100%;
     display: flex;
     position: relative;
+    min-height: 434px;
 }
 
 .slideArrowLeft,
@@ -192,7 +194,7 @@ input[type="search"] {
 
 .wrapper {
     display: flex;   
-    width:90%;
+    /* width:90%; */
     margin-top: 2em;
     min-height: 20em;
 }
@@ -211,6 +213,7 @@ input[type="search"] {
     flex-direction: column;
 }
 
+.listBtn,
 .influencerBtn {
     background: #000;
     color: #fff;
@@ -267,4 +270,65 @@ input[type="search"] {
 .influencerFormField h4 {
     color: #333;
     margin: 1em 0;
+}
+
+.influencerInput,
+.typeSelect {
+    width: 80%;
+}
+
+.listWrapperRows,
+.listWrapper {
+    display: flex; 
+    margin-top: 2em;
+}
+
+.listSectionOne {
+    width: 40%;
+}
+
+.listSectionTwo {
+    width: 40%;
+}
+
+.listSectionThree {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+.listBtn {
+    margin: 3.1em 0 2em !important;
+}
+
+.listWrapperRows {
+    margin-top: -1.5em !important;
+}
+/* 
+.fileUpload {
+    margin: 10px 0 20px;
+} */
+.fileUpload > div {
+    background: rgba(0,0,0,0.1) !important;
+    cursor: pointer;
+    width: 100% !important;
+    text-align: center;
+}
+.fileUpload p {
+    margin: 1.3em 0.5em;
+    font-size: 13px;
+}
+
+.storeDetailImg {
+    max-width: 13em;
+    margin: 0 1em;
+    max-height: 6em;
+}
+
+.uploadRegion {
+    height: 6em !important;
+    border-width: 2px;
+    border-color: rgb(102, 102, 102);
+    border-style: dashed;
+    border-radius: 5px;
 }

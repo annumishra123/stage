@@ -103,3 +103,44 @@ export function createUpdateInfluencer(param) {
         });
     }
 }
+
+export function createBanner(param) {
+    return function (dispatch) {
+        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/ShopInfluencerCarousels`;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            responseType: 'json',
+            data: param,
+        }).then((response) => {
+            console.log(response.data);
+            dispatch(fetchInfluencerCarousel());
+        }).catch((error) => {
+            console.log(error);
+            alert('Fails to create influencers');
+        });
+    }
+}
+
+export function deleteBanner(id) {
+    return function (dispatch) {
+        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/ShopInfluencerCarousels/${id}/replace`,
+            updateData = {
+                status: false
+            };
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            responseType: 'json',
+            data: updateData,
+        }).then((response) => {
+            console.log(response.data);
+            dispatch(fetchInfluencerCarousel());
+        }).catch((error) => {
+            console.log(error);
+            alert('Fails to create influencers');
+        });
+    }
+}
