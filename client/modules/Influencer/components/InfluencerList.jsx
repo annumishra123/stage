@@ -53,7 +53,7 @@ class InfluencerList extends React.Component {
                     let influencerName = `${item.firstName} ${item.lastName}`;
                     return (
                         <li key={influencerName} className={styles.autocompleteLi} onClick={() => { }}>
-                            {<img className={styles.suggestionListImage} alt='No Image available' src={item.profileImageUrl || 'https://res.cloudinary.com/stage3/image/upload/v1590582681/Rental_homepage_Banner-260520.jpg'} />}<div className={styles.liText}>{influencerName}</div>
+                            {<img className={styles.suggestionListImage} alt='No Image available' src={item.profileImageUrl} />}<div className={styles.liText}>{influencerName}</div>
                         </li>
                     );
                 })

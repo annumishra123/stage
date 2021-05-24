@@ -124,7 +124,7 @@ class Influencer extends React.Component {
                 <div className={styles.influencerImageSection}>
                     {influencersList.length != 0 && influencersList.map((item, idx) => <div key={idx} className={styles.influencerImageDiv}>
                         <i title='Remove from Spotlight' className="fa fa-times" style={{ float: 'right', cursor: 'pointer' }} aria-hidden="true" onClick={() => this.onDisableConfirmation(item.email)} />
-                        <img className={styles.influencerImage} alt='No Image available' src={item.profileImageUrl || 'https://res.cloudinary.com/stage3/image/upload/v1590582681/Rental_homepage_Banner-260520.jpg'} />
+                        <img className={styles.influencerImage} alt='No Image available' src={item.profileImageUrl} />
                         <div className={styles.influencerText}>{`${item.firstName} ${item.lastName}`}</div>
                     </div>)}
                 </div>
