@@ -38,13 +38,13 @@ export class Autocomplete extends Component {
         });
     };
 
-    onClick = e => {
+    onClick = (e, item) => {
         this.setState({
             filteredSuggestions: [],
             showSuggestions: false,
             userInput: e.currentTarget.innerText
         });
-        this.props.selectedItem(e.currentTarget.innerText);
+        this.props.selectedItem(item);
     };
 
     render() {
@@ -63,7 +63,7 @@ export class Autocomplete extends Component {
                         {filteredSuggestions.map((suggestion, index) => {
                             let sellerName = `${suggestion.firstName} ${suggestion.lastName}`;
                             return (
-                                <li key={sellerName} className={styles.autocompleteLi} onClick={onClick}>
+                                <li key={sellerName} className={styles.autocompleteLi} onClick={e => onClick(e, suggestion)}>
                                     {<img className={styles.suggestionListImage} alt='No Image available' src={suggestion.profileImageUrl} />}<div className={styles.liText}>{sellerName}</div>
                                 </li>
                             );
@@ -80,7 +80,7 @@ export class Autocomplete extends Component {
         }
 
         return <div className={styles.suggestionSection}>
-            <input type="search" onChange={onChange} value={userInput} />
+            <input placeholder={this.props.placeholder} type="search" onChange={onChange} value={userInput} />
             {suggestionsListComponent}
         </div>;
     }

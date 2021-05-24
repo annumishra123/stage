@@ -3,12 +3,6 @@ import axios from 'axios';
 
 export function fetchAllSpotlightInfluencers() {
     return function (dispatch) {
-        // let loopbackFilter = {
-        //     where: {
-        //         status: true
-        //     }
-        // };
-        // let url = clientConfig.targetURL + '/catalogv2/catalogv2/ShopInfluencerCarousels?filter=' + JSON.stringify(loopbackFilter);
         let url = `${clientConfig.targetURL}/api/myaccount/profile/frontend/influencer/spotlight`;
         return axios({
             url: url,
@@ -87,6 +81,25 @@ export function getAllSellers() {
             })
         }).catch(function (error) {
             console.log(error);
+        });
+    }
+}
+
+export function createUpdateInfluencer(param) {
+    return function (dispatch) {
+        let url = `${clientConfig.targetURL}/api/myaccount/profile/backend/influencer/`;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            responseType: 'json',
+            data: param,
+        }).then((response) => {
+            console.log(response.data);
+            dispatch(fetchAllSpotlightInfluencers());
+        }).catch((error) => {
+            console.log(error);
+            alert('Fails to create influencers');
         });
     }
 }
