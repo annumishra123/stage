@@ -94,3 +94,11 @@ export function lastQCStatus(state = null, action) {
     }
     return state;
 }
+
+export function entirShopCatalog(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_ENTIRE_SHOP_CATALOG':
+            return action.payload;
+    }
+    return state;
+}

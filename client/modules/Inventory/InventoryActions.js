@@ -571,9 +571,9 @@ export function getLastQCStatus(looknumber) {
 export function fetchFilterData(param) {
     return function (dispatch) {
         if (param == '') {
-            param = 'approved=false';
+            param = '?approved=false';
         }
-        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/filter?${param}`;
+        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/filter${param}`;
         return axios({
             url: url,
             timeout: 20000,
@@ -583,6 +583,30 @@ export function fetchFilterData(param) {
             dispatch({
                 type: 'FETCH_SHOP_CATALOG',
                 payload: response.data.docs
+            });
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+}
+
+export function fetchEntireShopCatalog(param) {
+    return function (dispatch) {
+        if (param == undefined || param == '') {
+            param = '';
+        } else {
+            param = param;
+        }
+        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/filter${param}`;
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json'
+        }).then((response) => {
+            dispatch({
+                type: 'FETCH_ENTIRE_SHOP_CATALOG',
+                payload: response.data
             });
         }).catch((error) => {
             console.log(error);

@@ -10,8 +10,7 @@ import ReactModal from 'react-modal';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Dropzone from 'react-dropzone';
 import moment from 'moment';
-import ColumnHeaderFilter from '../ColumnHeaderFilter';
-import * as constants from '../constants';
+import FilterComp from './FilterComp';
 
 // Import Style
 import styles from './inventory.css';
@@ -353,7 +352,7 @@ class Inventory extends React.Component {
                         Header: 'Approve',
                         id: 'approve',
                         accessor: 'id',
-                        Filter: <ColumnHeaderFilter colKey='approved' filterType='select' listData={constants.approvalStatus} />,
+                        filterable: false,
                         sortable: false,
                         Cell: ({ value }) => {
                             let product = this.props.shopCatalog.find(i => i.id == value);
@@ -440,6 +439,7 @@ class Inventory extends React.Component {
                                 <input className={styles.addComment} placeholder="Add Comment" value={this.state.shopCSVComment} onChange={(e) => this.changeShopComment(e)} />
                                 <button onClick={this.uploadShopCSV.bind(this)}>Upload CSV</button>
                             </div>
+                            <FilterComp />
                             {this.renderShopLooks()}
                         </TabPanel>
                         <TabPanel>
