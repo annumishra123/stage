@@ -22,11 +22,11 @@ export class Autocomplete extends Component {
 
     onChange = e => {
         const { suggestions } = this.props;
-        const userInput = e.currentTarget.value;
+        let userInput = e.currentTarget.value;
         if (userInput == '') {
             this.props.selectedItem(userInput);
         }
-        const filteredSuggestions = suggestions.filter(suggestion => {
+        let filteredSuggestions = suggestions.filter(suggestion => {
             let sellerName = `${suggestion.firstName} ${suggestion.lastName}`;
             return sellerName.toLowerCase().indexOf(userInput.toLowerCase()) > -1;
         });
