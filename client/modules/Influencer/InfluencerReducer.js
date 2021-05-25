@@ -21,3 +21,12 @@ export function influencersCarousel(state = null, action) {
     }
     return state;
 }
+
+export function allSellers(state = null, action) {
+    switch (action.type) {
+        case 'FETCH_ALL_SELLERS':
+            return action.payload;
+            break;
+    }
+    return state;
+}

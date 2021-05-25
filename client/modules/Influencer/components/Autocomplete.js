@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 // Import Style
-import styles from '../stories.css';
+import styles from '../influencer.css';
 
 export class Autocomplete extends Component {
     static propTypes = {
@@ -21,19 +21,14 @@ export class Autocomplete extends Component {
     }
 
     onChange = e => {
-        const { suggestions, selectedType } = this.props;
+        const { suggestions } = this.props;
         let userInput = e.currentTarget.value;
         if (userInput == '') {
             this.props.selectedItem(userInput);
         }
         let filteredSuggestions = suggestions.filter(suggestion => {
-            switch (selectedType.toLowerCase().trim()) {
-                case 'seller':
-                    let sellerName = `${suggestion.firstName} ${suggestion.lastName}`;
-                    return sellerName.toLowerCase().indexOf(userInput.toLowerCase()) > -1;
-                default:
-                    return suggestion.title.toLowerCase().indexOf(userInput.toLowerCase()) > -1;
-            }
+            let sellerName = `${suggestion.firstName} ${suggestion.lastName}`;
+            return sellerName.toLowerCase().indexOf(userInput.toLowerCase()) > -1;
         });
 
         this.setState({
@@ -43,13 +38,13 @@ export class Autocomplete extends Component {
         });
     };
 
-    onClick = e => {
+    onClick = (e, item) => {
         this.setState({
             filteredSuggestions: [],
             showSuggestions: false,
             userInput: e.currentTarget.innerText
         });
-        this.props.selectedItem(e.currentTarget.innerText);
+        this.props.selectedItem(item);
     };
 
     render() {
@@ -60,28 +55,18 @@ export class Autocomplete extends Component {
                 userInput
             }
         } = this;
-        const { selectedType } = this.props;
         let suggestionsListComponent;
         if (showSuggestions && userInput) {
             if (filteredSuggestions.length) {
                 suggestionsListComponent = (
                     <ul className={styles.autocompleteUl}>
                         {filteredSuggestions.map((suggestion, index) => {
-                            switch (selectedType.toLowerCase().trim()) {
-                                case 'seller':
-                                    let sellerName = `${suggestion.firstName} ${suggestion.lastName}`;
-                                    return (
-                                        <li key={sellerName} className={styles.autocompleteLi} onClick={onClick}>
-                                            {<img className={styles.suggestionListImage} alt='No Image available' src={suggestion.profileImageUrl} />}<div className={styles.liText}>{sellerName}</div>
-                                        </li>
-                                    );
-                                default:
-                                    return (
-                                        <li key={suggestion.title} className={styles.autocompleteLi} onClick={onClick}>
-                                            <div className={styles.liText}>{suggestion.title}</div>
-                                        </li>
-                                    );
-                            }
+                            let sellerName = `${suggestion.firstName} ${suggestion.lastName}`;
+                            return (
+                                <li key={sellerName} className={styles.autocompleteLi} onClick={e => onClick(e, suggestion)}>
+                                    {<img className={styles.suggestionListImage} alt='No Image available' src={suggestion.profileImageUrl} />}<div className={styles.liText}>{sellerName}</div>
+                                </li>
+                            );
                         })}
                     </ul>
                 );
@@ -94,8 +79,8 @@ export class Autocomplete extends Component {
             }
         }
 
-        return <div>
-            <input type="search" onChange={onChange} value={userInput} />
+        return <div className={styles.suggestionSection}>
+            <input placeholder={this.props.placeholder} type="search" onChange={onChange} value={userInput} />
             {suggestionsListComponent}
         </div>;
     }
