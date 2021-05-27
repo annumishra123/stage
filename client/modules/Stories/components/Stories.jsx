@@ -368,7 +368,7 @@ class Stories extends React.Component {
         let categoriesItemList = categorySelections, subCategoriesItemList = subCategorySelections,
             colorItemList = colorSelections, sizeItemList = sizeSelections, brandItemList = brandSelections;
 
-        return <div>
+        return <div className={ styles.newStore}>
             <div className={styles.bubbleFormField}>
                 <h4>Store Name: </h4>
                 <input type='text' name='title' className={styles.bubbleInput} onChange={e => { this.setState({ storeName: e.target.value }) }} />
