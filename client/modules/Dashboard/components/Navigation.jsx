@@ -260,7 +260,7 @@ class Navigation extends React.Component {
         <li>
           <Link to="/stories">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-create-store.png" />
+              <img src="https://res.cloudinary.com/stage3/image/upload/f_auto,q_auto:low/icon-stories.png" />
             </figure>
             <p>Stories</p>
           </Link>
@@ -268,7 +268,7 @@ class Navigation extends React.Component {
         <li>
           <Link to="/influencer">
             <figure>
-              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-create-store.png" />
+              <img src="https://res.cloudinary.com/stage3/image/upload/f_auto,q_auto:low/icon-influencer.png" />
             </figure>
             <p>influencer</p>
           </Link>

@@ -120,13 +120,13 @@ class Stories extends React.Component {
     renderSellerSection() {
         const { selectedListItem, sellerStoriesList, selectedType } = this.state;
         return <div className={styles.sellerFormSection}>
-            <h1>Seller</h1>
+            <h2>Seller</h2>
             <h4>Name: </h4>
             <Autocomplete suggestions={sellerStoriesList} selectedItem={this.onItemSelectionChange.bind(this)} selectedType={selectedType} />
             {
                 Object.keys(selectedListItem).length != 0 && selectedListItem.map((file) => (
-                    <div style={{ display: 'flex' }}>
-                        <img className={styles.storeDetailImg} alt='No Image available' src={file.profileImageUrl} />
+                    <div className={ styles.sellerselection }>
+                        <span><img className={styles.storeDetailImg} alt='No Image available' src={file.profileImageUrl} /></span>
                         <h3><div className={styles.storeDetailText}>{`${file.firstName} ${file.lastName}`}</div></h3>
                     </div>
                 ))
@@ -136,7 +136,7 @@ class Stories extends React.Component {
 
     renderStoreSection() {
         return <div className={styles.storeFormSection}>
-            <h1>Store</h1>
+            <h2>Store</h2>
             <h4>Choose Store: </h4>
             <Select className={styles.typeSelect}
                 value={this.state.selectedStoreType}
@@ -530,7 +530,7 @@ class Stories extends React.Component {
                             this.renderNewStoreSection() : '') : ''
             }
             {selectedType != '' && <div className={styles.bubbleFormField}>
-                <h4>Upload Image(for stories): </h4>
+                <h4>Upload Image URL (for stories): </h4>
                 {/* <div style={{ display: 'flex' }}>
                     <div className={styles.fileUpload} style={{ width: '25%' }}>
                         <Dropzone onDrop={this.handleShopOnDrop.bind(this)} accept="image/*" multiple={false}>
