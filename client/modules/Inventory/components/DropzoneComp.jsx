@@ -44,8 +44,8 @@ class DropzoneComp extends React.Component {
         return (
             <div className={styles.productDetailField}>
                 <h4>{title}:</h4>
-                <div style={{ display: 'flex' }}>
-                    <div className={styles.fileUpload} style={{ width: '20%' }}>
+                <div style={{ display: 'inline-block' }}>
+                    <div className={styles.fileUpload}>
                         <Dropzone onDrop={this.handleShopOnDrop.bind(this)} accept={`${type}/*`} multiple={false}>
                             <p>{`Select product ${title} to upload`}</p>
                         </Dropzone>

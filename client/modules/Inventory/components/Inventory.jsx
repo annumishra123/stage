@@ -363,7 +363,7 @@ class Inventory extends React.Component {
                     });
                 }
             }
-            return <div>
+            return <div className={ styles.shopTableOne }>
                 <ReactTable defaultSorted={[{ id: "uploadtime", desc: false }]} filterable data={shopCatalog} columns={clientConfig.shopLooksColumns} defaultPageSize={10} className="-striped -highlight" />
                 {shopCatalogCSV && <CSVLink data={shopCatalogCSV} filename={"Shop Inventory.csv"}>Export CSV</CSVLink>}
             </div>;
