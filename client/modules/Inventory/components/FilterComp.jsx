@@ -331,7 +331,7 @@ class FilterComp extends React.Component {
         let categoriesItemList = categorySelections, subCategoriesItemList = subCategorySelections,
             colorItemList = colorSelections, sizeItemList = sizeSelections, brandItemList = brandSelections, conditionItemList = conditionSelections;
         let genderItems = afterHandleChange ? actualGenderList : genderList;
-        return <div>
+        return <div className={ styles.filter }>
             <button type="button" id="collapsible" className={styles.collapsible} onClick={(e) => this.handleToggle(e)}>{isExpanded ? 'Collapse' : 'Expand'} Filter(s)<span className={styles.collapsibleIcon}>{isExpanded ? '  -' : '  +'}</span></button>
             <div className={styles.content} style={{ display: isExpanded ? 'block' : 'none' }}>
                 {isExpanded && <div>
@@ -418,7 +418,7 @@ class FilterComp extends React.Component {
                                     placeholder='Min'
                                     className={styles.inventoryInput}
                                     style={{
-                                        width: '8.7em',
+                                        width: '35%',
                                         marginRight: '0.5rem',
                                     }}
                                 />
@@ -431,7 +431,7 @@ class FilterComp extends React.Component {
                                     placeholder='Max'
                                     className={styles.inventoryInput}
                                     style={{
-                                        width: '8.7em',
+                                        width: '35%',
                                         marginLeft: '0.5rem',
                                     }}
                                 />
