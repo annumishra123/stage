@@ -1,7 +1,5 @@
 import moment from 'moment';
 import React from 'react';
-import ColumnHeaderFilter from './modules/Inventory/ColumnHeaderFilter';
-import * as constants from './modules/Inventory/constants';
 
 // Import Style
 import styles from 'modules/Scan/components/scan.css';
@@ -688,102 +686,101 @@ const clientConfig = {
   shopLooksColumns: [{
     Header: 'SKU',
     accessor: 'sku',
-    Filter: <ColumnHeaderFilter colKey='sku' />
+    filterable: false
   }, {
     id: 'image1',
     Header: 'Image 1',
     accessor: o => o.image1 ? <a target="blank" href={o.image1}>Link</a> : '-',
-    filterable: false,
+    filterable: false
   }, {
     id: 'image2',
     Header: 'Image 2',
     accessor: o => o.image2 ? <a target="blank" href={o.image2}>Link</a> : '-',
-    filterable: false,
+    filterable: false
   }, {
     id: 'image3',
     Header: 'Image 3',
     accessor: o => o.image3 ? <a target="blank" href={o.image3}>Link</a> : '-',
-    filterable: false,
+    filterable: false
   }, {
     id: 'image4',
     Header: 'Image 4',
     accessor: o => o.image4 ? <a target="blank" href={o.image4}>Link</a> : '-',
-    filterable: false,
+    filterable: false
   }, {
     id: 'video',
     Header: 'Video',
     accessor: o => o.video ? <a target="blank" href={o.video}>Link</a> : '-',
-    filterable: false,
+    filterable: false
   }, {
     Header: 'Name',
     accessor: 'name',
-    Filter: <ColumnHeaderFilter colKey='name' />
+    filterable: false
   }, {
     Header: 'Description',
     accessor: 'description',
-    Filter: <ColumnHeaderFilter colKey='description' />
+    filterable: false
   }, {
     Header: 'Gender',
     accessor: 'gender',
-    Filter: <ColumnHeaderFilter colKey='gender' filterType='select' listData={constants.genderList} />
+    filterable: false
   }, {
     Header: 'Price',
     accessor: 'saleprice',
-    Filter: <ColumnHeaderFilter colKey='saleprice' filterType='range' />,
-    filter: 'between',
+    filterable: false,
     width: 180
   }, {
     Header: ' Original Price',
     accessor: 'originalretailprice',
-    Filter: <ColumnHeaderFilter colKey='originalretailprice' filterType='number' />
+    filterable: false
   }, {
     Header: 'Status',
     accessor: 'status',
-    Filter: <ColumnHeaderFilter colKey='status' />
+    filterable: false
   }, {
     Header: 'Size',
     accessor: 'size',
-    Filter: <ColumnHeaderFilter colKey='size' filterType='select' listData={constants.sizeList} />
+    filterable: false
   }, {
     Header: 'Condition',
     accessor: 'condition',
-    Filter: <ColumnHeaderFilter colKey='condition' filterType='select' listData={constants.clothConditionList} />
+    filterable: false
   }, {
     Header: 'Color',
     accessor: 'color',
-    Filter: <ColumnHeaderFilter colKey='color' filterType='select' listData={constants.colorList} />
+    filterable: false
   }, {
     Header: 'Category',
     accessor: 'categories',
-    Filter: <ColumnHeaderFilter colKey='categories' filterType='select' listData={constants.clothCategoryList} />
+    filterable: false
   }, {
     Header: 'Sub Category',
     accessor: 'subcategories',
-    Filter: <ColumnHeaderFilter colKey='subcategories' filterType='select' listData={constants.clothSubCategoryList} />
+    filterable: false
   }, {
     Header: 'Sequence',
     accessor: 'sequence',
-    Filter: <ColumnHeaderFilter colKey='sequence' filterType='number' />
+    filterable: false
   }, {
     Header: 'Seller',
     accessor: 'seller',
-    Filter: <ColumnHeaderFilter colKey='seller' />
+    filterable: false
   }, {
     Header: 'Tags',
     accessor: 'tags',
-    Filter: <ColumnHeaderFilter colKey='tags' />
+    filterable: false
   }, {
     Header: 'Quantity',
     accessor: 'quantity',
-    Filter: <ColumnHeaderFilter colKey='quantity' filterType='number' />
+    filterable: false
   }, {
     Header: 'Brand',
     accessor: 'brand',
-    Filter: <ColumnHeaderFilter colKey='brand' filterType='select' listData={constants.brandList} />
+    filterable: false
   }, {
     Header: 'Shipping Size',
     accessor: 'shippingsize',
-    Filter: <ColumnHeaderFilter colKey='shippingsize' filterType='number' />
+    filterable: false
   }, {
     Header: 'Uploaded Time',
     id: 'uploadtime',

@@ -157,6 +157,7 @@ class ShopProduct extends React.Component {
 				<h1>Inventory Product detail</h1>
 				<br />
 				<button className={styles.backBtn} onClick={() => browserHistory.goBack()}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true" /> Back</button>
+				<div className={ styles.shopInventoryContainer }>
 				<div className={styles.productDetailField}>
 					<h4>Sku: </h4>
 					<input type="text" name="sku" className={styles.productDetailFieldWidth} value={sku} disabled={true} />
@@ -185,7 +186,7 @@ class ShopProduct extends React.Component {
 					<h4>Gender: </h4>
 					<div style={{ display: 'flex' }}>
 						{
-							constants.genderList.map(item => <div style={{ marginRight: '1em' }}>
+							constants.genderList.map(item => <div className={ styles.genderCol }>
 								<input type="radio" value={item} name="gender"
 									checked={genderSelected === item}
 									onChange={this.handleChange} />{item}
@@ -310,7 +311,7 @@ class ShopProduct extends React.Component {
 						{constants.approvalStatus.map((item, key) => <option key={key} value={item.key}>{item.value}</option>)};
 					</select>
 				</div>
-				<div className={styles.productDetailField}>
+				<div className={styles.productDetailImages}>
 					<h4>Images/Video: </h4>
 					{image1 && typeof (image1) != 'object' && <img id='image1' className={styles.productDetailImg} src={`${image1}`} />}
 					{image2 && typeof (image2) != 'object' && <img id='image2' className={styles.productDetailImg} src={`${image2}`} />}
@@ -321,8 +322,11 @@ class ShopProduct extends React.Component {
 						video && typeof (video) != 'object' && <video id='video' className={styles.productDetailVideo} src={`${video}`} controls type="video/mp4" />
 					}
 				</div>
-				{this.createDropzoneElement()}
+				<div className={ styles.dropzoneContainer }>
+					{this.createDropzoneElement()}
+				</div>
 				<button className={styles.productDetailBtn} onClick={this.updateShopProductDetails.bind(this)}>Update Product</button>
+				</div>
 			</div>)
 		}
 		else {
