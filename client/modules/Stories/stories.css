@@ -313,7 +313,6 @@ input[type="search"] {
     /* background-color: rgba(0,0,0,0.1) !important; */
     border: 2px dashed #333;
     left: 50em;
-    overflow: scroll;
 }
 
 .inProgress {
@@ -323,13 +322,12 @@ input[type="search"] {
     top: 10;
     /* background-color: rgba(0,0,0,0.1) !important; */
     border: 2px dashed #333;
-    overflow: scroll;
 }
 
 .taskHeader {
     border: 0;
     color: #333;
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 1px;
     font-weight: bold;
     cursor: default;
@@ -403,6 +401,15 @@ input[type="search"] {
 .sellerselection h3,
 .sellerselection .stories__storeDetailText__3zZ_Y {
     float: left;
+}
+
+.content {
+    position: absolute;
+    top: 1.5em;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    overflow-y: scroll;
 }
 
 @media (max-width: 767px) {
