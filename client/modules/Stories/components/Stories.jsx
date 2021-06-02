@@ -49,7 +49,9 @@ class Stories extends React.Component {
             brandSelections: [],
             skuList: [],
             isCategorySelected: false,
-            imageFiles: []
+            imageFiles: [],
+            actualGenderList: [],
+            afterHandleChange: false
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -80,19 +82,24 @@ class Stories extends React.Component {
                 subcategoryList: Object.keys(facetsData.subcategories) || [],
                 colorList: Object.keys(facetsData.colour) || [],
                 sizeList: Object.keys(facetsData.size) || [],
-                genderList: Object.keys(facetsData.gender) || [],
+                genderList: (this.state.afterHandleChange ? this.state.actualGenderList : Object.keys(facetsData.gender)) || [],
                 priceList: Object.keys(facetsData.price) || [],
                 itemList: nextProps.shopCatalog.docs || []
             });
+            if (!this.state.afterHandleChange) {
+                this.setState({
+                    actualGenderList: Object.keys(facetsData.gender) || []
+                });
+            }
         }
     }
 
     typeHandleChange(e) {
-        this.setState({ selectedType: e ? e.value : '', selectedStoreType: '', selectedListItem: {}, previewFile: [] });
+        this.setState({ selectedType: e ? e.value : '', selectedStoreType: '', selectedListItem: {}, previewFile: [], afterHandleChange: false });
     }
 
     storeTypeHandleChange(e) {
-        this.setState({ selectedStoreType: e ? e.value : '' });
+        this.setState({ selectedStoreType: e ? e.value : '', afterHandleChange: false });
     }
 
     onItemSelectionChange(val) {
@@ -125,7 +132,7 @@ class Stories extends React.Component {
             <Autocomplete suggestions={sellerStoriesList} selectedItem={this.onItemSelectionChange.bind(this)} selectedType={selectedType} />
             {
                 Object.keys(selectedListItem).length != 0 && selectedListItem.map((file) => (
-                    <div className={ styles.sellerselection }>
+                    <div className={styles.sellerselection}>
                         <span><img className={styles.storeDetailImg} alt='No Image available' src={file.profileImageUrl} /></span>
                         <h3><div className={styles.storeDetailText}>{`${file.firstName} ${file.lastName}`}</div></h3>
                     </div>
@@ -364,11 +371,11 @@ class Stories extends React.Component {
     renderNewStoreSection() {
         const { selectedGender, genderList, brandList, sizeList, categoryList, subcategoryList, colorList, priceList, selectedPricemin,
             selectedPricemax, categoryExpanded, categorySelections, subCategoryExpanded, subCategorySelections, colorExpanded,
-            colorSelections, sizeExpanded, sizeSelections, brandExpanded, brandSelections, isCategorySelected } = this.state;
+            colorSelections, sizeExpanded, sizeSelections, brandExpanded, brandSelections, isCategorySelected, actualGenderList, afterHandleChange } = this.state;
         let categoriesItemList = categorySelections, subCategoriesItemList = subCategorySelections,
             colorItemList = colorSelections, sizeItemList = sizeSelections, brandItemList = brandSelections;
-
-        return <div className={ styles.newStore}>
+        let genderItems = afterHandleChange ? actualGenderList : genderList;
+        return <div className={styles.newStore}>
             <div className={styles.bubbleFormField}>
                 <h4>Store Name: </h4>
                 <input type='text' name='title' className={styles.bubbleInput} onChange={e => { this.setState({ storeName: e.target.value }) }} />
@@ -381,8 +388,11 @@ class Stories extends React.Component {
                     value={selectedGender}
                     onChange={this.handleChange}
                 >
-                    {genderList.length != 0 && genderList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
-                        .map((item, key) => <option key={key + 1} value={item}>{item}</option>)}
+                    <option value=""></option>
+                    {genderItems.sort((val, nextVal) => {
+                        let firstVal = val.value || val, secondVal = nextVal.value || nextVal;
+                        return firstVal.toLowerCase().localeCompare(secondVal.toLowerCase())
+                    }).map((item, key) => <option key={key} value={item}>{item}</option>)}
                 </select>
             </div>
             <div className={styles.bubbleFormField} onClick={() => this.toggleExpanded('categories')}>
@@ -548,7 +558,7 @@ class Stories extends React.Component {
                 {/* temporary till the API creates/provide */}
                 <input type='text' name='image' className={styles.bubbleInput} onChange={e => { this.setState({ imageFileName: e.target.value }) }} />
             </div>}
-            {!!afterHandleChange && itemList.length != 0 && <DragDrog itemList={itemList} updatedSkuList={data => this.createSkuList(data)} />}
+            {!!afterHandleChange && itemList.length != 0 && selectedType != "" && selectedStoreType != "" && <DragDrog itemList={itemList} updatedSkuList={data => this.createSkuList(data)} />}
             <button className={styles.storiesBtn} onClick={this.createStore.bind(this)}>Create</button>
         </section>
     }
