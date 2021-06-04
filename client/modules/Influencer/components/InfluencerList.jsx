@@ -24,7 +24,9 @@ class InfluencerList extends React.Component {
             previewFile: [],
             imageFiles: [],
             title: '',
-            image: ''
+            image: '',
+            isBannerExpanded: false,
+            isInfluencerExpanded: false
         }
     }
 
@@ -144,77 +146,96 @@ class InfluencerList extends React.Component {
         }
     }
 
+    handleToggle(e, action) {
+        e.preventDefault();
+        switch (action) {
+            case 'banner':
+                this.setState({ isBannerExpanded: !this.state.isBannerExpanded, isInfluencerExpanded: false });
+                break;
+            case 'influencer':
+                this.setState({ isInfluencerExpanded: !this.state.isInfluencerExpanded, isBannerExpanded: false });
+                break;
+        }
+    }
+
     render() {
-        const { influencersCarouselList, allInfluencersList, seller, action, previewFile, title } = this.state;
+        const { influencersCarouselList, allInfluencersList, seller, action, previewFile, title, isBannerExpanded, isInfluencerExpanded } = this.state;
         let isDisabled = (seller != "" && action != "" && title != "" && previewFile.length != 0) ? true : false;
         return <section>
             <button className={styles.backBtn} onClick={() => browserHistory.goBack()}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true" /> Back</button>
             <div className={styles.influencerBodySection}>
                 <h1>Influencers closets</h1>
                 <Carousel dataList={influencersCarouselList} />
-                <div className={styles.influencerFormField}>
-                    <div className={styles.listWrapper}>
-                        <div className={styles.listSectionOne}>
-                            <h4>Select Seller: </h4>
-                            <Select className={styles.typeSelect}
-                                name='seller'
-                                value={seller}
-                                onChange={(e) => this.handleChange(e, 'seller')}
-                                options={allInfluencersList.length != 0 && allInfluencersList.map((item, i) => {
-                                    let influencerName = `${item.firstName} ${item.lastName}`;
-                                    return { value: item.email, label: influencerName }
-                                })}></Select>
-                        </div>
-                        <div className={styles.listSectionTwo}>
-                            <h4>Select Action: </h4>
-                            <Select className={styles.typeSelect}
-                                name='action'
-                                value={action}
-                                onChange={(e) => this.handleChange(e, 'action')}
-                                options={actionType.map((item, i) => {
-                                    return { value: item, label: item }
-                                })}></Select>
-                        </div>
-                        <div className={styles.listSectionThree}>
-                            <button className={styles.listBtn} style={{ cursor: !isDisabled && 'not-allowed' }} onClick={this.createDeleteBanner.bind(this)} disabled={!isDisabled}>Submit</button>
-                        </div>
+                <div className={styles.influencerBodySection} style={{ marginTop: '2em' }}>
+                    <button type="button" id="collapsibleBanner" className={styles.collapsible} onClick={(e) => this.handleToggle(e, 'banner')}>Create Banner<span className={styles.collapsibleIcon}>{isBannerExpanded ? '  -' : '  +'}</span></button>
+                    <div className={styles.content} style={{ display: isBannerExpanded ? 'block' : 'none' }}>
+                        {isBannerExpanded && <div className={styles.influencerFormField}>
+                            <div className={styles.listWrapper}>
+                                <div className={styles.listSectionOne}>
+                                    <h4>Select Seller: </h4>
+                                    <Select className={styles.typeSelect}
+                                        name='seller'
+                                        value={seller}
+                                        onChange={(e) => this.handleChange(e, 'seller')}
+                                        options={allInfluencersList.length != 0 && allInfluencersList.map((item, i) => {
+                                            let influencerName = `${item.firstName} ${item.lastName}`;
+                                            return { value: item.email, label: influencerName }
+                                        })}></Select>
+                                </div>
+                                <div className={styles.listSectionTwo}>
+                                    <h4>Select Action: </h4>
+                                    <Select className={styles.typeSelect}
+                                        name='action'
+                                        value={action}
+                                        onChange={(e) => this.handleChange(e, 'action')}
+                                        options={actionType.map((item, i) => {
+                                            return { value: item, label: item }
+                                        })}></Select>
+                                </div>
+                                <div className={styles.listSectionThree}>
+                                    <button className={styles.listBtn} style={{ cursor: !isDisabled && 'not-allowed' }} onClick={this.createDeleteBanner.bind(this)} disabled={!isDisabled}>Submit</button>
+                                </div>
+                            </div>
+                        </div>}
+                        {action == 'Create Banner' &&
+                            <div className={styles.influencerFormField}>
+                                <div className={styles.listWrapperRows}>
+                                    <div className={styles.listSectionOne}>
+                                        <h4>Title: </h4>
+                                        <input type='text' name='title' className={styles.influencerInput} onChange={(e) => this.handleChange(e, 'title')} />
+                                    </div>
+                                    <div className={styles.listSectionTwo}>
+                                        <h4>Banner Image: </h4>
+                                        <div style={{ display: 'flex' }}>
+                                            <div className={styles.fileUpload} style={{ width: '25%' }}>
+                                                <Dropzone className={styles.uploadRegion} onDrop={this.handleShopOnDrop.bind(this)} accept="image/*" multiple={false}>
+                                                    <p>Select banner image to upload</p>
+                                                </Dropzone>
+                                            </div>
+                                            {previewFile.length > 0 ? <div>
+                                                {previewFile.map((file) => {
+                                                    if (file.type.match(/^image/)) {
+                                                        return <img className={styles.storeDetailImg} alt='No Image available' src={file.preview} />
+                                                    }
+                                                })}
+                                            </div> : null}
+                                        </div>
+                                        {/* temporary till the API creates/provide */}
+                                        {/* <input type='text' name='image' className={styles.influencerInput} onChange={(e) => this.handleChange(e, 'image')} /> */}
+                                    </div>
+                                    <div className={styles.listSectionThree}>
+                                        {/* <button className={styles.listBtn} style={{ cursor: !(previewFile.length > 0) && 'not-allowed' }} onClick={this.uploadImage.bind(this)} disabled={previewFile.length > 0 ? false : true}>Upload</button> */}
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
-                {action == 'Create Banner' &&
-                    <div className={styles.influencerFormField}>
-                        <div className={styles.listWrapperRows}>
-                            <div className={styles.listSectionOne}>
-                                <h4>Title: </h4>
-                                <input type='text' name='title' className={styles.influencerInput} onChange={(e) => this.handleChange(e, 'title')} />
-                            </div>
-                            <div className={styles.listSectionTwo}>
-                                <h4>Banner Image: </h4>
-                                <div style={{ display: 'flex' }}>
-                                    <div className={styles.fileUpload} style={{ width: '25%' }}>
-                                        <Dropzone className={styles.uploadRegion} onDrop={this.handleShopOnDrop.bind(this)} accept="image/*" multiple={false}>
-                                            <p>Select banner image to upload</p>
-                                        </Dropzone>
-                                    </div>
-                                    {previewFile.length > 0 ? <div>
-                                        {previewFile.map((file) => {
-                                            if (file.type.match(/^image/)) {
-                                                return <img className={styles.storeDetailImg} alt='No Image available' src={file.preview} />
-                                            }
-                                        })}
-                                    </div> : null}
-                                </div>
-                                {/* temporary till the API creates/provide */}
-                                {/* <input type='text' name='image' className={styles.influencerInput} onChange={(e) => this.handleChange(e, 'image')} /> */}
-                            </div>
-                            <div className={styles.listSectionThree}>
-                                {/* <button className={styles.listBtn} style={{ cursor: !(previewFile.length > 0) && 'not-allowed' }} onClick={this.uploadImage.bind(this)} disabled={previewFile.length > 0 ? false : true}>Upload</button> */}
-                            </div>
-                        </div>
-                    </div>
-                }
                 <div className={styles.influencerBodySection} style={{ marginTop: '2em' }}>
-                    <h1>Create Influencers</h1>
-                    <InfluencerForm isFromSeeMore={true} />
+                    <button type="button" id="collapsibleInfluencer" className={styles.collapsible} onClick={(e) => this.handleToggle(e, 'influencer')}>Create Influencer<span className={styles.collapsibleIcon}>{isInfluencerExpanded ? '  -' : '  +'}</span></button>
+                    <div className={styles.content} style={{ display: isInfluencerExpanded ? 'block' : 'none' }}>
+                        {isInfluencerExpanded && <InfluencerForm isFromSeeMore={true} />}
+                    </div>
                 </div>
                 {this.renderListSection()}
             </div>

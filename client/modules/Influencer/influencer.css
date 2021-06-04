@@ -211,8 +211,6 @@ input[type="search"] {
 
 .divThree {
     width: 30%;
-    display: flex;
-    flex-direction: column;
 }
 
 .listBtn,
@@ -225,6 +223,7 @@ input[type="search"] {
     border: 0;
     margin: 1.5em 0 2em;
     cursor: pointer;
+    width: 60%;
 }
 
 .optionCheckbox {
@@ -294,9 +293,7 @@ input[type="search"] {
 }
 
 .listSectionThree {
-    width: 30%;
-    display: flex;
-    flex-direction: column;
+    width: 20%;
 }
 
 .listBtn {
@@ -333,4 +330,36 @@ input[type="search"] {
     border-color: rgb(102, 102, 102);
     border-style: dashed;
     border-radius: 5px;
+}
+
+.collapsible {
+    color: #fff;
+    cursor: pointer;
+    text-align: right;
+    width: 100%;
+    margin: 0;
+    border: 1px solid #000;
+    text-transform: capitalize;
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 2px;
+    box-shadow: 0;
+    background-color: #000;
+    transition: background-color 300ms;
+    letter-spacing: 1px;
+}
+
+.collapsibleIcon {
+    font-weight: 900;
+    font-size: 1.5em;
+}
+
+.content {
+    border: 1px solid rgba(0,0,0,0.2);
+    margin: 0 0 30px;
+    padding: 25px 0 35px 25px;
+    position: relative;
+    transition: 300ms;
 }
