@@ -6,6 +6,7 @@ import Select from 'react-select';
 import Dropzone from 'react-dropzone';
 import { fetchAllInfluencers, fetchInfluencerCarousel, createBanner, deleteBanner } from '../InfluencerAction';
 import Carousel from './Carousel';
+import InfluencerForm from './InfluencerForm';
 
 // Import Style
 import styles from '../influencer.css';
@@ -53,7 +54,11 @@ class InfluencerList extends React.Component {
                     let influencerName = `${item.firstName} ${item.lastName}`;
                     return (
                         <li key={influencerName} className={styles.autocompleteLi} onClick={() => { }}>
-                            {<img className={styles.suggestionListImage} alt='No Image available' src={item.profileImageUrl} />}<div className={styles.liText}>{influencerName}</div>
+                            {<img className={styles.suggestionListImage} alt='No Image available' src={item.profileImageUrl} />}
+                            <div className={styles.liText}>
+                                <div>{influencerName}</div>
+                                <div><b><i>Sequence: </i></b> {item.influencerSequence}</div>
+                            </div>
                         </li>
                     );
                 })
@@ -105,6 +110,17 @@ class InfluencerList extends React.Component {
         });
     }
 
+    // uploadImage() {
+    //     const { imageFiles } = this.state;
+    //     if (imageFiles.length != 0) {
+    //         let confirmStatus = confirm('Are you sure want to upload?');
+    //         if (confirmStatus) {
+    //             this.props.uploadMedia('image', imageFiles[0]);
+    //             this.setState({ isUploaded: true, previewFile: [], imageFiles: [] });
+    //         }
+    //     }
+    // }
+
     createDeleteBanner() {
         const { seller, action, title, image, allInfluencersList, influencersCarouselList } = this.state;
         switch (action) {
@@ -129,7 +145,8 @@ class InfluencerList extends React.Component {
     }
 
     render() {
-        const { influencersCarouselList, allInfluencersList, seller, action, previewFile } = this.state;
+        const { influencersCarouselList, allInfluencersList, seller, action, previewFile, title } = this.state;
+        let isDisabled = (seller != "" && action != "" && title != "" && previewFile.length != 0) ? true : false;
         return <section>
             <button className={styles.backBtn} onClick={() => browserHistory.goBack()}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true" /> Back</button>
             <div className={styles.influencerBodySection}>
@@ -159,7 +176,7 @@ class InfluencerList extends React.Component {
                                 })}></Select>
                         </div>
                         <div className={styles.listSectionThree}>
-                            <button className={styles.listBtn} onClick={this.createDeleteBanner.bind(this)}>Submit</button>
+                            <button className={styles.listBtn} style={{ cursor: !isDisabled && 'not-allowed' }} onClick={this.createDeleteBanner.bind(this)} disabled={!isDisabled}>Submit</button>
                         </div>
                     </div>
                 </div>
@@ -172,7 +189,7 @@ class InfluencerList extends React.Component {
                             </div>
                             <div className={styles.listSectionTwo}>
                                 <h4>Banner Image: </h4>
-                                {/* <div style={{ display: 'flex' }}>
+                                <div style={{ display: 'flex' }}>
                                     <div className={styles.fileUpload} style={{ width: '25%' }}>
                                         <Dropzone className={styles.uploadRegion} onDrop={this.handleShopOnDrop.bind(this)} accept="image/*" multiple={false}>
                                             <p>Select banner image to upload</p>
@@ -185,14 +202,20 @@ class InfluencerList extends React.Component {
                                             }
                                         })}
                                     </div> : null}
-                                </div> */}
+                                </div>
                                 {/* temporary till the API creates/provide */}
-                                <input type='text' name='image' className={styles.influencerInput} onChange={(e) => this.handleChange(e, 'image')} />
+                                {/* <input type='text' name='image' className={styles.influencerInput} onChange={(e) => this.handleChange(e, 'image')} /> */}
                             </div>
-                            <div className={styles.listSectionThree}></div>
+                            <div className={styles.listSectionThree}>
+                                {/* <button className={styles.listBtn} style={{ cursor: !(previewFile.length > 0) && 'not-allowed' }} onClick={this.uploadImage.bind(this)} disabled={previewFile.length > 0 ? false : true}>Upload</button> */}
+                            </div>
                         </div>
                     </div>
                 }
+                <div className={styles.influencerBodySection} style={{ marginTop: '2em' }}>
+                    <h1>Create Influencers</h1>
+                    <InfluencerForm isFromSeeMore={true} />
+                </div>
                 {this.renderListSection()}
             </div>
         </section>
