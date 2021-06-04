@@ -51,7 +51,10 @@ class Stories extends React.Component {
             isCategorySelected: false,
             imageFiles: [],
             actualGenderList: [],
-            afterHandleChange: false
+            afterHandleChange: false,
+            storeName: '',
+            finalFilterParamList: '',
+            afterFilterChange: false
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -83,12 +86,16 @@ class Stories extends React.Component {
                 colorList: Object.keys(facetsData.colour) || [],
                 sizeList: Object.keys(facetsData.size) || [],
                 genderList: (this.state.afterHandleChange ? this.state.actualGenderList : Object.keys(facetsData.gender)) || [],
-                priceList: Object.keys(facetsData.price) || [],
-                itemList: nextProps.shopCatalog.docs || []
+                priceList: Object.keys(facetsData.price) || []
             });
             if (!this.state.afterHandleChange) {
                 this.setState({
                     actualGenderList: Object.keys(facetsData.gender) || []
+                });
+            }
+            if (this.state.afterFilterChange) {
+                this.setState({
+                    itemList: nextProps.shopCatalog.docs || []
                 });
             }
         }
@@ -289,44 +296,69 @@ class Stories extends React.Component {
             }
         });
         console.log(filterParamList);
+        this.setState({ finalFilterParamList: filterParamList });
         this.props.fetchFilterData(filterParamList != '' ? `?${filterParamList}` : '');
+    }
+
+    filterClickHandler = (action) => {
+        const { finalFilterParamList } = this.state;
+        let emptyString = '';
+        switch (action.toLowerCase()) {
+            case 'apply':
+                this.props.fetchFilterData(finalFilterParamList != emptyString ? `?${finalFilterParamList}` : emptyString);
+                this.setState({ afterFilterChange: true });
+                break;
+            case 'clear':
+                this.props.fetchFilterData(emptyString);
+                this.setState({
+                    afterFilterChange: false, storeName: '', selectedGender: '',
+                    brandList: [], categoryList: [], subcategoryList: [], colorList: [], sizeList: [], genderList: this.state.actualGenderList || [], priceList: [],
+                    categoryExpanded: false, categorySelections: [],
+                    subCategoryExpanded: false, subCategorySelections: [],
+                    colorExpanded: false, colorSelections: [],
+                    sizeExpanded: false, sizeSelections: [],
+                    brandExpanded: false, brandSelections: [],
+                    skuList: [], imageFiles: [], previewFile: [], itemList: []
+                });
+                break
+        }
     }
 
     toggleExpanded = (fieldName) => {
         switch (fieldName) {
             case 'categories':
                 if (!this.state.categoryExpanded) {
-                    this.setState({ categoryExpanded: true, subCategoryExpanded: false, colorExpanded: false, sizeExpanded: false, brandExpanded: false });
+                    this.setState({ categoryExpanded: true, subCategoryExpanded: false, colorExpanded: false, sizeExpanded: false, brandExpanded: false, afterFilterChange: false });
                 } else {
-                    this.setState({ categoryExpanded: false, subCategoryExpanded: false, colorExpanded: false, sizeExpanded: false, brandExpanded: false })
+                    this.setState({ categoryExpanded: false, subCategoryExpanded: false, colorExpanded: false, sizeExpanded: false, brandExpanded: false, afterFilterChange: false })
                 }
                 break;
             case 'subcategories':
                 if (!this.state.subCategoryExpanded) {
-                    this.setState({ subCategoryExpanded: true, categoryExpanded: false, colorExpanded: false, sizeExpanded: false, brandExpanded: false });
+                    this.setState({ subCategoryExpanded: true, categoryExpanded: false, colorExpanded: false, sizeExpanded: false, brandExpanded: false, afterFilterChange: false });
                 } else {
-                    this.setState({ subCategoryExpanded: false, categoryExpanded: false, colorExpanded: false, sizeExpanded: false, brandExpanded: false })
+                    this.setState({ subCategoryExpanded: false, categoryExpanded: false, colorExpanded: false, sizeExpanded: false, brandExpanded: false, afterFilterChange: false })
                 }
                 break;
             case 'colour':
                 if (!this.state.colorExpanded) {
-                    this.setState({ colorExpanded: true, categoryExpanded: false, subCategoryExpanded: false, sizeExpanded: false, brandExpanded: false });
+                    this.setState({ colorExpanded: true, categoryExpanded: false, subCategoryExpanded: false, sizeExpanded: false, brandExpanded: false, afterFilterChange: false });
                 } else {
-                    this.setState({ colorExpanded: false, categoryExpanded: false, subCategoryExpanded: false, sizeExpanded: false, brandExpanded: false })
+                    this.setState({ colorExpanded: false, categoryExpanded: false, subCategoryExpanded: false, sizeExpanded: false, brandExpanded: false, afterFilterChange: false })
                 }
                 break;
             case 'size':
                 if (!this.state.sizeExpanded) {
-                    this.setState({ sizeExpanded: true, categoryExpanded: false, subCategoryExpanded: false, colorExpanded: false, brandExpanded: false });
+                    this.setState({ sizeExpanded: true, categoryExpanded: false, subCategoryExpanded: false, colorExpanded: false, brandExpanded: false, afterFilterChange: false });
                 } else {
-                    this.setState({ sizeExpanded: false, categoryExpanded: false, subCategoryExpanded: false, colorExpanded: false, brandExpanded: false })
+                    this.setState({ sizeExpanded: false, categoryExpanded: false, subCategoryExpanded: false, colorExpanded: false, brandExpanded: false, afterFilterChange: false })
                 }
                 break;
             case 'brand':
                 if (!this.state.brandExpanded) {
-                    this.setState({ brandExpanded: true, categoryExpanded: false, subCategoryExpanded: false, sizeExpanded: false, colorExpanded: false });
+                    this.setState({ brandExpanded: true, categoryExpanded: false, subCategoryExpanded: false, sizeExpanded: false, colorExpanded: false, afterFilterChange: false });
                 } else {
-                    this.setState({ brandExpanded: false, categoryExpanded: false, subCategoryExpanded: false, sizeExpanded: false, colorExpanded: false })
+                    this.setState({ brandExpanded: false, categoryExpanded: false, subCategoryExpanded: false, sizeExpanded: false, colorExpanded: false, afterFilterChange: false })
                 }
                 break;
         }
@@ -444,23 +476,14 @@ class Stories extends React.Component {
     }
 
     createStore() {
-        const { storeName, skuList, imageFiles, fileType, selectedType, imageFileName, selectedListItem, selectedStoreType } = this.state;
-        let imgFileName = imageFileName;
-        // temporary till the API creates/provide
-        // if (imageFiles && imageFiles.length != 0 && this.props.user) {
-        //     imageFiles.forEach(item => {
-        //         if (fileType == 'image') {
-        //             imgFileName = item;
-        //         }
-        //     });
-        // }
+        const { storeName, skuList, selectedType, selectedListItem, selectedStoreType, imageFiles } = this.state;
         let createStoreData = {};
         if (selectedType.toLowerCase() == 'seller') {
             selectedListItem.forEach(i => {
                 createStoreData = {
                     title: `${i.firstName} ${i.lastName}` || '',
                     skuList: [],
-                    image: imgFileName || '',
+                    image: imageFiles[0] || [],
                     type: 'seller',
                     link: i.email || '',
                     status: true
@@ -474,7 +497,7 @@ class Stories extends React.Component {
                     selectedListItem.forEach(i => {
                         createStoryData = {
                             title: i.title || '',
-                            image: imgFileName || '',
+                            image: imageFiles[0] || [],
                             type: 'store',
                             link: i.title || '',
                             status: true
@@ -486,7 +509,7 @@ class Stories extends React.Component {
                     createStoreData = {
                         title: storeName || '',
                         skuList: skuList || [],
-                        image: imgFileName || '',
+                        image: imageFiles[0] || [],
                         type: 'store',
                         link: storeName.replace(/\s+/g, '-').toLowerCase() || '',
                         status: true
@@ -507,8 +530,10 @@ class Stories extends React.Component {
     }
 
     render() {
-        let { selectedType, selectedStoreType, itemList, afterHandleChange, previewFile } = this.state;
+        let { selectedType, selectedStoreType, itemList, previewFile, selectedGender, storeName, afterFilterChange } = this.state;
         let { stories } = this.props;
+        let isDisabled = (selectedType != "" && selectedStoreType != "" && selectedGender != "" && storeName != "" && previewFile.length != 0) ? true : false;
+        let isFilterDisabled = (selectedType != "" && selectedStoreType != "" && selectedGender != "" && storeName != "") ? true : false;
         return <section>
             <button className={styles.backBtn} onClick={() => browserHistory.goBack()}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true" /> Back</button>
             <div className={styles.bubbleSection}>
@@ -541,7 +566,7 @@ class Stories extends React.Component {
             }
             {selectedType != '' && <div className={styles.bubbleFormField}>
                 <h4>Upload Image URL (for stories): </h4>
-                {/* <div style={{ display: 'flex' }}>
+                <div style={{ display: 'flex' }}>
                     <div className={styles.fileUpload} style={{ width: '25%' }}>
                         <Dropzone onDrop={this.handleShopOnDrop.bind(this)} accept="image/*" multiple={false}>
                             <p>Select a product image file to upload</p>
@@ -554,12 +579,17 @@ class Stories extends React.Component {
                             }
                         })}
                     </div> : null}
-                </div> */}
-                {/* temporary till the API creates/provide */}
-                <input type='text' name='image' className={styles.bubbleInput} onChange={e => { this.setState({ imageFileName: e.target.value }) }} />
+                </div>
             </div>}
-            {!!afterHandleChange && itemList.length != 0 && selectedType != "" && selectedStoreType != "" && <DragDrog itemList={itemList} updatedSkuList={data => this.createSkuList(data)} />}
-            <button className={styles.storiesBtn} onClick={this.createStore.bind(this)}>Create</button>
+            {
+                selectedType != '' && selectedStoreType != '' &&
+                <div>
+                    <button className={styles.storiesBtn} style={{ cursor: !isFilterDisabled && 'not-allowed', marginRight: '1em' }} onClick={() => this.filterClickHandler('apply')} disabled={!isFilterDisabled}>Apply Filter</button>
+                    <button className={styles.storiesBtn} onClick={() => this.filterClickHandler('clear')}>Reset Filter</button>
+                </div>
+            }
+            {afterFilterChange && selectedType != "" && selectedStoreType != "" && <DragDrog itemList={itemList} isAfterChange={afterFilterChange} updatedSkuList={data => this.createSkuList(data)} />}
+            <button className={styles.storiesBtn} style={{ cursor: !isDisabled && 'not-allowed' }} onClick={this.createStore.bind(this)} disabled={!isDisabled}>Create</button>
         </section>
     }
 }

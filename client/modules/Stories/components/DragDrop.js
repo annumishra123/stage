@@ -14,8 +14,14 @@ class DragDrog extends Component {
         }
     }
 
+    componentDidMount() {
+        this.setState({ tasks: this.props.itemList });
+    }
+
     componentWillReceiveProps(nextProps) {
-        this.setState({ tasks: nextProps.itemList });
+        if ((this.props.itemList != nextProps.itemList) && nextProps.isAfterChange) {
+            this.setState({ tasks: nextProps.itemList });
+        }
     }
 
     onDragStart = (ev, item) => {

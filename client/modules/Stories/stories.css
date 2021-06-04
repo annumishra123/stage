@@ -127,8 +127,10 @@
     letter-spacing: 1px;
     text-transform: uppercase;
     border: 0;
-    margin: 10px 0 0;
+    /* margin: 10px 0 0; */
     cursor: pointer;
+    margin-top: 12%;
+    margin-left: 2em;
 }
 
 .priceDropdown,
