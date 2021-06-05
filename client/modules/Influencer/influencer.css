@@ -278,10 +278,9 @@ input[type="search"] {
     width: 80%;
 }
 
-.listWrapperRows,
 .listWrapper {
     display: flex; 
-    margin-top: 2em;
+    margin-top: 1.5em;
 }
 
 .listSectionOne {
@@ -300,13 +299,10 @@ input[type="search"] {
     margin: 3.1em 0 2em !important;
 }
 
-.listWrapperRows {
-    margin-top: -1.5em !important;
-}
-/* 
 .fileUpload {
     margin: 10px 0 20px;
-} */
+}
+
 .fileUpload > div {
     background: rgba(0,0,0,0.1) !important;
     cursor: pointer;
@@ -314,8 +310,8 @@ input[type="search"] {
     text-align: center;
 }
 .fileUpload p {
-    margin: 1.3em 0.5em;
-    font-size: 13px;
+    margin: 2.3em 0.5em;
+    font-size: 18px;
 }
 
 .storeDetailImg {
@@ -325,7 +321,7 @@ input[type="search"] {
 }
 
 .uploadRegion {
-    height: 6em !important;
+    height: 8em !important;
     border-width: 2px;
     border-color: rgb(102, 102, 102);
     border-style: dashed;

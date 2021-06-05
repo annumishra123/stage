@@ -41,7 +41,7 @@ class Carousel extends React.Component {
         return (
             <div className={styles.carousel}>
                 <Arrow direction="left" clickFunction={this.previousSlide} glyph="&#x3c;" />
-                {imageSet.length != 0 && <ImageSlide url={imageSet[currentImageIndex].image} />}
+                {imageSet.length != 0 && <ImageSlide url={imageSet[currentImageIndex].image} confirmation={this.props.confirmation} data={imageSet[currentImageIndex]} />}
                 <Arrow direction="right" clickFunction={this.nextSlide} glyph="&#x3e;" />
             </div>
         );
@@ -56,7 +56,7 @@ const Arrow = ({ direction, clickFunction, glyph }) => (
     </div>
 );
 
-const ImageSlide = ({ url }) => {
+const ImageSlide = ({ url, confirmation, data }) => {
     const styles = {
         backgroundImage: `url(${url})`,
         backgroundSize: 'contain',
@@ -68,7 +68,9 @@ const ImageSlide = ({ url }) => {
     };
 
     return (
-        <div style={styles}></div>
+        <div style={styles}>
+            <i title='Remove Banner' className="fa fa-lg fa-times" style={{ float: 'right', cursor: 'pointer' }} aria-hidden="true" onClick={() => confirmation(data)} />
+        </div>
     );
 }
 

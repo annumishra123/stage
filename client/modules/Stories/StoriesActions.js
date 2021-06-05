@@ -125,7 +125,7 @@ export function createStories(param) {
             });
         }).catch((error) => {
             console.log(error);
-            alert('Image Upload Fails');
+            alert('Image Upload Failed');
         });
     }
 }
