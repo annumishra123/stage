@@ -568,7 +568,7 @@ class Stories extends React.Component {
                         this.renderExistingStoreSection() : selectedStoreType == 'New' ?
                             this.renderNewStoreSection() : '') : ''
             }
-            {selectedType != '' && <div className={styles.bubbleFormField}>
+            {selectedType != '' && <div>
                 <h4>Upload Image URL (for stories): </h4>
                 <div style={{ display: 'flex' }}>
                     <div className={styles.fileUpload} style={{ width: '25%' }}>
