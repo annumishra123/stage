@@ -2,7 +2,7 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { fetchAllSpotlightInfluencers } from '../InfluencerAction';
+import { fetchAllSpotlightInfluencers, createUpdateInfluencer } from '../InfluencerAction';
 import InfluencerForm from './InfluencerForm';
 
 // Import Style
@@ -67,7 +67,8 @@ class Influencer extends React.Component {
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        fetchAllSpotlightInfluencers
+        fetchAllSpotlightInfluencers,
+        createUpdateInfluencer
     }, dispatch);
 }
 

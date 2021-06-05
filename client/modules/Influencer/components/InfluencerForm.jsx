@@ -80,6 +80,7 @@ class InfluencerForm extends React.Component {
 
     render() {
         const { allSellerList, selectedListItem, counterValue } = this.state;
+        let isDisabled = Object.keys(selectedListItem).length != 0 ? true : false;
         return <div className={styles.wrapper}>
             <div className={styles.divOne}>
                 <Autocomplete placeholder="Type to select seller" suggestions={allSellerList} selectedItem={this.onItemSelectionChange.bind(this)} />
@@ -99,7 +100,7 @@ class InfluencerForm extends React.Component {
                         <button className={styles.counterBtn} name="increement" onClick={this.handleChange}>+</button>
                     </div>
                 </div>
-                <button className={styles.influencerBtn} onClick={this.createInfluencer.bind(this)}>Create</button>
+                <button className={styles.influencerBtn} style={{ cursor: !isDisabled && 'not-allowed' }} onClick={this.createInfluencer.bind(this)} disabled={!isDisabled}>Create</button>
             </div>
         </div>
     }

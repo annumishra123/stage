@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
-import { fetchAllInfluencers, fetchInfluencerCarousel, createBanner, deleteBanner, getAllSellers } from '../InfluencerAction';
+import { fetchAllInfluencers, fetchInfluencerCarousel, createBanner, deleteBanner, getAllSellers, createUpdateInfluencer } from '../InfluencerAction';
 import Carousel from './Carousel';
 import InfluencerForm from './InfluencerForm';
 import Autocomplete from './Autocomplete';
@@ -51,6 +51,18 @@ class InfluencerList extends React.Component {
         }
     }
 
+    onRemoveConfirmation(data) {
+        let confirmStatus = confirm('Are you sure want to remove from Influencer?');
+        if (confirmStatus) {
+            const bodyData = {
+                "emailId": data.email || '',
+                "influencer": false,
+                "spotlight": false
+            }
+            this.props.createUpdateInfluencer(bodyData);
+        }
+    }
+
     renderListSection() {
         const { allInfluencersList } = this.state;
         return <ul className={styles.autocompleteUl}>
@@ -62,7 +74,10 @@ class InfluencerList extends React.Component {
                             {<img className={styles.suggestionListImage} alt='No Image available' src={item.profileImageUrl} />}
                             <div className={styles.liText}>
                                 <div>{influencerName}</div>
-                                <div><b><i>Sequence: </i></b> {item.influencerSequence}</div>
+                                <div><b><i>Sequence: </i></b>{item.influencerSequence}</div>
+                                <div style={{ marginTop: '0.5em' }}>
+                                    <i title='Remove Influencer' className="fa fa-lg fa-trash" style={{ cursor: 'pointer' }} aria-hidden="true" onClick={() => this.onRemoveConfirmation(item)} />
+                                </div>
                             </div>
                         </li>
                     );
@@ -207,7 +222,8 @@ function matchDispatchToProps(dispatch) {
         fetchInfluencerCarousel,
         createBanner,
         deleteBanner,
-        getAllSellers
+        getAllSellers,
+        createUpdateInfluencer
     }, dispatch);
 }
 
