@@ -66,6 +66,10 @@ class Stories extends React.Component {
         this.props.getAllSellers();
     }
 
+    handleClickOutside() {
+        this.setState({ categoryExpanded: false, subCategoryExpanded: false, colorExpanded: false, sizeExpanded: false, brandExpanded: false, afterFilterChange: false });
+    }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.allStore) {
             this.setState({
@@ -330,35 +334,35 @@ class Stories extends React.Component {
                 if (!this.state.categoryExpanded) {
                     this.setState({ categoryExpanded: true, subCategoryExpanded: false, colorExpanded: false, sizeExpanded: false, brandExpanded: false, afterFilterChange: false });
                 } else {
-                    this.setState({ categoryExpanded: false, subCategoryExpanded: false, colorExpanded: false, sizeExpanded: false, brandExpanded: false, afterFilterChange: false })
+                    this.setState({ categoryExpanded: false, subCategoryExpanded: false, colorExpanded: false, sizeExpanded: false, brandExpanded: false, afterFilterChange: false });
                 }
                 break;
             case 'subcategories':
                 if (!this.state.subCategoryExpanded) {
                     this.setState({ subCategoryExpanded: true, categoryExpanded: false, colorExpanded: false, sizeExpanded: false, brandExpanded: false, afterFilterChange: false });
                 } else {
-                    this.setState({ subCategoryExpanded: false, categoryExpanded: false, colorExpanded: false, sizeExpanded: false, brandExpanded: false, afterFilterChange: false })
+                    this.setState({ subCategoryExpanded: false, categoryExpanded: false, colorExpanded: false, sizeExpanded: false, brandExpanded: false, afterFilterChange: false });
                 }
                 break;
             case 'colour':
                 if (!this.state.colorExpanded) {
                     this.setState({ colorExpanded: true, categoryExpanded: false, subCategoryExpanded: false, sizeExpanded: false, brandExpanded: false, afterFilterChange: false });
                 } else {
-                    this.setState({ colorExpanded: false, categoryExpanded: false, subCategoryExpanded: false, sizeExpanded: false, brandExpanded: false, afterFilterChange: false })
+                    this.setState({ colorExpanded: false, categoryExpanded: false, subCategoryExpanded: false, sizeExpanded: false, brandExpanded: false, afterFilterChange: false });
                 }
                 break;
             case 'size':
                 if (!this.state.sizeExpanded) {
                     this.setState({ sizeExpanded: true, categoryExpanded: false, subCategoryExpanded: false, colorExpanded: false, brandExpanded: false, afterFilterChange: false });
                 } else {
-                    this.setState({ sizeExpanded: false, categoryExpanded: false, subCategoryExpanded: false, colorExpanded: false, brandExpanded: false, afterFilterChange: false })
+                    this.setState({ sizeExpanded: false, categoryExpanded: false, subCategoryExpanded: false, colorExpanded: false, brandExpanded: false, afterFilterChange: false });
                 }
                 break;
             case 'brand':
                 if (!this.state.brandExpanded) {
                     this.setState({ brandExpanded: true, categoryExpanded: false, subCategoryExpanded: false, sizeExpanded: false, colorExpanded: false, afterFilterChange: false });
                 } else {
-                    this.setState({ brandExpanded: false, categoryExpanded: false, subCategoryExpanded: false, sizeExpanded: false, colorExpanded: false, afterFilterChange: false })
+                    this.setState({ brandExpanded: false, categoryExpanded: false, subCategoryExpanded: false, sizeExpanded: false, colorExpanded: false, afterFilterChange: false });
                 }
                 break;
         }
@@ -427,23 +431,23 @@ class Stories extends React.Component {
                     }).map((item, key) => <option key={key} value={item}>{item}</option>)}
                 </select>
             </div>
-            <div className={styles.bubbleFormField} onClick={() => this.toggleExpanded('categories')}>
+            <div className={styles.bubbleFormField} onBlur={() => this.handleClickOutside()} onClick={() => this.toggleExpanded('categories')}>
                 <h4>Category: </h4>
                 {this.customDropDown(categoryExpanded, categoryList, categorySelections, "categories", categoriesItemList)}
             </div>
-            <div className={styles.bubbleFormField} onClick={() => isCategorySelected ? this.toggleExpanded('subcategories') : {}}>
+            <div className={styles.bubbleFormField} onBlur={() => this.handleClickOutside()} onClick={() => isCategorySelected ? this.toggleExpanded('subcategories') : {}}>
                 <h4>Sub Category: </h4>
                 {this.customDropDown(subCategoryExpanded, subcategoryList, subCategorySelections, "subcategories", subCategoriesItemList)}
             </div>
-            <div className={styles.bubbleFormField} onClick={() => this.toggleExpanded('colour')}>
+            <div className={styles.bubbleFormField} onBlur={() => this.handleClickOutside()} onClick={() => this.toggleExpanded('colour')}>
                 <h4>Color: </h4>
                 {this.customDropDown(colorExpanded, colorList, colorSelections, "colour", colorItemList)}
             </div>
-            <div className={styles.bubbleFormField} onClick={() => this.toggleExpanded('size')}>
+            <div className={styles.bubbleFormField} onBlur={() => this.handleClickOutside()} onClick={() => this.toggleExpanded('size')}>
                 <h4>Size: </h4>
                 {this.customDropDown(sizeExpanded, sizeList, sizeSelections, "size", sizeItemList)}
             </div>
-            <div className={styles.bubbleFormField} onClick={() => this.toggleExpanded('brand')}>
+            <div className={styles.bubbleFormField} onBlur={() => this.handleClickOutside()} onClick={() => this.toggleExpanded('brand')}>
                 <h4>Brand: </h4>
                 {this.customDropDown(brandExpanded, brandList, brandSelections, "brand", brandItemList)}
             </div>
