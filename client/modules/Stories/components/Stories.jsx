@@ -19,6 +19,7 @@ var filterList = {};
 class Stories extends React.Component {
     constructor(props) {
         super(props);
+        this.setWrapperRef = this.setWrapperRef.bind(this);
         this.state = {
             selectedType: '',
             selectedStoreType: '',
@@ -57,17 +58,57 @@ class Stories extends React.Component {
             afterFilterChange: false
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleClickOutside = this.handleClickOutside.bind(this);
     }
 
     componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
         this.props.fetchStories();
         this.props.fetchShopCatalog();
         this.props.getAllStores();
         this.props.getAllSellers();
     }
 
-    handleClickOutside() {
-        this.setState({ categoryExpanded: false, subCategoryExpanded: false, colorExpanded: false, sizeExpanded: false, brandExpanded: false, afterFilterChange: false });
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+    }
+
+    setWrapperRef(node) {
+        switch (node.title.toLowerCase()) {
+            case 'category':
+                this.categoryRef = node;
+                break;
+            case 'subcategory':
+                this.subCategoryRef = node;
+                break;
+            case 'color':
+                this.colorRef = node;
+                break;
+            case 'size':
+                this.sizeRef = node;
+                break;
+            case 'brand':
+                this.brandRef = node;
+                break;
+        }
+    }
+
+    handleClickOutside(event) {
+        if (this.categoryRef && !this.categoryRef.contains(event.target)) {
+            this.setState({ categoryExpanded: false });
+        }
+        if (this.subCategoryRef && !this.subCategoryRef.contains(event.target)) {
+            this.setState({ subCategoryExpanded: false });
+        }
+        if (this.colorRef && !this.colorRef.contains(event.target)) {
+            this.setState({ colorExpanded: false });
+        }
+        if (this.sizeRef && !this.sizeRef.contains(event.target)) {
+            this.setState({ sizeExpanded: false });
+        }
+        if (this.brandRef && !this.brandRef.contains(event.target)) {
+            this.setState({ brandExpanded: false });
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -431,23 +472,23 @@ class Stories extends React.Component {
                     }).map((item, key) => <option key={key} value={item}>{item}</option>)}
                 </select>
             </div>
-            <div className={styles.bubbleFormField} onBlur={() => this.handleClickOutside()} onClick={() => this.toggleExpanded('categories')}>
+            <div ref={this.setWrapperRef} title='Category' className={styles.bubbleFormField} onClick={() => this.toggleExpanded('categories')}>
                 <h4>Category: </h4>
                 {this.customDropDown(categoryExpanded, categoryList, categorySelections, "categories", categoriesItemList)}
             </div>
-            <div className={styles.bubbleFormField} onBlur={() => this.handleClickOutside()} onClick={() => isCategorySelected ? this.toggleExpanded('subcategories') : {}}>
+            <div ref={this.setWrapperRef} title='SubCategory' className={styles.bubbleFormField} onClick={() => isCategorySelected ? this.toggleExpanded('subcategories') : {}}>
                 <h4>Sub Category: </h4>
                 {this.customDropDown(subCategoryExpanded, subcategoryList, subCategorySelections, "subcategories", subCategoriesItemList)}
             </div>
-            <div className={styles.bubbleFormField} onBlur={() => this.handleClickOutside()} onClick={() => this.toggleExpanded('colour')}>
+            <div ref={this.setWrapperRef} title='Color' className={styles.bubbleFormField} onClick={() => this.toggleExpanded('colour')}>
                 <h4>Color: </h4>
                 {this.customDropDown(colorExpanded, colorList, colorSelections, "colour", colorItemList)}
             </div>
-            <div className={styles.bubbleFormField} onBlur={() => this.handleClickOutside()} onClick={() => this.toggleExpanded('size')}>
+            <div ref={this.setWrapperRef} title='Size' className={styles.bubbleFormField} onClick={() => this.toggleExpanded('size')}>
                 <h4>Size: </h4>
                 {this.customDropDown(sizeExpanded, sizeList, sizeSelections, "size", sizeItemList)}
             </div>
-            <div className={styles.bubbleFormField} onBlur={() => this.handleClickOutside()} onClick={() => this.toggleExpanded('brand')}>
+            <div ref={this.setWrapperRef} title='Brand' className={styles.bubbleFormField} onClick={() => this.toggleExpanded('brand')}>
                 <h4>Brand: </h4>
                 {this.customDropDown(brandExpanded, brandList, brandSelections, "brand", brandItemList)}
             </div>
