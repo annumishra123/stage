@@ -74,22 +74,24 @@ class Stories extends React.Component {
     }
 
     setWrapperRef(node) {
-        switch (node.title.toLowerCase()) {
-            case 'category':
-                this.categoryRef = node;
-                break;
-            case 'subcategory':
-                this.subCategoryRef = node;
-                break;
-            case 'color':
-                this.colorRef = node;
-                break;
-            case 'size':
-                this.sizeRef = node;
-                break;
-            case 'brand':
-                this.brandRef = node;
-                break;
+        if (node && node.title) {
+            switch (node.title.toLowerCase()) {
+                case 'category':
+                    this.categoryRef = node;
+                    break;
+                case 'subcategory':
+                    this.subCategoryRef = node;
+                    break;
+                case 'color':
+                    this.colorRef = node;
+                    break;
+                case 'size':
+                    this.sizeRef = node;
+                    break;
+                case 'brand':
+                    this.brandRef = node;
+                    break;
+            }
         }
     }
 
