@@ -569,7 +569,7 @@ class Stories extends React.Component {
                             this.renderNewStoreSection() : '') : ''
             }
             {selectedType != '' && <div>
-                <h4>Upload Image URL (for stories): </h4>
+                <h4>Upload Image(for stories): </h4>
                 <div style={{ display: 'flex' }}>
                     <div className={styles.fileUpload} style={{ width: '25%' }}>
                         <Dropzone onDrop={this.handleShopOnDrop.bind(this)} accept="image/*" multiple={false}>
