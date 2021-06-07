@@ -686,105 +686,129 @@ const clientConfig = {
   shopLooksColumns: [{
     Header: 'SKU',
     accessor: 'sku',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     id: 'image1',
     Header: 'Image 1',
     accessor: o => o.image1 ? <a target="blank" href={o.image1}>Link</a> : '-',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     id: 'image2',
     Header: 'Image 2',
     accessor: o => o.image2 ? <a target="blank" href={o.image2}>Link</a> : '-',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     id: 'image3',
     Header: 'Image 3',
     accessor: o => o.image3 ? <a target="blank" href={o.image3}>Link</a> : '-',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     id: 'image4',
     Header: 'Image 4',
     accessor: o => o.image4 ? <a target="blank" href={o.image4}>Link</a> : '-',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     id: 'video',
     Header: 'Video',
     accessor: o => o.video ? <a target="blank" href={o.video}>Link</a> : '-',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     Header: 'Name',
     accessor: 'name',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     Header: 'Description',
     accessor: 'description',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     Header: 'Gender',
     accessor: 'gender',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     Header: 'Price',
     accessor: 'saleprice',
     filterable: false,
+    sortable: false,
     width: 180
   }, {
     Header: ' Original Price',
     accessor: 'originalretailprice',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     Header: 'Status',
     accessor: 'status',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     Header: 'Size',
     accessor: 'size',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     Header: 'Condition',
     accessor: 'condition',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     Header: 'Color',
     accessor: 'color',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     Header: 'Category',
     accessor: 'categories',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     Header: 'Sub Category',
     accessor: 'subcategories',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     Header: 'Sequence',
     accessor: 'sequence',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     Header: 'Seller',
     accessor: 'seller',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     Header: 'Tags',
     accessor: 'tags',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     Header: 'Quantity',
     accessor: 'quantity',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     Header: 'Brand',
     accessor: 'brand',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     Header: 'Shipping Size',
     accessor: 'shippingsize',
-    filterable: false
+    filterable: false,
+    sortable: false
   }, {
     Header: 'Uploaded Time',
     id: 'uploadtime',
     filterable: false,
+    sortable: false,
     accessor: o => moment(o.uploadtime).format('lll'),
     width: 180
   }],

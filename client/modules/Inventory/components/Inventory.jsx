@@ -11,6 +11,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Dropzone from 'react-dropzone';
 import moment from 'moment';
 import FilterComp from './FilterComp';
+import SortComp from './SortComp';
 
 // Import Style
 import styles from './inventory.css';
@@ -363,8 +364,8 @@ class Inventory extends React.Component {
                     });
                 }
             }
-            return <div className={ styles.shopTableOne }>
-                <ReactTable defaultSorted={[{ id: "uploadtime", desc: false }]} filterable data={shopCatalog} columns={clientConfig.shopLooksColumns} defaultPageSize={10} className="-striped -highlight" />
+            return <div className={styles.shopTableOne}>
+                <ReactTable data={shopCatalog} columns={clientConfig.shopLooksColumns} defaultPageSize={10} className="-striped -highlight" />
                 {shopCatalogCSV && <CSVLink data={shopCatalogCSV} filename={"Shop Inventory.csv"}>Export CSV</CSVLink>}
             </div>;
         }
@@ -440,6 +441,7 @@ class Inventory extends React.Component {
                                 <button onClick={this.uploadShopCSV.bind(this)}>Upload CSV</button>
                             </div>
                             <FilterComp />
+                            <SortComp />
                             {this.renderShopLooks()}
                         </TabPanel>
                         <TabPanel>

@@ -1,24 +1,33 @@
 import clientConfig from '../../config';
 import axios from 'axios';
 
-export function fetchShopCatalog() {
+export function fetchShopCatalog(filterParam) {
     return function (dispatch) {
-        let loopbackFilter = {
-            where: {
-                approved: false
-            },
-            order: 'uploadtime ASC'
-        };
-        let url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts?filter=' + JSON.stringify(loopbackFilter);
+        let url = '';
+        if (filterParam) {
+            url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/filter?${filterParam}`;
+        } else {
+            let loopbackFilter = {
+                where: {
+                    approved: false
+                },
+                order: 'uploadtime ASC'
+            };
+            url = clientConfig.targetURL + '/catalogv2/catalogv2/SaleProducts?filter=' + JSON.stringify(loopbackFilter);
+        }
         return axios({
             url: url,
             timeout: 20000,
             method: 'get',
             responseType: 'json'
         }).then((response) => {
+            let payloadData = response.data;
+            if (filterParam) {
+                payloadData = response.data.docs;
+            }
             dispatch({
                 type: 'FETCH_SHOP_CATALOG',
-                payload: response.data
+                payload: payloadData
             });
         }).catch((error) => {
             console.log(error);
