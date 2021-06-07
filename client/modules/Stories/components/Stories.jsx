@@ -422,25 +422,23 @@ class Stories extends React.Component {
                     : "None selected"}
             </div>
             {
-                expand && (
-                    <div className={styles.optionsContainer}>
-                        {dataList.length != 0 && dataList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
-                            .map(item => (
-                                <label htmlFor={item} className={styles.optionSection} key={item}>
-                                    <input
-                                        type="checkbox"
-                                        id={item}
-                                        name={name}
-                                        value={item}
-                                        checked={itemList.length != 0 && itemList.includes(item) || false}
-                                        onChange={this.handleChange}
-                                        className={styles.optionCheckbox}
-                                    />
-                                    {item}
-                                </label>
-                            ))}
-                    </div>
-                )
+                <div className={styles.optionsContainer} style={{ display: expand ? 'block' : 'none' }}>
+                    {dataList.length != 0 && dataList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
+                        .map((item, idx) => (
+                            <label htmlFor={item} className={styles.optionSection} key={idx} onClick={() => this.setState({ categoryExpanded: true })}>
+                                <input
+                                    type="checkbox"
+                                    id={item}
+                                    name={name}
+                                    value={item}
+                                    checked={itemList.length != 0 && itemList.includes(item) || false}
+                                    onChange={this.handleChange}
+                                    className={styles.optionCheckbox}
+                                />
+                                {item}
+                            </label>
+                        ))}
+                </div>
             }
         </div>
     }
