@@ -453,11 +453,11 @@ class Stories extends React.Component {
             colorItemList = colorSelections, sizeItemList = sizeSelections, brandItemList = brandSelections;
         let genderItems = afterHandleChange ? actualGenderList : genderList;
         return <div className={styles.newStore}>
-            <div className={styles.bubbleFormField}>
+            <div title='StoreName' className={styles.bubbleFormField}>
                 <h4>Store Name: </h4>
                 <input type='text' name='title' className={styles.bubbleInput} onChange={e => { this.setState({ storeName: e.target.value }) }} />
             </div>
-            <div className={styles.bubbleFormField}>
+            <div title='Gender' className={styles.bubbleFormField}>
                 <h4>Gender: </h4>
                 <select
                     name="gender"
@@ -492,7 +492,7 @@ class Stories extends React.Component {
                 <h4>Brand: </h4>
                 {this.customDropDown(brandExpanded, brandList, brandSelections, "brand", brandItemList)}
             </div>
-            <div className={styles.bubbleFormField}>
+            <div title='Price Range' className={styles.bubbleFormField}>
                 <h4>Price Range: </h4>
                 <div style={{ display: 'flex' }}>
                     <select
