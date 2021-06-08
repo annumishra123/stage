@@ -592,7 +592,7 @@ class Inventory extends React.Component {
                                             let displayName = constants.tagOptions.find(item => item.key == name);
                                             return <span key={i}>
                                                 {i ? ", " : null}
-                                                {displayName.value}
+                                                {displayName ? displayName.value : ''}
                                             </span>
                                         })
                                         : "None selected"}
