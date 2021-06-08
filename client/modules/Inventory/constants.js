@@ -18,3 +18,16 @@ export const brandList = ["", "Adidas", "zara", "109F", "Ajio", "Accessorize", "
 	"forever 26", "forever 27", "forever 28", "forever 29", "forever 30", "forever 31", "forever 32", "forever 33", "forever 34", "forever 35", "forever 36", "forever 37", "forever 38", "forever 39", "forever 40", "forever 41",
 	"forever 42", "harpa", "hsj", "jaspal", "qwerty"];
 export const tagsList = ["", "fancy"];
+export const shippingsizeOptions = ['','A', 'B', 'C'];
+export const tagOptions = [
+	{ key: "sonam kapoor", value: "Sonam Kapoor" }, { key: "deepika padukone", value: "Deepika Padukone" },
+	{ key: "malaika arora", value: "Malaika Arora" }, { key: "alia bhatt", value: "Alia Bhatt" },
+	{ key: "kareena kapoor", value: "Kareena Kapoor" }, { key: "feminine & chic", value: "Feminine & Chic" },
+	{ key: "classic and minimal", value: "Classic & Minimal" }, { key: "cool and sporty", value: "Cool & Sporty" },
+	{ key: "relaxed and easy", value: "Relaxed & Easy" }, { key: "ethnic and desi", value: "Ethnic & Desi" },
+	{ key: "classic and tailored", value: "Classic & Tailored" }, { key: "streetwear & sporty", value: "Streetwear & Sporty" },
+	{ key: "hip and edgy", value: "Hip & Edgy" }, { key: "shahid kapoor", value: "Shahid Kapoor" },
+	{ key: "virat kohli", value: "Virat Kohli" }, { key: "saif ali khan", value: "Saif Ali khan" },
+	{ key: "anil kapoor", value: "Anil Kapoor" }, { key: "ranbir kapoor", value: "Ranbir Kapoor" },
+	{ key: "ranveer singh", value: "Ranveer Singh" }
+]

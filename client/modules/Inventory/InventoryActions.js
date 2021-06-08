@@ -368,15 +368,14 @@ export function changeShopLookLocation(id, location) {
     }
 }
 
-export function approveProduct(row) {
+export function approveProduct(param) {
     return function (dispatch) {
-        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/approve?sku=${row.sku}&action=${row.action}&user=${row.user}`,
-            formData = new FormData();
+        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/approve`;
         return axios({
             url: url,
             method: 'post',
             responseType: 'json',
-            data: formData
+            data: param
         }).then((response) => {
             console.log(response.data);
             alert("The product has been updated!");
