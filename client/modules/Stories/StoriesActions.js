@@ -87,26 +87,45 @@ export function createNewStore(param) {
 
 export function createStories(param) {
     return function (dispatch) {
-        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/ShopStories`,
-            storiesRawData = {
-                title: param.title,
-                type: param.type,
-                link: param.link,
-                image: param.image,
-                status: param.status
-            }
+        let cloudinaryUrl = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/upload/cloudinary`,
+            formData = new FormData();
+        formData.append('image', param.image);
         return axios({
-            url: url,
+            url: cloudinaryUrl,
             timeout: 20000,
             method: 'post',
             responseType: 'json',
-            data: storiesRawData,
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         }).then((response) => {
-            console.log(response.data);
-            dispatch(fetchStories());
+            console.log(response);
+            let imageUrl = response.data.length != 0 && response.data.map(i => Object.values(i)).toString() || "";
+            let url = `${clientConfig.targetURL}/catalogv2/catalogv2/ShopStories`,
+                storiesRawData = {
+                    title: param.title,
+                    type: param.type,
+                    link: param.link,
+                    image: imageUrl,
+                    status: param.status
+                }
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'post',
+                responseType: 'json',
+                data: storiesRawData,
+            }).then((response) => {
+                console.log(response.data);
+                dispatch(fetchStories());
+            }).catch((error) => {
+                console.log(error);
+                alert('Story creation failed');
+            });
         }).catch((error) => {
             console.log(error);
-            alert('Story Not Created');
+            alert('Image Upload Failed');
         });
     }
 }

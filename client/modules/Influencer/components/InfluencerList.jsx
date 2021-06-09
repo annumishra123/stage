@@ -2,15 +2,14 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Select from 'react-select';
 import Dropzone from 'react-dropzone';
-import { fetchAllInfluencers, fetchInfluencerCarousel, createBanner, deleteBanner } from '../InfluencerAction';
+import { fetchAllInfluencers, fetchInfluencerCarousel, createBanner, deleteBanner, getAllSellers, createUpdateInfluencer } from '../InfluencerAction';
 import Carousel from './Carousel';
+import InfluencerForm from './InfluencerForm';
+import Autocomplete from './Autocomplete';
 
 // Import Style
 import styles from '../influencer.css';
-
-const actionType = ['Create Banner', 'Delete Banner'];
 
 class InfluencerList extends React.Component {
     constructor(props) {
@@ -19,17 +18,19 @@ class InfluencerList extends React.Component {
             allInfluencersList: [],
             influencersCarouselList: [],
             seller: '',
-            action: '',
             previewFile: [],
             imageFiles: [],
             title: '',
-            image: ''
+            isBannerExpanded: false,
+            isInfluencerExpanded: false,
+            allSellerList: []
         }
     }
 
     componentDidMount() {
         this.props.fetchAllInfluencers();
         this.props.fetchInfluencerCarousel();
+        this.props.getAllSellers();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -43,6 +44,23 @@ class InfluencerList extends React.Component {
                 influencersCarouselList: nextProps.influencersCarousel
             });
         }
+        if (nextProps.allSellers) {
+            this.setState({
+                allSellerList: nextProps.allSellers
+            });
+        }
+    }
+
+    onRemoveConfirmation(data) {
+        let confirmStatus = confirm('Are you sure want to remove from Influencer?');
+        if (confirmStatus) {
+            const bodyData = {
+                "emailId": data.email || '',
+                "influencer": false,
+                "spotlight": false
+            }
+            this.props.createUpdateInfluencer(bodyData);
+        }
     }
 
     renderListSection() {
@@ -53,7 +71,14 @@ class InfluencerList extends React.Component {
                     let influencerName = `${item.firstName} ${item.lastName}`;
                     return (
                         <li key={influencerName} className={styles.autocompleteLi} onClick={() => { }}>
-                            {<img className={styles.suggestionListImage} alt='No Image available' src={item.profileImageUrl} />}<div className={styles.liText}>{influencerName}</div>
+                            {<img className={styles.suggestionListImage} alt='No Image available' src={item.profileImageUrl} />}
+                            <div className={styles.liText}>
+                                <div>{influencerName}</div>
+                                <div><b><i>Sequence: </i></b>{item.influencerSequence}</div>
+                                <div style={{ marginTop: '0.5em' }}>
+                                    <i title='Remove Influencer' className="fa fa-lg fa-trash" style={{ cursor: 'pointer' }} aria-hidden="true" onClick={() => this.onRemoveConfirmation(item)} />
+                                </div>
+                            </div>
                         </li>
                     );
                 })
@@ -61,21 +86,12 @@ class InfluencerList extends React.Component {
         </ul>
     }
 
-    handleChange(e, fieldName) {
-        switch (fieldName) {
-            case 'seller':
-                this.setState({ seller: e ? e.value : '' });
-                break;
-            case 'action':
-                this.setState({ action: e ? e.value : '' });
-                break;
-            case 'title':
-                this.setState({ title: e ? e.target.value : '' });
-                break;
-            case 'image':
-                this.setState({ image: e ? e.target.value : '' });
-                break;
+    onItemSelectionChange(val) {
+        if (val == '') {
+            this.setState({ seller: '' });
+            return;
         }
+        this.setState({ seller: val.email });
     }
 
     handleShopOnDrop(acceptedFiles, rejectedFiles) {
@@ -105,94 +121,95 @@ class InfluencerList extends React.Component {
         });
     }
 
-    createDeleteBanner() {
-        const { seller, action, title, image, allInfluencersList, influencersCarouselList } = this.state;
+    createNewBanner() {
+        const { seller, title, imageFiles } = this.state;
+        let bodyData = {
+            title: title || '',
+            link: seller || '',
+            image: imageFiles[0] || [],
+            status: true
+        }
+        this.props.createBanner(bodyData);
+        this.setState({ previewFile: [], imageFiles: [], title: '' });
+    }
+
+    handleToggle(e, action) {
+        e.preventDefault();
         switch (action) {
-            case 'Create Banner':
-                let bodyData = {
-                    title: title || '',
-                    link: seller || '',
-                    image: image || '',
-                    status: true
-                }
-                this.props.createBanner(bodyData);
+            case 'banner':
+                this.setState({ isBannerExpanded: !this.state.isBannerExpanded, isInfluencerExpanded: false });
                 break;
-            case 'Delete Banner':
-                let selectedItem = influencersCarouselList.length != 0 && influencersCarouselList.filter((item, i) => item.link == seller);
-                if (selectedItem.length != 0) {
-                    selectedItem.forEach(item => {
-                        this.props.deleteBanner(item.id);
-                    });
-                }
+            case 'influencer':
+                this.setState({ isInfluencerExpanded: !this.state.isInfluencerExpanded, isBannerExpanded: false });
                 break;
         }
     }
 
+    onDisableConfirmation(data) {
+        let confirmStatus = confirm('Are you sure want to remove Banner?');
+        if (confirmStatus && data) {
+            this.props.deleteBanner(data.id);
+        }
+    }
     render() {
-        const { influencersCarouselList, allInfluencersList, seller, action, previewFile } = this.state;
+        const { influencersCarouselList, seller, previewFile, title, isBannerExpanded, isInfluencerExpanded, allSellerList } = this.state;
+        let isDisabled = (seller != "" && title != "" && previewFile.length != 0) ? true : false;
         return <section>
             <button className={styles.backBtn} onClick={() => browserHistory.goBack()}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true" /> Back</button>
             <div className={styles.influencerBodySection}>
                 <h1>Influencers closets</h1>
-                <Carousel dataList={influencersCarouselList} />
-                <div className={styles.influencerFormField}>
-                    <div className={styles.listWrapper}>
-                        <div className={styles.listSectionOne}>
-                            <h4>Select Seller: </h4>
-                            <Select className={styles.typeSelect}
-                                name='seller'
-                                value={seller}
-                                onChange={(e) => this.handleChange(e, 'seller')}
-                                options={allInfluencersList.length != 0 && allInfluencersList.map((item, i) => {
-                                    let influencerName = `${item.firstName} ${item.lastName}`;
-                                    return { value: item.email, label: influencerName }
-                                })}></Select>
-                        </div>
-                        <div className={styles.listSectionTwo}>
-                            <h4>Select Action: </h4>
-                            <Select className={styles.typeSelect}
-                                name='action'
-                                value={action}
-                                onChange={(e) => this.handleChange(e, 'action')}
-                                options={actionType.map((item, i) => {
-                                    return { value: item, label: item }
-                                })}></Select>
-                        </div>
-                        <div className={styles.listSectionThree}>
-                            <button className={styles.listBtn} onClick={this.createDeleteBanner.bind(this)}>Submit</button>
-                        </div>
-                    </div>
+                <div style={{ marginTop: '2em' }}>
+                    <Carousel dataList={influencersCarouselList} confirmation={(data) => this.onDisableConfirmation(data)} />
                 </div>
-                {action == 'Create Banner' &&
-                    <div className={styles.influencerFormField}>
-                        <div className={styles.listWrapperRows}>
-                            <div className={styles.listSectionOne}>
-                                <h4>Title: </h4>
-                                <input type='text' name='title' className={styles.influencerInput} onChange={(e) => this.handleChange(e, 'title')} />
+                <div className={styles.influencerBodySection} style={{ marginTop: '2em' }}>
+                    <button type="button" id="collapsibleBanner" className={styles.collapsible} onClick={(e) => this.handleToggle(e, 'banner')}>Create Banner<span className={styles.collapsibleIcon}>{isBannerExpanded ? '  -' : '  +'}</span></button>
+                    <div className={styles.content} style={{ display: isBannerExpanded ? 'block' : 'none' }}>
+                        {isBannerExpanded && <div className={styles.influencerFormField}>
+                            <div className={styles.listWrapper}>
+                                <div className={styles.listSectionOne}>
+                                    <h4>Select Seller: </h4>
+                                    <Autocomplete placeholder="Type to select seller" suggestions={allSellerList} selectedItem={this.onItemSelectionChange.bind(this)} />
+                                </div>
+                                <div className={styles.listSectionTwo}>
+                                    <h4>Title: </h4>
+                                    <input type='text' name='title' className={styles.influencerInput} value={title} onChange={(e) => this.setState({ title: e ? e.target.value : '' })} />
+                                </div>
+                                <div className={styles.listSectionThree}></div>
                             </div>
-                            <div className={styles.listSectionTwo}>
-                                <h4>Banner Image: </h4>
-                                {/* <div style={{ display: 'flex' }}>
-                                    <div className={styles.fileUpload} style={{ width: '25%' }}>
+                        </div>}
+                        <div className={styles.influencerFormField}>
+                            <div className={styles.listWrapper}>
+                                <div className={styles.listSectionOne}>
+                                    <h4>Banner Image: </h4>
+                                    <div className={styles.fileUpload} style={{ width: '65%' }}>
                                         <Dropzone className={styles.uploadRegion} onDrop={this.handleShopOnDrop.bind(this)} accept="image/*" multiple={false}>
                                             <p>Select banner image to upload</p>
                                         </Dropzone>
                                     </div>
+                                </div>
+                                <div className={styles.listSectionTwo}>
                                     {previewFile.length > 0 ? <div>
+                                        <h4>Image Preview: </h4>
                                         {previewFile.map((file) => {
                                             if (file.type.match(/^image/)) {
                                                 return <img className={styles.storeDetailImg} alt='No Image available' src={file.preview} />
                                             }
                                         })}
                                     </div> : null}
-                                </div> */}
-                                {/* temporary till the API creates/provide */}
-                                <input type='text' name='image' className={styles.influencerInput} onChange={(e) => this.handleChange(e, 'image')} />
+                                </div>
+                                <div className={styles.listSectionThree}>
+                                    <button className={styles.listBtn} style={{ cursor: !isDisabled && 'not-allowed' }} onClick={this.createNewBanner.bind(this)} disabled={!isDisabled}>Submit</button>
+                                </div>
                             </div>
-                            <div className={styles.listSectionThree}></div>
                         </div>
                     </div>
-                }
+                </div>
+                <div className={styles.influencerBodySection} style={{ marginTop: '2em' }}>
+                    <button type="button" id="collapsibleInfluencer" className={styles.collapsible} onClick={(e) => this.handleToggle(e, 'influencer')}>Create Influencer<span className={styles.collapsibleIcon}>{isInfluencerExpanded ? '  -' : '  +'}</span></button>
+                    <div className={styles.content} style={{ display: isInfluencerExpanded ? 'block' : 'none' }}>
+                        {isInfluencerExpanded && <InfluencerForm isFromSeeMore={true} />}
+                    </div>
+                </div>
                 {this.renderListSection()}
             </div>
         </section>
@@ -204,7 +221,9 @@ function matchDispatchToProps(dispatch) {
         fetchAllInfluencers,
         fetchInfluencerCarousel,
         createBanner,
-        deleteBanner
+        deleteBanner,
+        getAllSellers,
+        createUpdateInfluencer
     }, dispatch);
 }
 
@@ -213,7 +232,8 @@ function mapStateToProps(state) {
         role: state.auth.role,
         user: state.auth.email,
         allInfluencers: state.allInfluencers,
-        influencersCarousel: state.influencersCarousel
+        influencersCarousel: state.influencersCarousel,
+        allSellers: state.allSellers
     };
 }
 

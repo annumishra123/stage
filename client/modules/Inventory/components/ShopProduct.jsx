@@ -157,108 +157,108 @@ class ShopProduct extends React.Component {
 				<h1>Inventory Product detail</h1>
 				<br />
 				<button className={styles.backBtn} onClick={() => browserHistory.goBack()}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true" /> Back</button>
-				<div className={ styles.shopInventoryContainer }>
-				<div className={styles.productDetailField}>
-					<h4>Sku: </h4>
-					<input type="text" name="sku" className={styles.productDetailFieldWidth} value={sku} disabled={true} />
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Name: </h4>
-					<input type="text" name="name" className={styles.productDetailFieldWidth} defaultValue={name} onChange={this.handleChange} />
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Brand: </h4>
-					<select
-						name="brand"
-						className={styles.productDetailFieldWidth}
-						value={selectedBrand}
-						onChange={this.handleChange}
-					>
-						{constants.brandList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
-							.map(item => <option value={item}>{item}</option>)}
-					</select>
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Description: </h4>
-					<textarea type="text" name="description" className={styles.productDetailFieldWidth} defaultValue={description} onChange={this.handleChange} />
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Gender: </h4>
-					<div style={{ display: 'flex' }}>
-						{
-							constants.genderList.map(item => <div className={ styles.genderCol }>
-								<input type="radio" value={item} name="gender"
-									checked={genderSelected === item}
-									onChange={this.handleChange} />{item}
-							</div>
-							)
-						}
+				<div className={styles.shopInventoryContainer}>
+					<div className={styles.productDetailField}>
+						<h4>Sku: </h4>
+						<input type="text" name="sku" className={styles.productDetailFieldWidth} value={sku} disabled={true} />
 					</div>
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Condition: </h4>
-					<select
-						name="condition"
-						className={styles.productDetailFieldWidth}
-						value={selectedCondition}
-						onChange={this.handleChange}
-					>
-						{constants.clothConditionList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
-							.map(item => <option value={item}>{item}</option>)}
-					</select>
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Size: </h4>
-					<select
-						name="size"
-						className={styles.productDetailFieldWidth}
-						value={selectedSize}
-						onChange={this.handleChange}
-					>
-						{constants.sizeList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
-							.map(item => <option value={item}>{item}</option>)}
-					</select>
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Category: </h4>
-					<select
-						name="categories"
-						className={styles.productDetailFieldWidth}
-						value={selectedCategory}
-						onChange={this.handleChange}
-					>
-						{constants.clothCategoryList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
-							.map(item => <option value={item}>{item}</option>)}
-					</select>
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Sub Category: </h4>
-					<select
-						name="subcategories"
-						className={styles.productDetailFieldWidth}
-						value={selectedSubCategory}
-						onChange={this.handleChange}
-					>
-						{constants.clothSubCategoryList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
-							.map(item => <option value={item}>{item}</option>)}
-					</select>
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Color: </h4>
-					<select
-						name="color"
-						className={styles.productDetailFieldWidth}
-						value={selectedColor}
-						onChange={this.handleChange}
-					>
-						{constants.colorList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
-							.map(item => <option value={item}>{item}</option>)}
-					</select>
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Tags: </h4>
-					<input type="text" name="tags" className={styles.productDetailFieldWidth} defaultValue={tags} onChange={this.handleChange} />
-					{/* <select
+					<div className={styles.productDetailField}>
+						<h4>Name: </h4>
+						<input type="text" name="name" className={styles.productDetailFieldWidth} defaultValue={name} onChange={this.handleChange} />
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Brand: </h4>
+						<select
+							name="brand"
+							className={styles.productDetailFieldWidth}
+							value={selectedBrand}
+							onChange={this.handleChange}
+						>
+							{constants.brandList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
+								.map(item => <option value={item}>{item}</option>)}
+						</select>
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Description: </h4>
+						<textarea type="text" name="description" className={styles.productDetailFieldWidth} defaultValue={description} onChange={this.handleChange} />
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Gender: </h4>
+						<div style={{ display: 'flex' }}>
+							{
+								constants.genderList.map(item => <div className={styles.genderCol}>
+									<input type="radio" value={item} name="gender"
+										checked={genderSelected === item}
+										onChange={this.handleChange} />{item}
+								</div>
+								)
+							}
+						</div>
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Condition: </h4>
+						<select
+							name="condition"
+							className={styles.productDetailFieldWidth}
+							value={selectedCondition}
+							onChange={this.handleChange}
+						>
+							{constants.clothConditionList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
+								.map(item => <option value={item}>{item}</option>)}
+						</select>
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Size: </h4>
+						<select
+							name="size"
+							className={styles.productDetailFieldWidth}
+							value={selectedSize}
+							onChange={this.handleChange}
+						>
+							{constants.sizeList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
+								.map(item => <option value={item}>{item}</option>)}
+						</select>
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Category: </h4>
+						<select
+							name="categories"
+							className={styles.productDetailFieldWidth}
+							value={selectedCategory}
+							onChange={this.handleChange}
+						>
+							{constants.clothCategoryList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
+								.map(item => <option value={item}>{item}</option>)}
+						</select>
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Sub Category: </h4>
+						<select
+							name="subcategories"
+							className={styles.productDetailFieldWidth}
+							value={selectedSubCategory}
+							onChange={this.handleChange}
+						>
+							{constants.clothSubCategoryList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
+								.map(item => <option value={item}>{item}</option>)}
+						</select>
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Color: </h4>
+						<select
+							name="color"
+							className={styles.productDetailFieldWidth}
+							value={selectedColor}
+							onChange={this.handleChange}
+						>
+							{constants.colorList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
+								.map(item => <option value={item}>{item}</option>)}
+						</select>
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Tags: </h4>
+						<input type="text" name="tags" className={styles.productDetailFieldWidth} defaultValue={tags} onChange={this.handleChange} />
+						{/* <select
 						name="tags"
 						className={styles.productDetailFieldWidth}
 						value={selectedTag}
@@ -267,65 +267,65 @@ class ShopProduct extends React.Component {
 						{constants.tagsList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
 							.map(item => <option value={item}>{item}</option>)}
 					</select> */}
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Retail Price: </h4>
-					<input type="number" name="originalretailprice" className={styles.productDetailFieldWidth} defaultValue={originalretailprice} onChange={this.handleChange} />
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Sale Price: </h4>
-					<input type="number" name="saleprice" className={styles.productDetailFieldWidth} defaultValue={saleprice} onChange={this.handleChange} />
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Quantity: </h4>
-					<input type="number" name="quantity" className={styles.productDetailFieldWidth} defaultValue={quantity} onChange={this.handleChange} />
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Status: </h4>
-					<input type="text" name="status" className={styles.productDetailFieldWidth} defaultValue={status} onChange={this.handleChange} />
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Sequence: </h4>
-					<input type="number" name="sequence" className={styles.productDetailFieldWidth} defaultValue={sequence} onChange={this.handleChange} />
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Shipping Size: </h4>
-					<input type="number" name="shippingsize" className={styles.productDetailFieldWidth} defaultValue={shippingsize} onChange={this.handleChange} />
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Seller: </h4>
-					<input type="text" name="seller" className={styles.productDetailFieldWidth} defaultValue={seller} onChange={this.handleChange} />
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Notes: </h4>
-					<textarea type="text" name="notes" className={styles.productDetailFieldWidth} defaultValue={notes} onChange={this.handleChange} />
-				</div>
-				<div className={styles.productDetailField}>
-					<h4>Approve: </h4>
-					<select
-						name="approved"
-						className={styles.productDetailFieldWidth}
-						value={selectedApproveStatus}
-						onChange={this.handleChange}
-					>
-						{constants.approvalStatus.map((item, key) => <option key={key} value={item.key}>{item.value}</option>)};
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Retail Price: </h4>
+						<input type="number" name="originalretailprice" className={styles.productDetailFieldWidth} defaultValue={originalretailprice} onChange={this.handleChange} />
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Sale Price: </h4>
+						<input type="number" name="saleprice" className={styles.productDetailFieldWidth} defaultValue={saleprice} onChange={this.handleChange} />
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Quantity: </h4>
+						<input type="number" name="quantity" className={styles.productDetailFieldWidth} defaultValue={quantity} onChange={this.handleChange} />
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Status: </h4>
+						<input type="text" name="status" className={styles.productDetailFieldWidth} defaultValue={status} onChange={this.handleChange} />
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Sequence: </h4>
+						<input type="number" name="sequence" className={styles.productDetailFieldWidth} defaultValue={sequence} onChange={this.handleChange} />
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Shipping Size: </h4>
+						<input type="number" name="shippingsize" className={styles.productDetailFieldWidth} defaultValue={shippingsize} onChange={this.handleChange} />
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Seller: </h4>
+						<input type="text" name="seller" className={styles.productDetailFieldWidth} defaultValue={seller} onChange={this.handleChange} />
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Notes: </h4>
+						<textarea type="text" name="notes" className={styles.productDetailFieldWidth} defaultValue={notes} onChange={this.handleChange} />
+					</div>
+					<div className={styles.productDetailField}>
+						<h4>Approve: </h4>
+						<select
+							name="approved"
+							className={styles.productDetailFieldWidth}
+							value={selectedApproveStatus}
+							onChange={this.handleChange}
+						>
+							{constants.approvalStatus.map((item, key) => <option key={key} value={item.key}>{item.value}</option>)};
 					</select>
-				</div>
-				<div className={styles.productDetailImages}>
-					<h4>Images/Video: </h4>
-					{image1 && typeof (image1) != 'object' && <img id='image1' className={styles.productDetailImg} src={`${image1}`} />}
-					{image2 && typeof (image2) != 'object' && <img id='image2' className={styles.productDetailImg} src={`${image2}`} />}
-					{image3 && typeof (image3) != 'object' && <img id='image3' className={styles.productDetailImg} src={`${image3}`} />}
-					{image4 && typeof (image4) != 'object' && <img id='image4' className={styles.productDetailImg} src={`${image4}`} />}
-					<br />
-					{
-						video && typeof (video) != 'object' && <video id='video' className={styles.productDetailVideo} src={`${video}`} controls type="video/mp4" />
-					}
-				</div>
-				<div className={ styles.dropzoneContainer }>
-					{this.createDropzoneElement()}
-				</div>
-				<button className={styles.productDetailBtn} onClick={this.updateShopProductDetails.bind(this)}>Update Product</button>
+					</div>
+					<div className={styles.productDetailImages}>
+						<h4>Images/Video: </h4>
+						{image1 && typeof (image1) != 'object' && <img id='image1' className={styles.productDetailImg} src={`${image1}`} />}
+						{image2 && typeof (image2) != 'object' && <img id='image2' className={styles.productDetailImg} src={`${image2}`} />}
+						{image3 && typeof (image3) != 'object' && <img id='image3' className={styles.productDetailImg} src={`${image3}`} />}
+						{image4 && typeof (image4) != 'object' && <img id='image4' className={styles.productDetailImg} src={`${image4}`} />}
+						<br />
+						{
+							video && typeof (video) != 'object' && <video id='video' className={styles.productDetailVideo} src={`${video}`} controls type="video/mp4" />
+						}
+					</div>
+					<div className={styles.dropzoneContainer}>
+						{this.createDropzoneElement()}
+					</div>
+					<button className={styles.productDetailBtn} onClick={this.updateShopProductDetails.bind(this)}>Update Product</button>
 				</div>
 			</div>)
 		}

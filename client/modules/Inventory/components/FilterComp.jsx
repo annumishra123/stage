@@ -7,7 +7,7 @@ import { fetchEntireShopCatalog, fetchFilterData } from '../InventoryActions';
 import styles from './inventory.css';
 
 var filterList = {};
-
+const approvalOptions = [{ key: '', value: '' }, { key: "true", value: 'Yes' }, { key: "false", value: 'No' }]
 class FilterComp extends React.Component {
     constructor(props) {
         super(props);
@@ -38,13 +38,10 @@ class FilterComp extends React.Component {
             selectedPricemax: '',
             selectedGender: '',
             enteredSeller: '',
-            enteredQuantity: '',
-            enteredShippingsize: '',
-            enteredSequence: '',
             enteredSku: '',
-            enteredName: '',
             actualGenderList: [],
-            afterHandleChange: false
+            afterHandleChange: false,
+            selectedApprovalStatus: ''
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -92,25 +89,23 @@ class FilterComp extends React.Component {
                     : "None selected"}
             </div>
             {
-                expand && (
-                    <div className={styles.optionsContainer}>
-                        {dataList.length != 0 && dataList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
-                            .map(item => (
-                                <label htmlFor={item} className={styles.optionSection} key={item}>
-                                    <input
-                                        type="checkbox"
-                                        id={item}
-                                        name={name}
-                                        value={item}
-                                        checked={itemList.length != 0 && itemList.includes(item) || false}
-                                        onChange={this.handleChange}
-                                        className={styles.optionCheckbox}
-                                    />
-                                    {item}
-                                </label>
-                            ))}
-                    </div>
-                )
+                <div className={styles.optionsContainer} style={{ display: expand ? 'block' : 'none' }}>
+                    {dataList.length != 0 && dataList.sort((val, nextVal) => val.toLowerCase().localeCompare(nextVal.toLowerCase()))
+                        .map(item => (
+                            <label htmlFor={item} className={styles.optionSection} key={item}>
+                                <input
+                                    type="checkbox"
+                                    id={item}
+                                    name={name}
+                                    value={item}
+                                    checked={itemList.length != 0 && itemList.includes(item) || false}
+                                    onChange={this.handleChange}
+                                    className={styles.optionCheckbox}
+                                />
+                                {item}
+                            </label>
+                        ))}
+                </div>
             }
         </div>
     }
@@ -250,24 +245,16 @@ class FilterComp extends React.Component {
             case 'seller':
                 this.setState({ enteredSeller: value });
                 break;
-            case 'quantity':
-                this.setState({ enteredQuantity: value });
-                break;
-            case 'shippingsize':
-                this.setState({ enteredShippingsize: value });
-                break;
-            case 'sequence':
-                this.setState({ enteredSequence: value });
-                break;
             case 'sku':
                 this.setState({ enteredSku: value });
                 break;
-            case 'name':
-                this.setState({ enteredName: value });
+            case 'approved':
+                let updateStatusVal = value != '' ? (value == 'true' ? true : false) : value;
+                this.setState({ selectedApprovalStatus: updateStatusVal });
                 break;
         }
         itemSelected = [];
-        if (filterList.hasOwnProperty(name) && name !== 'gender') {
+        if (filterList.hasOwnProperty(name) && name !== 'gender' && name != 'approved') {
             let updatedVal = '';
             if (!checked) {
                 let tempArr = filterList[name].split(',');
@@ -280,10 +267,15 @@ class FilterComp extends React.Component {
             }
             filterList = { ...filterList, ...{ [name]: updatedVal } };
         } else {
+            if (name == 'approved') {
+                let updateStatusVal = '';
+                updateStatusVal = value != '' ? (value == 'true' ? true : false) : value;
+                newFilter = { ...filterList, ...{ [name]: updateStatusVal } }
+            }
             filterList = { ...filterList, ...newFilter };
         }
         Object.keys(filterList).forEach((filterKey, idx) => {
-            if (filterList[filterKey] != '') {
+            if (filterList[filterKey] != '' || (name == 'approved' && value != '')) {
                 let appendFilter = (Object.keys(filterList).length - 1) != idx ? '&' : '';
                 filterParamList = `${filterParamList}${filterKey}=${filterList[filterKey]}${appendFilter}`;
             } else {
@@ -327,11 +319,11 @@ class FilterComp extends React.Component {
         const { isExpanded, genderList, sizeList, brandList, categoryList, subcategoryList, colorList, priceList, conditionList, selectedPricemin,
             selectedPricemax, categoryExpanded, categorySelections, subCategoryExpanded, subCategorySelections, colorExpanded, colorSelections,
             sizeExpanded, sizeSelections, brandExpanded, brandSelections, selectedGender, conditionExpanded, conditionSelections,
-            enteredSeller, enteredQuantity, enteredShippingsize, enteredSequence, enteredSku, enteredName, afterHandleChange, actualGenderList } = this.state;
+            enteredSeller, enteredSku, afterHandleChange, actualGenderList, selectedApprovalStatus } = this.state;
         let categoriesItemList = categorySelections, subCategoriesItemList = subCategorySelections,
             colorItemList = colorSelections, sizeItemList = sizeSelections, brandItemList = brandSelections, conditionItemList = conditionSelections;
         let genderItems = afterHandleChange ? actualGenderList : genderList;
-        return <div className={ styles.filter }>
+        return <div className={styles.filter}>
             <button type="button" id="collapsible" className={styles.collapsible} onClick={(e) => this.handleToggle(e)}>{isExpanded ? 'Collapse' : 'Expand'} Filter(s)<span className={styles.collapsibleIcon}>{isExpanded ? '  -' : '  +'}</span></button>
             <div className={styles.content} style={{ display: isExpanded ? 'block' : 'none' }}>
                 {isExpanded && <div>
@@ -341,10 +333,6 @@ class FilterComp extends React.Component {
                             <input type='text' name='sku' value={enteredSku} className={styles.inventoryInput} onChange={this.handleChange} />
                         </div>
                         <div className={styles.divTwo}>
-                            <h4>Name</h4>
-                            <input type='text' name='name' value={enteredName} className={styles.inventoryInput} onChange={this.handleChange} />
-                        </div>
-                        <div className={styles.divThree}>
                             <h4>Gender</h4>
                             <select name='gender' value={selectedGender} onChange={this.handleChange} className={styles.inventoryDropdown}>
                                 <option value=""></option>
@@ -354,56 +342,41 @@ class FilterComp extends React.Component {
                                 }).map((item, key) => <option key={key} value={item.key || item}>{item.value || item}</option>)}
                             </select>
                         </div>
-                    </div>
-                    <div className={styles.wrapper}>
-                        <div className={styles.divOne} onClick={() => this.toggleExpanded('categories')}>
+                        <div className={styles.divThree} onClick={() => this.toggleExpanded('categories')}>
                             <h4>Category</h4>
                             {this.customDropDown(categoryExpanded, categoryList, categorySelections, "categories", categoriesItemList)}
                         </div>
-                        <div className={styles.divTwo} onClick={() => this.toggleExpanded('subcategories')}>
+                    </div>
+                    <div className={styles.wrapper}>
+                        <div className={styles.divOne} onClick={() => this.toggleExpanded('subcategories')}>
                             <h4>Sub Category</h4>
                             {this.customDropDown(subCategoryExpanded, subcategoryList, subCategorySelections, "subcategories", subCategoriesItemList)}
                         </div>
-                        <div className={styles.divThree} onClick={() => this.toggleExpanded('colour')}>
+                        <div className={styles.divTwo} onClick={() => this.toggleExpanded('colour')}>
                             <h4>Color</h4>
                             {this.customDropDown(colorExpanded, colorList, colorSelections, "colour", colorItemList)}
                         </div>
-                    </div>
-                    <div className={styles.wrapper}>
-                        <div className={styles.divOne} onClick={() => this.toggleExpanded('size')}>
+                        <div className={styles.divThree} onClick={() => this.toggleExpanded('size')}>
                             <h4>Size</h4>
                             {this.customDropDown(sizeExpanded, sizeList, sizeSelections, "size", sizeItemList)}
                         </div>
-                        <div className={styles.divTwo} onClick={() => this.toggleExpanded('brand')}>
+                    </div>
+                    <div className={styles.wrapper}>
+                        <div className={styles.divOne} onClick={() => this.toggleExpanded('brand')}>
                             <h4>Brand</h4>
                             {this.customDropDown(brandExpanded, brandList, brandSelections, "brand", brandItemList)}
                         </div>
-                        <div className={styles.divThree} onClick={() => this.toggleExpanded('condition')}>
+                        <div className={styles.divTwo} onClick={() => this.toggleExpanded('condition')}>
                             <h4>Condition</h4>
                             {this.customDropDown(conditionExpanded, conditionList, conditionSelections, "condition", conditionItemList)}
                         </div>
-                    </div>
-                    <div className={styles.wrapper}>
-                        <div className={styles.divTwo}>
+                        <div className={styles.divThree}>
                             <h4>Seller</h4>
                             <input type='text' name='seller' value={enteredSeller} className={styles.inventoryInput} onChange={this.handleChange} />
                         </div>
-                        <div className={styles.divOne}>
-                            <h4>Quantity</h4>
-                            <input type='number' name='quantity' value={enteredQuantity} className={styles.inventoryInput} onChange={this.handleChange} />
-                        </div>
-
-                        <div className={styles.divThree}>
-                            <h4>Shipping Size</h4>
-                            <input type='number' name='shippingsize' value={enteredShippingsize} className={styles.inventoryInput} onChange={this.handleChange} />
-                        </div>
                     </div>
                     <div className={styles.wrapper}>
                         <div className={styles.divOne}>
-                            <h4>Sequence</h4>
-                            <input type='number' name='sequence' value={enteredSequence} className={styles.inventoryInput} onChange={this.handleChange} />
-                        </div>
-                        <div className={styles.divTwo}>
                             <h4>Price</h4>
                             <div
                                 style={{
@@ -436,6 +409,12 @@ class FilterComp extends React.Component {
                                     }}
                                 />
                             </div>
+                        </div>
+                        <div className={styles.divTwo}>
+                            <h4>Approved</h4>
+                            <select name='approved' value={selectedApprovalStatus} onChange={this.handleChange} className={styles.inventoryDropdown}>
+                                {approvalOptions.map((item, key) => <option key={key} value={item.key}>{item.value}</option>)}
+                            </select>
                         </div>
                         <div className={styles.divThree} style={{ flexDirection: 'row' }}>
                             <button className={styles.inventoryBtn} style={{ marginRight: '2em' }} onClick={this.applyResetFilter.bind(this, 'apply')}>APPLY</button>

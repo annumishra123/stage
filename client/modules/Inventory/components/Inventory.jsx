@@ -11,13 +11,18 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Dropzone from 'react-dropzone';
 import moment from 'moment';
 import FilterComp from './FilterComp';
+import SortComp from './SortComp';
+
+import * as constants from '../constants';
 
 // Import Style
 import styles from './inventory.css';
 
+var filterList = {};
 class Inventory extends React.Component {
     constructor(props) {
         super(props);
+        this.setWrapperRef = this.setWrapperRef.bind(this);
         this.state = {
             location: '',
             viewOrderDetails: false,
@@ -33,15 +38,26 @@ class Inventory extends React.Component {
             status: '',
             rentCatalogCSV: null,
             shopCatalogCSV: null,
-            accessoryCSV: null
+            accessoryCSV: null,
+            openApproveModal: false,
+            tagsExpand: false,
+            tagsSelections: [],
+            shippingsizeSelections: ''
         }
+        this.handleClickOutside = this.handleClickOutside.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
         this.props.fetchAccessoryCatalog();
         this.props.fetchRentCatalog();
         this.props.fetchShopCatalog();
         this.props.fetchUpdateLogs();
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
     }
 
     componentWillReceiveProps(props) {
@@ -81,6 +97,18 @@ class Inventory extends React.Component {
             this.setState({
                 accessoryCSV: accessoryCSV
             });
+        }
+    }
+
+    setWrapperRef(node) {
+        if (node) {
+            this.tagsRef = node;
+        }
+    }
+
+    handleClickOutside(event) {
+        if (this.tagsRef && !this.tagsRef.contains(event.target)) {
+            this.setState({ tagsExpand: false });
         }
     }
 
@@ -173,18 +201,83 @@ class Inventory extends React.Component {
         }
     }
 
-    handleApproveProduct(id) {
-        if (id) {
-            const selectedRow = this.props.shopCatalog.find(item => item.id == id);
-            let rowData = {
+    handleApproveProduct(params) {
+        const { approveProductId } = this.state;
+        let rowId = approveProductId || params.id;
+        if (rowId) {
+            const selectedRow = this.props.shopCatalog.find(item => item.id == rowId);
+            let updateData = {
                 sku: selectedRow.sku,
-                action: selectedRow.approved ? 'DISAPPROVED' : 'APPROVED',
-                user: this.props.user
+                approvedby: this.props.user
             }
-            this.props.approveProduct(rowData);
+            if (params.actionName == 'disapprove') {
+                updateData.approved = false;
+            } else {
+                updateData.approved = true;
+                updateData = { ...updateData, ...filterList };
+            }
+            this.props.approveProduct(updateData);
         }
     }
 
+    handleApprovalModal(id) {
+        this.setState({ openApproveModal: true, approveProductId: id });
+    }
+
+    hideApproveModal() {
+        filterList = {};
+        this.setState({ openApproveModal: false, tagsSelections: [], shippingsizeSelections: '' });
+    }
+
+    toggleExpanded = () => {
+        if (!this.state.tagsExpand) {
+            this.setState({ tagsExpand: true });
+        } else {
+            this.setState({ tagsExpand: false });
+        }
+    };
+
+    handleChange(e) {
+        let { name, value, checked } = e.target, newFilter = {}, itemSelected = [];
+        switch (name) {
+            case 'tags':
+                itemSelected = this.state.tagsSelections;
+                if (checked) {
+                    itemSelected.push(value)
+                } else {
+                    itemSelected = itemSelected.filter(function (obj) {
+                        return obj !== value;
+                    });
+                }
+                if (itemSelected.length == 0) {
+                    this.setState({ shippingsizeSelections: '' });
+                }
+                newFilter = { [name]: [value] };
+                this.setState({ tagsSelections: itemSelected, tagsExpand: true });
+                break;
+            case 'shippingsize':
+                newFilter = { [name]: value };
+                this.setState({ shippingsizeSelections: value });
+                break;
+        }
+        itemSelected = [];
+        if (filterList.hasOwnProperty(name)) {
+            let updatedList = name == 'shippingsize' ? newFilter : filterList;
+            if (name == 'tags') {
+                if (!checked) {
+                    let tempList = filterList[name].filter(o => {
+                        return o.trim() != value;
+                    });
+                    updatedList[name] = tempList;
+                } else {
+                    updatedList = filterList[name].push(value);
+                }
+            }
+            filterList = { ...filterList, ...updatedList };
+        } else {
+            filterList = { ...filterList, ...newFilter };
+        }
+    }
 
     renderProductDetail(tab) {
         switch (tab) {
@@ -357,14 +450,14 @@ class Inventory extends React.Component {
                         Cell: ({ value }) => {
                             let product = this.props.shopCatalog.find(i => i.id == value);
                             return <div style={{ textAlign: 'center' }}>
-                                <button className={styles.gridBtn} onClick={this.handleApproveProduct.bind(this, value)}>{product.approved ? 'Disapprove' : 'Approve'}</button>
+                                <button className={styles.gridBtn} onClick={product.approved ? this.handleApproveProduct.bind(this, { id: value, actionName: 'disapprove' }) : this.handleApprovalModal.bind(this, value)}>{product.approved ? 'Disapprove' : 'Approve'}</button>
                             </div>
                         }
                     });
                 }
             }
-            return <div className={ styles.shopTableOne }>
-                <ReactTable defaultSorted={[{ id: "uploadtime", desc: false }]} filterable data={shopCatalog} columns={clientConfig.shopLooksColumns} defaultPageSize={10} className="-striped -highlight" />
+            return <div className={styles.shopTableOne}>
+                <ReactTable data={shopCatalog} columns={clientConfig.shopLooksColumns} defaultPageSize={10} className="-striped -highlight" />
                 {shopCatalogCSV && <CSVLink data={shopCatalogCSV} filename={"Shop Inventory.csv"}>Export CSV</CSVLink>}
             </div>;
         }
@@ -419,6 +512,8 @@ class Inventory extends React.Component {
     }
 
     render() {
+        const { tagsExpand, tagsSelections, shippingsizeSelections } = this.state;
+        let isDisable = tagsSelections.length == 0 || shippingsizeSelections == '';
         return <section>
             {!this.state.viewOrderDetails ?
                 <div>
@@ -440,6 +535,7 @@ class Inventory extends React.Component {
                                 <button onClick={this.uploadShopCSV.bind(this)}>Upload CSV</button>
                             </div>
                             <FilterComp />
+                            <SortComp />
                             {this.renderShopLooks()}
                         </TabPanel>
                         <TabPanel>
@@ -484,6 +580,51 @@ class Inventory extends React.Component {
                             <option value="Approve Permanant Disable">Permanant Disable</option>
                         </select><br />
                         <button onClick={this.changeQCStatus.bind(this)}>Update</button>
+                    </ReactModal>
+                    <ReactModal className={styles.InventoryStatusPop} isOpen={this.state.openApproveModal} onRequestClose={this.hideApproveModal.bind(this)} contentLabel="Change Approval Status">
+                        <span onClick={this.hideApproveModal.bind(this)}>×</span>
+                        <div style={{ marginTop: '2em' }}>
+                            <h3>Tags</h3>
+                            <div ref={this.setWrapperRef} title='Tags' className={styles.inventoryFormField} onClick={() => this.toggleExpanded()}>
+                                <div className={tagsExpand ? styles.upArrow : styles.downArrow}>
+                                    {tagsSelections.length != 0
+                                        ? tagsSelections.map((name, i) => {
+                                            let displayName = constants.tagOptions.find(item => item.key == name);
+                                            return <span key={i}>
+                                                {i ? ", " : null}
+                                                {displayName ? displayName.value : ''}
+                                            </span>
+                                        })
+                                        : "None selected"}
+                                </div>
+                                {
+                                    <div className={styles.optionsContainer} style={{ display: tagsExpand ? 'block' : 'none' }}>
+                                        {constants.tagOptions.sort((val, nextVal) => val.value.toLowerCase().localeCompare(nextVal.value.toLowerCase()))
+                                            .map(item => (
+                                                <label htmlFor={item.key} className={styles.optionSection} key={item.key}>
+                                                    <input
+                                                        type="checkbox"
+                                                        id={item.key}
+                                                        name='tags'
+                                                        value={item.key}
+                                                        checked={tagsSelections.length != 0 && tagsSelections.includes(item.key) || false}
+                                                        onChange={this.handleChange}
+                                                        className={styles.optionCheckbox}
+                                                    />
+                                                    {item.value}
+                                                </label>
+                                            ))}
+                                    </div>
+                                }
+                            </div>
+                            <h3>Shipping Size</h3>
+                            <select name='shippingsize' className={styles.inventoryDropdown} style={{ cursor: (tagsSelections.length == 0) && 'not-allowed' }} disabled={tagsSelections.length == 0} value={shippingsizeSelections} onChange={this.handleChange}>
+                                {
+                                    constants.shippingsizeOptions.map((item, idx) => <option key={idx} value={item}>{item}</option>)
+                                }
+                            </select>
+                            <button className={styles.inventoryBtn} style={{ cursor: isDisable && 'not-allowed' }} disabled={isDisable} onClick={this.handleApproveProduct.bind(this, { actionName: 'approve' })}>Approve</button>
+                        </div>
                     </ReactModal>
                 </div> :
                 <div>
