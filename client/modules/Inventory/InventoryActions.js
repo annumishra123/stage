@@ -379,10 +379,7 @@ export function approveProduct(param) {
         }).then((response) => {
             console.log(response.data);
             alert("The product has been updated!");
-            dispatch({
-                type: 'FETCH_SHOP_CATALOG',
-                payload: response.data
-            });
+            dispatch(fetchShopCatalog())
         }).catch((error) => {
             console.log(error);
         });
