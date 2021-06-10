@@ -1384,6 +1384,77 @@ const clientConfig = {
         }
       }
     },
+  }],
+  orderlineColumns: [{
+    Header: 'Order Date',
+    id: 'orderDate',
+    accessor: o => moment(o.orderDate).format('lll'),
+    width: 150
+  }, {
+    Header: 'SKU',
+    accessor: 'sku',
+    width: 220
+  }, {
+    Header: 'Orderline Id',
+    accessor: 'orderlineProcess.orderlineId'
+  }, {
+    Header: 'Source',
+    accessor: 'source',
+    width: 150
+  }, {
+    Header: 'Approve Status',
+    id: 'orderlineProcess.isPaymentApproved',
+    accessor: o => (o.orderlineProcess.isPaymentApproved) ? 'Approved' : 'Disapproved',
+    width: 120
+  }, {
+    Header: 'Status',
+    accessor: 'status',
+    width: 150
+  }, {
+    Header: 'Actual Price',
+    accessor: 'originalPrice'
+  }, {
+    Header: 'Discounted Price',
+    accessor: 'discountedPrice'
+  }, {
+    Header: 'Discount Coupon',
+    accessor: 'discountCoupon'
+  }, {
+    Header: 'Payment Method',
+    accessor: 'paymentMethod'
+  }, {
+    Header: 'Is Active',
+    accessor: 'orderlineProcess.isActive'
+  }, {
+    Header: 'Is Cancelled',
+    accessor: 'orderlineProcess.isCancelled'
+  }, {
+    Header: 'Is Completed',
+    accessor: 'orderlineProcess.isCompleted'
+  }, {
+    Header: 'Is Payment Approved',
+    accessor: 'orderlineProcess.isPaymentApproved'
+  }, {
+    Header: 'Payment Approver',
+    accessor: 'orderlineProcess.paymentApprovedBy'
+  }, {
+    Header: 'Payment Status',
+    accessor: 'orderlineProcess.paymentStatus'
+  }, {
+    Header: 'Is Refund Approved',
+    accessor: 'orderlineProcess.isRefundApproved'
+  }, {
+    Header: 'Refund Approver',
+    accessor: 'orderlineProcess.refundApprovedBy'
+  }, {
+    Header: 'Refund Payment Status',
+    accessor: 'orderlineProcess.reversePaymentStatus'
+  }, {
+    Header: 'Is Return',
+    accessor: 'orderlineProcess.isReturn'
+  }, {
+    Header: 'Orderline Status',
+    accessor: 'orderlineProcess.status'
   }]
 };
 
