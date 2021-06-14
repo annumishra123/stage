@@ -3,12 +3,15 @@ import axios from 'axios';
 
 export function fetchAllSpotlightInfluencers() {
     return function (dispatch) {
-        let url = `${clientConfig.targetURL}/api/myaccount/profile/frontend/influencer/spotlight`;
+        let url = `/api/myaccount/profile/frontend/influencer/spotlight`;
         return axios({
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then((response) => {
             dispatch({
                 type: 'FETCH_SPOTLIGHT_INFLUENCERS',
@@ -22,12 +25,15 @@ export function fetchAllSpotlightInfluencers() {
 
 export function fetchAllInfluencers() {
     return function (dispatch) {
-        let url = `${clientConfig.targetURL}/api/myaccount/profile/frontend/influencers`;
+        let url = `/api/myaccount/profile/frontend/influencers`;
         return axios({
             url: url,
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then((response) => {
             dispatch({
                 type: 'FETCH_ALL_INFLUENCERS',
@@ -65,14 +71,14 @@ export function fetchInfluencerCarousel() {
 
 export function getAllSellers() {
     return function (dispatch) {
-        let url = `${clientConfig.targetURL}/api/myaccount/profile/backend/get/sellers`;
+        let url = `/api/myaccount/profile/backend/get/sellers`;
         return axios({
             url: url,
             timeout: 20000,
             method: 'get',
             responseType: 'json',
             headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MzU3NDg5NDUsInVzZXJfbmFtZSI6ImJhY2tlbmRhZG1pbkBzdGFnZTMuY28iLCJhdXRob3JpdGllcyI6WyJST0xFX0FOT05ZTU9VUyIsIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwianRpIjoiMjczZjU3YmItOGQ2Ny00MDRlLWI3NDMtMDI4ZGE4N2I2MmMyIiwiY2xpZW50X2lkIjoiZWRnZSIsInNjb3BlIjpbInBhc3N3b3JkIl19.ELO4jXM8ydQzTyKT87MJBk5NwnKAulLqSfN-i2-LweY'
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
             }
         }).then(function (response) {
             dispatch({
@@ -87,16 +93,20 @@ export function getAllSellers() {
 
 export function createUpdateInfluencer(param) {
     return function (dispatch) {
-        let url = `${clientConfig.targetURL}/api/myaccount/profile/backend/influencer/`;
+        let url = `/api/myaccount/profile/backend/influencer/`;
         return axios({
             url: url,
             timeout: 20000,
             method: 'post',
             responseType: 'json',
             data: param,
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
         }).then((response) => {
             console.log(response.data);
-            dispatch(fetchAllSpotlightInfluencers());
+            dispatch(fetchAllInfluencers());
+            alert(`Successfully ${param.influencer ? 'created' : 'deleted'} influencer`);
         }).catch((error) => {
             console.log(error);
             alert('Fails to create influencers');
