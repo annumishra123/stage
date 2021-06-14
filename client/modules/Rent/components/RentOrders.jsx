@@ -152,7 +152,8 @@ class RentOrders extends React.Component {
   }
 
   showOrderDetail(id) {
-    browserHistory.push('/rent?orderId=' + id);
+    // browserHistory.push('/rent?orderId=' + id);
+    this.props.getOrderDetail(id);
   }
 
   showOrderList() {
@@ -232,20 +233,24 @@ class RentOrders extends React.Component {
 
 
   renderOrders() {
-    if (this.props.orders) {
-      if (this.props.orders.length > 0) {
-        if (!clientConfig.rentalColumns.find(o => o.id == 'view')) {
-          clientConfig.rentalColumns.unshift({
-            Header: '',
-            id: 'view',
-            accessor: 'frontendOrderId',
-            Cell: ({ value }) => (<button className={styles.tableBtn} onClick={this.showOrderDetail.bind(this, value)}>Order Detail</button>)
-          });
-        }
-        return <div>
-          <ReactTable data={this.props.orders} filterable columns={clientConfig.rentalColumns} defaultPageSize={10} className="-striped -highlight" />
-        </div>
-      }
+    const { orders } = this.props;
+    if (orders && orders.length > 0) {
+      // if (!clientConfig.rentalColumns.find(o => o.id == 'view')) {
+      //   clientConfig.rentalColumns.unshift({
+      //     Header: '',
+      //     id: 'view',
+      //     accessor: 'frontendOrderId',
+      //     width: 125,
+      //     Cell: ({ value }) => (<button className={styles.tableBtn} onClick={this.showOrderDetail.bind(this, value)}>Order Detail</button>)
+      //   });
+      // }
+      return <div>
+        <ReactTable data={this.props.orders} filterable columns={clientConfig.rentalColumns} defaultPageSize={10} className="-striped -highlight" />
+      </div>
+    } else {
+      return <div style={{ textAlign: 'center', fontSize: '18', fontWeight: 'bold' }}>
+        <em>No record... Apply some criteria  !!!</em>
+      </div>
     }
   }
 
@@ -665,7 +670,7 @@ class RentOrders extends React.Component {
                 </div>
               </form>
             </div>
-            <div>
+            {/* <div>
               <form onSubmit={this.getOrdersByPhoneNumber.bind(this)}>
                 <h4>Phone Number</h4>
                 <input type="text" onChange={this.handleChangePhoneNumber.bind(this)} />
@@ -673,14 +678,14 @@ class RentOrders extends React.Component {
                   <button type="submit" onClick={this.getOrdersByPhoneNumber.bind(this)}>Search By Phone Number</button>
                 </div>
               </form>
+            </div> */}
+            <div>
+              <h4>SKU</h4>
+              <input type="text" onChange={this.handleChangeLookNumber.bind(this)} />
+              <div>
+                <button onClick={this.getOrdersByLookNumber.bind(this)}>Search By SKU</button>
+              </div>
             </div>
-            {/* <div>
-                     <h4>Look Number</h4>
-                     <input type="text" onChange={ this.handleChangeLookNumber.bind(this) } />
-                     <div>
-                       <button onClick={ this.getOrdersByLookNumber.bind(this) }>Search By Look Number</button>
-                     </div>
-                   </div> */}
           </div>
           <br />
           {this.renderOrders()}

@@ -226,18 +226,36 @@ const clientConfig = {
     accessor: 'qcStatus'
   }],
   rentalColumns: [{
-    Header: 'Order Id',
-    accessor: 'frontendOrderId',
+    Header: 'SKU',
+    accessor: 'sku'
   }, {
     Header: 'User Id',
     accessor: 'userId',
   }, {
-    id: 'dateOrder',
+    id: 'orderDate',
     Header: 'Date Of Order',
-    accessor: o => moment(o.orderDate).format('lll'),
+    accessor: o => moment(o.orderDate).format('lll')
+  }, {
+    Header: 'Discount Coupon',
+    accessor: 'discountCoupon',
+  }, {
+    Header: 'Payment Method',
+    accessor: 'paymentMethod'
   }, {
     Header: 'Status',
     accessor: 'status',
+  }, {
+    Header: 'Original Price',
+    accessor: 'originalPrice'
+  }, {
+    Header: 'Discounted Price',
+    accessor: 'discountedPrice',
+  }, {
+    Header: 'Product Id',
+    accessor: 'productId'
+  }, {
+    Header: 'Is Cancelled',
+    accessor: 'isCancelled',
   }],
   orderProcessColumns: [{
     id: 'Order Id',
@@ -560,20 +578,6 @@ const clientConfig = {
     Header: 'Quality',
     accessor: 'qcStatus'
   }],
-  rentalColumns: [{
-    Header: 'Order Id',
-    accessor: 'frontendOrderId',
-  }, {
-    Header: 'User Id',
-    accessor: 'userId',
-  }, {
-    id: 'dateOrder',
-    Header: 'Date Of Order',
-    accessor: o => moment(o.orderDate).format('lll'),
-  }, {
-    Header: 'Status',
-    accessor: 'status',
-  }],
   shopDeliveryColumns: [{
     Header: 'Order Id',
     accessor: 'parentOrder.frontendOrderId',
@@ -634,20 +638,6 @@ const clientConfig = {
     id: 'cod charges',
     Header: 'COD Charges',
     accessor: 'additionalCharges',
-  }],
-  rentalColumns: [{
-    Header: 'Order Id',
-    accessor: 'frontendOrderId',
-  }, {
-    Header: 'User Id',
-    accessor: 'userId',
-  }, {
-    id: 'dateOrder',
-    Header: 'Date Of Order',
-    accessor: o => moment(o.orderDate).format('lll'),
-  }, {
-    Header: 'Status',
-    accessor: 'status',
   }],
   shopColumns: [{
     Header: 'Order Id',

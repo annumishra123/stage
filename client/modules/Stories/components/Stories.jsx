@@ -578,7 +578,7 @@ class Stories extends React.Component {
         let { selectedType, selectedStoreType, itemList, previewFile, selectedGender, storeName, afterFilterChange } = this.state;
         let { stories } = this.props;
         let isDisabled = (selectedType != "" && selectedStoreType != "" && selectedGender != "" && storeName != "" && previewFile.length != 0) ? true : false;
-        let isFilterDisabled = (selectedType != "" && selectedStoreType != "" && selectedGender != "" && storeName != "") ? true : false;
+        let isFilterDisabled = (selectedType != "" && selectedStoreType != "" && selectedGender != "") ? true : false;
         return <section>
             <button className={styles.backBtn} onClick={() => browserHistory.goBack()}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true" /> Back</button>
             <div className={styles.bubbleSection}>
