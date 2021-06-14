@@ -151,7 +151,7 @@ export function getAllStores() {
 
 export function getAllSellers() {
     return function (dispatch) {
-        let url = `${clientConfig.targetURL}/api/myaccount/profile/backend/get/sellers`;
+        let url = `/api/myaccount/profile/backend/get/sellers`;
         return axios({
             url: url,
             timeout: 20000,
