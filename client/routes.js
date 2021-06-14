@@ -536,6 +536,11 @@ export default function getRoutes(store, req) {
           cb(null, require('./modules/Influencer/components/InfluencerList').default);
         });
       }} />
+      <Route path="/managePayment" onEnter={checkAuth} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/ManagePayment/components/OrderList').default);
+        });
+      }} />
     </Route>
   );
 }

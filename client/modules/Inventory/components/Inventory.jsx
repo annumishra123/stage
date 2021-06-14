@@ -217,6 +217,9 @@ class Inventory extends React.Component {
                 updateData = { ...updateData, ...filterList };
             }
             this.props.approveProduct(updateData);
+            alert(params.actionName == 'disapprove' ? 'Product Disapproved' : 'Product Approved!');
+            filterList = {};
+            this.setState({ openApproveModal: false, tagsSelections: [], shippingsizeSelections: '' });
         }
     }
 

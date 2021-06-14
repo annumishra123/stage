@@ -270,7 +270,15 @@ class Navigation extends React.Component {
             <figure>
               <img src="https://res.cloudinary.com/stage3/image/upload/f_auto,q_auto:low/icon-influencer.png" />
             </figure>
-            <p>influencer</p>
+            <p>Influencer</p>
+          </Link>
+        </li>
+        <li>
+          <Link to="/managePayment">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-rev-share.png" />
+            </figure>
+            <p>Manage Payment</p>
           </Link>
         </li>
         <li>
