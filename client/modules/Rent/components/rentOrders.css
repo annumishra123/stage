@@ -332,6 +332,10 @@ td {
   padding: 8px 10px;
 }
 
+.rt-tbody {
+  overflow: hidden;
+}
+
 @media (max-width: 767px) {
   .rentOrders {
     padding: 10px;
