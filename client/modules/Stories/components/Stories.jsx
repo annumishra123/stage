@@ -369,6 +369,7 @@ class Stories extends React.Component {
                 });
                 break
         }
+        emptyString = '';
     }
 
     toggleExpanded = (fieldName) => {
@@ -577,7 +578,25 @@ class Stories extends React.Component {
     render() {
         let { selectedType, selectedStoreType, itemList, previewFile, selectedGender, storeName, afterFilterChange } = this.state;
         let { stories } = this.props;
-        let isDisabled = (selectedType != "" && selectedStoreType != "" && selectedGender != "" && storeName != "" && previewFile.length != 0) ? true : false;
+        let isDisabled = selectedType != "" ? true : false;
+        if (selectedType != "") {
+            switch (selectedType) {
+                case 'Seller':
+                    isDisabled = previewFile.length != 0 ? true : false;
+                    break;
+                case 'Store':
+                    isDisabled = selectedStoreType != "" ? true : false;
+                    switch (selectedStoreType) {
+                        case 'Existing':
+                            isDisabled = previewFile.length != 0 ? true : false;
+                            break;
+                        case 'New':
+                            isDisabled = (storeName != "" && selectedGender != "" && previewFile.length != 0) ? true : false;
+                            break;
+                    }
+                    break;
+            }
+        }
         let isFilterDisabled = (selectedType != "" && selectedStoreType != "" && selectedGender != "") ? true : false;
         return <section>
             <button className={styles.backBtn} onClick={() => browserHistory.goBack()}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true" /> Back</button>
@@ -627,7 +646,7 @@ class Stories extends React.Component {
                 </div>
             </div>}
             {
-                selectedType != '' && selectedStoreType != '' &&
+                selectedType != '' && selectedStoreType == 'New' &&
                 <div>
                     <button className={styles.storiesBtn} style={{ cursor: !isFilterDisabled && 'not-allowed', marginRight: '1em' }} onClick={() => this.filterClickHandler('apply')} disabled={!isFilterDisabled}>Apply Filter</button>
                     <button className={styles.storiesBtn} onClick={() => this.filterClickHandler('clear')}>Reset Filter</button>
