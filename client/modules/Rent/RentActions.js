@@ -7,8 +7,7 @@ import { getCustomerDetail } from '../Customer/CustomerActions';
 export function getShopOrderListByDate(startDate, endDate) {
     return function (dispatch) {
         if (startDate && endDate) {
-            // let url = '/api/om/orders/backend/get/byDateRange/' + startDate + '/' + endDate;
-            let url = `/api/shop-service/backend/getOrderLinesbyDateRange/:${startDate}/:${endDate}`;
+            let url = '/api/om/orders/backend/get/byDateRange/' + startDate + '/' + endDate;
             return axios({
                 url: url,
                 timeout: 20000,
@@ -32,8 +31,7 @@ export function getShopOrderListByDate(startDate, endDate) {
 export function getOrdersByUserId(userId) {
     return function (dispatch) {
         if (userId) {
-            // let url = '/api/om/orders/backend/get/byUserId/' + userId + '/';
-            let url = `/api/shop-service/backend/getOrderLinesByUserId?userId=${userId}`;
+            let url = '/api/om/orders/backend/get/byUserId/' + userId + '/';
             return axios({
                 url: url,
                 timeout: 20000,
@@ -88,8 +86,7 @@ export function getOrdersByPhoneNumber(phoneNumber) {
 export function getOrdersByLookNumber(looknumber) {
     return function (dispatch) {
         if (looknumber) {
-            // let url = '/api/inventory-manager/getOrderLinesForSku?looknumber=' + looknumber.toUpperCase();
-            let url = `/api/shop-service/backend/getOrderLinesBySku?sku=${looknumber}`
+            let url = '/api/inventory-manager/getOrderLinesForSku?looknumber=' + looknumber.toUpperCase();
             return axios({
                 url: url,
                 timeout: 20000,
@@ -116,7 +113,7 @@ export function getOrdersByLookNumber(looknumber) {
 export function getOrderDetail(id) {
     return function (dispatch) {
         if (id) {
-            let url = `/api/shop-service/backend/getOrderLinesByFrontendId?orderId=${id}`;
+            let url = '/api/om/orders/backend/view/' + id + '/';
             return axios({
                 url: url,
                 timeout: 20000,
@@ -126,12 +123,12 @@ export function getOrderDetail(id) {
                     "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
                 }
             }).then(function (response) {
-                // dispatch(getMeasurementStatus(response.data.id));
+                dispatch(getMeasurementStatus(response.data.id));
                 dispatch({
-                    type: 'FETCH_RENT_ORDERS',
+                    type: 'FETCH_RENT_ORDER_DETAIL',
                     payload: response.data
                 });
-                // dispatch(getCustomerDetail(response.data.userId));
+                dispatch(getCustomerDetail(response.data.userId));
             }).catch(function (error) {
                 alert('Could not fetch order detail');
                 console.log(error);

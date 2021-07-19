@@ -226,6 +226,20 @@ const clientConfig = {
     accessor: 'qcStatus'
   }],
   rentalColumns: [{
+    Header: 'Order Id',
+    accessor: 'frontendOrderId',
+  }, {
+    Header: 'User Id',
+    accessor: 'userId',
+  }, {
+    id: 'dateOrder',
+    Header: 'Date Of Order',
+    accessor: o => moment(o.orderDate).format('lll'),
+  }, {
+    Header: 'Status',
+    accessor: 'status',
+  }],
+  marketRentalColumns: [{
     Header: 'SKU',
     accessor: 'sku'
   }, {

@@ -282,6 +282,14 @@ class Navigation extends React.Component {
           </Link>
         </li>
         <li>
+          <Link to="/marketplaceRent">
+            <figure>
+              <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-rent-orders2.png" />
+            </figure>
+            <p>Marketplace Rent Orders</p>
+          </Link>
+        </li>
+        <li>
           <Link to="/login/update">
             <figure>
               <img src="https://ik.imagekit.io/stage3/tr:n-web/icon-change-password.png" />

@@ -541,6 +541,11 @@ export default function getRoutes(store, req) {
           cb(null, require('./modules/ManagePayment/components/OrderList').default);
         });
       }} />
+      <Route path="/marketplaceRent" onEnter={checkAuth} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/MarketplaceRent/components/RentOrders').default);
+        });
+      }} />
     </Route>
   );
 }
