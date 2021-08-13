@@ -3,7 +3,7 @@ import axios from 'axios';
 export function getShopOrderListByDate(startDate, endDate) {
     return function (dispatch) {
         if (startDate && endDate) {
-            let url = `/api/shop-service/backend/getOrderLinesbyDateRange/:${startDate}/:${endDate}`;
+            let url = `/api/shop-service/backend/getOrderLinesbyDateRange/${startDate}/${endDate}`;
             return axios({
                 url: url,
                 timeout: 20000,
