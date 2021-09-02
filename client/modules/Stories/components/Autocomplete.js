@@ -43,13 +43,16 @@ export class Autocomplete extends Component {
         });
     };
 
-    onClick = e => {
+    onClick(suggestion, e) {
         this.setState({
             filteredSuggestions: [],
             showSuggestions: false,
             userInput: e.currentTarget.innerText
         });
-        this.props.selectedItem(e.currentTarget.innerText);
+        this.props.selectedItem({
+            name: e.currentTarget.innerText, email: suggestion.email,
+            username: suggestion.username, billingId: suggestion.defaultBillingInfoId
+        });
     };
 
     render() {
@@ -71,13 +74,13 @@ export class Autocomplete extends Component {
                                 case 'seller':
                                     let sellerName = `${suggestion.firstName} ${suggestion.lastName}`;
                                     return (
-                                        <li key={sellerName} className={styles.autocompleteLi} onClick={onClick}>
+                                        <li key={sellerName} className={styles.autocompleteLi} onClick={onClick.bind(this, suggestion)}>
                                             {<img className={styles.suggestionListImage} alt='No Image available' src={suggestion.profileImageUrl} />}<div className={styles.liText}>{sellerName}</div>
                                         </li>
                                     );
                                 default:
                                     return (
-                                        <li key={suggestion.title} className={styles.autocompleteLi} onClick={onClick}>
+                                        <li key={suggestion.title} className={styles.autocompleteLi} onClick={onClick.bind(this, suggestion)}>
                                             <div className={styles.liText}>{suggestion.title}</div>
                                         </li>
                                     );

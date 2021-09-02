@@ -25,7 +25,7 @@ export function fetchAllOrderLine() {
 
 export function fetchAllReturnOrderLine() {
     return function (dispatch) {
-        let url = `/api/shop-service/backend/getReturnOrdersForPayment`;
+        let url = `/api/shop-service/backend/getOrderLinesForRefund`;
         return axios({
             url: url,
             timeout: 20000,

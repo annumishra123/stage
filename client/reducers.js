@@ -33,6 +33,7 @@ import {
 import { stories, entireStore, entireSeller } from './modules/Stories/StoriesReducer';
 import { spotlightInfluencers, allInfluencers, influencersCarousel, allSellers } from './modules/Influencer/InfluencerReducer';
 import { allOrderLine, allReturnOrderLine } from './modules/ManagePayment/ManagePaymentReducer';
+import { marketRentOrders } from './modules/MarketplaceRent/RentReducer';
 
 // Combine all reducers into one root reducer
 export default combineReducers({
@@ -115,5 +116,6 @@ export default combineReducers({
   allSellers,
   entirShopCatalog,
   allOrderLine,
-  allReturnOrderLine
+  allReturnOrderLine,
+  marketRentOrders
 });

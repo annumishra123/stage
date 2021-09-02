@@ -156,9 +156,9 @@ class Stories extends React.Component {
         this.setState({ selectedStoreType: e ? e.value : '', afterHandleChange: false });
     }
 
-    onItemSelectionChange(val) {
+    onItemSelectionChange(selectedData) {
         const { selectedType } = this.state;
-        if (val == '') {
+        if (selectedData.name == {}) {
             this.setState({ selectedListItem: {} });
             return;
         }
@@ -166,12 +166,13 @@ class Stories extends React.Component {
         switch (selectedType.toLowerCase()) {
             case 'seller':
                 selectedItem = this.props.allSeller.filter(item => {
-                    let sellerName = `${item.firstName} ${item.lastName}`;
-                    return sellerName == val;
+                    if (item.defaultBillingInfoId == selectedData.billingId && item.email == selectedData.email) {
+                        return selectedData.name;
+                    }
                 });
                 break;
             case 'store':
-                selectedItem = this.props.allStore.filter(item => item.title == val);
+                selectedItem = this.props.allStore.filter(item => item.title == selectedData.name);
                 break;
         }
         this.setState({ selectedListItem: selectedItem });
