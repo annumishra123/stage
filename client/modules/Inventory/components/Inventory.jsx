@@ -50,8 +50,8 @@ class Inventory extends React.Component {
 
     componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside);
-        this.props.fetchAccessoryCatalog();
-        this.props.fetchRentCatalog();
+        // this.props.fetchAccessoryCatalog();
+        // this.props.fetchRentCatalog();
         this.props.fetchShopCatalog();
         this.props.fetchUpdateLogs();
     }
@@ -525,7 +525,7 @@ class Inventory extends React.Component {
                     <Tabs selectedIndex={this.state.tabIndex} onSelect={this.handleTabChange.bind(this)}>
                         <TabList>
                             <Tab>Shop</Tab>
-                            <Tab>Rent</Tab>
+                            {/* <Tab>Rent</Tab> */}
                             {/* <Tab>Accessory</Tab> */}
                         </TabList>
                         <TabPanel>
@@ -541,7 +541,7 @@ class Inventory extends React.Component {
                             <SortComp />
                             {this.renderShopLooks()}
                         </TabPanel>
-                        <TabPanel>
+                        {/* <TabPanel>
                             <div className={styles.fileUpload}>
                                 <Dropzone onDrop={this.handleOnDrop.bind(this)}>
                                     <p>Select a file to upload.</p>
@@ -551,7 +551,7 @@ class Inventory extends React.Component {
                                 <button onClick={this.uploadCSV.bind(this)}>Upload CSV</button>
                             </div>
                             {this.renderRentLooks()}
-                        </TabPanel>
+                        </TabPanel> */}
                         {/* <TabPanel>
                             <div className={styles.fileUpload}>
                                 <Dropzone onDrop={this.handleAccessoryOnDrop.bind(this)}>
@@ -565,7 +565,7 @@ class Inventory extends React.Component {
                         </TabPanel> */}
                     </Tabs>
                     {this.renderUploadLogs()}
-                    <ReactModal className={styles.InventoryStatusPop} isOpen={this.state.viewQCModal} onRequestClose={this.hideQCModal.bind(this)} contentLabel="Change QC Status">
+                    {/* <ReactModal className={styles.InventoryStatusPop} isOpen={this.state.viewQCModal} onRequestClose={this.hideQCModal.bind(this)} contentLabel="Change QC Status">
                         <span onClick={this.hideQCModal.bind(this)}>×</span>
                         {this.props.lastQCStatus ? <div>
                             <h3>Last QC Status</h3>
@@ -583,7 +583,7 @@ class Inventory extends React.Component {
                             <option value="Approve Permanant Disable">Permanant Disable</option>
                         </select><br />
                         <button onClick={this.changeQCStatus.bind(this)}>Update</button>
-                    </ReactModal>
+                    </ReactModal> */}
                     <ReactModal className={styles.InventoryStatusPop} isOpen={this.state.openApproveModal} onRequestClose={this.hideApproveModal.bind(this)} contentLabel="Change Approval Status">
                         <span onClick={this.hideApproveModal.bind(this)}>×</span>
                         <div style={{ marginTop: '2em' }}>

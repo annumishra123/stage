@@ -83,7 +83,8 @@ class InfluencerForm extends React.Component {
         let isDisabled = Object.keys(selectedListItem).length != 0 ? true : false;
         return <div className={styles.wrapper}>
             <div className={styles.divOne}>
-                <Autocomplete placeholder="Type to select seller" suggestions={allSellerList} selectedItem={this.onItemSelectionChange.bind(this)} />
+                <Autocomplete placeholder="Type to select seller" suggestions={allSellerList} selectedItem={this.onItemSelectionChange.bind(this)} /><br /><br />
+                <p>No. of sellers: {allSellerList ? allSellerList.length : 0}</p>
             </div>
             <div className={styles.divTwo}>
                 {Object.keys(selectedListItem).length != 0 && <div key={selectedListItem.email} className={styles.influencerDetailImageDiv}>
@@ -102,7 +103,7 @@ class InfluencerForm extends React.Component {
                 </div>
                 <button className={styles.influencerBtn} style={{ cursor: !isDisabled && 'not-allowed' }} onClick={this.createInfluencer.bind(this)} disabled={!isDisabled}>Create</button>
             </div>
-        </div>
+        </div >
     }
 }
 

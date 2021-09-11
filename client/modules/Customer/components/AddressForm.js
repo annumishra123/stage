@@ -27,7 +27,7 @@ let AddressForm = props => {
                <br/>
                { props.addresses.map((address, i) => {
                    return <div key={ i }>
-                            { props.role === 'admin' ? <input name="shippingId" type="radio" value={ address.shippingId } checked={ address.shippingId == props.selectedAddress } onChange={ handleSelectAddress } /> : null }
+                            { props.role === 'admin' || props.role == 'superuser' ? <input name="shippingId" type="radio" value={ address.shippingId } checked={ address.shippingId == props.selectedAddress } onChange={ handleSelectAddress } /> : null }
                             <div>
                               <label htmlFor="address">Address :
                                 { address.address }
@@ -55,7 +55,7 @@ let AddressForm = props => {
     }
   }
   const renderAddressForm = function() {
-    if (props.role === 'admin') {
+    if (props.role === 'admin' || props.role == 'superuser') {
       return <div>
                <h3>Save New Address</h3>
                <br/>
