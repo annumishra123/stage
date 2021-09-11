@@ -1,0 +1,86 @@
+.backBtn {
+    background: none;
+    border: 0;
+    color: #333;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin: 1.5em 0 2em;
+    cursor: pointer;
+}
+
+.orderBodySection h1 {
+    color: #000;
+    font-family: 'Lato', sans-serif;
+    font-size: 24px;
+    letter-spacing: 1px;
+    text-align: left;
+    margin: 0;
+    width: 90%;
+}
+
+.listUl {
+    /*removing predefined bullet points from list*/
+    list-style: none;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    background-color: #fff;
+    border-top-color: #e6e6e6;
+    box-shadow: 0 1px 0 rgb(0 0 0 / 6%);
+    box-sizing: border-box;
+    margin-top: 1em;
+    max-height: 24em;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    z-index: 1;
+    -webkit-overflow-scrolling: touch;
+    overflow: auto;
+}
+
+.listUl .listLi:hover {
+    background-color: rgba(0, 126, 255, 0.08);
+    color: #333;
+}
+
+.listLi {
+    display: flex;
+}
+
+.listLiFirstSection {
+    display: flex;
+    /*removing underlines from anchor element*/
+    text-decoration: none;
+    cursor: pointer;
+    padding: 8px 10px;
+    width: 50%;
+}
+
+.listLiSecondSection {
+    width: 50%;
+}
+
+.suggestionListImage {
+    border: 2px solid #CC6600;
+    border-radius: 50%;
+    width: 6.5em;
+    height: 6.5em;
+    padding: 1px;
+    text-align: center;
+    font-style: italic;    
+}
+
+.liText {
+    margin: 2em;
+}
+
+.listBtn {
+    background: #000;
+    color: #fff;
+    padding: 10px 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 0;
+    margin: 0 0 1em;
+    cursor: pointer;
+    border-radius: 10px;
+}

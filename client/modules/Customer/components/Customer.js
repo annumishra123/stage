@@ -103,19 +103,19 @@ class Customer extends React.Component {
                 </div>
             </form>
             <CustomerForm />
-            {this.props.role === 'admin' ? <FormSubmitButton formName="createCustomer" text="Save Contact" /> : <br />}
+            {this.props.role == 'admin' || this.props.role == 'superuser' ? <FormSubmitButton formName="createCustomer" text="Save Contact" /> : <br />}
             <AddressForm selectAddress={this.selectAddress.bind(this)} />
-            {this.props.role === 'admin' ? <FormSubmitButton formName="createAddress" text="Save Address" /> : <br />}
-            <MeasurementsForm />
-            {this.props.role === 'admin' ? <FormSubmitButton formName="createMeasurements" text="Save Measurements" /> : <br />}
-            {this.props.role === 'admin' ? <button type="button" style={style} onClick={this.saveAllCustomerDetails.bind(this)}>Save All Information</button> : <br />}
+            {this.props.role == 'admin' || this.props.role == 'superuser' ? <FormSubmitButton formName="createAddress" text="Save Address" /> : <br />}
+            {/* <MeasurementsForm />
+            {this.props.role === 'admin' ? <FormSubmitButton formName="createMeasurements" text="Save Measurements" /> : <br />} */}
+            {this.props.role == 'admin' || this.props.role == 'superuser' ? <button type="button" style={style} onClick={this.saveAllCustomerDetails.bind(this)}>Save All Information</button> : <br />}
             {this.renderComments()}
             <div>
                 <input type="text" onChange={this.handleChangeComment.bind(this)} />
                 <button onClick={this.saveComment.bind(this)}>Save Comment</button>
             </div>
             {/* {this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" className={styles.marginSides} style={style} onClick={this.createShopOrder.bind(this)}>New Shop Order</button> : <br />} */}
-            {this.props.role === 'admin' && this.props.customerDetail && this.props.selectedAddress ? <button type="button" className={styles.marginSides} style={style} onClick={this.createRentOrder.bind(this)}>New Rent Order</button> : <br />}
+            {/* {(this.props.role == 'admin' || this.props.role == 'superuser') && this.props.customerDetail && this.props.selectedAddress ? <button type="button" className={styles.marginSides} style={style} onClick={this.createRentOrder.bind(this)}>New Rent Order</button> : <br />} */}
         </section>);
     }
 }

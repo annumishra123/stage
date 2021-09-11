@@ -25,6 +25,7 @@ class RentOrders extends React.Component {
   }
 
   componentDidMount() {
+    this.props.getShopOrderListByDate(this.state.startDate, this.state.endDate);
     if (this.props.location.query.orderId) {
       this.props.getOrderDetail(this.props.location.query.orderId);
       this.setState({
@@ -108,10 +109,6 @@ class RentOrders extends React.Component {
       return <div>
         <ReactTable data={this.props.orders} filterable columns={clientConfig.marketRentalColumns} defaultPageSize={10} className="-striped -highlight" />
       </div>
-    } else {
-      return <div style={{ textAlign: 'center', fontSize: '18', fontWeight: 'bold' }}>
-        <em>No record... Apply some criteria  !!!</em>
-      </div>
     }
   }
 
@@ -119,7 +116,7 @@ class RentOrders extends React.Component {
     return <section className={styles.rentOrders}>
       <button className={styles.backBtn} onClick={() => browserHistory.goBack()}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true" /> Back</button>
       <div>
-        <h3>Marketplace Rent Orders</h3>
+        <h3>Marketplace Orders</h3>
         <div>
           <form onSubmit={this.getOrders.bind(this)}>
             <div className={styles.width50}>

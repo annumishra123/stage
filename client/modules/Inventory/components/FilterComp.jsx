@@ -41,7 +41,8 @@ class FilterComp extends React.Component {
             enteredSku: '',
             actualGenderList: [],
             afterHandleChange: false,
-            selectedApprovalStatus: ''
+            selectedApprovalStatus: '',
+            count: 0
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -62,6 +63,7 @@ class FilterComp extends React.Component {
                 genderList: (this.state.afterHandleChange ? this.state.actualGenderList : Object.keys(facetsData.gender)) || [],
                 priceList: Object.keys(facetsData.price) || [],
                 conditionList: Object.keys(facetsData.condition) || [],
+                count: nextProps.entirShopCatalog.count
             });
             if (!this.state.afterHandleChange) {
                 this.setState({
@@ -319,12 +321,12 @@ class FilterComp extends React.Component {
         const { isExpanded, genderList, sizeList, brandList, categoryList, subcategoryList, colorList, priceList, conditionList, selectedPricemin,
             selectedPricemax, categoryExpanded, categorySelections, subCategoryExpanded, subCategorySelections, colorExpanded, colorSelections,
             sizeExpanded, sizeSelections, brandExpanded, brandSelections, selectedGender, conditionExpanded, conditionSelections,
-            enteredSeller, enteredSku, afterHandleChange, actualGenderList, selectedApprovalStatus } = this.state;
+            enteredSeller, enteredSku, afterHandleChange, actualGenderList, selectedApprovalStatus, count } = this.state;
         let categoriesItemList = categorySelections, subCategoriesItemList = subCategorySelections,
             colorItemList = colorSelections, sizeItemList = sizeSelections, brandItemList = brandSelections, conditionItemList = conditionSelections;
         let genderItems = afterHandleChange ? actualGenderList : genderList;
         return <div className={styles.filter}>
-            <button type="button" id="collapsible" className={styles.collapsible} onClick={(e) => this.handleToggle(e)}>{isExpanded ? 'Collapse' : 'Expand'} Filter(s)<span className={styles.collapsibleIcon}>{isExpanded ? '  -' : '  +'}</span></button>
+            <button type="button" id="collapsible" className={styles.collapsible} onClick={(e) => this.handleToggle(e)}>{isExpanded ? 'Collapse' : 'Expand'} Filter ({count})<span className={styles.collapsibleIcon}>{isExpanded ? '  -' : '  +'}</span></button>
             <div className={styles.content} style={{ display: isExpanded ? 'block' : 'none' }}>
                 {isExpanded && <div>
                     <div className={styles.wrapper}>

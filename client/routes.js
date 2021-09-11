@@ -62,6 +62,8 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/OrderProcess/components/PostOrderQA');
   require('./modules/OrderProcess/components/QADeductions');
   require('./modules/OrderProcess/components/Refunds');
+  require('./modules/ManageReturns/components/OrderList');
+  require('./modules/OrderProcess/components/Refunds');
 }
 
 // react-router setup with code-splitting
@@ -521,29 +523,34 @@ export default function getRoutes(store, req) {
           cb(null, require('./modules/OrderProcess/components/Refunds').default);
         });
       }} />
-      <Route path="/stories" onEnter={checkAuth} getComponent={(nextState, cb) => {
+      <Route path="/stories" onEnter={checkAdmin} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Stories/components/Stories').default);
         });
       }} />
-      <Route path="/influencer" onEnter={checkAuth} getComponent={(nextState, cb) => {
+      <Route path="/influencer" onEnter={checkAdmin} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Influencer/components/Influencer').default);
         });
       }} />
-      <Route path="/influencer/list" onEnter={checkAuth} getComponent={(nextState, cb) => {
+      <Route path="/influencer/list" onEnter={checkAdmin} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Influencer/components/InfluencerList').default);
         });
       }} />
-      <Route path="/managePayment" onEnter={checkAuth} getComponent={(nextState, cb) => {
+      <Route path="/manage/payment" onEnter={checkFinance} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/ManagePayment/components/OrderList').default);
         });
       }} />
-      <Route path="/marketplaceRent" onEnter={checkAuth} getComponent={(nextState, cb) => {
+      <Route path="/marketplace/rent" onEnter={checkAdmin} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/MarketplaceRent/components/RentOrders').default);
+        });
+      }} />
+      <Route path="/manage/returns" onEnter={checkAdmin} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/ManageReturns/components/OrderList').default);
         });
       }} />
     </Route>
