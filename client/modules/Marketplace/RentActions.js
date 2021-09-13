@@ -99,3 +99,45 @@ export function getOrderDetail(id) {
         }
     }
 }
+
+export function getOrdersForDelivery() {
+    return function (dispatch) {
+        let url = `/api/shop-service/backend/getOrderLinesToCreateAwb`
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'get',
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
+        }).then(function (response) {
+            dispatch({
+                type: 'FETCH_DELIVERY_ORDERS',
+                payload: response.data
+            });
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+}
+
+export function updateBuyerAWB(data) {
+    return function (dispatch) {
+        let url = `/api/shop-service/backend/saveToBuyerAwb`
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            data: data,
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
+        }).then(function (response) {
+            dispatch(getOrdersForDelivery());
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+}

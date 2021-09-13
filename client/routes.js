@@ -62,8 +62,13 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/OrderProcess/components/PostOrderQA');
   require('./modules/OrderProcess/components/QADeductions');
   require('./modules/OrderProcess/components/Refunds');
+  require('./modules/ManagePayment/components/OrderList');
   require('./modules/ManageReturns/components/OrderList');
-  require('./modules/OrderProcess/components/Refunds');
+  require('./modules/Marketplace/components/Logistics');
+  require('./modules/Marketplace/components/RentOrders');
+  require('./modules/Stories/components/Stories');
+  require('./modules/Influencer/components/InfluencerList');
+  require('./modules/Influencer/components/Influencer');
 }
 
 // react-router setup with code-splitting
@@ -538,19 +543,24 @@ export default function getRoutes(store, req) {
           cb(null, require('./modules/Influencer/components/InfluencerList').default);
         });
       }} />
-      <Route path="/manage/payment" onEnter={checkFinance} getComponent={(nextState, cb) => {
+      <Route path="/manage/payment" onEnter={checkAdmin} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/ManagePayment/components/OrderList').default);
         });
       }} />
       <Route path="/marketplace/rent" onEnter={checkAdmin} getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          cb(null, require('./modules/MarketplaceRent/components/RentOrders').default);
+          cb(null, require('./modules/Marketplace/components/RentOrders').default);
         });
       }} />
       <Route path="/manage/returns" onEnter={checkAdmin} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/ManageReturns/components/OrderList').default);
+        });
+      }} />
+      <Route path="/market/logistics" onEnter={checkAdmin} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Marketplace/components/Logistics').default);
         });
       }} />
     </Route>
