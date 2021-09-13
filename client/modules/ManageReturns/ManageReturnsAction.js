@@ -14,7 +14,7 @@ export function fetchAllReturnOrderLine() {
             }
         }).then((response) => {
             dispatch({
-                type: 'FETCH_ALL_ORDERLINE_FOR_APPROVAL',
+                type: 'FETCH_ALL_RETURN_ORDERLINE',
                 payload: response.data
             });
         }).catch((error) => {
@@ -23,10 +23,10 @@ export function fetchAllReturnOrderLine() {
     }
 }
 
-export function approvalUpdateReturn(param) {
+export function approvalUpdateOrderLine(param) {
     return function (dispatch) {
         let action = param.actionName, // either approve or disapprove
-            url = `/api/shop-service/backend/refund/${action}`;
+            url = `/api/shop-service/backend/return/${action}`;
         return axios({
             url: url,
             timeout: 20000,

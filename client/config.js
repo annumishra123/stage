@@ -1459,6 +1459,75 @@ const clientConfig = {
   }, {
     Header: 'Orderline Status',
     accessor: 'orderlineProcess.status'
+  }],
+  returnOrderlineColumns: [{
+    Header: 'Order Date',
+    id: 'orderDate',
+    accessor: o => moment(o.orderDate).format('lll'),
+    width: 150
+  }, {
+    Header: 'SKU',
+    accessor: 'sku',
+    width: 220
+  }, {
+    Header: 'Orderline Id',
+    accessor: 'orderlineProcess.orderlineId'
+  }, {
+    id: 'image',
+    Header: 'Image',
+    accessor: o => {
+      return <a target="blank" href={o.orderlineProcess.returnProductImageUrl}>Link</a>;
+    }
+  }, {
+    Header: 'Reason',
+    accessor: 'orderlineProcess.returnReason'
+  }, {
+    Header: 'Status',
+    accessor: 'status',
+    width: 150
+  }, {
+    Header: 'Price',
+    accessor: 'discountedPrice'
+  }, {
+    Header: 'Payment Method',
+    accessor: 'paymentMethod'
+  }],
+  marketDeliveryColumns: [{
+    Header: 'Order Date',
+    id: 'orderDate',
+    accessor: o => moment(o.orderDate).format('lll'),
+    width: 150
+  }, {
+    Header: 'SKU',
+    accessor: 'sku',
+    width: 220
+  }, {
+    Header: 'Orderline Id',
+    accessor: 'orderlineProcess.orderlineId'
+  }, {
+    Header: 'Seller AWB',
+    accessor: 'orderlineProcess.toSellerTrackingId'
+  }, {
+    Header: 'Price',
+    accessor: 'discountedPrice'
+  }, {
+    Header: 'Payment Method',
+    accessor: 'paymentMethod'
+  }, {
+    id: 'seller',
+    Header: 'Seller Address',
+    accessor: o => {
+      return `${o.sellerAddress.userName} (${o.sellerAddress.phoneNumber}), ${o.sellerAddress.address}, ${o.sellerAddress.city}, ${o.sellerAddress.state}, ${o.sellerAddress.pincode}`;
+    }
+  }, {
+    id: 'buyer',
+    Header: 'Buyer Address',
+    accessor: o => {
+      return `${o.buyerAddress.userName} (${o.buyerAddress.phoneNumber}), ${o.buyerAddress.address}, ${o.buyerAddress.city}, ${o.buyerAddress.state}, ${o.buyerAddress.pincode}`;
+    }
+  }, {
+    Header: 'Status',
+    accessor: 'status'
   }]
 };
 

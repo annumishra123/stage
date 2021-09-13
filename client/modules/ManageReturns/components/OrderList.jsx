@@ -6,7 +6,7 @@ import ReactTable from "react-table";
 import clientConfig from "../../../config";
 import {
   fetchAllReturnOrderLine,
-  approvalUpdateReturn,
+  approvalUpdateOrderLine,
 } from "../ManageReturnsAction";
 
 // Import Style
@@ -17,10 +17,8 @@ class OrderList extends React.Component {
     super(props);
     this.state = {
       allOrderLineList: [],
-      allReturnOrderLineList: [],
       tabIndex: 0,
-      selectedOrderLineIds: [],
-      selectedRefundOrderLineIds: [],
+      selectedOrderLineIds: []
     };
   }
 
@@ -29,14 +27,9 @@ class OrderList extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.allOrderLine) {
-      this.setState({
-        allOrderLineList: nextProps.allOrderLine,
-      });
-    }
     if (nextProps.allReturnOrderLine) {
       this.setState({
-        allReturnOrderLineList: nextProps.allReturnOrderLine,
+        allOrderLineList: nextProps.allReturnOrderLine,
       });
     }
   }
@@ -44,8 +37,7 @@ class OrderList extends React.Component {
   handleChange(rowId, tabName, e) {
     const {
       allOrderLineList,
-      selectedOrderLineIds,
-      selectedRefundOrderLineIds,
+      selectedOrderLineIds
     } = this.state,
       { checked } = e.target;
     let tempIdsList = [],
@@ -54,10 +46,6 @@ class OrderList extends React.Component {
       case "payment":
         tempIdsList = selectedOrderLineIds;
         listData = allOrderLineList;
-        break;
-      case "refund":
-        tempIdsList = selectedRefundOrderLineIds;
-        listData = allReturnOrderLineList;
         break;
     }
     if (rowId) {
@@ -70,8 +58,6 @@ class OrderList extends React.Component {
 
       if (tabName == "payment") {
         this.setState({ selectedOrderLineIds: tempIdsList });
-      } else {
-        this.setState({ selectedRefundOrderLineIds: tempIdsList });
       }
     }
     tempIdsList = [];
@@ -79,7 +65,7 @@ class OrderList extends React.Component {
   }
 
   handleClick(actionName, tabName) {
-    const { selectedOrderLineIds, selectedRefundOrderLineIds } = this.state;
+    const { selectedOrderLineIds } = this.state;
     let requestData = {
       approver: this.props.user,
     };
@@ -90,21 +76,15 @@ class OrderList extends React.Component {
           this.props.approvalUpdateOrderLine({ requestData, actionName });
         }
         break;
-      case "refund":
-        if (selectedRefundOrderLineIds.length != 0) {
-          requestData.orderlineIds = selectedRefundOrderLineIds;
-          this.props.approvalUpdateReturn({ requestData, actionName });
-        }
-        break;
     }
   }
 
   renderPaymentListSection(tabName) {
     const { role } = this.props,
-      { allReturnOrderLineList } = this.state;
+      { allOrderLineList } = this.state;
     if (role == "admin" || role == "superuser") {
-      if (!clientConfig.orderlineColumns.find((o) => o.id == "select")) {
-        clientConfig.orderlineColumns.unshift({
+      if (!clientConfig.returnOrderlineColumns.find((o) => o.id == "select")) {
+        clientConfig.returnOrderlineColumns.unshift({
           Header: "",
           id: "select",
           accessor: "id",
@@ -123,8 +103,8 @@ class OrderList extends React.Component {
     }
     return (
       <ReactTable
-        data={allReturnOrderLineList}
-        columns={clientConfig.orderlineColumns}
+        data={allOrderLineList}
+        columns={clientConfig.returnOrderlineColumns}
         defaultPageSize={10}
         className="-striped -highlight"
       />
@@ -132,9 +112,8 @@ class OrderList extends React.Component {
   }
 
   render() {
-    const { allOrderLineList, allReturnOrderLineList } = this.state;
-    let isOrderLineEnable = allOrderLineList.length != 0,
-      isRefundOrderLineEnable = allReturnOrderLineList != 0;
+    const { allOrderLineList } = this.state;
+    let isOrderLineEnable = allOrderLineList.length != 0;
     return (
       <section>
         <button
@@ -179,7 +158,7 @@ function matchDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       fetchAllReturnOrderLine,
-      approvalUpdateReturn,
+      approvalUpdateOrderLine,
     },
     dispatch
   );
