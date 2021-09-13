@@ -6,7 +6,6 @@ import { getOrdersForDelivery, updateBuyerAWB } from '../RentActions';
 import moment from 'moment';
 import clientConfig from '../../../config';
 import ReactTable from 'react-table';
-import { data } from './dummy';
 import ReactModal from 'react-modal';
 
 // Import Style
