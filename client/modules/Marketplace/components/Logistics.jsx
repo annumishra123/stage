@@ -7,6 +7,7 @@ import moment from 'moment';
 import clientConfig from '../../../config';
 import ReactTable from 'react-table';
 import ReactModal from 'react-modal';
+import { CSVLink } from 'react-csv';
 
 // Import Style
 import styles from './rentOrders.css';
@@ -19,7 +20,8 @@ class RentOrders extends React.Component {
       endDate: moment().endOf('day'),
       orderlineId: '',
       openApproveModal: false,
-      awbNo: ''
+      awbNo: '',
+      csvData: null,
     };
   }
 
@@ -50,6 +52,13 @@ class RentOrders extends React.Component {
     })
   }
 
+  generateExportLink() {
+    let csvDataArray = this.logisticsTable.getResolvedState().sortedData;
+    this.setState({
+      csvData: csvDataArray
+    });
+  }
+
   renderOrders() {
     const { orders } = this.props;
     if (orders && orders.length > 0) {
@@ -62,13 +71,15 @@ class RentOrders extends React.Component {
             filterable: false,
             sortable: false,
             Cell: ({ value }) => {
-              return <button onClick={this.handleApprovalModal.bind(this, value)}>Update</button>
+              return <div><button onClick={this.handleApprovalModal.bind(this, value)}>Update</button></div>
             }
           });
         }
       }
       return <div>
-        <ReactTable data={orders} filterable columns={clientConfig.marketDeliveryColumns} defaultPageSize={10} className="-striped -highlight" />
+        <ReactTable data={orders} filterable columns={clientConfig.marketDeliveryColumns} ref={(r) => this.logisticsTable = r} defaultPageSize={10} className="-striped -highlight" />
+        {!this.state.csvData ? <button onClick={this.generateExportLink.bind(this)}>Generate Export Link</button> : null}
+        {this.state.csvData ? <CSVLink data={this.state.csvData} filename={"Marketplace Logistics.csv"}>Export CSV</CSVLink> : null}
       </div>
     }
   }

@@ -2,11 +2,12 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getShopOrderListByDate, getOrderDetail, getOrdersByUserId, getOrdersByLookNumber } from '../RentActions';
+import { getShopOrderListByDate, getOrdersByUserId, getOrdersByLookNumber, getOrdersBySellerId, getOrdersById } from '../RentActions';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import clientConfig from '../../../config';
 import ReactTable from 'react-table';
+import { CSVLink } from 'react-csv';
 
 // Import Style
 import styles from './rentOrders.css';
@@ -19,40 +20,15 @@ class RentOrders extends React.Component {
       endDate: moment().endOf('day'),
       viewOrderDetail: false,
       emailId: '',
+      sellerId: '',
       orderId: '',
+      csvData: null,
       sku: ''
     };
   }
 
   componentDidMount() {
     this.props.getShopOrderListByDate(this.state.startDate, this.state.endDate);
-    if (this.props.location.query.orderId) {
-      this.props.getOrderDetail(this.props.location.query.orderId);
-      this.setState({
-        viewOrderDetail: true,
-        cancelReason: ''
-      });
-    } else {
-      this.setState({
-        viewOrderDetail: false
-      });
-    }
-  }
-
-  componentWillReceiveProps(next) {
-    if (this.props.location.query.orderId !== next.location.query.orderId) {
-      if (next.location.query.orderId) {
-        this.props.getOrderDetail(next.location.query.orderId);
-        this.setState({
-          viewOrderDetail: true,
-          cancelReason: ''
-        });
-      } else {
-        this.setState({
-          viewOrderDetail: false
-        });
-      }
-    }
   }
 
   handleChangeStartDate(date) {
@@ -73,6 +49,12 @@ class RentOrders extends React.Component {
     })
   }
 
+  handleChangeSellerId(e) {
+    this.setState({
+      sellerId: e.target.value
+    })
+  }
+
   handleChangeOrderId(e) {
     this.setState({
       orderId: e.target.value
@@ -87,29 +69,55 @@ class RentOrders extends React.Component {
 
   getOrders(e) {
     e.preventDefault();
-    this.props.getShopOrderListByDate(this.state.startDate, this.state.endDate);
+    this.setState({
+      csvData: null
+    }, () => this.props.getShopOrderListByDate(this.state.startDate, this.state.endDate));
   }
 
   getOrdersByUserId(e) {
     e.preventDefault();
-    this.props.getOrdersByUserId(this.state.emailId);
+    this.setState({
+      csvData: null
+    }, () => this.props.getOrdersByUserId(this.state.emailId));
   }
 
-  getOrdersByLookNumber() {
-    this.props.getOrdersByLookNumber(this.state.sku);
+  getOrdersById(e) {
+    e.preventDefault();
+    this.setState({
+      csvData: null
+    }, () => this.props.getOrdersById(this.state.orderId));
   }
 
-  showOrderDetail(id) {
-    this.props.getOrderDetail(id);
+  getOrdersBySellerId(e) {
+    e.preventDefault();
+    this.setState({
+      csvData: null
+    }, () => this.props.getOrdersBySellerId(this.state.sellerId));
+  }
+
+  getOrdersByLookNumber(e) {
+    e.preventDefault();
+    this.setState({
+      csvData: null
+    }, () => this.props.getOrdersByLookNumber(this.state.sku));
   }
 
   renderOrders() {
     const { orders } = this.props;
     if (orders && orders.length > 0) {
       return <div>
-        <ReactTable data={this.props.orders} filterable columns={clientConfig.marketRentalColumns} defaultPageSize={10} className="-striped -highlight" />
+        <ReactTable data={this.props.orders} filterable columns={clientConfig.marketRentalColumns} ref={(r) => this.marketOrdersTable = r} defaultPageSize={10} defaultPageSize={10} className="-striped -highlight" />
+        {!this.state.csvData ? <button onClick={this.generateExportLink.bind(this)}>Generate Export Link</button> : null}
+        {this.state.csvData ? <CSVLink data={this.state.csvData} filename={"Marketplace Logistics.csv"}>Export CSV</CSVLink> : null}
       </div>
     }
+  }
+
+  generateExportLink() {
+    let csvDataArray = this.marketOrdersTable.getResolvedState().sortedData;
+    this.setState({
+      csvData: csvDataArray
+    });
   }
 
   render() {
@@ -134,29 +142,40 @@ class RentOrders extends React.Component {
             </div>
           </form>
           <div>
+            <form onSubmit={this.getOrdersById.bind(this)}>
+              <h4>Order Id</h4>
+              <input type="text" onChange={this.handleChangeOrderId.bind(this)} />
+              <div>
+                <button onClick={this.getOrdersById.bind(this)}>Search By Order Id</button>
+              </div>
+            </form>
+          </div>
+          <div>
             <form onSubmit={this.getOrdersByUserId.bind(this)}>
               <h4>Email Id</h4>
               <input type="text" onChange={this.handleChangeEmailId.bind(this)} />
               <div>
-                <button type="submit" onClick={this.getOrdersByUserId.bind(this)}>Search By Email Id</button>
+                <button type="submit" onClick={this.getOrdersByUserId.bind(this)}>Search By Buyer Email Id</button>
               </div>
             </form>
           </div>
           <div>
-            <form onSubmit={this.showOrderDetail.bind(this)}>
-              <h4>Order Id</h4>
-              <input type="text" onChange={this.handleChangeOrderId.bind(this)} />
+            <form onSubmit={this.getOrdersBySellerId.bind(this)}>
+              <h4>Email Id</h4>
+              <input type="text" onChange={this.handleChangeSellerId.bind(this)} />
               <div>
-                <button type="submit" onClick={this.showOrderDetail.bind(this, this.state.orderId)}>Search By Order Id</button>
+                <button type="submit" onClick={this.getOrdersBySellerId.bind(this)}>Search By Seller Email Id</button>
               </div>
             </form>
           </div>
           <div>
-            <h4>SKU</h4>
-            <input type="text" onChange={this.handleChangeLookNumber.bind(this)} />
-            <div>
-              <button onClick={this.getOrdersByLookNumber.bind(this)}>Search By SKU</button>
-            </div>
+            <form onSubmit={this.getOrdersByLookNumber.bind(this)}>
+              <h4>SKU</h4>
+              <input type="text" onChange={this.handleChangeLookNumber.bind(this)} />
+              <div>
+                <button onClick={this.getOrdersByLookNumber.bind(this)}>Search By SKU</button>
+              </div>
+            </form>
           </div>
         </div>
         <br />
@@ -170,8 +189,9 @@ function matchDispatchToProps(dispatch) {
   return bindActionCreators({
     getShopOrderListByDate,
     getOrdersByUserId,
-    getOrderDetail,
-    getOrdersByLookNumber
+    getOrdersById,
+    getOrdersByLookNumber,
+    getOrdersBySellerId
   }, dispatch);
 }
 

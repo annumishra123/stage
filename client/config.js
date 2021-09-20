@@ -240,11 +240,43 @@ const clientConfig = {
     accessor: 'status',
   }],
   marketRentalColumns: [{
+    Header: 'Order Id',
+    accessor: 'frontendOrderId'
+  }, {
     Header: 'SKU',
     accessor: 'sku'
   }, {
-    Header: 'User Id',
+    Header: 'Product',
+    accessor: 'product.name'
+  }, {
+    Header: 'Product Image',
+    accessor: 'product.image1'
+  }, {
+    Header: 'Buyer Email',
     accessor: 'userId',
+  }, {
+    id: 'buyer_name',
+    Header: 'Buyer Name',
+    accessor: o => o.buyerProfile ? `${o.buyerProfile.firstName} ${o.buyerProfile.lastName}` : null,
+  }, {
+    Header: 'Buyer Contact',
+    accessor: 'buyerProfile.verifiedPhoneNumber',
+  }, {
+    Header: 'Buyer Alias',
+    accessor: 'buyerProfile.username',
+  }, {
+    Header: 'Seller Email',
+    accessor: 'sellerId',
+  }, {
+    id: 'seller_name',
+    Header: 'Seller Name',
+    accessor: o => o.sellerProfile ? `${o.sellerProfile.firstName} ${o.sellerProfile.lastName}` : null,
+  }, {
+    Header: 'Seller Contact',
+    accessor: 'sellerProfile.verifiedPhoneNumber',
+  }, {
+    Header: 'Seller Alias',
+    accessor: 'sellerProfile.username',
   }, {
     id: 'orderDate',
     Header: 'Date Of Order',
@@ -259,17 +291,110 @@ const clientConfig = {
     Header: 'Status',
     accessor: 'status',
   }, {
-    Header: 'Original Price',
-    accessor: 'originalPrice'
-  }, {
-    Header: 'Discounted Price',
+    Header: 'Value',
     accessor: 'discountedPrice',
   }, {
-    Header: 'Product Id',
-    accessor: 'productId'
-  }, {
-    Header: 'Is Cancelled',
+    Header: 'Cancelled',
     accessor: 'isCancelled',
+  }, {
+    Header: 'Process Status',
+    accessor: 'orderlineProcess.status',
+  }, {
+    Header: 'Payout Status',
+    accessor: 'orderlineProcess.paymentStatus',
+  }, {
+    Header: 'Refund Status',
+    accessor: 'orderlineProcess.reversePaymentStatus',
+  }, {
+    Header: 'Completed',
+    accessor: 'orderlineProcess.isCompleted',
+  }, {
+    Header: 'Cancelled',
+    accessor: 'orderlineProcess.isCancelled',
+  }, {
+    Header: 'Return',
+    accessor: 'orderlineProcess.isReturn',
+  }, {
+    Header: 'Active',
+    accessor: 'orderlineProcess.isActive',
+  }, {
+    Header: 'Payment Approved',
+    accessor: 'orderlineProcess.isPaymentApproved',
+  }, {
+    Header: 'Payment Approver',
+    accessor: 'orderlineProcess.paymentApprovedBy',
+  }, {
+    Header: 'Return Approved',
+    accessor: 'orderlineProcess.isReturnApproved',
+  }, {
+    Header: 'Return Approver',
+    accessor: 'orderlineProcess.returnApprovedBy',
+  }, {
+    Header: 'Refund Approved',
+    accessor: 'orderlineProcess.isRefundApproved',
+  }, {
+    Header: 'Refund Approver',
+    accessor: 'orderlineProcess.refundApprovedBy',
+  }, {
+    Header: 'Return Image',
+    accessor: 'orderlineProcess.returnProductImageUrl',
+  }, {
+    Header: 'Return Reason',
+    accessor: 'orderlineProcess.returnReason',
+  }, {
+    Header: 'Seller AWB',
+    accessor: 'orderlineProcess.toSellerTrackingId',
+  }, {
+    Header: 'Seller AWB Status',
+    accessor: 'orderlineProcess.toSellerTrackingStatus',
+  }, {
+    Header: 'Buyer AWB',
+    accessor: 'orderlineProcess.toBuyerTrackingId',
+  }, {
+    Header: 'Buyer AWB Status',
+    accessor: 'orderlineProcess.toBuyerTrackingStatus',
+  }, {
+    Header: 'Return AWB',
+    accessor: 'orderlineProcess.reverseTrackingId',
+  }, {
+    Header: 'Return AWB Status',
+    accessor: 'orderlineProcess.reverseTrackingStatus',
+  }, {
+    id: 'shippedToSellerAction',
+    Header: 'Shipped To Seller',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.shippedToSellerAction ? moment(o.orderlineProcess.shippedToSellerAction.timeUtc).format('lll') : null,
+  }, {
+    id: 'ofdToSellerAction',
+    Header: 'Seller OFD',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.ofdToSellerAction ? moment(o.orderlineProcess.ofdToSellerAction.timeUtc).format('lll') : null,
+  }, {
+    id: 'deliveredToSellerAction',
+    Header: 'Delivered To Seller',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.deliveredToSellerAction ? moment(o.orderlineProcess.deliveredToSellerAction.timeUtc).format('lll') : null,
+  }, {
+    id: 'shippedToBuyerAction',
+    Header: 'Shipped To Buyer',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.shippedToBuyerAction ? moment(o.orderlineProcess.shippedToBuyerAction.timeUtc).format('lll') : null,
+  }, {
+    id: 'ofdToBuyerAction',
+    Header: 'Buyer OFD',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.ofdToBuyerAction ? moment(o.orderlineProcess.ofdToBuyerAction.timeUtc).format('lll') : null,
+  }, {
+    id: 'deliveredToBuyerAction',
+    Header: 'Delivered To Buyer',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.deliveredToBuyerAction ? moment(o.orderlineProcess.deliveredToBuyerAction.timeUtc).format('lll') : null,
+  }, {
+    id: 'reverseShippedAction',
+    Header: 'Shipped Return',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.reverseShippedAction ? moment(o.orderlineProcess.reverseShippedAction.timeUtc).format('lll') : null,
+  }, {
+    id: 'reverseOfdAction',
+    Header: 'Return OFD',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.reverseOfdAction ? moment(o.orderlineProcess.reverseOfdAction.timeUtc).format('lll') : null,
+  }, {
+    id: 'reverseDeliveredAction',
+    Header: 'Returned To Seller',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.reverseDeliveredAction ? moment(o.orderlineProcess.reverseDeliveredAction.timeUtc).format('lll') : null,
   }],
   orderProcessColumns: [{
     id: 'Order Id',
@@ -1493,6 +1618,10 @@ const clientConfig = {
     accessor: 'paymentMethod'
   }],
   marketDeliveryColumns: [{
+    Header: 'Order Id',
+    accessor: 'frontendOrderId',
+    width: 220
+  }, {
     Header: 'Order Date',
     id: 'orderDate',
     accessor: o => moment(o.orderDate).format('lll'),
@@ -1501,9 +1630,6 @@ const clientConfig = {
     Header: 'SKU',
     accessor: 'sku',
     width: 220
-  }, {
-    Header: 'Orderline Id',
-    accessor: 'orderlineProcess.orderlineId'
   }, {
     Header: 'Seller AWB',
     accessor: 'orderlineProcess.toSellerTrackingId'
@@ -1514,17 +1640,59 @@ const clientConfig = {
     Header: 'Payment Method',
     accessor: 'paymentMethod'
   }, {
+    id: 'sellerName',
+    Header: 'Seller Name',
+    accessor: o => {
+      return o.sellerAddress ? o.sellerAddress.userName : null;
+    }
+  }, {
+    id: 'sellerContact',
+    Header: 'Seller Contact',
+    accessor: o => {
+      return o.sellerAddress ? o.sellerAddress.phoneNumber : null;
+    }
+  }, {
     id: 'seller',
     Header: 'Seller Address',
     accessor: o => {
-      return `${o.sellerAddress.userName} (${o.sellerAddress.phoneNumber}), ${o.sellerAddress.address}, ${o.sellerAddress.city}, ${o.sellerAddress.state}, ${o.sellerAddress.pincode}`;
+      return `${o.sellerAddress.address}, ${o.sellerAddress.city}, ${o.sellerAddress.state}, ${o.sellerAddress.pincode}`;
+    }
+  }, {
+    Header: 'Seller City',
+    accessor: 'sellerAddress.city'
+  }, {
+    Header: 'Seller State',
+    accessor: 'sellerAddress.state'
+  }, {
+    Header: 'Seller Pincode',
+    accessor: 'sellerAddress.pincode'
+  }, {
+    id: 'buyerName',
+    Header: 'Buyer Name',
+    accessor: o => {
+      return o.buyerAddress ? o.buyerAddress.userName : null;
+    }
+  }, {
+    id: 'buyerContact',
+    Header: 'Buyer Contact',
+    accessor: o => {
+      return o.buyerAddress ? o.buyerAddress.phoneNumber : null;
     }
   }, {
     id: 'buyer',
     Header: 'Buyer Address',
     accessor: o => {
-      return `${o.buyerAddress.userName} (${o.buyerAddress.phoneNumber}), ${o.buyerAddress.address}, ${o.buyerAddress.city}, ${o.buyerAddress.state}, ${o.buyerAddress.pincode}`;
+      return `${o.buyerAddress.address}, ${o.buyerAddress.city}, ${o.buyerAddress.state}, ${o.buyerAddress.pincode}`;
     }
+  }, {
+    Header: 'Buyer City',
+    accessor: 'buyerAddress.city'
+  }, {
+    Header: 'Buyer State',
+    accessor: 'buyerAddress.state'
+  }, {
+    Header: 'Buyer Pincode',
+    accessor: 'buyerAddress.pincode'
   }, {
     Header: 'Status',
     accessor: 'status'

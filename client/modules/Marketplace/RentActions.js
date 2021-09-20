@@ -48,6 +48,55 @@ export function getOrdersByUserId(userId) {
     }
 }
 
+export function getOrdersBySellerId(userId) {
+    return function (dispatch) {
+        if (userId) {
+            let url = `/api/shop-service/backend/getOrderLinesBySellerId?sellerId=${userId}`;
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'get',
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
+            }).then(function (response) {
+                dispatch({
+                    type: 'FETCH_MARKET_RENT_ORDERS',
+                    payload: response.data
+                })
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+}
+
+export function getOrdersById(id) {
+    return function (dispatch) {
+        if (id) {
+            let url = `/api/shop-service/backend/getOrderLinesByFrontendId?orderId=${id}`;
+            return axios({
+                url: url,
+                timeout: 20000,
+                method: 'get',
+                responseType: 'json',
+                headers: {
+                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+                }
+            }).then(function (response) {
+                dispatch({
+                    type: 'FETCH_MARKET_RENT_ORDERS',
+                    payload: response.data
+                });
+            }).catch(function (error) {
+                alert('Could not fetch order detail');
+                console.log(error);
+            });
+        }
+    }
+}
+
 export function getOrdersByLookNumber(looknumber) {
     return function (dispatch) {
         if (looknumber) {
@@ -71,31 +120,6 @@ export function getOrdersByLookNumber(looknumber) {
             });
         } else {
             alert('Enter a valid Look Number');
-        }
-    }
-}
-
-export function getOrderDetail(id) {
-    return function (dispatch) {
-        if (id) {
-            let url = `/api/shop-service/backend/getOrderLinesByFrontendId?orderId=${id}`;
-            return axios({
-                url: url,
-                timeout: 20000,
-                method: 'get',
-                responseType: 'json',
-                headers: {
-                    "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
-                }
-            }).then(function (response) {
-                dispatch({
-                    type: 'FETCH_MARKET_RENT_ORDERS',
-                    payload: response.data
-                });
-            }).catch(function (error) {
-                alert('Could not fetch order detail');
-                console.log(error);
-            });
         }
     }
 }
