@@ -61,19 +61,19 @@ class Inventory extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        if (props.rentCatalog) {
-            let rentCatalogCSV = props.rentCatalog.map((item) => {
-                return {
-                    'looknumber': item.looknumber,
-                    'sku': item.sku,
-                    'name': item.name,
-                    'location': item.location
-                }
-            });
-            this.setState({
-                rentCatalogCSV: rentCatalogCSV
-            });
-        }
+        // if (props.rentCatalog) {
+        //     let rentCatalogCSV = props.rentCatalog.map((item) => {
+        //         return {
+        //             'looknumber': item.looknumber,
+        //             'sku': item.sku,
+        //             'name': item.name,
+        //             'location': item.location
+        //         }
+        //     });
+        //     this.setState({
+        //         rentCatalogCSV: rentCatalogCSV
+        //     });
+        // }
         if (props.shopCatalog) {
             let shopCatalogCSV = props.shopCatalog.map((item) => {
                 return {
@@ -86,18 +86,18 @@ class Inventory extends React.Component {
                 shopCatalogCSV: shopCatalogCSV
             });
         }
-        if (props.accessoryCatalog) {
-            let accessoryCSV = props.accessoryCatalog.map((item) => {
-                return {
-                    'sku': item.sku,
-                    'name': item.name,
-                    'location': item.location
-                }
-            });
-            this.setState({
-                accessoryCSV: accessoryCSV
-            });
-        }
+        // if (props.accessoryCatalog) {
+        //     let accessoryCSV = props.accessoryCatalog.map((item) => {
+        //         return {
+        //             'sku': item.sku,
+        //             'name': item.name,
+        //             'location': item.location
+        //         }
+        //     });
+        //     this.setState({
+        //         accessoryCSV: accessoryCSV
+        //     });
+        // }
     }
 
     setWrapperRef(node) {
