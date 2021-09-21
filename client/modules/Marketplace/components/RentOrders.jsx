@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getShopOrderListByDate, getOrdersByUserId, getOrdersByLookNumber, getOrdersBySellerId, getOrdersById } from '../RentActions';
+import { getShopOrderListByDate, getOrdersByUserId, getOrdersByLookNumber, getOrdersBySellerId, getOrdersById, cancelOrder } from '../RentActions';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import clientConfig from '../../../config';
@@ -23,7 +23,8 @@ class RentOrders extends React.Component {
       sellerId: '',
       orderId: '',
       csvData: null,
-      sku: ''
+      sku: '',
+      selectedOrderlines: []
     };
   }
 
@@ -102,11 +103,56 @@ class RentOrders extends React.Component {
     }, () => this.props.getOrdersByLookNumber(this.state.sku));
   }
 
+  handleChange(id, e) {
+    const { checked } = e.target;
+    let tempIdsList = this.state.selectedOrderlines;
+    if (id) {
+      if (checked) {
+        tempIdsList.push(id);
+      } else {
+        tempIdsList = tempIdsList.filter((listItem) => listItem != id);
+      }
+      this.setState({
+        selectedOrderlines: tempIdsList
+      });
+    }
+  }
+
+  cancelOrder() {
+    let data = {
+      orderlinesToCancel: this.state.selectedOrderlines,
+      cancellationUser: this.props.user
+    }
+    this.setState({
+      selectedOrderlines: []
+    });
+    this.props.cancelOrder(data);
+  }
+
   renderOrders() {
     const { orders } = this.props;
     if (orders && orders.length > 0) {
+      if (this.props.role == "admin" || this.props.role == "superuser") {
+        let deliveryIndex = clientConfig.marketRentalColumns.findIndex(o => o.id == 'select');
+        if (deliveryIndex != -1) { clientConfig.marketRentalColumns.splice(deliveryIndex, 1); }
+        clientConfig.marketRentalColumns.unshift({
+          Header: "",
+          id: "select",
+          accessor: "id",
+          filterable: false,
+          sortable: false,
+          Cell: ({ value }) => (
+            <div style={{ textAlign: "center" }}>
+              <input type="checkbox" className="" onChange={this.handleChange.bind(this, value)} />
+            </div>
+          ),
+        });
+      }
       return <div>
-        <ReactTable data={this.props.orders} filterable columns={clientConfig.marketRentalColumns} ref={(r) => this.marketOrdersTable = r} defaultPageSize={10} defaultPageSize={10} className="-striped -highlight" />
+        <div>
+          <button disabled={this.state.selectedOrderlines.length == 0} onClick={this.cancelOrder.bind(this)}> Cancel Order(s) </button>
+        </div>
+        <ReactTable data={this.props.orders} filterable columns={clientConfig.marketRentalColumns} ref={(r) => this.marketOrdersTable = r} defaultPageSize={10} className="-striped -highlight" />
         {!this.state.csvData ? <button onClick={this.generateExportLink.bind(this)}>Generate Export Link</button> : null}
         {this.state.csvData ? <CSVLink data={this.state.csvData} filename={"Marketplace Logistics.csv"}>Export CSV</CSVLink> : null}
       </div>
@@ -191,7 +237,8 @@ function matchDispatchToProps(dispatch) {
     getOrdersByUserId,
     getOrdersById,
     getOrdersByLookNumber,
-    getOrdersBySellerId
+    getOrdersBySellerId,
+    cancelOrder
   }, dispatch);
 }
 
