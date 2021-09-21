@@ -249,8 +249,9 @@ const clientConfig = {
     Header: 'Product',
     accessor: 'product.name'
   }, {
+    id: 'product_image',
     Header: 'Product Image',
-    accessor: 'product.image1'
+    accessor: o => <a target="blank" href={o.product.image1}>Link</a>
   }, {
     Header: 'Buyer Email',
     accessor: 'userId',
@@ -294,8 +295,9 @@ const clientConfig = {
     Header: 'Value',
     accessor: 'discountedPrice',
   }, {
+    id: 'isCancelled',
     Header: 'Cancelled',
-    accessor: 'isCancelled',
+    accessor: o => o.isCancelled ? 'Yes' : 'No',
   }, {
     Header: 'Process Status',
     accessor: 'orderlineProcess.status',
@@ -306,32 +308,39 @@ const clientConfig = {
     Header: 'Refund Status',
     accessor: 'orderlineProcess.reversePaymentStatus',
   }, {
+    id: 'completed',
     Header: 'Completed',
-    accessor: 'orderlineProcess.isCompleted',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.isCompleted ? 'Yes' : 'No',
   }, {
-    Header: 'Cancelled',
-    accessor: 'orderlineProcess.isCancelled',
+    id: 'isCancelled',
+    Header: 'Process Cancelled',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.isCancelled ? 'Yes' : 'No',
   }, {
+    id: 'isReturn',
     Header: 'Return',
-    accessor: 'orderlineProcess.isReturn',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.isReturn ? 'Yes' : 'No',
   }, {
+    id: 'isActive',
     Header: 'Active',
-    accessor: 'orderlineProcess.isActive',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.isActive ? 'Yes' : 'No',
   }, {
+    id: 'isPaymentApproved',
     Header: 'Payment Approved',
-    accessor: 'orderlineProcess.isPaymentApproved',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.isPaymentApproved ? 'Yes' : 'No',
   }, {
     Header: 'Payment Approver',
     accessor: 'orderlineProcess.paymentApprovedBy',
   }, {
+    id: 'isReturnApproved',
     Header: 'Return Approved',
-    accessor: 'orderlineProcess.isReturnApproved',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.isReturnApproved ? 'Yes' : 'No',
   }, {
     Header: 'Return Approver',
     accessor: 'orderlineProcess.returnApprovedBy',
   }, {
+    id: 'isRefundApproved',
     Header: 'Refund Approved',
-    accessor: 'orderlineProcess.isRefundApproved',
+    accessor: o => o.orderlineProcess && o.orderlineProcess.isRefundApproved ? 'Yes' : 'No',
   }, {
     Header: 'Refund Approver',
     accessor: 'orderlineProcess.refundApprovedBy',
@@ -362,39 +371,39 @@ const clientConfig = {
   }, {
     id: 'shippedToSellerAction',
     Header: 'Shipped To Seller',
-    accessor: o => o.orderlineProcess && o.orderlineProcess.shippedToSellerAction ? moment(o.orderlineProcess.shippedToSellerAction.timeUtc).format('lll') : null,
+    accessor: o => o.orderlineProcess && o.orderlineProcess.shippedToSellerAction ? moment(o.orderlineProcess.shippedToSellerAction.timeUtc).format('lll') : 'No',
   }, {
     id: 'ofdToSellerAction',
     Header: 'Seller OFD',
-    accessor: o => o.orderlineProcess && o.orderlineProcess.ofdToSellerAction ? moment(o.orderlineProcess.ofdToSellerAction.timeUtc).format('lll') : null,
+    accessor: o => o.orderlineProcess && o.orderlineProcess.ofdToSellerAction ? moment(o.orderlineProcess.ofdToSellerAction.timeUtc).format('lll') : 'No',
   }, {
     id: 'deliveredToSellerAction',
     Header: 'Delivered To Seller',
-    accessor: o => o.orderlineProcess && o.orderlineProcess.deliveredToSellerAction ? moment(o.orderlineProcess.deliveredToSellerAction.timeUtc).format('lll') : null,
+    accessor: o => o.orderlineProcess && o.orderlineProcess.deliveredToSellerAction ? moment(o.orderlineProcess.deliveredToSellerAction.timeUtc).format('lll') : 'No',
   }, {
     id: 'shippedToBuyerAction',
     Header: 'Shipped To Buyer',
-    accessor: o => o.orderlineProcess && o.orderlineProcess.shippedToBuyerAction ? moment(o.orderlineProcess.shippedToBuyerAction.timeUtc).format('lll') : null,
+    accessor: o => o.orderlineProcess && o.orderlineProcess.shippedToBuyerAction ? moment(o.orderlineProcess.shippedToBuyerAction.timeUtc).format('lll') : 'No',
   }, {
     id: 'ofdToBuyerAction',
     Header: 'Buyer OFD',
-    accessor: o => o.orderlineProcess && o.orderlineProcess.ofdToBuyerAction ? moment(o.orderlineProcess.ofdToBuyerAction.timeUtc).format('lll') : null,
+    accessor: o => o.orderlineProcess && o.orderlineProcess.ofdToBuyerAction ? moment(o.orderlineProcess.ofdToBuyerAction.timeUtc).format('lll') : 'No',
   }, {
     id: 'deliveredToBuyerAction',
     Header: 'Delivered To Buyer',
-    accessor: o => o.orderlineProcess && o.orderlineProcess.deliveredToBuyerAction ? moment(o.orderlineProcess.deliveredToBuyerAction.timeUtc).format('lll') : null,
+    accessor: o => o.orderlineProcess && o.orderlineProcess.deliveredToBuyerAction ? moment(o.orderlineProcess.deliveredToBuyerAction.timeUtc).format('lll') : 'No',
   }, {
     id: 'reverseShippedAction',
     Header: 'Shipped Return',
-    accessor: o => o.orderlineProcess && o.orderlineProcess.reverseShippedAction ? moment(o.orderlineProcess.reverseShippedAction.timeUtc).format('lll') : null,
+    accessor: o => o.orderlineProcess && o.orderlineProcess.reverseShippedAction ? moment(o.orderlineProcess.reverseShippedAction.timeUtc).format('lll') : 'No',
   }, {
     id: 'reverseOfdAction',
     Header: 'Return OFD',
-    accessor: o => o.orderlineProcess && o.orderlineProcess.reverseOfdAction ? moment(o.orderlineProcess.reverseOfdAction.timeUtc).format('lll') : null,
+    accessor: o => o.orderlineProcess && o.orderlineProcess.reverseOfdAction ? moment(o.orderlineProcess.reverseOfdAction.timeUtc).format('lll') : 'No',
   }, {
     id: 'reverseDeliveredAction',
     Header: 'Returned To Seller',
-    accessor: o => o.orderlineProcess && o.orderlineProcess.reverseDeliveredAction ? moment(o.orderlineProcess.reverseDeliveredAction.timeUtc).format('lll') : null,
+    accessor: o => o.orderlineProcess && o.orderlineProcess.reverseDeliveredAction ? moment(o.orderlineProcess.reverseDeliveredAction.timeUtc).format('lll') : 'No',
   }],
   orderProcessColumns: [{
     id: 'Order Id',

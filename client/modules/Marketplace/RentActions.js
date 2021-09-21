@@ -165,3 +165,23 @@ export function updateBuyerAWB(data) {
         });
     }
 }
+
+export function cancelOrder(data) {
+    return function (dispatch) {
+        let url = `/api/shop-service/backend/cancelOrder`
+        return axios({
+            url: url,
+            timeout: 20000,
+            method: 'post',
+            data: data,
+            responseType: 'json',
+            headers: {
+                "Authorization": localStorage.getItem('token') ? 'JWT ' + localStorage.getItem('token') : null
+            }
+        }).then(function (response) {
+            alert('Orders have been cancelled!');
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+}
