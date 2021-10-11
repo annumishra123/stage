@@ -266,6 +266,21 @@ const clientConfig = {
     Header: 'Buyer Alias',
     accessor: 'buyerProfile.username',
   }, {
+    id: 'buyer',
+    Header: 'Buyer Address',
+    accessor: o => {
+      return `${o.buyerAddress.address}, ${o.buyerAddress.city}, ${o.buyerAddress.state}, ${o.buyerAddress.pincode}`;
+    }
+  }, {
+    Header: 'Buyer City',
+    accessor: 'buyerAddress.city'
+  }, {
+    Header: 'Buyer State',
+    accessor: 'buyerAddress.state'
+  }, {
+    Header: 'Buyer Pincode',
+    accessor: 'buyerAddress.pincode'
+  }, {
     Header: 'Seller Email',
     accessor: 'sellerId',
   }, {
@@ -278,6 +293,21 @@ const clientConfig = {
   }, {
     Header: 'Seller Alias',
     accessor: 'sellerProfile.username',
+  }, {
+    id: 'seller',
+    Header: 'Seller Address',
+    accessor: o => {
+      return `${o.sellerAddress.address}, ${o.sellerAddress.city}, ${o.sellerAddress.state}, ${o.sellerAddress.pincode}`;
+    }
+  }, {
+    Header: 'Seller City',
+    accessor: 'sellerAddress.city'
+  }, {
+    Header: 'Seller State',
+    accessor: 'sellerAddress.state'
+  }, {
+    Header: 'Seller Pincode',
+    accessor: 'sellerAddress.pincode'
   }, {
     id: 'orderDate',
     Header: 'Date Of Order',
@@ -1652,13 +1682,25 @@ const clientConfig = {
     id: 'sellerName',
     Header: 'Seller Name',
     accessor: o => {
-      return o.sellerAddress ? o.sellerAddress.userName : null;
+      if (o.sellerAddress && o.sellerAddress.userName) {
+        return o.sellerAddress.userName;
+      } else if (o.sellerProfile) {
+        return `${o.sellerProfile.firstName} ${o.sellerProfile.lastName}`
+      } else {
+        return '-'
+      }
     }
   }, {
     id: 'sellerContact',
     Header: 'Seller Contact',
     accessor: o => {
-      return o.sellerAddress ? o.sellerAddress.phoneNumber : null;
+      if (o.sellerAddress && o.sellerAddress.phoneNumber) {
+        return o.sellerAddress.phoneNumber;
+      } else if (o.sellerProfile) {
+        return o.sellerProfile.verifiedPhoneNumber
+      } else {
+        return '-'
+      }
     }
   }, {
     id: 'seller',
@@ -1679,13 +1721,25 @@ const clientConfig = {
     id: 'buyerName',
     Header: 'Buyer Name',
     accessor: o => {
-      return o.buyerAddress ? o.buyerAddress.userName : null;
+      if (o.buyerAddress && o.buyerAddress.userName) {
+        return o.buyerAddress.userName;
+      } else if (o.buyerProfile) {
+        return `${o.buyerProfile.firstName} ${o.buyerProfile.lastName}`
+      } else {
+        return '-'
+      }
     }
   }, {
     id: 'buyerContact',
     Header: 'Buyer Contact',
     accessor: o => {
-      return o.buyerAddress ? o.buyerAddress.phoneNumber : null;
+      if (o.buyerAddress && o.buyerAddress.phoneNumber) {
+        return o.buyerAddress.phoneNumber;
+      } else if (o.buyerProfile) {
+        return o.buyerProfile.verifiedPhoneNumber
+      } else {
+        return '-'
+      }
     }
   }, {
     id: 'buyer',
