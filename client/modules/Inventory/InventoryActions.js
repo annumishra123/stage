@@ -5,7 +5,7 @@ export function fetchShopCatalog(filterParam) {
     return function (dispatch) {
         let url = '';
         if (filterParam) {
-            url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/filter?${filterParam}`;
+            url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/filter?variants=true&${filterParam}`;
         } else {
             let loopbackFilter = {
                 where: {
@@ -576,9 +576,9 @@ export function getLastQCStatus(looknumber) {
 export function fetchFilterData(param) {
     return function (dispatch) {
         if (param == '') {
-            param = '?approved=false';
+            param = 'approved=false';
         }
-        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/filter${param}`;
+        let url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/filter?variants=true&${param}`;
         return axios({
             url: url,
             timeout: 20000,
@@ -598,9 +598,9 @@ export function fetchFilterData(param) {
 export function fetchEntireShopCatalog(param) {
     return function (dispatch) {
         if (param == undefined || param == '') {
-            param = '';
+            param = 'variants=true';
         } else {
-            param = param;
+            param = param + '&variants=true';
         }
         let url = `${clientConfig.targetURL}/catalogv2/catalogv2/SaleProducts/filter${param}`;
         return axios({
