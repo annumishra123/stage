@@ -42,6 +42,14 @@ class Navigation extends React.Component {
           </Link>
         </li> : null}
         {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
+          <Link to="/story/highlights">
+            <figure>
+              <img src="https://res.cloudinary.com/stage3/image/upload/f_auto,q_auto:low/icon-stories.png" />
+            </figure>
+            <p>Story Highlights</p>
+          </Link>
+        </li> : null}
+        {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>
           <Link to="/influencer">
             <figure>
               <img src="https://res.cloudinary.com/stage3/image/upload/f_auto,q_auto:low/icon-influencer.png" />
