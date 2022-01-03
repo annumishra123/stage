@@ -25,12 +25,13 @@ export function createHighlights(param, id) {
         let formData = new FormData(),
             data = {
                 title: param.highlightName,
-                contents: param.storyContentsList.map(content => content.id),
                 creationtime: Date.now(),
                 createdby: param.createdby
             };
         if (id)
             data.id = id;
+        if (param.contentListDirty)
+            data.contents = param.storyContentsList.map(content => content.id);
         formData.append('data', JSON.stringify(data));
         if (param.imageFiles.length)
             formData.append('image', param.imageFiles[0]);

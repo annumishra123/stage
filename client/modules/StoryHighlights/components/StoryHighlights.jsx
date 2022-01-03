@@ -24,7 +24,9 @@ class StoryHighlights extends React.Component {
             previewFile: [],
             isVideoDialogOpen: false,
             videoUrl: '',
-            currentHighlight: null
+            contentListDirty: false,
+            currentHighlight: null,
+            isDisabled: false
         }
 
         let viewer = [{
@@ -70,7 +72,8 @@ class StoryHighlights extends React.Component {
                         let list = me.state.storyContentsList;
                         if (!list.some(entry => entry.id === _original.id)) {
                             me.setState({
-                                storyContentsList: list.concat(_original)
+                                storyContentsList: list.concat(_original),
+                                contentListDirty: true
                             });
                         }
                     }}>Add</button>
@@ -89,7 +92,8 @@ class StoryHighlights extends React.Component {
                     <button style={{padding: '4px 16px'}} onClick={()=>{
                         let list = me.state.storyContentsList;
                         me.setState({
-                            storyContentsList: list.filter(x => x.id !== _original.id)
+                            storyContentsList: list.filter(x => x.id !== _original.id),
+                            contentListDirty: true
                         });
                     }}>Remove</button>
                 </div>
@@ -123,6 +127,9 @@ class StoryHighlights extends React.Component {
             me = this,
             currentHighlight = state.currentHighlight || {};
         state.createdby = this.props.user;
+        me.setState({
+            isDisabled: true
+        });
         this.props.createHighlights(state, currentHighlight.id).then(() => {
             alert("Store and Story created Successfully!!!");
             me.setState({
@@ -130,7 +137,8 @@ class StoryHighlights extends React.Component {
                 imageFiles: [],
                 previewFile: [],
                 storyContentsList: [],
-                currentHighlight: null
+                currentHighlight: null,
+                isDisabled: false
             });
         });
     }
@@ -193,8 +201,11 @@ class StoryHighlights extends React.Component {
 
     render() {
         let { allHighlights, allStoryContents } = this.props,
-            { previewFile, isVideoDialogOpen, videoUrl, storyContentsList, currentHighlight, highlightName } = this.state,
-            isDisabled = false;
+            { previewFile, isVideoDialogOpen, videoUrl, storyContentsList, currentHighlight, highlightName, isDisabled } = this.state;
+        
+        if (!highlightName)
+            isDisabled = true;
+
         return <section>
             <button className={styles.backBtn} onClick={() => browserHistory.goBack()}><i className="login__backicon__a-Exb fa fa-chevron-left" aria-hidden="true" /> Back</button>
             <div className={styles.bubbleSection}>
@@ -211,12 +222,14 @@ class StoryHighlights extends React.Component {
                                     me.setState({
                                         currentHighlight: item,
                                         storyContentsList: list,
+                                        contentListDirty: false,
                                         highlightName: item.title
                                     });
                                 });
                             } else {
                                 this.setState({
                                     currentHighlight: null,
+                                    contentListDirty: false,
                                     storyContentsList: []
                                 });
                             }
@@ -281,7 +294,9 @@ class StoryHighlights extends React.Component {
                     </Dialog>
                 }
             </div>
-            <button className={styles.storiesBtn} onClick={this.createHighlights.bind(this)}>
+            <button className={styles.storiesBtn} onClick={this.createHighlights.bind(this)}
+             style={{ cursor: isDisabled && 'not-allowed' }} disabled={isDisabled}
+            >
                 {currentHighlight ? 'Update' : 'Create'}
             </button>
         </section>
