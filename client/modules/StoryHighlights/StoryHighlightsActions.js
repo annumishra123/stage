@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export function fetchHighlights() {
     return function (dispatch) {
-        let url = clientConfig.contentServiceURL + '/contentv1/StoryHighlights';
+        let url = clientConfig.contentServiceURL + '/contentv1/Highlights';
         return axios({
             url: url,
             timeout: 20000,
@@ -20,13 +20,22 @@ export function fetchHighlights() {
     }
 }
 
-export function createHighlights(param) {
+export function createHighlights(param, id) {
     return function (dispatch) {
-        let cloudinaryUrl = `${clientConfig.contentServiceURL}/contentv1/StoryHighlights/upload/cloudinary`,
-            formData = new FormData();
-        formData.append('image', param.imageFiles[0]);
+        let formData = new FormData(),
+            data = {
+                title: param.highlightName,
+                contents: param.storyContentsList.map(content => content.id),
+                creationtime: Date.now(),
+                createdby: param.createdby
+            };
+        if (id)
+            data.id = id;
+        formData.append('data', JSON.stringify(data));
+        if (param.imageFiles.length)
+            formData.append('image', param.imageFiles[0]);
         return axios({
-            url: cloudinaryUrl,
+            url: `${clientConfig.contentServiceURL}/contentv1/Highlights`,
             timeout: 20000,
             method: 'post',
             responseType: 'json',
@@ -35,73 +44,82 @@ export function createHighlights(param) {
                 'Content-Type': 'multipart/form-data'
             }
         }).then((response) => {
-            console.log(response);
-            let imageUrl = response.data.length != 0 && response.data.map(i => Object.values(i)).toString() || "";
-            let url = `${clientConfig.contentServiceURL}/contentv1/StoryHighlights`,
-                highlightsRawData = {
-                    title: param.highlightName,
-                    image: imageUrl,
-                    contentlinks: param.storyContentsList,
-                    creationtime: Date.now(),
-                    createdby: param.createdby
-                }
-            return axios({
-                url: url,
-                timeout: 20000,
-                method: 'post',
-                responseType: 'json',
-                data: highlightsRawData,
-            }).then((response) => {
-                console.log(response.data);
-                dispatch(fetchHighlights());
-            }).catch((error) => {
-                console.log(error);
-                alert('Highlights creation failed');
-            });
+            console.log(response.data);
+            dispatch(fetchHighlights());
         }).catch((error) => {
             console.log(error);
-            alert('Image Upload Failed');
+            alert('Highlights creation failed');
         });
     }
 }
 
-export function getAllStoryContents() {
-    return function (dispatch) {
-        let url = `${clientConfig.contentServiceURL}/contentv1/StoryContents`;
-        return axios({
-            url: url,
+export function getContents(filter) {
+    filter = filter || {};
+    return new Promise((accept, reject) => {
+        axios({
+            url: `${clientConfig.contentServiceURL}/contentv1/Contents?filter=${encodeURIComponent(JSON.stringify(filter))}`,
             timeout: 20000,
             method: 'get',
             responseType: 'json'
-        }).then(function (response) {
+        }).then((response) => {
+            let contents = response.data;
+            axios({
+                url: `${clientConfig.contentServiceURL}/contentv1/Interactions/countAllMulti`,
+                timeout: 20000,
+                method: 'get',
+                data: {
+                    contentids: contents.map((con) => con.id)
+                },
+                responseType: 'json'
+            }).then((response) => {
+                let map = {},
+                dummyCounts = {
+                    like: 0,
+                    view: 0,
+                    comment: 0
+                };
+                response.data.forEach(function(entry){
+                    if (!map[entry.contentid])
+                        map[entry.contentid] = {};
+                    map[entry.contentid][entry.type] = entry.count;
+                });
+                contents.forEach(function(entry){
+                    let counts = map[entry.id] || dummyCounts;
+                    entry.like = counts.like || 0;
+                    entry.view = counts.view || 0;
+                    entry.comment = counts.comment || 0;
+                });
+                accept(contents);
+            }).catch(reject);
+        }).catch(reject);
+    });
+}
+
+export function getAllStoryContents(filter) {
+    return function (dispatch) {
+        getContents(filter).then((contents) => {
             dispatch({
                 type: 'FETCH_STORY_CONTENTS',
-                payload: response.data
+                payload: contents
             })
-        }).catch(function (error) {
-            console.log(error);
         });
     }
 }
 
 export function deactivateHighlights(id) {
     return function (dispatch) {
-        let url = `${clientConfig.contentServiceURL}/contentv1/StoryContents/${id}/replace`,
-            highlightsRawData = {
-                status: false
-            }
+        let url = `${clientConfig.contentServiceURL}/contentv1/Highlights/${id}`;
         return axios({
             url: url,
             timeout: 20000,
-            method: 'post',
-            responseType: 'json',
-            data: highlightsRawData,
+            method: 'delete',
+            responseType: 'json'
         }).then((response) => {
             console.log(response.data);
             dispatch(fetchHighlights());
         }).catch((error) => {
             console.log(error);
-            alert('Highlights fails to disable');
+            alert('Highlights fails to delete');
         });
     }
 }

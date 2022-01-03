@@ -11,6 +11,7 @@ import 'react-table/react-table.css';
 import 'react-tabs/style/react-tabs.css';
 import 'react-datetime/css/react-datetime.css';
 import 'react-select/dist/react-select.css';
+import 'react-dialog/css/index.css';
 
 // Initialize store
 const store = configureStore(window.__INITIAL_STATE__);
