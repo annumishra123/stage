@@ -11,7 +11,11 @@ import DragDrog from './DragDrop';
 // Import Style
 import styles from '../stories.css';
 
-const storyType = ['Seller', 'Store'];
+const storyType = [
+    {value: 'Seller', label: 'Seller'},
+    {value: 'Store', label: 'Store'},
+    {value: 'MultiSeller', label: 'Multi Seller'}
+];
 const storeType = ['Existing', 'New'];
 
 var filterList = {};
@@ -26,7 +30,7 @@ class Stories extends React.Component {
             previewFile: [],
             sellerStoriesList: [],
             storeStoriesList: [],
-            selectedListItem: {},
+            selectedItems: [],
             selectedGender: '',
             selectedPricemin: '',
             selectedPricemax: '',
@@ -55,7 +59,8 @@ class Stories extends React.Component {
             afterHandleChange: false,
             storeName: '',
             finalFilterParamList: '',
-            afterFilterChange: false
+            afterFilterChange: false,
+            collectionName: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
@@ -149,7 +154,7 @@ class Stories extends React.Component {
     }
 
     typeHandleChange(e) {
-        this.setState({ selectedType: e ? e.value : '', selectedStoreType: '', selectedListItem: {}, previewFile: [], afterHandleChange: false });
+        this.setState({ selectedType: e ? e.value : '', selectedStoreType: '', selectedItems: [], previewFile: [], afterHandleChange: false });
     }
 
     storeTypeHandleChange(e) {
@@ -157,12 +162,12 @@ class Stories extends React.Component {
     }
 
     onItemSelectionChange(selectedData) {
-        const { selectedType } = this.state;
+        const { selectedType, selectedItems } = this.state;
         if (selectedData.name == {}) {
-            this.setState({ selectedListItem: {} });
+            this.setState({ selectedItems: [] });
             return;
         }
-        let selectedItem = {};
+        let selectedItem = [];
         switch (selectedType.toLowerCase()) {
             case 'seller':
                 selectedItem = this.props.allSeller.filter(item => {
@@ -171,23 +176,71 @@ class Stories extends React.Component {
                     }
                 });
                 break;
+            case 'multiseller':
+                selectedItem = this.props.allSeller.filter(item => {
+                    if (item.defaultBillingInfoId == selectedData.billingId && item.email == selectedData.email) {
+                        return selectedData.name;
+                    } else if (selectedItems.indexOf(item) !== -1) {
+                        return item;
+                    }
+                });
+                break;
             case 'store':
                 selectedItem = this.props.allStore.filter(item => item.title == selectedData.name);
                 break;
         }
-        this.setState({ selectedListItem: selectedItem });
+        this.setState({ selectedItems: selectedItem });
         console.log(selectedItem);
     }
 
     renderSellerSection() {
-        const { selectedListItem, sellerStoriesList, selectedType } = this.state;
+        const { selectedItems, sellerStoriesList, selectedType } = this.state;
         return <div className={styles.sellerFormSection}>
             <h2>Seller</h2>
             <h4>Name: </h4>
             <Autocomplete suggestions={sellerStoriesList} selectedItem={this.onItemSelectionChange.bind(this)} selectedType={selectedType} />
             {
-                Object.keys(selectedListItem).length != 0 && selectedListItem.map((file) => (
+                selectedItems.map((file) => (
                     <div className={styles.sellerselection}>
+                        <span><img className={styles.storeDetailImg} alt='No Image available' src={file.profileImageUrl} /></span>
+                        <h3><div className={styles.storeDetailText}>{`${file.firstName} ${file.lastName}`}</div></h3>
+                    </div>
+                ))
+            }
+        </div>
+    }
+
+    renderMultiSellerSection() {
+        const { selectedItems, sellerStoriesList, selectedType, collectionName } = this.state;
+        return <div className={styles.sellerFormSection}>
+            <h2>Sellers</h2>
+            <div title='Name' className={styles.bubbleFormField} style={{float: 'none'}}>
+                <h4>Collection Name: </h4>
+                <input type='text' name='title' className={styles.bubbleInput} 
+                    onChange={e => { 
+                        this.setState({
+                            collectionName: e.target.value
+                        }); 
+                    }}
+                    value={collectionName || ''}
+                />
+            </div>
+            <h4>Names: </h4>
+            <Autocomplete suggestions={sellerStoriesList} selectedItem={this.onItemSelectionChange.bind(this)} selectedType={selectedType} />
+            {
+                selectedItems.map((file, index) => (
+                    <div key={index} className={styles.sellerselection}> 
+                        <i title='Remove' className="fa fa-times" style={{ 
+                            cursor: 'pointer',
+                            position: 'absolute',
+                            top: '50%',
+                            left: '90%',
+                            transform: 'translate(-50%, -50%)'
+                        }} aria-hidden="true" onClick={() => {
+                            this.setState({
+                                selectedItems: selectedItems.filter(item => item !== file)
+                            });
+                        }} />
                         <span><img className={styles.storeDetailImg} alt='No Image available' src={file.profileImageUrl} /></span>
                         <h3><div className={styles.storeDetailText}>{`${file.firstName} ${file.lastName}`}</div></h3>
                     </div>
@@ -523,10 +576,10 @@ class Stories extends React.Component {
     }
 
     createStore() {
-        const { storeName, skuList, selectedType, selectedListItem, selectedStoreType, imageFiles } = this.state;
+        const { storeName, skuList, selectedType, selectedItems, selectedStoreType, imageFiles, collectionName } = this.state;
         let createStoreData = {};
         if (selectedType.toLowerCase() == 'seller') {
-            selectedListItem.forEach(i => {
+            selectedItems.forEach(i => {
                 createStoreData = {
                     title: `${i.firstName} ${i.lastName}` || '',
                     skuList: [],
@@ -537,11 +590,21 @@ class Stories extends React.Component {
                 };
             });
             this.props.createStories(createStoreData);
+        } else if (selectedType.toLowerCase() == 'multiseller') {
+            createStoreData = {
+                title: collectionName,
+                skuList: [],
+                image: imageFiles[0] || [],
+                type: 'multiseller',
+                links: selectedItems.map(i => i.email),
+                status: true
+            };
+            this.props.createStories(createStoreData);
         } else {
             switch (selectedStoreType.toLowerCase()) {
                 case 'existing':
                     let createStoryData = {};
-                    selectedListItem.forEach(i => {
+                    selectedItems.forEach(i => {
                         createStoryData = {
                             title: i.title || '',
                             image: imageFiles[0] || [],
@@ -604,24 +667,27 @@ class Stories extends React.Component {
             <div className={styles.bubbleSection}>
                 {stories && stories.length != 0 && stories.map((item, idx) => (
                     <div key={idx} className={styles.bubbleField}>
-                        <i title='Disable' className="fa fa-times" style={{ float: 'right', cursor: 'pointer' }} aria-hidden="true" onClick={() => this.onDisableConfirmation(item.id)} />
-                        <img className={styles.bubbleArea} alt='No Image available' src={item.image} />
-                        <div className={styles.bubbleText}>{item.title}</div>
+                        <i title='Disable' className="fa fa-times" 
+                        style={{ float: 'right', cursor: 'pointer', transform: 'translate(11px, -6px)' }}
+                         aria-hidden="true" onClick={() => this.onDisableConfirmation(item.id)} />
+                        <div className={styles.bubbleArea} style={{backgroundImage: `url(${item.image})`}} />
+                        <div className={styles.bubbleText}>
+                            <span>{item.title}</span>
+                        </div>
                     </div>
                 ))}
             </div>
             <div className={styles.storyFormSection}>
-                <h1>Create Stories</h1>
+                <h1>Create Collections</h1>
                 <Select className={styles.typeSelect}
                     value={selectedType}
                     onChange={(e) => this.typeHandleChange(e)}
-                    options={storyType.map((item, i) => {
-                        return { value: item, label: item }
-                    })}></Select>
+                    options={storyType}></Select>
             </div>
             {
                 selectedType == 'Seller' ? this.renderSellerSection() :
-                    selectedType == 'Store' ? this.renderStoreSection() : ''
+                    selectedType == 'Store' ? this.renderStoreSection() :
+                        selectedType == 'MultiSeller' ? this.renderMultiSellerSection() : ''
             }
             {
                 selectedType == 'Store' ?
@@ -629,7 +695,7 @@ class Stories extends React.Component {
                         this.renderExistingStoreSection() : selectedStoreType == 'New' ?
                             this.renderNewStoreSection() : '') : ''
             }
-            {selectedType != '' && <div>
+            {selectedType != '' && <div style={{marginTop: '2em'}}>
                 <h4>Upload Image(for stories): </h4>
                 <div style={{ display: 'flex' }}>
                     <div className={styles.fileUpload} style={{ width: '25%' }}>

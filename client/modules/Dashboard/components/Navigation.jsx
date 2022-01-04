@@ -38,7 +38,7 @@ class Navigation extends React.Component {
             <figure>
               <img src="https://res.cloudinary.com/stage3/image/upload/f_auto,q_auto:low/icon-stories.png" />
             </figure>
-            <p>Stories</p>
+            <p>Collections</p>
           </Link>
         </li> : null}
         {this.props.role == 'admin' || this.props.role == 'superuser' ? <li>

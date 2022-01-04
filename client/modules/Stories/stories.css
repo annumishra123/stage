@@ -4,19 +4,30 @@
 }
 
 .bubbleText {
-    color: #000;
+    position: absolute;
+    background-color: #0007;
+    color: #fff;
     font-family: 'Lato', sans-serif;
     font-size: 12px;
     letter-spacing: 1px;
-    text-align: center;
     margin: 5px 0;
+    bottom: -4px;
+    border-radius: 0 0 1.5rem 1.5rem;
+    width: 100%;
+    height: 2.5rem;
+}
+
+.bubbleText span {
+    position: absolute;
+    left: 9%;
+    top: 50%;
+    transform: translate(0%, -50%);
 }
 
 .bubbleField {
     margin: 10px 15px;
-    text-align: center;
+    position: relative;
     float: left;
-    width: 90px;
 }
 
 .bubbleFormFieldWidth {
@@ -25,9 +36,13 @@
 
 .bubbleArea {
     border: 3px solid #CC6600;
-    border-radius: 50%;
-    width: 5em;
+    border-radius: 1.5rem;
+    width: 17em;
+    height: 11em;
     padding: 1px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .suggestionListImage {
@@ -395,6 +410,7 @@ input[type="search"] {
     border-radius: 50px;
     overflow: hidden;
     margin: 10px 0;
+    position: relative;
 }
 .sellerselection span {
     width: 60px;

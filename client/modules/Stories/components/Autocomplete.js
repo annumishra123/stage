@@ -29,6 +29,7 @@ export class Autocomplete extends Component {
         let filteredSuggestions = suggestions.filter(suggestion => {
             switch (selectedType.toLowerCase().trim()) {
                 case 'seller':
+                case 'multiseller':
                     let sellerName = `${suggestion.firstName} ${suggestion.lastName}`;
                     return sellerName.toLowerCase().indexOf(userInput.toLowerCase()) > -1;
                 default:
@@ -72,15 +73,16 @@ export class Autocomplete extends Component {
                         {filteredSuggestions.map((suggestion, index) => {
                             switch (selectedType.toLowerCase().trim()) {
                                 case 'seller':
+                                case 'multiseller':
                                     let sellerName = `${suggestion.firstName} ${suggestion.lastName}`;
                                     return (
-                                        <li key={sellerName} className={styles.autocompleteLi} onClick={onClick.bind(this, suggestion)}>
+                                        <li key={index} className={styles.autocompleteLi} onClick={onClick.bind(this, suggestion)}>
                                             {<img className={styles.suggestionListImage} alt='No Image available' src={suggestion.profileImageUrl} />}<div className={styles.liText}>{sellerName}</div>
                                         </li>
                                     );
                                 default:
                                     return (
-                                        <li key={suggestion.title} className={styles.autocompleteLi} onClick={onClick.bind(this, suggestion)}>
+                                        <li key={index} className={styles.autocompleteLi} onClick={onClick.bind(this, suggestion)}>
                                             <div className={styles.liText}>{suggestion.title}</div>
                                         </li>
                                     );
