@@ -68,6 +68,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Marketplace/components/RentOrders');
   require('./modules/Stories/components/Stories');
   require('./modules/StoryHighlights/components/StoryHighlights');
+  require('./modules/Brands/components/Brands');
   require('./modules/Influencer/components/InfluencerList');
   require('./modules/Influencer/components/Influencer');
 }
@@ -537,6 +538,11 @@ export default function getRoutes(store, req) {
       <Route path="/story/highlights" onEnter={checkAdmin} getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/StoryHighlights/components/StoryHighlights').default);
+        });
+      }} />
+      <Route path="/brands" onEnter={checkAdmin} getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Brands/components/Brands').default);
         });
       }} />
       <Route path="/influencer" onEnter={checkAdmin} getComponent={(nextState, cb) => {

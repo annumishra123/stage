@@ -31,6 +31,7 @@ import {
   getOrderLinesToBeDispatched, getOrderLinesToBeReceived, rentDeliveryOrdersV2
 } from './modules/OrderProcess/OrderProcessReducer';
 import { stories, entireStore, entireSeller } from './modules/Stories/StoriesReducer';
+import { brands } from './modules/Brands/BrandsReducer';
 import { entireHighlights, entireStoryContents } from './modules/StoryHighlights/StoryHighlightsReducer';
 import { spotlightInfluencers, allInfluencers, influencersCarousel, allSellers } from './modules/Influencer/InfluencerReducer';
 import { allOrderLine, allReturnOrderLine } from './modules/ManagePayment/ManagePaymentReducer';
@@ -123,5 +124,6 @@ export default combineReducers({
   allReturnOrderLineForApproval,
   marketDeliveryOrders,
   entireHighlights, 
-  entireStoryContents
+  entireStoryContents,
+  brands
 });
