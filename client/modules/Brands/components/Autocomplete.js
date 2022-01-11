@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 // Import Style
-import styles from '../stories.css';
+import styles from '../brands.css';
 
 export class Autocomplete extends Component {
     static propTypes = {
@@ -21,20 +21,14 @@ export class Autocomplete extends Component {
     }
 
     onChange = e => {
-        const { suggestions, selectedType } = this.props;
+        const { suggestions } = this.props;
         let userInput = e.currentTarget.value;
         if (userInput == '') {
             this.props.selectedItem(userInput);
         }
         let filteredSuggestions = suggestions.filter(suggestion => {
-            switch (selectedType.toLowerCase().trim()) {
-                case 'seller':
-                case 'multiseller':
-                    let sellerName = `${suggestion.firstName} ${suggestion.lastName}`;
-                    return sellerName.toLowerCase().indexOf(userInput.toLowerCase()) > -1;
-                default:
-                    return suggestion.title.toLowerCase().indexOf(userInput.toLowerCase()) > -1;
-            }
+            let sellerName = `${suggestion.firstName} ${suggestion.lastName}`;
+            return sellerName.toLowerCase().indexOf(userInput.toLowerCase()) > -1;
         });
 
         this.setState({
@@ -64,29 +58,18 @@ export class Autocomplete extends Component {
                 userInput
             }
         } = this;
-        const { selectedType } = this.props;
         let suggestionsListComponent;
         if (showSuggestions && userInput) {
             if (filteredSuggestions.length) {
                 suggestionsListComponent = (
                     <ul className={styles.autocompleteUl}>
                         {filteredSuggestions.map((suggestion, index) => {
-                            switch (selectedType.toLowerCase().trim()) {
-                                case 'seller':
-                                case 'multiseller':
-                                    let sellerName = `${suggestion.firstName} ${suggestion.lastName}`;
-                                    return (
-                                        <li key={index} className={styles.autocompleteLi} onClick={onClick.bind(this, suggestion)}>
-                                            {<img className={styles.suggestionListImage} alt='No Image available' src={suggestion.profileImageUrl} />}<div className={styles.liText}>{sellerName}</div>
-                                        </li>
-                                    );
-                                default:
-                                    return (
-                                        <li key={index} className={styles.autocompleteLi} onClick={onClick.bind(this, suggestion)}>
-                                            <div className={styles.liText}>{suggestion.title}</div>
-                                        </li>
-                                    );
-                            }
+                            let sellerName = `${suggestion.firstName} ${suggestion.lastName}`;
+                            return (
+                                <li key={index} className={styles.autocompleteLi} onClick={onClick.bind(this, suggestion)}>
+                                    {<img className={styles.suggestionListImage} alt='No Image available' src={suggestion.profileImageUrl} />}<div className={styles.liText}>{sellerName}</div>
+                                </li>
+                            );
                         })}
                     </ul>
                 );

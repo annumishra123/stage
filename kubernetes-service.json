@@ -1,0 +1,24 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "stage3-admin",
+        "namespace": "test-environment"
+    },
+    "spec": {
+        "ports": [
+            {
+                "name": "stage3-admin",
+                "protocol": "TCP",
+                "port": 8000,
+                "targetPort": 8000
+            }
+        ],
+        "selector": {
+            "app": "stage3-admin"
+        },
+        "type": "LoadBalancer",
+        "sessionAffinity": "None",
+        "externalTrafficPolicy": "Cluster"
+    }
+}
