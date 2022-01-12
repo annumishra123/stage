@@ -99,7 +99,7 @@ const clientConfig = {
   scanLocations: { 'store-sdn': 'Sadhna Store', 'warehouse-sdn': 'Sadhna Warehouse', 'store-hkv': 'Hauz Khas Store', 'store-scw': 'City Walk Store', 'office': 'Office', 'customer': 'Customer', 'dc': 'Dry Cleaning', 'popup': 'Pop-Up', 'warehouse-nfc': 'NFC Warehouse', 'bus': 'Bus' },
   scanReasons: ['item received', 'send to sadhna warehouse', 'send to sadhna store', 'send to hkv', 'send to nfc', 'send to city walk', 'send to office', 'send to customer', 'send to dc', 'send to popup', 'send to bus', 'reconcile'],
   targetURL: 'https://staging.stage3.co',
-  contentServiceURL: 'http://192.168.1.25:3008',
+  contentServiceURL: 'https://staging.stage3.co/content/contentv1',
   paymentMethods: [
     'bank deposit',
     'PAYU',
